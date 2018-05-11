@@ -1,5 +1,7 @@
-import APIPageable from './APIPageable'
-import APIResource from './APIResource'
+import './APIPageable'
+import './APIResource'
+
+import throwUnlessId from '../Utils'
 
 class Devices extends APIPageable
   constructor: (api, parent) ->
@@ -14,7 +16,7 @@ class Devices extends APIPageable
     a = new APIPageable(@api, this)
     a.pushSelector('cleanup-configurations')
   cleanupConfiguration: (id) ->
-    @api.throwUnlessId(id, 'Devices CleanupConfiguration')
+    throwUnlessId(id, 'Devices CleanupConfiguration')
     a = new APIResource(@api, this)
     a.pushSelector('cleanup-configurations', id)
 

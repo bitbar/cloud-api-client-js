@@ -1,25 +1,25 @@
+import './resources/APIResource'
+import './resources/APIPageable'
+
+import './resources/User'
+import './resources/Devices'
+import './resources/Device'
+import './resources/File'
+import './resources/FileSet'
+import './resources/Run'
+import './resources/Project'
+import './resources/LabelGroup'
+import './resources/Properties'
+import './resources/Services'
+import './resources/DeviceSession'
+import './resources/DeviceGroup'
+import './resources/UserSession'
+
+import throwUnlessId from './Utils'
+
 #
 # API
 #
-
-import APIResource from './resources/APIResource'
-import APIPageable from './resources/APIPageable'
-
-import User from './resources/User'
-import Devices from './resources/Devices'
-import Device from './resources/Device'
-import File from './resources/File'
-import FileSet from './resources/FileSet'
-import Run from './resources/Run'
-import Project from './resources/Project'
-import LabelGroup from './resources/LabelGroup'
-import Properties from './resources/Properties'
-import Services from './resources/Services'
-import DeviceSession from './resources/DeviceSession'
-import DeviceGroup from './resources/DeviceGroup'
-import UserSession from './resources/UserSession'
-
-
 class API
 
   user: (id) ->
@@ -74,12 +74,12 @@ class API
     a = new APIPageable(this)
     a.pushSelector('device-status')
   deviceStatus: (id) ->
-    @throwUnlessId(id, 'Device Status')
+    throwUnlessId(id, 'Device Status')
     a = new APIResource(this)
     a.pushSelector('device-status', id)
 
   property: (id) ->
-    @throwUnlessId(id, 'Properties')
+    throwUnlessId(id, 'Properties')
     a = new APIResource(this, undefined)
     a.pushSelector('properties', id)
   properties: ->
@@ -89,7 +89,7 @@ class API
     new Services(this)
 
   filePath: (id) ->
-    @throwUnlessId(id, 'Files Path')
+    throwUnlessId(id, 'Files Path')
     a = new APIPageable(this)
     a.pushSelector('files', id)
     a.pushSelector('file')

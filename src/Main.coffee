@@ -1,4 +1,7 @@
-import API from './API'
+import './API'
+import './FilterBuilder'
 
-export default ->
-  console.log API
+export default {
+  API: API
+  FilterBuilder: FilterBuilder
+}

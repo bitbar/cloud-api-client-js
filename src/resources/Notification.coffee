@@ -1,9 +1,11 @@
-import APIResource from './APIResource'
+import './APIResource'
+
+import throwUnlessId from '../Utils'
 
 class Notification extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'Notification')
+    throwUnlessId(id, 'Notification')
     @pushSelector('notifications', id)
 
   test: ->

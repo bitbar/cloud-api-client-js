@@ -1,10 +1,12 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
+
+import throwUnlessId from '../Utils'
 
 class Device extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'Device')
+    throwUnlessId(id, 'Device')
     @pushSelector('devices', id)
 
   queue: ->
@@ -12,7 +14,7 @@ class Device extends APIResource
     a.pushSelector('queue')
 
   property: (id) ->
-    @api.throwUnlessId(id, 'Device Property')
+    throwUnlessId(id, 'Device Property')
     a = new APIResource(@api, this)
     a.pushSelector('properties', id)
   properties: ->
@@ -20,7 +22,7 @@ class Device extends APIResource
     a.pushSelector('properties')
 
   label: (id) ->
-    @api.throwUnlessId(id, 'Device Label')
+    throwUnlessId(id, 'Device Label')
     a = new APIResource(@api, this)
     a.pushSelector('labels', id)
   labels: ->

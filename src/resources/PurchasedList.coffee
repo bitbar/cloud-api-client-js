@@ -1,4 +1,4 @@
-import APIPageable from './APIPageable'
+import './APIPageable'
 
 class PurchasedList extends APIPageable
   constructor: (api, parent) ->

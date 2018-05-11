@@ -1,12 +1,13 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
 
-import FilterBuilder from '../FilterBuilder'
+import '../FilterBuilder'
+import throwUnlessId from '../Utils'
 
 class DeviceSession extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'DeviceSession')
+    throwUnlessId(id, 'DeviceSession')
     @pushSelector('device-sessions', id)
 
   steps: ->
@@ -53,7 +54,7 @@ class DeviceSession extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('screenshots')
   screenshot: (id) ->
-    @api.throwUnlessId(id, 'DeviceSession Screenshot')
+    throwUnlessId(id, 'DeviceSession Screenshot')
     a = new APIResource(@api, this)
     a.pushSelector('screenshots', id)
 
@@ -105,7 +106,7 @@ class OutputFileset extends APIResource
     a.pushSelector('files')
 
   note: (id) ->
-    @api.throwUnlessId(id, 'DeviceSession Note')
+    throwUnlessId(id, 'DeviceSession Note')
     a = new APIResource(@api, this)
     a.pushSelector('notes', id)
   notes: ->

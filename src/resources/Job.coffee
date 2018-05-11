@@ -1,12 +1,14 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
 
-import Build from './Build'
+import './Build'
+
+import throwUnlessId from '../Utils'
 
 class Job extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'Job')
+    throwUnlessId(id, 'Job')
     @pushSelector('jobs', id)
 
   config: ->

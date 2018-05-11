@@ -1,10 +1,12 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
+
+import throwUnlessId from '../Utils'
 
 class NotificationPlan extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'NotificationPlan')
+    throwUnlessId(id, 'NotificationPlan')
     @pushSelector('notification-plans', id)
 
   check: ->

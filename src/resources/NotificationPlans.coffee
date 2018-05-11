@@ -1,5 +1,5 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
 
 class NotificationPlans extends APIPageable
   constructor: (api, parent, id) ->

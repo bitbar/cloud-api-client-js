@@ -1,4 +1,4 @@
-import APIPageable from './APIPageable'
+import './APIPageable'
 
 class Notifications extends APIPageable
   constructor: (api, parent) ->

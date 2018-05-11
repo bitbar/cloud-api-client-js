@@ -1,24 +1,26 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
 
-import DeviceGroup from './DeviceGroup'
-import DeviceSession from './DeviceSession'
-import Project from './Project'
-import FileSet from './FileSet'
-import File from './File'
-import BillingPeriod from './BillingPeriod'
-import Run from './Run'
-import Services from './Services'
-import Service from './Service'
-import Account from './Account'
-import Notifications from './Notifications'
-import Notification from './Notification'
-import Job from './Job'
+import './DeviceGroup'
+import './DeviceSession'
+import './Project'
+import './FileSet'
+import './File'
+import './BillingPeriod'
+import './Run'
+import './Services'
+import './Service'
+import './Account'
+import './Notifications'
+import './Notification'
+import './Job'
+
+import throwUnlessId from '../Utils'
 
 class User extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'User')
+    throwUnlessId(id, 'User')
 
     if id is 'me'
       @pushSelector('me')
@@ -106,7 +108,7 @@ class User extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('receipts')
   receipt: (id) ->
-    @api.throwUnlessId(id, 'User Receipt')
+    throwUnlessId(id, 'User Receipt')
     a = new APIResource(@api, this)
     a.pushSelector('receipts', id)
 

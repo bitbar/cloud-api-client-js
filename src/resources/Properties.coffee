@@ -1,4 +1,6 @@
-import APIPageable from './APIPageable'
+import './APIPageable'
+
+import throwUnlessId from '../Utils'
 
 class Properties extends APIPageable
   constructor: (api, parent) ->
@@ -6,7 +8,7 @@ class Properties extends APIPageable
     @pushSelector('properties')
 
   appBan: (id) ->
-    @api.throwUnlessId(id, 'Property AppBan')
+    throwUnlessId(id, 'Property AppBan')
     @pushSelector('app-bans')
     @setConstantParams({
       testRunId: id

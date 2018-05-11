@@ -1,17 +1,19 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
+
+import throwUnlessId from '../Utils'
 
 class Label extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'Label')
+    throwUnlessId(id, 'Label')
     @pushSelector('labels', id)
 
   devices: ->
     a = new APIPageable(@api, this)
     a.pushSelector('devices')
   device: (id) ->
-    @api.throwUnlessId(id, 'Label Device')
+    throwUnlessId(id, 'Label Device')
     a = new APIResource(@api, this)
     a.pushSelector('devices', id)
 

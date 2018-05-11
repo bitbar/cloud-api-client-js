@@ -1,12 +1,14 @@
-import APIResource from './APIResource'
-import APIPageable from './APIPageable'
+import './APIResource'
+import './APIPageable'
 
-import Label from './Label'
+import './Label'
+
+import throwUnlessId from '../Utils'
 
 class LabelGroup extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    @api.throwUnlessId(id, 'LabelGroup')
+    throwUnlessId(id, 'LabelGroup')
     @pushSelector('label-groups', id)
 
   labels: ->
