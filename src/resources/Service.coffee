@@ -1,7 +1,7 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Service extends APIResource
   constructor: (api, parent, id) ->

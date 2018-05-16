@@ -1,10 +1,11 @@
 {
   "name": "testdroid-api-client-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Testdroid Cloud API Client for JavaScript",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx rollup -c"
+    "build": "npx rollup -c",
+    "test": "npx mocha"
   },
   "keywords": [
     "testdroid",
@@ -24,9 +25,11 @@
   },
   "devDependencies": {
     "coffee-script": "<2.0.0",
+    "mocha": "^5.1.1",
     "rollup": "^0.58.2",
     "rollup-plugin-coffee-script": "<2.0.0",
     "rollup-plugin-commonjs": "^9.1.3",
-    "rollup-plugin-node-resolve": "^3.3.0"
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^3.0.0"
   }
 }

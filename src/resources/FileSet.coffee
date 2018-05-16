@@ -1,9 +1,9 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
-import './File'
+import File from './File'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class FileSet extends APIResource
   constructor: (api, parent, id) ->

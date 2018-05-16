@@ -1,10 +1,10 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
-import './File'
-import './DeviceSession'
+import File from './File'
+import DeviceSession from './DeviceSession'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Run extends APIResource
   constructor: (api, parent, id) ->

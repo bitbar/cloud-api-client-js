@@ -1,4 +1,4 @@
-import './APIPageable'
+import APIPageable from './APIPageable'
 
 class Statistics extends APIPageable
   constructor: (api, parent) ->

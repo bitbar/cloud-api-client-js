@@ -1,9 +1,9 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
-import './Build'
+import Build from './Build'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Job extends APIResource
   constructor: (api, parent, id) ->

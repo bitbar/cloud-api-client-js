@@ -1,4 +1,4 @@
-import './APIAbstractResource'
+import APIAbstractResource from './APIAbstractResource'
 
 class APIPageable extends APIAbstractResource
 

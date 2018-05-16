@@ -1,5 +1,5 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
 class UserSession extends APIResource
 

@@ -1,8 +1,8 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
-import '../FilterBuilder'
-import throwUnlessId from '../Utils'
+import FilterBuilder from '../FilterBuilder'
+import { throwUnlessId } from '../Utils'
 
 class DeviceSession extends APIResource
   constructor: (api, parent, id) ->

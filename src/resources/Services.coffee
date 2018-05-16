@@ -1,7 +1,7 @@
-import './APIPageable'
+import APIPageable from './APIPageable'
 
-import './Purchased'
-import './PurchasedList'
+import Purchased from './Purchased'
+import PurchasedList from './PurchasedList'
 
 class Services extends APIPageable
 

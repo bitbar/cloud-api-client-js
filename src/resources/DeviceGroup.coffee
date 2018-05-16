@@ -1,9 +1,9 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
-import './Device'
+import Device from './Device'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class DeviceGroup extends APIResource
   constructor: (api, parent, id) ->

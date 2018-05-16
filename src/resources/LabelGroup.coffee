@@ -1,9 +1,9 @@
-import './APIResource'
-import './APIPageable'
+import APIResource from './APIResource'
+import APIPageable from './APIPageable'
 
-import './Label'
+import Label from './Label'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class LabelGroup extends APIResource
   constructor: (api, parent, id) ->

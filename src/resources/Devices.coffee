@@ -1,7 +1,7 @@
-import './APIPageable'
-import './APIResource'
+import APIPageable from './APIPageable'
+import APIResource from './APIResource'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Devices extends APIPageable
   constructor: (api, parent) ->

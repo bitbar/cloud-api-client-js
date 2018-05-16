@@ -1,9 +1,9 @@
-import './APIPageable'
-import './APIResource'
+import APIPageable from './APIPageable'
+import APIResource from './APIResource'
 
-import './Services'
+import Services from './Services'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Account extends APIPageable
   constructor: (api, parent) ->

@@ -1,6 +1,6 @@
-import './APIResource'
+import APIResource from './APIResource'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Notification extends APIResource
   constructor: (api, parent, id) ->

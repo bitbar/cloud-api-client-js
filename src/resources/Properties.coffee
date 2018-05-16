@@ -1,6 +1,6 @@
-import './APIPageable'
+import APIPageable from './APIPageable'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Properties extends APIPageable
   constructor: (api, parent) ->

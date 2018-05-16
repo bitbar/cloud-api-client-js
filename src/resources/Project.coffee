@@ -1,11 +1,11 @@
-import './APIResource'
+import APIResource from './APIResource'
 
-import './DeviceGroup'
-import './APIPageable'
-import './File'
-import './Run'
+import DeviceGroup from './DeviceGroup'
+import APIPageable from './APIPageable'
+import File from './File'
+import Run from './Run'
 
-import throwUnlessId from '../Utils'
+import { throwUnlessId } from '../Utils'
 
 class Project extends APIResource
   constructor: (api, parent, id) ->
