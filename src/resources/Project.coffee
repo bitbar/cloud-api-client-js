@@ -5,12 +5,12 @@ import APIPageable from './APIPageable'
 import File from './File'
 import Run from './Run'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class Project extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'Project')
+    Utils.throwUnlessId(id, 'Project')
     @pushSelector('projects', id)
 
   publicDeviceGroups: ->
@@ -49,7 +49,7 @@ class Project extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('sharings')
   sharing: (id) ->
-    throwUnlessId(id, 'Project Sharing')
+    Utils.throwUnlessId(id, 'Project Sharing')
     a = new APIResource(@api, this)
     a.pushSelector('sharings', id)
 
@@ -67,7 +67,7 @@ class Project extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('runs-extended')
   runExtended: (id) ->
-    throwUnlessId(id, 'Project RunExtended')
+    Utils.throwUnlessId(id, 'Project RunExtended')
     a = new APIResource(@api, this)
     a.pushSelector('runs-extended', id)
 
@@ -79,7 +79,7 @@ class Project extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('config/parameters')
   configParameter: (id) ->
-    throwUnlessId(id, 'Project ConfigParameter')
+    Utils.throwUnlessId(id, 'Project ConfigParameter')
     a = new APIResource(@api, this)
     a.pushSelector('config/parameters', id)
 

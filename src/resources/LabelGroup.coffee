@@ -3,12 +3,12 @@ import APIPageable from './APIPageable'
 
 import Label from './Label'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class LabelGroup extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'LabelGroup')
+    Utils.throwUnlessId(id, 'LabelGroup')
     @pushSelector('label-groups', id)
 
   labels: ->

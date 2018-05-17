@@ -1,8 +1,8 @@
 {
   "name": "testdroid-api-client-js",
-  "version": "0.1.2",
+  "version": "0.2.0-alpha",
   "description": "Testdroid Cloud API Client for JavaScript",
-  "main": "dist/index.js",
+  "main": "dist/testdroid-api-client.js",
   "scripts": {
     "build": "npx rollup -c",
     "test": "npx mocha"

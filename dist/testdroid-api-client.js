@@ -1,9 +1,129 @@
-/* Testdroid Cloud API Client for JavaScript v0.1.2 | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.2.0-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global['testdroid-api-client-js'] = factory());
 }(this, (function () { 'use strict';
+
+  var Utils, buildParams;
+
+  Utils = {};
+
+
+  /*
+    Throw error if id is not set
+   */
+
+  Utils.throwUnlessId = function(id, name) {
+    if (id == null) {
+      throw new Error(name + ' id must be provided!');
+    }
+  };
+
+
+  /*
+    Serialize an array of form elements or a set of key/values into a query string
+
+    Based on jQuery.param from jQuery v3.3.1
+
+    jQuery JavaScript Library v3.3.1
+    https://jquery.com/
+   
+    Copyright JS Foundation and other contributors
+    Released under the MIT license
+    https://jquery.org/license
+   */
+
+  buildParams = function(prefix, obj, add) {
+    var i, j, k, len, v;
+    if (Array.isArray(obj)) {
+      for (i in obj) {
+        v = obj[i];
+        if (/\[\]$/.test(prefix)) {
+          add(prefix, v);
+        } else {
+          buildParams(prefix + '[' + ((v != null) && typeof v === 'object' ? i : '') + ']', v, add);
+        }
+      }
+    } else if ((obj != null) && typeof obj === 'object') {
+      for (v = j = 0, len = obj.length; j < len; v = ++j) {
+        k = obj[v];
+        buildParams(prefix + '[' + k + ']', v, add);
+      }
+    } else {
+      add(prefix, obj);
+    }
+  };
+
+  Utils.param = function(a) {
+    var add, item, j, k, len, s, v;
+    s = [];
+    add = function(key, valueOrFunction) {
+      var value;
+      value = typeof valueOrFunction === 'function' ? valueOrFunction() : valueOrFunction;
+      return s[s.length] = encodeURIComponent(key) + '=' + encodeURIComponent(value != null ? value : '');
+    };
+    if (Array.isArray(a)) {
+      for (j = 0, len = a.length; j < len; j++) {
+        item = a[j];
+        add(item.name, item.value);
+      }
+    } else {
+      for (k in a) {
+        v = a[k];
+        buildParams(k, v, add);
+      }
+    }
+    return s.join('&');
+  };
+
+  Utils.getUrl = function(resource, settings, cloudUrl) {
+    var params, paramsString;
+    if (settings == null) {
+      settings = {};
+    }
+    if (cloudUrl == null) {
+      cloudUrl = '';
+    }
+    params = Utils.extend({}, settings.params || {});
+    delete params.important;
+    delete params.cacheTTL;
+    paramsString = Utils.param(params).replace('%25', '');
+    if (paramsString.length > 0) {
+      paramsString = '?' + paramsString;
+    }
+    return cloudUrl + resource + paramsString;
+  };
+
+  Utils.extend = function() {
+    var i, j, key, ref;
+    for (i = j = 1, ref = arguments.length - 1; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
+      for (key in arguments[i]) {
+        if (arguments[i].hasOwnProperty(key)) {
+          if (typeof arguments[0][key] === 'object' && typeof arguments[i][key] === 'object') {
+            Utils.extend(arguments[0][key], arguments[i][key]);
+          } else {
+            arguments[0][key] = arguments[i][key];
+          }
+        }
+      }
+    }
+    return arguments[0];
+  };
+
+  Utils.isJSONString = function(msg) {
+    if (typeof msg !== 'string') {
+      return false;
+    }
+    try {
+      JSON.parse(msg);
+    } catch (error) {
+      return false;
+    }
+    return true;
+  };
+
+  var Utils$1 = Utils;
 
   var APIAbstractResource,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
@@ -56,42 +176,33 @@
     };
 
     APIAbstractResource.prototype.getAbsoluteResourcePath = function() {
-      return app.env.apiUrl + this.getResourcePath();
+      return this.api.config.cloudUrl + this.getResourcePath();
     };
 
     APIAbstractResource.prototype.getUrl = function(params) {
       if (params == null) {
         params = {};
       }
-      return app.ctx.service.ajax.getUrl(this.getResourcePath(), {
+      return this.api.getUrl(this.getResourcePath(), {
         params: params
       });
     };
 
-    APIAbstractResource.prototype.openUrl = function() {
-      return window.open(this.getUrl(), '_blank');
-    };
-
     APIAbstractResource.prototype.get = function(settings) {
-      var promise, ref;
+      var promise;
       if ((this.dataType != null) && !((settings != null ? settings.dataType : void 0) != null)) {
         if (settings == null) {
           settings = {};
         }
         settings.dataType = this.dataType;
       }
-      promise = new $.Deferred();
+      promise = new Promise();
       promise.then(this.executeHooks);
-      settings = $.extend(true, {
+      settings = Utils$1.extend({
         params: this.constantParams
       }, settings);
       settings.params.cacheTTL = this.cacheTTL;
-      if (((ref = this.api) != null ? ref.request : void 0) != null) {
-        return this.api.request(this.getResourcePath(), 'GET', settings, promise);
-      } else {
-        $console.error(new Error('API CALL IS NOT A FUNCTION!!!'));
-        return false;
-      }
+      return this.api.request(this.getResourcePath(), 'GET', settings, promise);
     };
 
     APIAbstractResource.prototype.getCustom = function(params, _settings) {
@@ -104,9 +215,9 @@
       }
       settings = {
         method: 'GET',
-        params: $.extend({}, this.constantParams, params)
+        params: Utils$1.extend({}, this.constantParams, params)
       };
-      $.extend(true, settings, _settings);
+      Utils$1.extend(settings, _settings);
       return this.api.customRequest(this.getResourcePath(), settings);
     };
 
@@ -123,7 +234,7 @@
         data: data,
         params: this.constantParams
       };
-      $.extend(true, settings, _settings);
+      Utils$1.extend(settings, _settings);
       return this._post(settings);
     };
 
@@ -215,7 +326,7 @@
     };
 
     APIAbstractResource.prototype.setConstantParams = function(params) {
-      $.extend(this.constantParams, params);
+      Utils$1.extend(this.constantParams, params);
       return this;
     };
 
@@ -266,9 +377,9 @@
         _settings = {};
       }
       settings = {
-        params: $.extend({}, this.constantParams, params)
+        params: Utils$1.extend({}, this.constantParams, params)
       };
-      $.extend(settings, _settings);
+      Utils$1.extend(settings, _settings);
       return APIPageable.__super__.get.call(this, settings);
     };
 
@@ -289,12 +400,6 @@
 
   var APIPageable$1 = APIPageable;
 
-  var throwUnlessId = function(id, name) {
-    if (id == null) {
-      throw new Error(name + ' id must be provided!');
-    }
-  };
-
   var Device,
     extend$3 = function(child, parent) { for (var key in parent) { if (hasProp$3.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$3 = {}.hasOwnProperty;
@@ -304,7 +409,7 @@
 
     function Device(api, parent, id) {
       Device.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Device');
+      Utils$1.throwUnlessId(id, 'Device');
       this.pushSelector('devices', id);
     }
 
@@ -316,7 +421,7 @@
 
     Device.prototype.property = function(id) {
       var a;
-      throwUnlessId(id, 'Device Property');
+      Utils$1.throwUnlessId(id, 'Device Property');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('properties', id);
     };
@@ -329,7 +434,7 @@
 
     Device.prototype.label = function(id) {
       var a;
-      throwUnlessId(id, 'Device Label');
+      Utils$1.throwUnlessId(id, 'Device Label');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('labels', id);
     };
@@ -355,7 +460,7 @@
 
     function DeviceGroup(api, parent, id) {
       DeviceGroup.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'DeviceGroup');
+      Utils$1.throwUnlessId(id, 'DeviceGroup');
       this.pushSelector('device-groups', id);
     }
 
@@ -377,7 +482,7 @@
 
     DeviceGroup.prototype.selector = function(id) {
       var a;
-      throwUnlessId(id, 'DeviceGroup Selector');
+      Utils$1.throwUnlessId(id, 'DeviceGroup Selector');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('selectors', id);
     };
@@ -412,7 +517,7 @@
       if (checkNull == null) {
         checkNull = false;
       }
-      if (!$.isArray(value)) {
+      if (!Array.isArray(value)) {
         value = [value];
       }
       if (value.length === 0) {
@@ -553,7 +658,7 @@
 
     function DeviceSession(api, parent, id) {
       DeviceSession.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'DeviceSession');
+      Utils$1.throwUnlessId(id, 'DeviceSession');
       this.pushSelector('device-sessions', id);
     }
 
@@ -625,7 +730,7 @@
 
     DeviceSession.prototype.screenshot = function(id) {
       var a;
-      throwUnlessId(id, 'DeviceSession Screenshot');
+      Utils$1.throwUnlessId(id, 'DeviceSession Screenshot');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('screenshots', id);
     };
@@ -704,7 +809,7 @@
 
     OutputFileset.prototype.note = function(id) {
       var a;
-      throwUnlessId(id, 'DeviceSession Note');
+      Utils$1.throwUnlessId(id, 'DeviceSession Note');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('notes', id);
     };
@@ -836,7 +941,7 @@
 
     function Run(api, parent, id) {
       Run.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Run');
+      Utils$1.throwUnlessId(id, 'Run');
       this.pushSelector('runs', id);
     }
 
@@ -858,7 +963,7 @@
 
     Run.prototype.tag = function(id) {
       var a;
-      throwUnlessId(id, 'Run Tag');
+      Utils$1.throwUnlessId(id, 'Run Tag');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('tags', id);
     };
@@ -887,7 +992,7 @@
 
     Run.prototype.videoRecording = function(id) {
       var a;
-      throwUnlessId(id, 'Run ScreenRecording');
+      Utils$1.throwUnlessId(id, 'Run ScreenRecording');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('video-recording', id);
     };
@@ -1016,7 +1121,7 @@
 
     function Project(api, parent, id) {
       Project.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Project');
+      Utils$1.throwUnlessId(id, 'Project');
       this.pushSelector('projects', id);
     }
 
@@ -1079,7 +1184,7 @@
 
     Project.prototype.sharing = function(id) {
       var a;
-      throwUnlessId(id, 'Project Sharing');
+      Utils$1.throwUnlessId(id, 'Project Sharing');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('sharings', id);
     };
@@ -1108,7 +1213,7 @@
 
     Project.prototype.runExtended = function(id) {
       var a;
-      throwUnlessId(id, 'Project RunExtended');
+      Utils$1.throwUnlessId(id, 'Project RunExtended');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('runs-extended', id);
     };
@@ -1127,7 +1232,7 @@
 
     Project.prototype.configParameter = function(id) {
       var a;
-      throwUnlessId(id, 'Project ConfigParameter');
+      Utils$1.throwUnlessId(id, 'Project ConfigParameter');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('config/parameters', id);
     };
@@ -1165,7 +1270,7 @@
 
     function FileSet(api, parent, id) {
       FileSet.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'FileSet');
+      Utils$1.throwUnlessId(id, 'FileSet');
       this.pushSelector('file-sets', id);
     }
 
@@ -1194,7 +1299,7 @@
 
     function BillingPeriod(api, parent, id) {
       BillingPeriod.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'BillingPeriod');
+      Utils$1.throwUnlessId(id, 'BillingPeriod');
       this.pushSelector('billing-periods', id);
     }
 
@@ -1221,7 +1326,7 @@
     function Purchased(api, parent, id) {
       this.receipt = bind$1(this.receipt, this);
       Purchased.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Purchased');
+      Utils$1.throwUnlessId(id, 'Purchased');
       this.pushSelector('purchased', id);
     }
 
@@ -1332,7 +1437,7 @@
 
     function Service(api, parent, id) {
       Service.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Service');
+      Utils$1.throwUnlessId(id, 'Service');
       this.pushSelector('services', id);
     }
 
@@ -1380,7 +1485,7 @@
 
     Account.prototype.service = function(id) {
       var a;
-      throwUnlessId(id, 'Account Services');
+      Utils$1.throwUnlessId(id, 'Account Services');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('services', id);
     };
@@ -1393,7 +1498,7 @@
 
     Account.prototype.role = function(id) {
       var a;
-      throwUnlessId(id, 'Account Roles');
+      Utils$1.throwUnlessId(id, 'Account Roles');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('roles', id);
     };
@@ -1406,7 +1511,7 @@
 
     Account.prototype.additionalUser = function(id) {
       var a;
-      throwUnlessId(id, 'Account Additional User');
+      Utils$1.throwUnlessId(id, 'Account Additional User');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('additional-users', id);
     };
@@ -1457,7 +1562,7 @@
 
     function Notification(api, parent, id) {
       Notification.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Notification');
+      Utils$1.throwUnlessId(id, 'Notification');
       this.pushSelector('notifications', id);
     }
 
@@ -1482,7 +1587,7 @@
 
     function Build(api, parent, id) {
       Build.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Build');
+      Utils$1.throwUnlessId(id, 'Build');
       this.pushSelector('builds', id);
     }
 
@@ -1507,7 +1612,7 @@
 
     function Job(api, parent, id) {
       Job.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Job');
+      Utils$1.throwUnlessId(id, 'Job');
       this.pushSelector('jobs', id);
     }
 
@@ -1542,7 +1647,7 @@
 
     function User(api, parent, id) {
       User.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'User');
+      Utils$1.throwUnlessId(id, 'User');
       if (id === 'me') {
         this.pushSelector('me');
       } else {
@@ -1678,7 +1783,7 @@
 
     User.prototype.receipt = function(id) {
       var a;
-      throwUnlessId(id, 'User Receipt');
+      Utils$1.throwUnlessId(id, 'User Receipt');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('receipts', id);
     };
@@ -1762,7 +1867,7 @@
 
     Devices.prototype.cleanupConfiguration = function(id) {
       var a;
-      throwUnlessId(id, 'Devices CleanupConfiguration');
+      Utils$1.throwUnlessId(id, 'Devices CleanupConfiguration');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('cleanup-configurations', id);
     };
@@ -1782,7 +1887,7 @@
 
     function Label(api, parent, id) {
       Label.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'Label');
+      Utils$1.throwUnlessId(id, 'Label');
       this.pushSelector('labels', id);
     }
 
@@ -1794,7 +1899,7 @@
 
     Label.prototype.device = function(id) {
       var a;
-      throwUnlessId(id, 'Label Device');
+      Utils$1.throwUnlessId(id, 'Label Device');
       a = new APIResource$1(this.api, this);
       return a.pushSelector('devices', id);
     };
@@ -1814,7 +1919,7 @@
 
     function LabelGroup(api, parent, id) {
       LabelGroup.__super__.constructor.call(this, api, parent);
-      throwUnlessId(id, 'LabelGroup');
+      Utils$1.throwUnlessId(id, 'LabelGroup');
       this.pushSelector('label-groups', id);
     }
 
@@ -1847,7 +1952,7 @@
     }
 
     Properties.prototype.appBan = function(id) {
-      throwUnlessId(id, 'Property AppBan');
+      Utils$1.throwUnlessId(id, 'Property AppBan');
       this.pushSelector('app-bans');
       return this.setConstantParams({
         testRunId: id
@@ -1889,168 +1994,369 @@
 
   var UserSession$1 = UserSession;
 
-  var API;
+  var TestdroidCloudAPIClient;
 
-  API = (function() {
-    function API() {}
+  TestdroidCloudAPIClient = (function() {
+    function TestdroidCloudAPIClient(config) {
+      this.config = {
+        cloudUrl: null,
+        driver: null
+      };
+      this.setup(config);
+    }
 
-    API.prototype.user = function(id) {
+    TestdroidCloudAPIClient.prototype.setup = function(config) {
+      return Utils$1.extend(this.config, config);
+    };
+
+    TestdroidCloudAPIClient.prototype.getUrl = function(resource, settings) {
+      return Utils$1.getUrl.call(this, resource, settings, this.config.cloudUrl);
+    };
+
+    TestdroidCloudAPIClient.prototype.request = function(resource, method, settings, dfd) {
+      var _settings, cacheId, cacheTTL, contentType, ref, req, storedData;
+      if (settings == null) {
+        settings = {};
+      }
+      if (dfd == null) {
+        dfd = $.Deferred();
+      }
+      contentType = Utils$1.isJSONString(settings.data) ? 'application/json' : 'application/x-www-form-urlencoded; charset=UTF-8';
+      _settings = {
+        method: method,
+        data: settings.data,
+        dataType: settings.dataType,
+        contentType: contentType,
+        timeout: settings.timeout,
+        params: settings.params
+      };
+      if ((typeof FormData !== "undefined" && FormData !== null) && _settings.data instanceof FormData) {
+        _settings.contentType = false;
+        _settings.processData = false;
+      }
+      _settings.dfd = dfd;
+      _settings.xhr = this._xhrHandlerFactory(_settings);
+      _settings.success = this._successHandlerFactory(resource, _settings);
+      _settings.error = this._errorHandlerFactory(resource, _settings);
+      if (_settings.method === 'GET' && ((ref = _settings.params) != null ? ref.cacheTTL : void 0) > 0) {
+        cacheId = 'GET ' + app.ctx.service.ajax.getUrl(resource, _settings) + ' ' + _settings.contentType;
+        cacheTTL = _settings.params.cacheTTL;
+        if (Cache.isStored(cacheId)) {
+          storedData = Cache.get(cacheId);
+          if (isPromise(storedData)) {
+            dfd = storedData;
+          } else {
+            dfd.resolve.apply(this, storedData);
+          }
+          return dfd;
+        } else {
+          Cache.set(cacheId, dfd, cacheTTL);
+          (function(cacheId, cacheTTL) {
+            dfd.then(function() {
+              return Cache.set(cacheId, arguments, cacheTTL);
+            });
+            return dfd.fail(function() {
+              return Cache.remove(cacheId);
+            });
+          })(cacheId, cacheTTL);
+        }
+      }
+      req = app.ctx.service.ajax.request(resource, _settings);
+      dfd.abort = req.abort;
+      return dfd;
+    };
+
+    TestdroidCloudAPIClient.prototype.customRequest = function(resource, settings, dfd) {
+      if (settings == null) {
+        settings = {};
+      }
+      if (dfd == null) {
+        dfd = $.Deferred();
+      }
+      if (settings.uploadProgress == null) {
+        settings.uploadProgress = this._progressHandlerFactory(settings, dfd);
+      }
+      if (settings.success == null) {
+        settings.success = (function(_this) {
+          return function() {
+            return dfd.resolve.apply(_this, arguments);
+          };
+        })(this);
+      }
+      if (settings.error == null) {
+        settings.error = (function(_this) {
+          return function() {
+            return dfd.reject.apply(_this, arguments);
+          };
+        })(this);
+      }
+      settings.xhr = (function(_this) {
+        return function() {
+          var xhr;
+          xhr = new window.XMLHttpRequest();
+          if (settings.method === 'POST') {
+            xhr.upload.addEventListener('progress', _this._progressHandlerFactory(settings, dfd));
+          } else {
+            xhr.addEventListener('progress', _this._progressHandlerFactory(settings, dfd));
+          }
+          return xhr;
+        };
+      })(this);
+      app.ctx.service.ajax.request(resource, settings);
+      return dfd;
+    };
+
+    TestdroidCloudAPIClient.prototype._xhrHandlerFactory = function(settings) {
+      return (function(_this) {
+        return function() {
+          var xhr;
+          xhr = new window.XMLHttpRequest();
+          if (settings.method === 'POST') {
+            xhr.upload.addEventListener('progress', _this._progressHandlerFactory(settings));
+          } else {
+            xhr.addEventListener('progress', _this._progressHandlerFactory(settings));
+          }
+          return xhr;
+        };
+      })(this);
+    };
+
+    TestdroidCloudAPIClient.prototype._progressHandlerFactory = function(settings) {
+      return function(e) {
+        return settings.dfd.notify({
+          type: settings.method === 'POST' ? 'upload' : 'download',
+          computable: e.lengthComputable,
+          totalBytes: e.total,
+          loadedBytes: e.loaded,
+          loadedPercent: e.lengthComputable ? parseFloat(e.loaded / e.total * 100) : void 0
+        });
+      };
+    };
+
+    TestdroidCloudAPIClient.prototype._errorHandlerFactory = function(resource, settings) {
+      return (function(_this) {
+        return function(xhr, status) {
+          if (arguments.length > 1) {
+            if (xhr.status === 401) {
+              app.ctx.service.auth.reAuthorize(function() {
+                return _this.request(resource, settings.method, settings, settings.dfd);
+              });
+            } else if (xhr.status === 404) {
+              settings.dfd.reject(xhr, status);
+            } else {
+              $console.warn(_this._getRequestLog(xhr, settings.method, resource));
+              $console.warn('Request settings:', settings);
+              settings.dfd.reject(xhr, status);
+            }
+          } else {
+            $console.warn('Trying to re-authorize...');
+            app.ctx.service.auth.reAuthorize(function() {
+              return _this.request(resource, settings.method, settings, settings.dfd);
+            });
+          }
+        };
+      })(this);
+    };
+
+    TestdroidCloudAPIClient.prototype._successHandlerFactory = function(resource, settings) {
+      return (function(_this) {
+        return function(data, status, xhr) {
+          var info;
+          if (data instanceof XMLDocument) {
+            return requirejs(['x2js'], function(X2JS) {
+              var obj;
+              if (_this._xml2json == null) {
+                _this._xml2json = new X2JS();
+              }
+              obj = _this._xml2json.xml2json(data);
+              obj = obj[Object.keys(obj)[0]];
+              return settings.dfd.resolve(obj, {
+                status: status,
+                apiHandler: 'form'
+              });
+            });
+          } else {
+            info = {};
+            info.status = status;
+            info.apiHandler = 'json';
+            if (settings.method === 'GET') {
+              info.offset = data.offset;
+              info.limit = data.limit;
+              info.total = data.total;
+              info.search = data.search;
+              info.sort = data.sort;
+              info.size = xhr.getResponseHeader('Content-Length');
+              if (data.data && (data.total != null)) {
+                data = data.data;
+              }
+            }
+            return settings.dfd.resolve(data, info);
+          }
+        };
+      })(this);
+    };
+
+    TestdroidCloudAPIClient.prototype._getRequestLog = function(xhr, method, resource) {
+      return "HTTP " + method + " status " + xhr.status + " (" + xhr.statusText + ")\n Resource: " + resource + "\nResponse: " + xhr.responseText;
+    };
+
+    TestdroidCloudAPIClient.prototype.user = function(id) {
       return new User$1(this, null, id);
     };
 
-    API.prototype.me = function() {
+    TestdroidCloudAPIClient.prototype.me = function() {
       return new User$1(this, void 0, 'me');
     };
 
-    API.prototype.admin = function() {
+    TestdroidCloudAPIClient.prototype.admin = function() {
       return new Admin(this);
     };
 
-    API.prototype.devices = function() {
+    TestdroidCloudAPIClient.prototype.devices = function() {
       return new Devices$1(this);
     };
 
-    API.prototype.device = function(id) {
+    TestdroidCloudAPIClient.prototype.device = function(id) {
       return new Device$1(this, null, id);
     };
 
-    API.prototype.files = function() {
+    TestdroidCloudAPIClient.prototype.files = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('files');
     };
 
-    API.prototype.file = function(id) {
+    TestdroidCloudAPIClient.prototype.file = function(id) {
       return new File$1(this, null, id);
     };
 
-    API.prototype.filesets = function() {
+    TestdroidCloudAPIClient.prototype.filesets = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('file-sets');
     };
 
-    API.prototype.fileset = function(id) {
+    TestdroidCloudAPIClient.prototype.fileset = function(id) {
       return new FileSet$1(this, null, id);
     };
 
-    API.prototype.runsConfig = function() {
+    TestdroidCloudAPIClient.prototype.runsConfig = function() {
       var a;
       a = new APIResource$1(this);
       a.pushSelector('runs');
       return a.pushSelector('config');
     };
 
-    API.prototype.runs = function() {
+    TestdroidCloudAPIClient.prototype.runs = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('runs');
     };
 
-    API.prototype.run = function(id) {
+    TestdroidCloudAPIClient.prototype.run = function(id) {
       return new Run$1(this, null, id);
     };
 
-    API.prototype.projects = function() {
+    TestdroidCloudAPIClient.prototype.projects = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('projects');
     };
 
-    API.prototype.project = function(id) {
+    TestdroidCloudAPIClient.prototype.project = function(id) {
       return new Project$1(this, null, id);
     };
 
-    API.prototype.labelGroups = function() {
+    TestdroidCloudAPIClient.prototype.labelGroups = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('label-groups');
     };
 
-    API.prototype.labelGroup = function(id) {
+    TestdroidCloudAPIClient.prototype.labelGroup = function(id) {
       return new LabelGroup$1(this, null, id);
     };
 
-    API.prototype.deviceStatuses = function() {
+    TestdroidCloudAPIClient.prototype.deviceStatuses = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('device-status');
     };
 
-    API.prototype.deviceStatus = function(id) {
+    TestdroidCloudAPIClient.prototype.deviceStatus = function(id) {
       var a;
-      throwUnlessId(id, 'Device Status');
+      Utils$1.throwUnlessId(id, 'Device Status');
       a = new APIResource$1(this);
       return a.pushSelector('device-status', id);
     };
 
-    API.prototype.property = function(id) {
+    TestdroidCloudAPIClient.prototype.property = function(id) {
       var a;
-      throwUnlessId(id, 'Properties');
+      Utils$1.throwUnlessId(id, 'Properties');
       a = new APIResource$1(this, void 0);
       return a.pushSelector('properties', id);
     };
 
-    API.prototype.properties = function() {
+    TestdroidCloudAPIClient.prototype.properties = function() {
       return new Properties$1(this);
     };
 
-    API.prototype.services = function() {
+    TestdroidCloudAPIClient.prototype.services = function() {
       return new Services$1(this);
     };
 
-    API.prototype.filePath = function(id) {
+    TestdroidCloudAPIClient.prototype.filePath = function(id) {
       var a;
-      throwUnlessId(id, 'Files Path');
+      Utils$1.throwUnlessId(id, 'Files Path');
       a = new APIPageable$1(this);
       a.pushSelector('files', id);
       return a.pushSelector('file');
     };
 
-    API.prototype.deviceSessions = function() {
+    TestdroidCloudAPIClient.prototype.deviceSessions = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('device-sessions');
     };
 
-    API.prototype.deviceSession = function(id) {
+    TestdroidCloudAPIClient.prototype.deviceSession = function(id) {
       return new DeviceSession$1(this, null, id);
     };
 
-    API.prototype.sessions = function() {
+    TestdroidCloudAPIClient.prototype.sessions = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('sessions');
     };
 
-    API.prototype.deviceGroups = function() {
+    TestdroidCloudAPIClient.prototype.deviceGroups = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('device-groups');
     };
 
-    API.prototype.deviceGroup = function(id) {
+    TestdroidCloudAPIClient.prototype.deviceGroup = function(id) {
       return new DeviceGroup$1(this, null, id);
     };
 
-    API.prototype.userSessions = function() {
+    TestdroidCloudAPIClient.prototype.userSessions = function() {
       var a;
       a = new APIPageable$1(this);
       return a.pushSelector('user-session');
     };
 
-    API.prototype.userSession = function() {
+    TestdroidCloudAPIClient.prototype.userSession = function() {
       return new UserSession$1(this);
     };
 
-    API.prototype.license = function() {
+    TestdroidCloudAPIClient.prototype.license = function() {
       var a;
       a = new APIResource$1(this);
       a.cacheTTL = Date.ms.HOUR;
       return a.pushSelector('license');
     };
 
-    API.prototype.sso = function(name) {
+    TestdroidCloudAPIClient.prototype.sso = function(name) {
       var a;
       a = new APIResource$1(this);
       a.pushSelector('user-sessions');
@@ -2058,17 +2364,16 @@
       return a.getAbsoluteResourcePath();
     };
 
-    return API;
+    return TestdroidCloudAPIClient;
 
   })();
 
-  var API$1 = API;
+  var TestdroidCloudAPIClient$1 = TestdroidCloudAPIClient;
 
-  var Main = {
-    API: API$1,
-    FilterBuilder: FilterBuilder$1
-  };
+  TestdroidCloudAPIClient$1.Utils = Utils$1;
 
-  return Main;
+  TestdroidCloudAPIClient$1.FilterBuilder = FilterBuilder$1;
+
+  return TestdroidCloudAPIClient$1;
 
 })));

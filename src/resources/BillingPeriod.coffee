@@ -1,11 +1,11 @@
 import APIResource from './APIResource'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class BillingPeriod extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'BillingPeriod')
+    Utils.throwUnlessId(id, 'BillingPeriod')
     @pushSelector('billing-periods', id)
 
   receipt: ->

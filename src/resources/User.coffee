@@ -15,12 +15,12 @@ import Notifications from './Notifications'
 import Notification from './Notification'
 import Job from './Job'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class User extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'User')
+    Utils.throwUnlessId(id, 'User')
 
     if id is 'me'
       @pushSelector('me')
@@ -108,7 +108,7 @@ class User extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('receipts')
   receipt: (id) ->
-    throwUnlessId(id, 'User Receipt')
+    Utils.throwUnlessId(id, 'User Receipt')
     a = new APIResource(@api, this)
     a.pushSelector('receipts', id)
 

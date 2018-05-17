@@ -3,7 +3,7 @@ import APIResource from './APIResource'
 
 import Services from './Services'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class Account extends APIPageable
   constructor: (api, parent) ->
@@ -13,7 +13,7 @@ class Account extends APIPageable
   services: ->
     new Services(@api, this)
   service: (id) ->
-    throwUnlessId(id, 'Account Services')
+    Utils.throwUnlessId(id, 'Account Services')
     a = new APIResource(@api, this)
     a.pushSelector('services', id)
 
@@ -21,7 +21,7 @@ class Account extends APIPageable
     a = new APIPageable(@api, this)
     a.pushSelector('roles')
   role: (id) ->
-    throwUnlessId(id, 'Account Roles')
+    Utils.throwUnlessId(id, 'Account Roles')
     a = new APIResource(@api, this)
     a.pushSelector('roles', id)
 
@@ -29,7 +29,7 @@ class Account extends APIPageable
     a = new APIPageable(@api, this)
     a.pushSelector('additional-users')
   additionalUser: (id) ->
-    throwUnlessId(id, 'Account Additional User')
+    Utils.throwUnlessId(id, 'Account Additional User')
     a = new APIResource(@api, this)
     a.pushSelector('additional-users', id)
 

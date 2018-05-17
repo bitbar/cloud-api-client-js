@@ -4,12 +4,12 @@ import APIPageable from './APIPageable'
 import File from './File'
 import DeviceSession from './DeviceSession'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class Run extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'Run')
+    Utils.throwUnlessId(id, 'Run')
     @pushSelector('runs', id)
 
   files: ->
@@ -22,7 +22,7 @@ class Run extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('tags')
   tag: (id) ->
-    throwUnlessId(id, 'Run Tag')
+    Utils.throwUnlessId(id, 'Run Tag')
     a = new APIResource(@api, this)
     a.pushSelector('tags', id)
 
@@ -41,7 +41,7 @@ class Run extends APIResource
     a.pushSelector('changepriority')
 
   videoRecording: (id) ->
-    throwUnlessId(id, 'Run ScreenRecording')
+    Utils.throwUnlessId(id, 'Run ScreenRecording')
     a = new APIResource(@api, this)
     a.pushSelector('video-recording', id)
 

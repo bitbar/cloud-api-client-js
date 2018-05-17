@@ -20,7 +20,9 @@ var config = {
           + ' | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */'
   },
 
-  extensions: ['.js', '.coffee']
+  extensions: ['.js', '.coffee'],
+
+  external: Object.keys($package.dependencies || [])
 };
 
 // Export
@@ -44,7 +46,9 @@ export default [
       commonjs({
         extensions: config.extensions
       })
-    ]
+    ],
+
+    external: config.external
   },
 
   // Compressed config
@@ -71,6 +75,8 @@ export default [
           comments: 'all'
         }
       })
-    ]
+    ],
+
+    external: config.external
   }
 ]

@@ -1,7 +1,9 @@
-import API from './API'
-import FilterBuilder from './FilterBuilder'
+import TestdroidCloudAPIClient from './TestdroidCloudAPIClient'
 
-export default {
-  API: API
-  FilterBuilder: FilterBuilder
-}
+import FilterBuilder from './FilterBuilder'
+import Utils from './Utils'
+
+TestdroidCloudAPIClient.Utils = Utils
+TestdroidCloudAPIClient.FilterBuilder = FilterBuilder
+
+export default TestdroidCloudAPIClient

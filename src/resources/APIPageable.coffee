@@ -1,12 +1,14 @@
 import APIAbstractResource from './APIAbstractResource'
 
+import Utils from '../Utils'
+
 class APIPageable extends APIAbstractResource
 
   get: (params = {}, _settings = {}) ->
     settings = {
-      params: $.extend({}, @constantParams, params)
+      params: Utils.extend({}, @constantParams, params)
     }
-    $.extend(settings, _settings)
+    Utils.extend(settings, _settings)
     super(settings)
 
   create: (data, params = {}) ->

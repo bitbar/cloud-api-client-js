@@ -3,12 +3,12 @@ import APIPageable from './APIPageable'
 
 import File from './File'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class FileSet extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'FileSet')
+    Utils.throwUnlessId(id, 'FileSet')
     @pushSelector('file-sets', id)
 
   files: ->

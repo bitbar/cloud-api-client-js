@@ -1,3 +1,5 @@
+import Utils from '../Utils'
+
 class APIAbstractResource extends Array
 
   # Constant params
@@ -60,17 +62,13 @@ class APIAbstractResource extends Array
 
   # Get absolute resource path
   getAbsoluteResourcePath: =>
-    app.env.apiUrl + @getResourcePath()
+    @api.config.cloudUrl + @getResourcePath()
 
   # Get URL
   getUrl: (params = {}) ->
-    app.ctx.service.ajax.getUrl(@getResourcePath(), {
+    @api.getUrl(@getResourcePath(), {
       params: params
     })
-
-  # Open URL
-  openUrl: ->
-    window.open(@getUrl(), '_blank')
 
   #</editor-fold>
 
@@ -83,25 +81,21 @@ class APIAbstractResource extends Array
       settings ?= {}
       settings.dataType = @dataType
 
-    promise = new $.Deferred()
+    promise = new Promise()
     promise.then(@executeHooks)
 
-    settings = $.extend(true, { params: @constantParams }, settings)
+    settings = Utils.extend({ params: @constantParams }, settings)
     settings.params.cacheTTL = @cacheTTL
 
-    if @api?.request?
-      @api.request(@getResourcePath(), 'GET', settings, promise)
-    else
-      $console.error new Error('API CALL IS NOT A FUNCTION!!!')
-      false
+    @api.request(@getResourcePath(), 'GET', settings, promise)
 
   # GET (custom)
   getCustom: (params = {}, _settings = {}) ->
     settings = {
       method: 'GET'
-      params: $.extend({}, @constantParams, params),
+      params: Utils.extend({}, @constantParams, params),
     }
-    $.extend(true, settings, _settings)
+    Utils.extend(settings, _settings)
     @api.customRequest(@getResourcePath(), settings)
 
   # POST
@@ -115,7 +109,7 @@ class APIAbstractResource extends Array
       data: data
       params: @constantParams
     }
-    $.extend(true, settings, _settings)
+    Utils.extend(settings, _settings)
     @_post(settings)
 
   # UPDATE
@@ -190,7 +184,7 @@ class APIAbstractResource extends Array
 
   # Set constant params
   setConstantParams: (params) ->
-    $.extend(@constantParams, params)
+    Utils.extend(@constantParams, params)
     this
 
 

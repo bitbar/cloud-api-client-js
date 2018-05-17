@@ -1,12 +1,12 @@
 import APIResource from './APIResource'
 import APIPageable from './APIPageable'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class Service extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'Service')
+    Utils.throwUnlessId(id, 'Service')
     @pushSelector('services', id)
 
   activate: (data) ->

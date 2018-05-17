@@ -3,12 +3,12 @@ import APIPageable from './APIPageable'
 
 import Device from './Device'
 
-import { throwUnlessId } from '../Utils'
+import Utils from '../Utils'
 
 class DeviceGroup extends APIResource
   constructor: (api, parent, id) ->
     super(api, parent)
-    throwUnlessId(id, 'DeviceGroup')
+    Utils.throwUnlessId(id, 'DeviceGroup')
     @pushSelector('device-groups', id)
 
   devices: ->
@@ -21,7 +21,7 @@ class DeviceGroup extends APIResource
     a = new APIPageable(@api, this)
     a.pushSelector('selectors')
   selector: (id) ->
-    throwUnlessId(id, 'DeviceGroup Selector')
+    Utils.throwUnlessId(id, 'DeviceGroup Selector')
     a = new APIResource(@api, this)
     a.pushSelector('selectors', id)
 

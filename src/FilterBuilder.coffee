@@ -24,7 +24,7 @@ class FilterBuilder
   # Add filter to list
   # @private
   _add: (name, value, operand, type, checkNull = false) ->
-    unless $.isArray(value)
+    unless Array.isArray(value)
       value = [value]
 
     if value.length is 0
