@@ -31,7 +31,7 @@ describe('testdroid-api-client-js', function() {
     // getUrl
     it('getUrl is working', function() {
       assert.strictEqual(
-        client.getUrl('api/test'),
+        client.getUrl('/api/test'),
         'https://cloud.bitbar.com/api/test'
       );
     });
@@ -69,7 +69,31 @@ describe('testdroid-api-client-js', function() {
       );
     });
 
+  });
 
+  // API
+  describe('API', function() {
+
+    var projects = client.me().projects();
+
+    // getAbsoluteResourcePath
+    it('getAbsoluteResourcePath', function() {
+      assert.strictEqual(
+        projects.getAbsoluteResourcePath(),
+        'https://cloud.bitbar.com/me/projects'
+      );
+    });
+
+    // getUrl
+    it('getUrl', function() {
+      assert.strictEqual(
+        projects.getUrl({
+          sort: 'displayName_a',
+          filter: 's_type_eq_GENERIC'
+        }),
+        'https://cloud.bitbar.com/me/projects?sort=displayName_a&filter=s_type_eq_GENERIC'
+      );
+    });
 
   });
 

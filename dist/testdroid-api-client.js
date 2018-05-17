@@ -1,4 +1,4 @@
-/* Testdroid Cloud API Client for JavaScript v0.2.0-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.2.1-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -2006,7 +2006,12 @@
     }
 
     TestdroidCloudAPIClient.prototype.setup = function(config) {
-      return Utils$1.extend(this.config, config);
+      Utils$1.extend(this.config, config);
+      if ((this.config.cloudUrl != null) && typeof this.config.cloudUrl === 'string' && this.config.cloudUrl.length > 1) {
+        this.config.cloudUrl = this.config.cloudUrl.replace(/\/+$/, '');
+      } else {
+        throw 'Invalid cloudUrl';
+      }
     };
 
     TestdroidCloudAPIClient.prototype.getUrl = function(resource, settings) {

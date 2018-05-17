@@ -23,7 +23,7 @@ class TestdroidCloudAPIClient
   # Constructor
   constructor: (config) ->
     @config = {
-      # Cloud URL with a trailing slash
+      # Cloud URL without a trailing slash
       cloudUrl: null,
 
       # Which driver to call resources should be used:
@@ -38,18 +38,17 @@ class TestdroidCloudAPIClient
     Utils.extend(@config, config)
 
     # Validate and correct cloudUrl if needed
-    if config.cloudUrl? and typeof config.clourUrl is 'string' and config.clourUrl.length > 1
-      if config.cloudUrl.substr(-1) isnt '/'
-        config.cloudUrl += '/'
+    if @config.cloudUrl? and typeof @config.cloudUrl is 'string' and @config.cloudUrl.length > 1
+      @config.cloudUrl = @config.cloudUrl.replace(/\/+$/, '')
     else
       throw 'Invalid cloudUrl'
 
     return
 
-
   # getUrl
   getUrl: (resource, settings) ->
     Utils.getUrl.call(this, resource, settings, @config.cloudUrl)
+  
 
   #<editor-fold defaultstate="collapsed" desc="Requests">
 
