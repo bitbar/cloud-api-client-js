@@ -81,13 +81,12 @@ class APIAbstractResource extends Array
       settings ?= {}
       settings.dataType = @dataType
 
-    promise = new Promise()
-    promise.then(@executeHooks)
-
     settings = Utils.extend({ params: @constantParams }, settings)
     settings.params.cacheTTL = @cacheTTL
 
-    @api.request(@getResourcePath(), 'GET', settings, promise)
+    promise = @api.request(@getResourcePath(), 'GET', settings)
+    promise.then(@executeHooks)
+    promise
 
   # GET (custom)
   getCustom: (params = {}, _settings = {}) ->

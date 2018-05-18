@@ -1,4 +1,4 @@
-/* Testdroid Cloud API Client for JavaScript v0.2.1-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.2.2-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -196,13 +196,13 @@
         }
         settings.dataType = this.dataType;
       }
-      promise = new Promise();
-      promise.then(this.executeHooks);
       settings = Utils$1.extend({
         params: this.constantParams
       }, settings);
       settings.params.cacheTTL = this.cacheTTL;
-      return this.api.request(this.getResourcePath(), 'GET', settings, promise);
+      promise = this.api.request(this.getResourcePath(), 'GET', settings);
+      promise.then(this.executeHooks);
+      return promise;
     };
 
     APIAbstractResource.prototype.getCustom = function(params, _settings) {
