@@ -1,4 +1,4 @@
-/* Testdroid Cloud API Client for JavaScript v0.4.1-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.5.0-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -169,6 +169,21 @@
       return this;
     };
 
+    APIEntity.prototype.headers = function(headers) {
+      var _headers, key, newKey, value;
+      _headers = {};
+      for (key in headers) {
+        value = headers[key];
+        newKey = key.replace(/(?:^|-)([a-z])/g, function(letter) {
+          return letter.toUpperCase();
+        });
+        _headers[newKey] = value;
+      }
+      return this.config({
+        headers: _headers
+      });
+    };
+
     APIEntity.prototype.method = function(name) {
       if (indexOf.call(ALLOWED_HTTP_METHODS, name) < 0) {
         throw new Error("Method '" + name + "' is not allowed! You can use: " + (ALLOWED_HTTP_METHODS.join(', ')));
@@ -202,6 +217,13 @@
       Utils$1.extend(this._config, {
         data: data
       });
+      return this;
+    };
+
+    APIEntity.prototype.jsonData = function(data) {
+      this.headers({
+        'Content-Type': 'application/json'
+      }).data(data);
       return this;
     };
 
@@ -1541,13 +1563,15 @@
 
   var APIResourceUserSession$1 = APIResourceUserSession;
 
-  var version = "0.4.1-beta";
+  var version = "0.5.0-beta";
 
   var API, axios;
 
   axios = require('axios');
 
   axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version;
+
+  axios.defaults.maxContentLength = 1073741824;
 
   API = (function() {
     API.prototype.root = true;

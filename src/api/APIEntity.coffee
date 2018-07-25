@@ -81,6 +81,23 @@ class APIEntity
     delete @_config[key]
     this
 
+  # Set headers
+  #
+  # @public
+  # @param {Object} headers - Headers object
+  # @returns this
+  headers: (headers) ->
+    _headers = {}
+    # Unify headers
+    for key, value of headers
+      newKey = key.replace(/(?:^|-)([a-z])/g, (letter) -> letter.toUpperCase())
+      _headers[newKey] = value
+
+    # Set
+    @config({
+      headers: _headers
+    })
+
   # Set HTTP method
   #
   # @public
@@ -137,6 +154,17 @@ class APIEntity
     Utils.extend(@_config, {
       data: data
     })
+    this
+
+  # Set JSON data
+  #
+  # @public
+  # @param {Object} data - JSON Object to be set
+  # @returns this
+  jsonData: (data) ->
+    @headers({
+      'Content-Type': 'application/json'
+    }).data(data)
     this
 
   # Send request

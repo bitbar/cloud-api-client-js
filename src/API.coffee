@@ -23,6 +23,9 @@ import {version} from '../package.json'
 # Set User-Agent
 axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version
 
+# Disable max content length
+axios.defaults.maxContentLength = 1073741824 # 1GB
+
 
 # API
 # Root for other API resources
