@@ -1,4 +1,4 @@
-/* Testdroid Cloud API Client for JavaScript v0.2.2-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.3.0-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -8,17 +8,6 @@
   var Utils, buildParams;
 
   Utils = {};
-
-
-  /*
-    Throw error if id is not set
-   */
-
-  Utils.throwUnlessId = function(id, name) {
-    if (id == null) {
-      throw new Error(name + ' id must be provided!');
-    }
-  };
 
 
   /*
@@ -125,373 +114,87 @@
 
   var Utils$1 = Utils;
 
-  var APIAbstractResource,
-    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
+  var ALLOWED_HTTP_METHODS, APIEntity,
+    slice = [].slice,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  APIAbstractResource = (function(superClass) {
-    extend(APIAbstractResource, superClass);
+  ALLOWED_HTTP_METHODS = ['GET', 'POST', 'DELETE'];
 
-    APIAbstractResource.prototype.constantParams = null;
+  APIEntity = (function() {
+    APIEntity.prototype._stack = null;
 
-    APIAbstractResource.prototype._hooks = null;
+    APIEntity.prototype._config = null;
 
-    APIAbstractResource.prototype.cacheTTL = 0;
-
-    function APIAbstractResource(api, parent, dataType) {
-      this.api = api;
-      this.dataType = dataType;
-      this.executeHooks = bind(this.executeHooks, this);
-      this.clearHooks = bind(this.clearHooks, this);
-      this.addHook = bind(this.addHook, this);
-      this.getAbsoluteResourcePath = bind(this.getAbsoluteResourcePath, this);
+    function APIEntity(parent) {
+      this._stack = [];
+      this._config = {};
       if (parent != null) {
-        this.pushSelector(parent.getSelector());
+        this.push.apply(this, parent._stack);
+        this.config(parent._config);
       }
-      this.constantParams = {};
-      this._hooks = [];
-      return;
     }
 
-    APIAbstractResource.prototype.pushSelector = function(selector, id) {
-      var i, len, r, res;
-      if (id != null) {
-        selector += '#' + id;
-      }
-      res = selector.split(/\s+/g);
-      for (i = 0, len = res.length; i < len; i++) {
-        r = res[i];
-        this.push(r);
+    APIEntity.prototype.push = function() {
+      var i, item, items, len;
+      items = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      for (i = 0, len = items.length; i < len; i++) {
+        item = items[i];
+        this._stack.push(item);
       }
       return this;
     };
 
-    APIAbstractResource.prototype.getSelector = function() {
-      return this.join(' ');
+    APIEntity.prototype.config = function(config) {
+      Utils$1.extend(this._config, config);
+      return this;
     };
 
-    APIAbstractResource.prototype.getResourcePath = function() {
-      return '/' + this.join('/').replace(/#/g, '/');
+    APIEntity.prototype.removeConfig = function(key) {
+      delete this._config[key];
+      return this;
     };
 
-    APIAbstractResource.prototype.getAbsoluteResourcePath = function() {
-      return this.api.config.cloudUrl + this.getResourcePath();
-    };
-
-    APIAbstractResource.prototype.getUrl = function(params) {
-      if (params == null) {
-        params = {};
+    APIEntity.prototype.method = function(name) {
+      if (indexOf.call(ALLOWED_HTTP_METHODS, name) < 0) {
+        throw new Error("Method '" + name + "' is not allowed! You can use: " + (ALLOWED_HTTP_METHODS.join(', ')));
       }
-      return this.api.getUrl(this.getResourcePath(), {
+      return this.config({
+        method: name
+      });
+    };
+
+    APIEntity.prototype.get = function() {
+      return this.method('GET');
+    };
+
+    APIEntity.prototype.post = function() {
+      return this.method('POST');
+    };
+
+    APIEntity.prototype.params = function(params) {
+      Utils$1.extend(this._config, {
         params: params
       });
-    };
-
-    APIAbstractResource.prototype.get = function(settings) {
-      var promise;
-      if ((this.dataType != null) && !((settings != null ? settings.dataType : void 0) != null)) {
-        if (settings == null) {
-          settings = {};
-        }
-        settings.dataType = this.dataType;
-      }
-      settings = Utils$1.extend({
-        params: this.constantParams
-      }, settings);
-      settings.params.cacheTTL = this.cacheTTL;
-      promise = this.api.request(this.getResourcePath(), 'GET', settings);
-      promise.then(this.executeHooks);
-      return promise;
-    };
-
-    APIAbstractResource.prototype.getCustom = function(params, _settings) {
-      var settings;
-      if (params == null) {
-        params = {};
-      }
-      if (_settings == null) {
-        _settings = {};
-      }
-      settings = {
-        method: 'GET',
-        params: Utils$1.extend({}, this.constantParams, params)
-      };
-      Utils$1.extend(settings, _settings);
-      return this.api.customRequest(this.getResourcePath(), settings);
-    };
-
-    APIAbstractResource.prototype._post = function(settings) {
-      return this.api.request(this.getResourcePath(), 'POST', settings);
-    };
-
-    APIAbstractResource.prototype.post = function(data, _settings) {
-      var settings;
-      if (_settings == null) {
-        _settings = {};
-      }
-      settings = {
-        data: data,
-        params: this.constantParams
-      };
-      Utils$1.extend(settings, _settings);
-      return this._post(settings);
-    };
-
-    APIAbstractResource.prototype.update = function(data) {
-      return this.post(data);
-    };
-
-    APIAbstractResource.prototype["delete"] = function(settings) {
-      return this.api.request(this.getResourcePath(), 'DELETE', settings);
-    };
-
-    APIAbstractResource.prototype.addHook = function(hook) {
-      this._hooks.push(hook);
       return this;
     };
 
-    APIAbstractResource.prototype.clearHooks = function() {
-      this._hooks = [];
+    APIEntity.prototype.removeParam = function(key) {
+      delete this._config.params[key];
       return this;
     };
 
-    APIAbstractResource.prototype.executeHooks = function(items) {
-      var hook;
-      while (this._hooks.length > 0) {
-        hook = this._hooks.shift();
-        hook(items);
-      }
-    };
-
-    APIAbstractResource.prototype.downloadCustom = function(params, options, filename, ext, pleaseWait) {
-      var _filename, dfd, self;
-      if (filename == null) {
-        filename = null;
-      }
-      if (ext == null) {
-        ext = null;
-      }
-      if (pleaseWait == null) {
-        pleaseWait = true;
-      }
-      dfd = this.getCustom(params, options);
-      if (pleaseWait) {
-        _filename = filename;
-        if (_filename == null) {
-          _filename = this.join('-').replace(/#/g, '-');
-        }
-        $.pleaseWork(dfd, 'Downloading ' + _filename);
-      }
-      self = this;
-      requirejs(['helpers/DownloadData'], function(DownloadData) {
-        return dfd.then(DownloadData.call(self, filename, ext));
+    APIEntity.prototype.data = function(data) {
+      Utils$1.extend(this._config, {
+        data: data
       });
-      return dfd;
-    };
-
-    APIAbstractResource.prototype.downloadBinary = function(filename, ext, pleaseWait) {
-      if (filename == null) {
-        filename = null;
-      }
-      if (ext == null) {
-        ext = null;
-      }
-      if (pleaseWait == null) {
-        pleaseWait = true;
-      }
-      return this.downloadCustom({}, {
-        dataType: 'binary',
-        processData: false
-      }, filename, ext, pleaseWait);
-    };
-
-    APIAbstractResource.prototype.downloadText = function(params, filename, ext, pleaseWait) {
-      if (params == null) {
-        params = {};
-      }
-      if (filename == null) {
-        filename = null;
-      }
-      if (ext == null) {
-        ext = null;
-      }
-      if (pleaseWait == null) {
-        pleaseWait = true;
-      }
-      return this.downloadCustom(params, {
-        dataType: 'text',
-        processData: false
-      }, filename, ext, pleaseWait);
-    };
-
-    APIAbstractResource.prototype.setConstantParams = function(params) {
-      Utils$1.extend(this.constantParams, params);
       return this;
     };
 
-    return APIAbstractResource;
+    return APIEntity;
 
-  })(Array);
+  })();
 
-  var APIAbstractResource$1 = APIAbstractResource;
-
-  var APIResource,
-    extend$1 = function(child, parent) { for (var key in parent) { if (hasProp$1.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$1 = {}.hasOwnProperty;
-
-  APIResource = (function(superClass) {
-    extend$1(APIResource, superClass);
-
-    function APIResource() {
-      return APIResource.__super__.constructor.apply(this, arguments);
-    }
-
-    APIResource.prototype.update = function(data) {
-      return this.post(data);
-    };
-
-    return APIResource;
-
-  })(APIAbstractResource$1);
-
-  var APIResource$1 = APIResource;
-
-  var APIPageable,
-    extend$2 = function(child, parent) { for (var key in parent) { if (hasProp$2.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$2 = {}.hasOwnProperty;
-
-  APIPageable = (function(superClass) {
-    extend$2(APIPageable, superClass);
-
-    function APIPageable() {
-      return APIPageable.__super__.constructor.apply(this, arguments);
-    }
-
-    APIPageable.prototype.get = function(params, _settings) {
-      var settings;
-      if (params == null) {
-        params = {};
-      }
-      if (_settings == null) {
-        _settings = {};
-      }
-      settings = {
-        params: Utils$1.extend({}, this.constantParams, params)
-      };
-      Utils$1.extend(settings, _settings);
-      return APIPageable.__super__.get.call(this, settings);
-    };
-
-    APIPageable.prototype.create = function(data, params) {
-      if (params == null) {
-        params = {};
-      }
-      return this.post(data, params);
-    };
-
-    APIPageable.prototype["delete"] = function() {
-      return throwError("Can't delete collections");
-    };
-
-    return APIPageable;
-
-  })(APIAbstractResource$1);
-
-  var APIPageable$1 = APIPageable;
-
-  var Device,
-    extend$3 = function(child, parent) { for (var key in parent) { if (hasProp$3.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$3 = {}.hasOwnProperty;
-
-  Device = (function(superClass) {
-    extend$3(Device, superClass);
-
-    function Device(api, parent, id) {
-      Device.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Device');
-      this.pushSelector('devices', id);
-    }
-
-    Device.prototype.queue = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('queue');
-    };
-
-    Device.prototype.property = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Device Property');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('properties', id);
-    };
-
-    Device.prototype.properties = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('properties');
-    };
-
-    Device.prototype.label = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Device Label');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('labels', id);
-    };
-
-    Device.prototype.labels = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('labels');
-    };
-
-    return Device;
-
-  })(APIResource$1);
-
-  var Device$1 = Device;
-
-  var DeviceGroup,
-    extend$4 = function(child, parent) { for (var key in parent) { if (hasProp$4.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$4 = {}.hasOwnProperty;
-
-  DeviceGroup = (function(superClass) {
-    extend$4(DeviceGroup, superClass);
-
-    function DeviceGroup(api, parent, id) {
-      DeviceGroup.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'DeviceGroup');
-      this.pushSelector('device-groups', id);
-    }
-
-    DeviceGroup.prototype.devices = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('devices');
-    };
-
-    DeviceGroup.prototype.device = function(id) {
-      return new Device$1(this.api, this, id);
-    };
-
-    DeviceGroup.prototype.selectors = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('selectors');
-    };
-
-    DeviceGroup.prototype.selector = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'DeviceGroup Selector');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('selectors', id);
-    };
-
-    return DeviceGroup;
-
-  })(APIResource$1);
-
-  var DeviceGroup$1 = DeviceGroup;
+  var APIEntity$1 = APIEntity;
 
   var FilterBuilder;
 
@@ -649,714 +352,241 @@
 
   var FilterBuilder$1 = FilterBuilder;
 
-  var DeviceSession, InputFileset, OutputFileset,
-    extend$5 = function(child, parent) { for (var key in parent) { if (hasProp$5.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$5 = {}.hasOwnProperty;
+  var APIList, DEFAULT_LIMIT, DEFAULT_OFFSET,
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  DeviceSession = (function(superClass) {
-    extend$5(DeviceSession, superClass);
+  DEFAULT_LIMIT = 20;
 
-    function DeviceSession(api, parent, id) {
-      DeviceSession.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'DeviceSession');
-      this.pushSelector('device-sessions', id);
+  DEFAULT_OFFSET = 0;
+
+  APIList = (function(superClass) {
+    extend(APIList, superClass);
+
+    function APIList() {
+      return APIList.__super__.constructor.apply(this, arguments);
     }
 
-    DeviceSession.prototype.steps = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('steps');
+    APIList.prototype.create = function() {
+      return this.post();
     };
 
-    DeviceSession.prototype.abort = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('abort');
-    };
-
-    DeviceSession.prototype.release = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('release');
-    };
-
-    DeviceSession.prototype.connections = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('connections');
-    };
-
-    DeviceSession.prototype.output = function() {
-      return new OutputFileset(this.api, this);
-    };
-
-    DeviceSession.prototype.input = function() {
-      return new InputFileset(this.api, this);
-    };
-
-    DeviceSession.prototype.changeBillable = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('changebillable');
-    };
-
-    DeviceSession.prototype.retry = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      a.pushSelector('retry');
-      return a._post({
-        timeout: 0
+    APIList.prototype.sort = function(name, order) {
+      if (order == null) {
+        order = 'a';
+      }
+      if (order !== 'a' && order !== 'd') {
+        throw new Error("Order '" + order + "' is invalid! Use 'a' for ascending or 'd' for descending.");
+      }
+      return this.params({
+        sort: name + "_" + order
       });
     };
 
-    DeviceSession.prototype.logs = function() {
-      var a;
-      a = new APIResource$1(this.api, this, 'text');
-      return a.pushSelector('logs');
-    };
-
-    DeviceSession.prototype.performance = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      a.cacheTTL = Date.ms.MINUTE;
-      return a.pushSelector('performance');
-    };
-
-    DeviceSession.prototype.screenshots = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('screenshots');
-    };
-
-    DeviceSession.prototype.screenshot = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'DeviceSession Screenshot');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('screenshots', id);
-    };
-
-    DeviceSession.prototype.videos = function() {
-      return this.output().videos();
-    };
-
-    DeviceSession.prototype.testCaseRuns = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      a.cacheTTL = Date.ms.MINUTE;
-      return a.pushSelector('test-case-runs');
-    };
-
-    DeviceSession.prototype.dataAvailability = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('data-availability');
-    };
-
-    DeviceSession.prototype.clusterLogs = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('cluster-logs');
-    };
-
-    DeviceSession.prototype.resultDataZip = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('result-data.zip');
-    };
-
-    return DeviceSession;
-
-  })(APIResource$1);
-
-  InputFileset = (function(superClass) {
-    extend$5(InputFileset, superClass);
-
-    function InputFileset(api, parent) {
-      InputFileset.__super__.constructor.call(this, api, parent);
-      this.pushSelector('input-file-set');
-    }
-
-    InputFileset.prototype.files = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('files');
-    };
-
-    return InputFileset;
-
-  })(APIResource$1);
-
-  OutputFileset = (function(superClass) {
-    extend$5(OutputFileset, superClass);
-
-    function OutputFileset(api, parent) {
-      OutputFileset.__super__.constructor.call(this, api, parent);
-      this.pushSelector('output-file-set');
-    }
-
-    OutputFileset.prototype.filesZip = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('files.zip');
-    };
-
-    OutputFileset.prototype.files = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      a.cacheTTL = Date.ms.MINUTE;
-      return a.pushSelector('files');
-    };
-
-    OutputFileset.prototype.note = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'DeviceSession Note');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('notes', id);
-    };
-
-    OutputFileset.prototype.notes = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('notes');
-    };
-
-    OutputFileset.prototype.noteFile = function(id) {
-      return this.note(id).pushSelector('file');
-    };
-
-    OutputFileset.prototype.screenshot = function(id) {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('screenshots', id);
-    };
-
-    OutputFileset.prototype.screenshots = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('screenshots');
-    };
-
-    OutputFileset.prototype.videos = function() {
-      return this.files().setConstantParams({
-        filter: 's_state_eq_READY',
-        tag: ['video']
+    APIList.prototype.limit = function(limit) {
+      if (limit == null) {
+        limit = DEFAULT_LIMIT;
+      }
+      if (!Utils$1.isNaturalNumber(limit)) {
+        throw new Error("Limit '" + limit + "' is invalid!");
+      }
+      return this.params({
+        limit: limit
       });
     };
 
-    OutputFileset.prototype.nonMediaFiles = function() {
-      if (this._nonMediaFilesFilter == null) {
-        this._nonMediaFilesFilter = new FilterBuilder$1();
-        this._nonMediaFilesFilter.eq('state', 'READY');
-        this._nonMediaFilesFilter.notin('mimetype', ['image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif', 'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg']);
-      }
-      return this.files().setConstantParams({
-        filter: this._nonMediaFilesFilter.toString()
+    APIList.prototype.noLimit = function() {
+      return this.params({
+        limit: 0
       });
     };
 
-    OutputFileset.prototype.screenshotFile = function(id) {
-      return this.screenshot(id).pushSelector('file');
+    APIList.prototype.all = function() {
+      return this.noLimit();
     };
 
-    return OutputFileset;
-
-  })(APIResource$1);
-
-  var DeviceSession$1 = DeviceSession;
-
-  var File,
-    extend$6 = function(child, parent) { for (var key in parent) { if (hasProp$6.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$6 = {}.hasOwnProperty;
-
-  File = (function(superClass) {
-    extend$6(File, superClass);
-
-    function File(api, parent, param) {
-      File.__super__.constructor.call(this, api, parent);
-      if (isNumeric(param)) {
-        this.pushSelector('files', param);
-      } else if (typeof param === 'string') {
-        if (param === 'certificate') {
-          this.pushSelector('certificate');
-        } else {
-          this.pushSelector('files', param);
-        }
-      } else {
-        this.pushSelector('files');
+    APIList.prototype.offset = function(offset) {
+      if (offset == null) {
+        offset = DEFAULT_OFFSET;
       }
-    }
-
-    File.prototype.upload = function(data) {
-      return this.post(data);
-    };
-
-    File.prototype.tags = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('tags');
-    };
-
-    File.prototype.file = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('file');
-    };
-
-    File.prototype.icon = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('icon');
-    };
-
-    File.prototype.app = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('application');
-    };
-
-    File.prototype.data = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('data');
-    };
-
-    File.prototype.test = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('test');
-    };
-
-    return File;
-
-  })(APIResource$1);
-
-  var File$1 = File;
-
-  var Run,
-    extend$7 = function(child, parent) { for (var key in parent) { if (hasProp$7.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$7 = {}.hasOwnProperty;
-
-  Run = (function(superClass) {
-    extend$7(Run, superClass);
-
-    function Run(api, parent, id) {
-      Run.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Run');
-      this.pushSelector('runs', id);
-    }
-
-    Run.prototype.files = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('files');
-    };
-
-    Run.prototype.file = function(name) {
-      return new File$1(this.api, this, name);
-    };
-
-    Run.prototype.tags = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('tags');
-    };
-
-    Run.prototype.tag = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Run Tag');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('tags', id);
-    };
-
-    Run.prototype.deviceSessions = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('device-sessions');
-    };
-
-    Run.prototype.deviceSession = function(id) {
-      return new DeviceSession$1(this.api, this, id);
-    };
-
-    Run.prototype.changeBillable = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('changebillable');
-    };
-
-    Run.prototype.changePriority = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('changepriority');
-    };
-
-    Run.prototype.videoRecording = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Run ScreenRecording');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('video-recording', id);
-    };
-
-    Run.prototype.reports = function(type) {
-      var a;
-      a = new APIPageable$1(this.api, this, false);
-      return a.pushSelector('reports', type);
-    };
-
-    Run.prototype.steps = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('steps');
-    };
-
-    Run.prototype.screenRecordings = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('screen-recordings');
-    };
-
-    Run.prototype.screenshotNames = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('screenshot-names');
-    };
-
-    Run.prototype.screenshots = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('screenshots');
-    };
-
-    Run.prototype.abort = function() {
-      this.pushSelector('abort');
-      return this._post();
-    };
-
-    Run.prototype.retry = function(ids) {
-      var params;
-      this.pushSelector('retry');
-      params = {
-        timeout: 0
-      };
-      if (ids != null) {
-        params.params = {
-          deviceRunIds: ids
-        };
+      if (!Utils$1.isNaturalNumber(offset)) {
+        throw new Error("Offset '" + offset + "' is invalid!");
       }
-      return this._post(params);
+      return this.params({
+        offset: offset
+      });
     };
 
-    Run.prototype.buildLogs = function(ids) {
-      var params;
-      this.pushSelector('build-logs.zip');
-      params = {};
-      if (ids != null) {
-        params.params = {
-          deviceRunIds: ids
-        };
+    APIList.prototype.between = function(from, to) {
+      if (!Utils$1.isNaturalNumber(from)) {
+        throw new Error("From '" + from + "' is invalid!");
       }
-      return this._post(params);
+      if (!Utils$1.isNaturalNumber(to)) {
+        throw new Error("To '" + to + "' is invalid!");
+      }
+      return this.params({
+        offset: from,
+        limit: 1 + (to - from)
+      });
     };
 
-    Run.prototype.config = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('config');
+    APIList.prototype.cut = function(from, to) {
+      return this.between(from, to);
     };
 
-    Run.prototype.appsDataZip = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('apps-data.zip');
+    APIList.prototype.only = function(idx) {
+      if (!Utils$1.isNaturalNumber(idx)) {
+        throw new Error("Index '" + from + "' is invalid!");
+      }
+      return this.params({
+        offset: idx,
+        limit: 1
+      });
     };
 
-    Run.prototype.screenshotsZip = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('screenshots.zip');
+    APIList.prototype.page = function(page) {
+      var limit, offset, ref;
+      if (page == null) {
+        page = 1;
+      }
+      if (!Utils$1.isNaturalNumber(page) || page === 0) {
+        throw new Error("Page '" + from + "' is invalid!");
+      }
+      limit = ((ref = this._config.params) != null ? ref.limit : void 0) != null ? this._config.params.limit : DEFAULT_LIMIT;
+      offset = (page - 1) * limit;
+      return this.params({
+        offset: offset,
+        limit: limit
+      });
     };
 
-    Run.prototype.performanceZip = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('performance.zip');
+    APIList.prototype.search = function(query) {
+      if (typeof query !== 'string') {
+        throw new Error("Search query must be a string!");
+      }
+      return this.params({
+        search: query
+      });
     };
 
-    Run.prototype.logsZip = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('logs.zip');
+    APIList.prototype.filter = function(filter) {
+      if (typeof filter !== 'string' || !(filter instanceof FilterBuilder$1)) {
+        throw new Error("Filter must be a string or instance of FilterBuilder!");
+      }
+      if (filter instanceof FilterBuilder$1) {
+        filter = filter.toString();
+      }
+      return this.params({
+        filter: filter
+      });
     };
 
-    Run.prototype.filesZip = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('files.zip');
-    };
+    return APIList;
 
-    Run.prototype.buildLogsZip = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('build-logs.zip');
-    };
+  })(APIEntity$1);
 
-    Run.prototype.zipDataAvailability = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('data-availability');
-    };
+  var APIList$1 = APIList;
 
-    return Run;
+  var APIResource$1,
+    extend$1 = function(child, parent) { for (var key in parent) { if (hasProp$1.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$1 = {}.hasOwnProperty;
 
-  })(APIResource$1);
+  APIResource$1 = (function(superClass) {
+    extend$1(APIResource, superClass);
 
-  var Run$1 = Run;
-
-  var Project,
-    extend$8 = function(child, parent) { for (var key in parent) { if (hasProp$8.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$8 = {}.hasOwnProperty;
-
-  Project = (function(superClass) {
-    extend$8(Project, superClass);
-
-    function Project(api, parent, id) {
-      Project.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Project');
-      this.pushSelector('projects', id);
+    function APIResource() {
+      return APIResource.__super__.constructor.apply(this, arguments);
     }
 
-    Project.prototype.publicDeviceGroups = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('public-device-groups');
+    APIResource.prototype.update = function() {
+      return this.post();
     };
 
-    Project.prototype.publicDeviceGroup = function(id) {
-      var a;
-      a = new DeviceGroup$1(this.api, this, id);
-      a[a.length - 1] = 'public-device-groups';
-      return a;
+    APIResource.prototype["delete"] = function() {
+      return this.method('DELETE');
     };
 
-    Project.prototype.deviceGroups = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('device-groups');
-    };
+    return APIResource;
 
-    Project.prototype.deviceGroup = function(id) {
-      return new DeviceGroup$1(this.api, this, id);
-    };
+  })(APIEntity$1);
 
-    Project.prototype.config = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('config');
-    };
+  var APIResource$2 = APIResource$1;
 
-    Project.prototype.files = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('files');
-    };
+  var APIListDevices,
+    extend$2 = function(child, parent) { for (var key in parent) { if (hasProp$2.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$2 = {}.hasOwnProperty;
 
-    Project.prototype.file = function(id) {
-      return new File$1(this.api, this, id);
-    };
+  APIListDevices = (function(superClass) {
+    extend$2(APIListDevices, superClass);
 
-    Project.prototype.filesZip = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('files.zip');
-    };
-
-    Project.prototype.icon = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('icon');
-    };
-
-    Project.prototype.sharings = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('sharings');
-    };
-
-    Project.prototype.sharing = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Project Sharing');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('sharings', id);
-    };
-
-    Project.prototype.trends = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('trends');
-    };
-
-    Project.prototype.runs = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('runs');
-    };
-
-    Project.prototype.run = function(id) {
-      return new Run$1(this.api, this, id);
-    };
-
-    Project.prototype.runsExtended = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('runs-extended');
-    };
-
-    Project.prototype.runExtended = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Project RunExtended');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('runs-extended', id);
-    };
-
-    Project.prototype.reports = function(type) {
-      var a;
-      a = new APIPageable$1(this.api, this, false);
-      return a.pushSelector('reports', type);
-    };
-
-    Project.prototype.configParameters = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('config/parameters');
-    };
-
-    Project.prototype.configParameter = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Project ConfigParameter');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('config/parameters', id);
-    };
-
-    Project.prototype.unarchive = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('unarchive');
-    };
-
-    Project.prototype.frameworks = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('frameworks');
-    };
-
-    Project.prototype.availableFrameworks = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('available-frameworks');
-    };
-
-    return Project;
-
-  })(APIResource$1);
-
-  var Project$1 = Project;
-
-  var FileSet,
-    extend$9 = function(child, parent) { for (var key in parent) { if (hasProp$9.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$9 = {}.hasOwnProperty;
-
-  FileSet = (function(superClass) {
-    extend$9(FileSet, superClass);
-
-    function FileSet(api, parent, id) {
-      FileSet.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'FileSet');
-      this.pushSelector('file-sets', id);
+    function APIListDevices(parent) {
+      APIListDevices.__super__.constructor.call(this, parent);
+      this.push('devices');
     }
 
-    FileSet.prototype.files = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('files');
+    APIListDevices.prototype.filters = function() {
+      return new APIResource$2(this).push('filters');
     };
 
-    FileSet.prototype.file = function(id) {
-      return new File$1(this.api, this, id);
+    APIListDevices.prototype.cleanupConfigurations = function() {
+      return new APIList$1(this).push('cleanup-configurations');
     };
 
-    return FileSet;
+    APIListDevices.prototype.cleanupConfiguration = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('cleanup-configurations', id);
+    };
 
-  })(APIResource$1);
+    return APIListDevices;
 
-  var FileSet$1 = FileSet;
+  })(APIList$1);
 
-  var BillingPeriod,
-    extend$10 = function(child, parent) { for (var key in parent) { if (hasProp$10.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$10 = {}.hasOwnProperty;
+  var APIListDevices$1 = APIListDevices;
 
-  BillingPeriod = (function(superClass) {
-    extend$10(BillingPeriod, superClass);
+  var APIListProperties,
+    extend$3 = function(child, parent) { for (var key in parent) { if (hasProp$3.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$3 = {}.hasOwnProperty;
 
-    function BillingPeriod(api, parent, id) {
-      BillingPeriod.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'BillingPeriod');
-      this.pushSelector('billing-periods', id);
+  APIListProperties = (function(superClass) {
+    extend$3(APIListProperties, superClass);
+
+    function APIListProperties(parent) {
+      APIListProperties.__super__.constructor.call(this, parent);
+      this.push('properties');
     }
 
-    BillingPeriod.prototype.receipt = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('receipt');
+    APIListProperties.prototype.appBan = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return this.push('app-bans').params({
+        testRunId: id
+      });
     };
 
-    return BillingPeriod;
+    return APIListProperties;
 
-  })(APIResource$1);
+  })(APIList$1);
 
-  var BillingPeriod$1 = BillingPeriod;
+  var APIListProperties$1 = APIListProperties;
 
-  var Purchased,
-    bind$1 = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend$11 = function(child, parent) { for (var key in parent) { if (hasProp$11.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$11 = {}.hasOwnProperty;
+  var APIListPurchased,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend$4 = function(child, parent) { for (var key in parent) { if (hasProp$4.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$4 = {}.hasOwnProperty;
 
-  Purchased = (function(superClass) {
-    extend$11(Purchased, superClass);
+  APIListPurchased = (function(superClass) {
+    extend$4(APIListPurchased, superClass);
 
-    function Purchased(api, parent, id) {
-      this.receipt = bind$1(this.receipt, this);
-      Purchased.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Purchased');
-      this.pushSelector('purchased', id);
+    function APIListPurchased(parent) {
+      this.active = bind(this.active, this);
+      APIListPurchased.__super__.constructor.call(this, parent);
+      this.push('purchased');
     }
 
-    Purchased.prototype.receipt = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('receipt');
-    };
-
-    return Purchased;
-
-  })(APIResource$1);
-
-  var Purchased$1 = Purchased;
-
-  var PurchasedList,
-    bind$2 = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend$12 = function(child, parent) { for (var key in parent) { if (hasProp$12.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$12 = {}.hasOwnProperty;
-
-  PurchasedList = (function(superClass) {
-    extend$12(PurchasedList, superClass);
-
-    function PurchasedList(api, parent) {
-      this.active = bind$2(this.active, this);
-      PurchasedList.__super__.constructor.call(this, api, parent);
-      this.pushSelector('purchased');
-    }
-
-    PurchasedList.prototype.active = function() {
+    APIListPurchased.prototype.active = function() {
       return this.addHook(function(data) {
         var i, results;
         i = 0;
@@ -1372,1012 +602,1056 @@
       });
     };
 
-    return PurchasedList;
+    return APIListPurchased;
 
-  })(APIPageable$1);
+  })(APIList$1);
 
-  var PurchasedList$1 = PurchasedList;
+  var APIListPurchased$1 = APIListPurchased;
 
-  var Services,
+  var APIListServices,
+    extend$5 = function(child, parent) { for (var key in parent) { if (hasProp$5.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$5 = {}.hasOwnProperty;
+
+  APIListServices = (function(superClass) {
+    extend$5(APIListServices, superClass);
+
+    function APIListServices(parent) {
+      APIListServices.__super__.constructor.call(this, parent);
+      this.push('services');
+    }
+
+    APIListServices.prototype.purchased = function() {
+      return new APIListPurchased$1(this);
+    };
+
+    APIListServices.prototype.available = function() {
+      return this.push('available');
+    };
+
+    APIListServices.prototype.active = function() {
+      var now;
+      if (this._stack[0] === 'me') {
+        return this.push('active');
+      } else {
+        now = Date.now();
+        return this.filter("d_activateTime_before_" + now + ";d_archiveTime_afterornull_" + now).sort('name', 'a').all();
+      }
+    };
+
+    APIListServices.prototype.activated = function() {
+      var now;
+      now = Date.now();
+      return this.filter("d_startTime_before_" + now + ";d_endTime_afterornull_" + now).sort('name', 'a').all();
+    };
+
+    return APIListServices;
+
+  })(APIList$1);
+
+  var APIListServices$1 = APIListServices;
+
+  var APIResourceDevice,
+    extend$6 = function(child, parent) { for (var key in parent) { if (hasProp$6.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$6 = {}.hasOwnProperty;
+
+  APIResourceDevice = (function(superClass) {
+    extend$6(APIResourceDevice, superClass);
+
+    function APIResourceDevice(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceDevice.__super__.constructor.call(this, parent);
+      this.push('devices', id);
+    }
+
+    APIResourceDevice.prototype.properties = function() {
+      return new APIList$1(this).push('properties');
+    };
+
+    return APIResourceDevice;
+
+  })(APIResource$2);
+
+  var APIResourceDevice$1 = APIResourceDevice;
+
+  var APIResourceDeviceGroup,
+    extend$7 = function(child, parent) { for (var key in parent) { if (hasProp$7.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$7 = {}.hasOwnProperty;
+
+  APIResourceDeviceGroup = (function(superClass) {
+    extend$7(APIResourceDeviceGroup, superClass);
+
+    function APIResourceDeviceGroup(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceDeviceGroup.__super__.constructor.call(this, parent);
+      this.push('device-groups', id);
+    }
+
+    APIResourceDeviceGroup.prototype.devices = function() {
+      return new APIList$1(this).push('devices');
+    };
+
+    APIResourceDeviceGroup.prototype.device = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('devices', id);
+    };
+
+    APIResourceDeviceGroup.prototype.selectors = function() {
+      return new APIList$1(this).push('selectors');
+    };
+
+    APIResourceDeviceGroup.prototype.selector = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('selectors', id);
+    };
+
+    return APIResourceDeviceGroup;
+
+  })(APIResource$2);
+
+  var APIResourceDeviceGroup$1 = APIResourceDeviceGroup;
+
+  var APIResourceDeviceSession, InputFileset, NON_MEDIA_FILES_FILTER, OutputFileset,
+    extend$8 = function(child, parent) { for (var key in parent) { if (hasProp$8.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$8 = {}.hasOwnProperty;
+
+  NON_MEDIA_FILES_FILTER = new FilterBuilder$1();
+
+  NON_MEDIA_FILES_FILTER.eq('state', 'READY');
+
+  NON_MEDIA_FILES_FILTER.notin('mimetype', ['image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif', 'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg']);
+
+  APIResourceDeviceSession = (function(superClass) {
+    extend$8(APIResourceDeviceSession, superClass);
+
+    function APIResourceDeviceSession(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceDeviceSession.__super__.constructor.call(this, parent);
+      this.push('device-sessions', id);
+    }
+
+    APIResourceDeviceSession.prototype.clusterLogs = function() {
+      return new APIResource$2(this).push('cluster-logs');
+    };
+
+    APIResourceDeviceSession.prototype.dataAvailability = function() {
+      return new APIResource$2(this).push('data-availability');
+    };
+
+    APIResourceDeviceSession.prototype.fixturesZip = function() {
+      return new APIResource$2(this).push('fixtures.zip');
+    };
+
+    APIResourceDeviceSession.prototype.junitXml = function() {
+      return new APIResource$2(this).push('junit.xml');
+    };
+
+    APIResourceDeviceSession.prototype.logs = function() {
+      return new APIResource$2(this).push('logs');
+    };
+
+    APIResourceDeviceSession.prototype.performance = function() {
+      return new APIResource$2(this).push('performance');
+    };
+
+    APIResourceDeviceSession.prototype.release = function() {
+      return new APIResource$2(this).push('release');
+    };
+
+    APIResourceDeviceSession.prototype.resultDataZip = function() {
+      return new APIResource$2(this).push('result-data.zip');
+    };
+
+    APIResourceDeviceSession.prototype.screenshots = function() {
+      return new APIList$1(this).push('screenshots');
+    };
+
+    APIResourceDeviceSession.prototype.screenshot = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('screenshots', id);
+    };
+
+    APIResourceDeviceSession.prototype.steps = function() {
+      return new APIList$1(this).push('steps');
+    };
+
+    APIResourceDeviceSession.prototype.step = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('steps', id);
+    };
+
+    APIResourceDeviceSession.prototype.currentStep = function() {
+      return this.step('current');
+    };
+
+    APIResourceDeviceSession.prototype.testCaseRuns = function() {
+      return new APIList$1(this).push('test-case-runs');
+    };
+
+    APIResourceDeviceSession.prototype.retry = function() {
+      return new APIResource$2(this).push('retry').post();
+    };
+
+    APIResourceDeviceSession.prototype.input = function() {
+      return new InputFileset(this);
+    };
+
+    APIResourceDeviceSession.prototype.output = function() {
+      return new OutputFileset(this);
+    };
+
+    APIResourceDeviceSession.prototype.videos = function() {
+      return this.output().videos();
+    };
+
+    return APIResourceDeviceSession;
+
+  })(APIResource$2);
+
+  InputFileset = (function(superClass) {
+    extend$8(InputFileset, superClass);
+
+    function InputFileset(parent) {
+      InputFileset.__super__.constructor.call(this, parent);
+      this.push('input-file-set');
+    }
+
+    InputFileset.prototype.files = function() {
+      return new APIList$1(this).push('files');
+    };
+
+    InputFileset.prototype.filesZip = function() {
+      return new APIResource$2(this).push('files.zip');
+    };
+
+    return InputFileset;
+
+  })(APIResource$2);
+
+  OutputFileset = (function(superClass) {
+    extend$8(OutputFileset, superClass);
+
+    function OutputFileset(parent) {
+      OutputFileset.__super__.constructor.call(this, parent);
+      this.push('output-file-set');
+    }
+
+    OutputFileset.prototype.files = function() {
+      return new APIList$1(this).push('files');
+    };
+
+    OutputFileset.prototype.filesZip = function() {
+      return new APIResource$2(this).push('files.zip');
+    };
+
+    OutputFileset.prototype.screenshots = function() {
+      return new APIList$1(this).push('screenshots');
+    };
+
+    OutputFileset.prototype.screenshot = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('screenshots', id);
+    };
+
+    OutputFileset.prototype.screenshotFile = function(id) {
+      return this.screenshot(id).push('file');
+    };
+
+    OutputFileset.prototype.videos = function() {
+      return this.files().params({
+        filter: 's_state_eq_READY',
+        tag: ['video']
+      });
+    };
+
+    OutputFileset.prototype.nonMediaFiles = function() {
+      return this.files().filter(NON_MEDIA_FILES_FILTER);
+    };
+
+    return OutputFileset;
+
+  })(APIResource$2);
+
+  var APIResourceDeviceSession$1 = APIResourceDeviceSession;
+
+  var APIResourceFile,
+    extend$9 = function(child, parent) { for (var key in parent) { if (hasProp$9.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$9 = {}.hasOwnProperty;
+
+  APIResourceFile = (function(superClass) {
+    extend$9(APIResourceFile, superClass);
+
+    function APIResourceFile(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceFile.__super__.constructor.call(this, parent);
+      this.push('files', id);
+    }
+
+    APIResourceFile.prototype.file = function() {
+      return new APIResource$2(this).push('file');
+    };
+
+    APIResourceFile.prototype.icon = function() {
+      return new APIResource$2(this).push('icon');
+    };
+
+    APIResourceFile.prototype.tags = function() {
+      return new APIList$1(this).push('tags');
+    };
+
+    return APIResourceFile;
+
+  })(APIResource$2);
+
+  var APIResourceFile$1 = APIResourceFile;
+
+  var APIResourceFileSet,
+    extend$10 = function(child, parent) { for (var key in parent) { if (hasProp$10.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$10 = {}.hasOwnProperty;
+
+  APIResourceFileSet = (function(superClass) {
+    extend$10(APIResourceFileSet, superClass);
+
+    function APIResourceFileSet(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceFileSet.__super__.constructor.call(this, parent);
+      this.push('file-sets', id);
+    }
+
+    APIResourceFileSet.prototype.files = function() {
+      return new APIList$1(this).push('files');
+    };
+
+    APIResourceFileSet.prototype.file = function(id) {
+      return new APIResourceFile$1(this, id);
+    };
+
+    return APIResourceFileSet;
+
+  })(APIResource$2);
+
+  var APIResourceFileSet$1 = APIResourceFileSet;
+
+  var APIResourceLabelGroup,
+    extend$11 = function(child, parent) { for (var key in parent) { if (hasProp$11.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$11 = {}.hasOwnProperty;
+
+  APIResourceLabelGroup = (function(superClass) {
+    extend$11(APIResourceLabelGroup, superClass);
+
+    function APIResourceLabelGroup(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceLabelGroup.__super__.constructor.call(this, parent);
+      this.push('label-groups', id);
+    }
+
+    APIResourceLabelGroup.prototype.labels = function() {
+      return new APIList$1(this).push('labels');
+    };
+
+    APIResourceLabelGroup.prototype.label = function(id) {
+      return new APIResource$2(this).push('labels', id);
+    };
+
+    return APIResourceLabelGroup;
+
+  })(APIResource$2);
+
+  var APIResourceLabelGroup$1 = APIResourceLabelGroup;
+
+  var APIResourceRun,
+    extend$12 = function(child, parent) { for (var key in parent) { if (hasProp$12.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$12 = {}.hasOwnProperty;
+
+  APIResourceRun = (function(superClass) {
+    extend$12(APIResourceRun, superClass);
+
+    function APIResourceRun(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceRun.__super__.constructor.call(this, parent);
+      this.push('runs', id);
+    }
+
+    APIResourceRun.prototype.config = function() {
+      return new APIResource$2(this).push('config');
+    };
+
+    APIResourceRun.prototype.deviceSessions = function() {
+      return new APIList$1(this).push('device-sessions');
+    };
+
+    APIResourceRun.prototype.deviceSession = function(id) {
+      return new APIResourceDeviceSession$1(this, id);
+    };
+
+    APIResourceRun.prototype.steps = function() {
+      return new APIList$1(this).push('steps');
+    };
+
+    APIResourceRun.prototype.files = function() {
+      return new APIList$1(this).push('files');
+    };
+
+    APIResourceRun.prototype.filesZip = function() {
+      return new APIResource$2(this).push('files.zip');
+    };
+
+    APIResourceRun.prototype.tags = function() {
+      return new APIList$1(this).push('tags');
+    };
+
+    APIResourceRun.prototype.tag = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('tags', id);
+    };
+
+    return APIResourceRun;
+
+  })(APIResource$2);
+
+  var APIResourceRun$1 = APIResourceRun;
+
+  var APIResourceProject,
     extend$13 = function(child, parent) { for (var key in parent) { if (hasProp$13.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$13 = {}.hasOwnProperty;
 
-  Services = (function(superClass) {
-    extend$13(Services, superClass);
+  APIResourceProject = (function(superClass) {
+    extend$13(APIResourceProject, superClass);
 
-    function Services(api, parent) {
-      Services.__super__.constructor.call(this, api, parent);
-      this.pushSelector('services');
+    function APIResourceProject(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceProject.__super__.constructor.call(this, parent);
+      this.push('projects', id);
     }
 
-    Services.prototype.purchased = function(id) {
-      if (id != null) {
-        return new Purchased$1(this.api, this, id);
-      } else {
-        return new PurchasedList$1(this.api, this);
+    APIResourceProject.prototype.runs = function() {
+      return new APIList$1(this).push('runs');
+    };
+
+    APIResourceProject.prototype.run = function(id) {
+      return new APIResourceRun$1(this, id);
+    };
+
+    APIResourceProject.prototype.runsExtended = function() {
+      return new APIList$1(this).push('runs-extended');
+    };
+
+    APIResourceProject.prototype.runExtended = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
       }
+      return new APIResource$2(this).push('runs-extended', id);
     };
 
-    Services.prototype.available = function() {
-      return this.pushSelector('available');
+    APIResourceProject.prototype.files = function() {
+      return new APIList$1(this).push('files');
     };
 
-    Services.prototype.active = function() {
-      if (this[0] === 'me') {
-        return this.pushSelector('active');
-      } else {
-        return this.setConstantParams({
-          sort: 'name_a',
-          limit: 0,
-          filter: 'd_activateTime_before_' + Date.now() + ';d_archiveTime_afterornull_' + Date.now()
-        });
+    APIResourceProject.prototype.filesZip = function() {
+      return new APIResource$2(this).push('files.zip');
+    };
+
+    APIResourceProject.prototype.sharings = function() {
+      return new APIList$1(this).push('sharings');
+    };
+
+    APIResourceProject.prototype.sharing = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
       }
+      return new APIResource$2(this).push('sharings', id);
     };
 
-    Services.prototype.activated = function() {
-      return this.setConstantParams({
-        sort: 'name_a',
-        limit: 0,
-        filter: 'd_startTime_before_' + Date.now() + ';d_endTime_afterornull_' + Date.now()
-      });
-    };
+    return APIResourceProject;
 
-    return Services;
+  })(APIResource$2);
 
-  })(APIPageable$1);
+  var APIResourceProject$1 = APIResourceProject;
 
-  var Services$1 = Services;
-
-  var Service,
+  var APIResourceBillingPeriod,
     extend$14 = function(child, parent) { for (var key in parent) { if (hasProp$14.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$14 = {}.hasOwnProperty;
 
-  Service = (function(superClass) {
-    extend$14(Service, superClass);
+  APIResourceBillingPeriod = (function(superClass) {
+    extend$14(APIResourceBillingPeriod, superClass);
 
-    function Service(api, parent, id) {
-      Service.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Service');
-      this.pushSelector('services', id);
+    function APIResourceBillingPeriod(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceBillingPeriod.__super__.constructor.call(this, parent);
+      this.push('billing-periods', id);
     }
 
-    Service.prototype.activate = function(data) {
-      var a;
-      a = new APIResource$1(this.api, this);
-      a.pushSelector('activate');
-      return a.post(data);
+    APIResourceBillingPeriod.prototype.receipt = function() {
+      return new APIResource$2(this).push('receipt');
     };
 
-    Service.prototype.deactivate = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      a.pushSelector('deactivate');
-      return a.post();
-    };
+    return APIResourceBillingPeriod;
 
-    Service.prototype.roles = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('roles');
-    };
+  })(APIResource$2);
 
-    return Service;
+  var APIResourceBillingPeriod$1 = APIResourceBillingPeriod;
 
-  })(APIResource$1);
-
-  var Service$1 = Service;
-
-  var Account,
+  var APIResourceBuild,
     extend$15 = function(child, parent) { for (var key in parent) { if (hasProp$15.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$15 = {}.hasOwnProperty;
 
-  Account = (function(superClass) {
-    extend$15(Account, superClass);
+  APIResourceBuild = (function(superClass) {
+    extend$15(APIResourceBuild, superClass);
 
-    function Account(api, parent) {
-      Account.__super__.constructor.call(this, api, parent);
-      this.pushSelector('account');
+    function APIResourceBuild(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceBuild.__super__.constructor.call(this, parent);
+      this.push('builds', id);
     }
 
-    Account.prototype.services = function() {
-      return new Services$1(this.api, this);
+    APIResourceBuild.prototype.abort = function() {
+      return new APIResource$2(this).push('abort');
     };
 
-    Account.prototype.service = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Account Services');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('services', id);
+    APIResourceBuild.prototype.outputFiles = function() {
+      return new APIList$1(this).push('output-file-set', 'files');
     };
 
-    Account.prototype.roles = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('roles');
-    };
+    return APIResourceBuild;
 
-    Account.prototype.role = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Account Roles');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('roles', id);
-    };
+  })(APIResource$2);
 
-    Account.prototype.additionalUsers = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('additional-users');
-    };
+  var APIResourceBuild$1 = APIResourceBuild;
 
-    Account.prototype.additionalUser = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Account Additional User');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('additional-users', id);
-    };
-
-    return Account;
-
-  })(APIPageable$1);
-
-  var Account$1 = Account;
-
-  var Notifications,
+  var APIResourceJob,
     extend$16 = function(child, parent) { for (var key in parent) { if (hasProp$16.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$16 = {}.hasOwnProperty;
 
-  Notifications = (function(superClass) {
-    extend$16(Notifications, superClass);
+  APIResourceJob = (function(superClass) {
+    extend$16(APIResourceJob, superClass);
 
-    function Notifications(api, parent) {
-      Notifications.__super__.constructor.call(this, api, parent);
-      this.pushSelector('notifications');
-      return;
+    function APIResourceJob(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceJob.__super__.constructor.call(this, parent);
+      this.push('jobs', id);
     }
 
-    Notifications.prototype.scopes = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('scopes');
+    APIResourceJob.prototype.builds = function() {
+      return new APIList$1(this).push('builds');
     };
 
-    Notifications.prototype.channels = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('channels');
+    APIResourceJob.prototype.build = function(id) {
+      return new APIResourceBuild$1(this, id);
     };
 
-    return Notifications;
+    return APIResourceJob;
 
-  })(APIPageable$1);
+  })(APIResource$2);
 
-  var Notifications$1 = Notifications;
+  var APIResourceJob$1 = APIResourceJob;
 
-  var Notification,
+  var APIResourceManualSession,
     extend$17 = function(child, parent) { for (var key in parent) { if (hasProp$17.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$17 = {}.hasOwnProperty;
 
-  Notification = (function(superClass) {
-    extend$17(Notification, superClass);
+  APIResourceManualSession = (function(superClass) {
+    extend$17(APIResourceManualSession, superClass);
 
-    function Notification(api, parent, id) {
-      Notification.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Notification');
-      this.pushSelector('notifications', id);
+    function APIResourceManualSession() {
+      return APIResourceManualSession.__super__.constructor.apply(this, arguments);
     }
 
-    Notification.prototype.test = function() {
+    APIResourceManualSession.prototype.connections = function() {
       var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('test');
+      a = new APIResource(this);
+      return a.push('connections');
     };
 
-    return Notification;
+    return APIResourceManualSession;
 
-  })(APIResource$1);
+  })(APIResourceDeviceSession$1);
 
-  var Notification$1 = Notification;
+  var APIResourceManualSession$1 = APIResourceManualSession;
 
-  var Build,
+  var APIResourceNotification,
     extend$18 = function(child, parent) { for (var key in parent) { if (hasProp$18.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$18 = {}.hasOwnProperty;
 
-  Build = (function(superClass) {
-    extend$18(Build, superClass);
+  APIResourceNotification = (function(superClass) {
+    extend$18(APIResourceNotification, superClass);
 
-    function Build(api, parent, id) {
-      Build.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Build');
-      this.pushSelector('builds', id);
+    function APIResourceNotification(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceNotification.__super__.constructor.call(this, parent);
+      this.push('notifications', id);
     }
 
-    Build.prototype.config = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('config');
+    APIResourceNotification.prototype.test = function() {
+      return new APIResource$2(this).push('test');
     };
 
-    return Build;
+    return APIResourceNotification;
 
-  })(APIResource$1);
+  })(APIResource$2);
 
-  var Build$1 = Build;
+  var APIResourceNotification$1 = APIResourceNotification;
 
-  var Job,
+  var APIListDeviceTime,
     extend$19 = function(child, parent) { for (var key in parent) { if (hasProp$19.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$19 = {}.hasOwnProperty;
 
-  Job = (function(superClass) {
-    extend$19(Job, superClass);
+  APIListDeviceTime = (function(superClass) {
+    extend$19(APIListDeviceTime, superClass);
 
-    function Job(api, parent, id) {
-      Job.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Job');
-      this.pushSelector('jobs', id);
+    function APIListDeviceTime(parent) {
+      APIListDeviceTime.__super__.constructor.call(this, parent);
+      this.push('device-time');
     }
 
-    Job.prototype.config = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('config');
+    APIListDeviceTime.prototype.reserved = function() {
+      return new APIList$1(this).push('reserved');
     };
 
-    Job.prototype.build = function(id) {
-      return new Build$1(this.api, this, id);
+    APIListDeviceTime.prototype.used = function() {
+      return new APIList$1(this).push('used');
     };
 
-    Job.prototype.builds = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('builds');
-    };
+    return APIListDeviceTime;
 
-    return Job;
+  })(APIList$1);
 
-  })(APIResource$1);
+  var APIListDeviceTime$1 = APIListDeviceTime;
 
-  var Job$1 = Job;
-
-  var User,
+  var APIListRuns,
     extend$20 = function(child, parent) { for (var key in parent) { if (hasProp$20.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$20 = {}.hasOwnProperty;
 
-  User = (function(superClass) {
-    extend$20(User, superClass);
+  APIListRuns = (function(superClass) {
+    extend$20(APIListRuns, superClass);
 
-    function User(api, parent, id) {
-      User.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'User');
-      if (id === 'me') {
-        this.pushSelector('me');
-      } else {
-        this.pushSelector('users', id);
-      }
+    function APIListRuns(parent) {
+      APIListRuns.__super__.constructor.call(this, parent);
+      this.push('runs');
     }
 
-    User.prototype.deviceGroups = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('device-groups');
+    APIListRuns.prototype.config = function() {
+      return new APIResource$2(this).push('config');
     };
 
-    User.prototype.deviceGroup = function(id) {
-      return new DeviceGroup$1(this.api, this, id);
-    };
+    return APIListRuns;
 
-    User.prototype.deviceSessions = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('device-sessions');
-    };
+  })(APIList$1);
 
-    User.prototype.deviceUsage = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('device-usage');
-    };
+  var APIListRuns$1 = APIListRuns;
 
-    User.prototype.deviceSession = function(id) {
-      return new DeviceSession$1(this.api, this, id);
-    };
-
-    User.prototype.projects = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('projects');
-    };
-
-    User.prototype.project = function(id) {
-      return new Project$1(this.api, this, id);
-    };
-
-    User.prototype.availableProjectTypes = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('available-project-types-extended');
-    };
-
-    User.prototype.filesets = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('file-sets');
-    };
-
-    User.prototype.fileset = function(id) {
-      return new FileSet$1(this.api, this, id);
-    };
-
-    User.prototype.files = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('files');
-    };
-
-    User.prototype.file = function(id) {
-      return new File$1(this.api, this, id);
-    };
-
-    User.prototype.billingPeriods = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('billing-periods');
-    };
-
-    User.prototype.billingPeriod = function(id) {
-      return new BillingPeriod$1(this.api, this, id);
-    };
-
-    User.prototype.runsConfig = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      a.pushSelector('runs');
-      return a.pushSelector('config');
-    };
-
-    User.prototype.runs = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('runs');
-    };
-
-    User.prototype.run = function(id) {
-      return new Run$1(this, void 0, id);
-    };
-
-    User.prototype.services = function() {
-      return new Services$1(this.api, this);
-    };
-
-    User.prototype.service = function(id) {
-      return new Service$1(this.api, this, id);
-    };
-
-    User.prototype.filePath = function(id) {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      a.pushSelector('files', id);
-      return a.pushSelector('file');
-    };
-
-    User.prototype.deviceTime = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('device-time');
-    };
-
-    User.prototype.uiPreferences = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('ui-preferences');
-    };
-
-    User.prototype.account = function() {
-      return new Account$1(this.api, this);
-    };
-
-    User.prototype.receipts = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('receipts');
-    };
-
-    User.prototype.receipt = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'User Receipt');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('receipts', id);
-    };
-
-    User.prototype.resetApiKey = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('reset-api-key');
-    };
-
-    User.prototype.integrations = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('integrations');
-    };
-
-    User.prototype.integration = function(id) {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('integrations', id);
-    };
-
-    User.prototype.notifications = function() {
-      return new Notifications$1(this.api, this);
-    };
-
-    User.prototype.notification = function(id) {
-      return new Notification$1(this.api, this, id);
-    };
-
-    User.prototype.statistics = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('statistics');
-    };
-
-    User.prototype.restore = function() {
-      this.pushSelector('restore');
-      return this._post();
-    };
-
-    User.prototype.jobs = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('jobs');
-    };
-
-    User.prototype.job = function(id) {
-      return new Job$1(this.api, this, id);
-    };
-
-    return User;
-
-  })(APIResource$1);
-
-  var User$1 = User;
-
-  var Devices,
+  var APIListNotifications,
     extend$21 = function(child, parent) { for (var key in parent) { if (hasProp$21.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$21 = {}.hasOwnProperty;
 
-  Devices = (function(superClass) {
-    extend$21(Devices, superClass);
+  APIListNotifications = (function(superClass) {
+    extend$21(APIListNotifications, superClass);
 
-    function Devices(api, parent) {
-      Devices.__super__.constructor.call(this, api, parent);
-      this.pushSelector('devices');
+    function APIListNotifications(parent) {
+      APIListNotifications.__super__.constructor.call(this, parent);
+      this.push('notifications');
     }
 
-    Devices.prototype.filters = function() {
-      var a;
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('filters');
+    APIListNotifications.prototype.scopes = function() {
+      return new APIList$1(this).push('scopes');
     };
 
-    Devices.prototype.cleanupConfigurations = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('cleanup-configurations');
+    APIListNotifications.prototype.channels = function() {
+      return new APIList$1(this).push('channels');
     };
 
-    Devices.prototype.cleanupConfiguration = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Devices CleanupConfiguration');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('cleanup-configurations', id);
-    };
+    return APIListNotifications;
 
-    return Devices;
+  })(APIList$1);
 
-  })(APIPageable$1);
+  var APIListNotifications$1 = APIListNotifications;
 
-  var Devices$1 = Devices;
-
-  var Label,
+  var APIResourceUser,
     extend$22 = function(child, parent) { for (var key in parent) { if (hasProp$22.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$22 = {}.hasOwnProperty;
 
-  Label = (function(superClass) {
-    extend$22(Label, superClass);
+  APIResourceUser = (function(superClass) {
+    extend$22(APIResourceUser, superClass);
 
-    function Label(api, parent, id) {
-      Label.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'Label');
-      this.pushSelector('labels', id);
+    function APIResourceUser(parent, id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      APIResourceUser.__super__.constructor.call(this, parent);
+      if (id === 'me') {
+        this.push('me');
+      } else {
+        this.push('users', id);
+      }
     }
 
-    Label.prototype.devices = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('devices');
+    APIResourceUser.prototype.deviceTime = function() {
+      return new APIListDeviceTime$1(this);
     };
 
-    Label.prototype.device = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Label Device');
-      a = new APIResource$1(this.api, this);
-      return a.pushSelector('devices', id);
+    APIResourceUser.prototype.services = function() {
+      return new APIListServices$1(this);
     };
 
-    return Label;
+    APIResourceUser.prototype.service = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('services', id);
+    };
 
-  })(APIResource$1);
+    APIResourceUser.prototype.accountServiceBillingPeriod = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('account-services', id, 'billing-period');
+    };
 
-  var Label$1 = Label;
+    APIResourceUser.prototype.billingPeriods = function() {
+      return new APIList$1(this).push('billing-periods');
+    };
 
-  var LabelGroup,
+    APIResourceUser.prototype.billingPeriod = function(id) {
+      return new APIResourceBillingPeriod$1(this, id);
+    };
+
+    APIResourceUser.prototype.jobs = function() {
+      return new APIList$1(this).push('jobs');
+    };
+
+    APIResourceUser.prototype.job = function(id) {
+      return new APIResourceJob$1(this, id);
+    };
+
+    APIResourceUser.prototype.deviceGroups = function() {
+      return new APIList$1(this).push('device-groups');
+    };
+
+    APIResourceUser.prototype.deviceGroup = function(id) {
+      return new APIResourceDeviceGroup$1(this, id);
+    };
+
+    APIResourceUser.prototype.deviceSessions = function() {
+      return new APIList$1(this).push('device-sessions');
+    };
+
+    APIResourceUser.prototype.deviceSession = function(id) {
+      return new APIResourceDeviceSession$1(this, id);
+    };
+
+    APIResourceUser.prototype.manualSession = function(id) {
+      return new APIResourceManualSession$1(this, id);
+    };
+
+    APIResourceUser.prototype.projects = function() {
+      return new APIList$1(this).push('projects');
+    };
+
+    APIResourceUser.prototype.project = function(id) {
+      return new APIResourceProject$1(this, id);
+    };
+
+    APIResourceUser.prototype.fileSets = function() {
+      return new APIList$1(this).push('file-sets');
+    };
+
+    APIResourceUser.prototype.fileSet = function(id) {
+      return new APIResourceFileSet$1(this, id);
+    };
+
+    APIResourceUser.prototype.files = function() {
+      return new APIList$1(this).push('files');
+    };
+
+    APIResourceUser.prototype.file = function(id) {
+      return new APIResourceFile$1(this, id);
+    };
+
+    APIResourceUser.prototype.runs = function() {
+      return new APIListRuns$1(this);
+    };
+
+    APIResourceUser.prototype.availableBuildExecutors = function() {
+      return new APIList$1(this).push('available-build-executors');
+    };
+
+    APIResourceUser.prototype.availableFrameworks = function() {
+      return new APIList$1(this).push('available-frameworks');
+    };
+
+    APIResourceUser.prototype.resetApiKey = function() {
+      return new APIResource$2(this).push('reset-api-key');
+    };
+
+    APIResourceUser.prototype.restore = function() {
+      return new APIResource$2(this).push('restore');
+    };
+
+    APIResourceUser.prototype.accountAdditionalUsers = function() {
+      return new APIList$1(this).push('account', 'additional-users');
+    };
+
+    APIResourceUser.prototype.accountAdditionalUser = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('account', 'additional-users', id);
+    };
+
+    APIResourceUser.prototype.feedback = function() {
+      return new APIResource$2(this).push('feedback');
+    };
+
+    APIResourceUser.prototype.notifications = function() {
+      return new APIListNotifications$1(this);
+    };
+
+    APIResourceUser.prototype.notification = function(id) {
+      return new APIResourceNotification$1(this, id);
+    };
+
+    APIResourceUser.prototype.receipts = function() {
+      return new APIList$1(this).push('receipts');
+    };
+
+    APIResourceUser.prototype.uiPreferences = function() {
+      return new APIResource$2(this).push('ui-preferences');
+    };
+
+    APIResourceUser.prototype.integrations = function() {
+      return new APIList$1(this).push('integrations');
+    };
+
+    APIResourceUser.prototype.integration = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
+      }
+      return new APIResource$2(this).push('integrations', id);
+    };
+
+    APIResourceUser.prototype.deviceUsage = function() {
+      return new APIList$1(this).push('device-usage');
+    };
+
+    APIResourceUser.prototype.statistics = function() {
+      return new APIList$1(this).push('statistics');
+    };
+
+    return APIResourceUser;
+
+  })(APIResource$2);
+
+  var APIResourceUser$1 = APIResourceUser;
+
+  var APIResourceUserSession,
     extend$23 = function(child, parent) { for (var key in parent) { if (hasProp$23.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$23 = {}.hasOwnProperty;
 
-  LabelGroup = (function(superClass) {
-    extend$23(LabelGroup, superClass);
+  APIResourceUserSession = (function(superClass) {
+    extend$23(APIResourceUserSession, superClass);
 
-    function LabelGroup(api, parent, id) {
-      LabelGroup.__super__.constructor.call(this, api, parent);
-      Utils$1.throwUnlessId(id, 'LabelGroup');
-      this.pushSelector('label-groups', id);
+    function APIResourceUserSession(parent) {
+      APIResourceUserSession.__super__.constructor.call(this, parent);
+      this.push('user-sessions');
     }
 
-    LabelGroup.prototype.labels = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('labels');
+    APIResourceUserSession.prototype.login = function() {
+      return new APIResource$2(this).push('login');
     };
 
-    LabelGroup.prototype.label = function(id) {
-      return new Label$1(this.api, this, id);
+    APIResourceUserSession.prototype.logout = function() {
+      return new APIResource$2(this).push('logout');
     };
 
-    return LabelGroup;
-
-  })(APIResource$1);
-
-  var LabelGroup$1 = LabelGroup;
-
-  var Properties,
-    extend$24 = function(child, parent) { for (var key in parent) { if (hasProp$24.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$24 = {}.hasOwnProperty;
-
-  Properties = (function(superClass) {
-    extend$24(Properties, superClass);
-
-    function Properties(api, parent) {
-      Properties.__super__.constructor.call(this, api, parent);
-      this.pushSelector('properties');
-    }
-
-    Properties.prototype.appBan = function(id) {
-      Utils$1.throwUnlessId(id, 'Property AppBan');
-      this.pushSelector('app-bans');
-      return this.setConstantParams({
-        testRunId: id
-      });
+    APIResourceUserSession.prototype.sso = function(name) {
+      return new APIResource$2(this).push('user-sessions', name + '-login');
     };
 
-    return Properties;
+    return APIResourceUserSession;
 
-  })(APIPageable$1);
+  })(APIResource$2);
 
-  var Properties$1 = Properties;
+  var APIResourceUserSession$1 = APIResourceUserSession;
 
-  var UserSession,
-    extend$25 = function(child, parent) { for (var key in parent) { if (hasProp$25.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$25 = {}.hasOwnProperty;
+  var API;
 
-  UserSession = (function(superClass) {
-    extend$25(UserSession, superClass);
+  API = (function() {
+    function API() {}
 
-    function UserSession() {
-      return UserSession.__super__.constructor.apply(this, arguments);
-    }
-
-    UserSession.prototype.login = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('login');
+    API.prototype.me = function() {
+      return new APIResourceUser$1(this, 'me');
     };
 
-    UserSession.prototype.logout = function() {
-      var a;
-      a = new APIPageable$1(this.api, this);
-      return a.pushSelector('logout');
+    API.prototype.user = function(id) {
+      return new APIResourceUser$1(null, id);
     };
 
-    return UserSession;
+    API.prototype.admin = function() {
+      return console.log('TODO');
+    };
 
-  })(APIResource$1);
+    API.prototype.userSession = function() {
+      return new APIResourceUserSession$1();
+    };
 
-  var UserSession$1 = UserSession;
+    API.prototype.devices = function() {
+      return new APIListDevices$1();
+    };
 
-  var TestdroidCloudAPIClient;
+    API.prototype.device = function(id) {
+      return new APIResourceDevice$1(null, id);
+    };
 
-  TestdroidCloudAPIClient = (function() {
-    function TestdroidCloudAPIClient(config) {
-      this.config = {
-        cloudUrl: null,
-        driver: null
-      };
-      this.setup(config);
-    }
+    API.prototype.deviceGroups = function() {
+      return new APIList$1().push('device-groups');
+    };
 
-    TestdroidCloudAPIClient.prototype.setup = function(config) {
-      Utils$1.extend(this.config, config);
-      if ((this.config.cloudUrl != null) && typeof this.config.cloudUrl === 'string' && this.config.cloudUrl.length > 1) {
-        this.config.cloudUrl = this.config.cloudUrl.replace(/\/+$/, '');
-      } else {
-        throw 'Invalid cloudUrl';
+    API.prototype.deviceGroup = function(id) {
+      return new APIResourceDeviceGroup$1(null, id);
+    };
+
+    API.prototype.deviceStatuses = function() {
+      return new APIList$1().push('device-status');
+    };
+
+    API.prototype.deviceStatus = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
       }
+      return new APIResource$2().push('device-status', id);
     };
 
-    TestdroidCloudAPIClient.prototype.getUrl = function(resource, settings) {
-      return Utils$1.getUrl.call(this, resource, settings, this.config.cloudUrl);
+    API.prototype.deviceSessions = function() {
+      return new APIList$1().push('device-sessions');
     };
 
-    TestdroidCloudAPIClient.prototype.request = function(resource, method, settings, dfd) {
-      var _settings, cacheId, cacheTTL, contentType, ref, req, storedData;
-      if (settings == null) {
-        settings = {};
+    API.prototype.deviceSession = function(id) {
+      return new APIResourceDeviceSession$1(null, id);
+    };
+
+    API.prototype.files = function() {
+      return new APIList$1().push('files');
+    };
+
+    API.prototype.file = function(id) {
+      return new APIResourceFile$1(null, id);
+    };
+
+    API.prototype.filePath = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
       }
-      if (dfd == null) {
-        dfd = $.Deferred();
+      return this.file(id).push('file');
+    };
+
+    API.prototype.fileSets = function() {
+      return new APIList$1().push('file-sets');
+    };
+
+    API.prototype.fileSet = function(id) {
+      return new APIResourceFileSet$1(null, id);
+    };
+
+    API.prototype.runsConfig = function() {
+      return new APIResource$2().push('runs', 'config');
+    };
+
+    API.prototype.runs = function() {
+      return new APIList$1().push('runs');
+    };
+
+    API.prototype.run = function(id) {
+      return new APIResourceRun$1(null, id);
+    };
+
+    API.prototype.projects = function() {
+      return new APIList$1().push('projects');
+    };
+
+    API.prototype.project = function(id) {
+      return new APIResourceProject$1(null, id);
+    };
+
+    API.prototype.labelGroups = function() {
+      return new APIList$1().push('label-groups');
+    };
+
+    API.prototype.labelGroup = function(id) {
+      return new APIResourceLabelGroup$1(null, id);
+    };
+
+    API.prototype.properties = function() {
+      return new APIListProperties$1();
+    };
+
+    API.prototype.property = function(id) {
+      if (id == null) {
+        throw new Error('Resource ID cannot be null!');
       }
-      contentType = Utils$1.isJSONString(settings.data) ? 'application/json' : 'application/x-www-form-urlencoded; charset=UTF-8';
-      _settings = {
-        method: method,
-        data: settings.data,
-        dataType: settings.dataType,
-        contentType: contentType,
-        timeout: settings.timeout,
-        params: settings.params
-      };
-      if ((typeof FormData !== "undefined" && FormData !== null) && _settings.data instanceof FormData) {
-        _settings.contentType = false;
-        _settings.processData = false;
-      }
-      _settings.dfd = dfd;
-      _settings.xhr = this._xhrHandlerFactory(_settings);
-      _settings.success = this._successHandlerFactory(resource, _settings);
-      _settings.error = this._errorHandlerFactory(resource, _settings);
-      if (_settings.method === 'GET' && ((ref = _settings.params) != null ? ref.cacheTTL : void 0) > 0) {
-        cacheId = 'GET ' + app.ctx.service.ajax.getUrl(resource, _settings) + ' ' + _settings.contentType;
-        cacheTTL = _settings.params.cacheTTL;
-        if (Cache.isStored(cacheId)) {
-          storedData = Cache.get(cacheId);
-          if (isPromise(storedData)) {
-            dfd = storedData;
-          } else {
-            dfd.resolve.apply(this, storedData);
-          }
-          return dfd;
-        } else {
-          Cache.set(cacheId, dfd, cacheTTL);
-          (function(cacheId, cacheTTL) {
-            dfd.then(function() {
-              return Cache.set(cacheId, arguments, cacheTTL);
-            });
-            return dfd.fail(function() {
-              return Cache.remove(cacheId);
-            });
-          })(cacheId, cacheTTL);
-        }
-      }
-      req = app.ctx.service.ajax.request(resource, _settings);
-      dfd.abort = req.abort;
-      return dfd;
+      return new APIResource$2().push('properties', id);
     };
 
-    TestdroidCloudAPIClient.prototype.customRequest = function(resource, settings, dfd) {
-      if (settings == null) {
-        settings = {};
-      }
-      if (dfd == null) {
-        dfd = $.Deferred();
-      }
-      if (settings.uploadProgress == null) {
-        settings.uploadProgress = this._progressHandlerFactory(settings, dfd);
-      }
-      if (settings.success == null) {
-        settings.success = (function(_this) {
-          return function() {
-            return dfd.resolve.apply(_this, arguments);
-          };
-        })(this);
-      }
-      if (settings.error == null) {
-        settings.error = (function(_this) {
-          return function() {
-            return dfd.reject.apply(_this, arguments);
-          };
-        })(this);
-      }
-      settings.xhr = (function(_this) {
-        return function() {
-          var xhr;
-          xhr = new window.XMLHttpRequest();
-          if (settings.method === 'POST') {
-            xhr.upload.addEventListener('progress', _this._progressHandlerFactory(settings, dfd));
-          } else {
-            xhr.addEventListener('progress', _this._progressHandlerFactory(settings, dfd));
-          }
-          return xhr;
-        };
-      })(this);
-      app.ctx.service.ajax.request(resource, settings);
-      return dfd;
+    API.prototype.services = function() {
+      return new APIListServices$1();
     };
 
-    TestdroidCloudAPIClient.prototype._xhrHandlerFactory = function(settings) {
-      return (function(_this) {
-        return function() {
-          var xhr;
-          xhr = new window.XMLHttpRequest();
-          if (settings.method === 'POST') {
-            xhr.upload.addEventListener('progress', _this._progressHandlerFactory(settings));
-          } else {
-            xhr.addEventListener('progress', _this._progressHandlerFactory(settings));
-          }
-          return xhr;
-        };
-      })(this);
+    API.prototype.sessions = function() {
+      return new APIList$1().push('sessions');
     };
 
-    TestdroidCloudAPIClient.prototype._progressHandlerFactory = function(settings) {
-      return function(e) {
-        return settings.dfd.notify({
-          type: settings.method === 'POST' ? 'upload' : 'download',
-          computable: e.lengthComputable,
-          totalBytes: e.total,
-          loadedBytes: e.loaded,
-          loadedPercent: e.lengthComputable ? parseFloat(e.loaded / e.total * 100) : void 0
-        });
-      };
+    API.prototype.license = function() {
+      return new APIResource$2().push('license');
     };
 
-    TestdroidCloudAPIClient.prototype._errorHandlerFactory = function(resource, settings) {
-      return (function(_this) {
-        return function(xhr, status) {
-          if (arguments.length > 1) {
-            if (xhr.status === 401) {
-              app.ctx.service.auth.reAuthorize(function() {
-                return _this.request(resource, settings.method, settings, settings.dfd);
-              });
-            } else if (xhr.status === 404) {
-              settings.dfd.reject(xhr, status);
-            } else {
-              $console.warn(_this._getRequestLog(xhr, settings.method, resource));
-              $console.warn('Request settings:', settings);
-              settings.dfd.reject(xhr, status);
-            }
-          } else {
-            $console.warn('Trying to re-authorize...');
-            app.ctx.service.auth.reAuthorize(function() {
-              return _this.request(resource, settings.method, settings, settings.dfd);
-            });
-          }
-        };
-      })(this);
-    };
-
-    TestdroidCloudAPIClient.prototype._successHandlerFactory = function(resource, settings) {
-      return (function(_this) {
-        return function(data, status, xhr) {
-          var info;
-          if (data instanceof XMLDocument) {
-            return requirejs(['x2js'], function(X2JS) {
-              var obj;
-              if (_this._xml2json == null) {
-                _this._xml2json = new X2JS();
-              }
-              obj = _this._xml2json.xml2json(data);
-              obj = obj[Object.keys(obj)[0]];
-              return settings.dfd.resolve(obj, {
-                status: status,
-                apiHandler: 'form'
-              });
-            });
-          } else {
-            info = {};
-            info.status = status;
-            info.apiHandler = 'json';
-            if (settings.method === 'GET') {
-              info.offset = data.offset;
-              info.limit = data.limit;
-              info.total = data.total;
-              info.search = data.search;
-              info.sort = data.sort;
-              info.size = xhr.getResponseHeader('Content-Length');
-              if (data.data && (data.total != null)) {
-                data = data.data;
-              }
-            }
-            return settings.dfd.resolve(data, info);
-          }
-        };
-      })(this);
-    };
-
-    TestdroidCloudAPIClient.prototype._getRequestLog = function(xhr, method, resource) {
-      return "HTTP " + method + " status " + xhr.status + " (" + xhr.statusText + ")\n Resource: " + resource + "\nResponse: " + xhr.responseText;
-    };
-
-    TestdroidCloudAPIClient.prototype.user = function(id) {
-      return new User$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.me = function() {
-      return new User$1(this, void 0, 'me');
-    };
-
-    TestdroidCloudAPIClient.prototype.admin = function() {
-      return new Admin(this);
-    };
-
-    TestdroidCloudAPIClient.prototype.devices = function() {
-      return new Devices$1(this);
-    };
-
-    TestdroidCloudAPIClient.prototype.device = function(id) {
-      return new Device$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.files = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('files');
-    };
-
-    TestdroidCloudAPIClient.prototype.file = function(id) {
-      return new File$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.filesets = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('file-sets');
-    };
-
-    TestdroidCloudAPIClient.prototype.fileset = function(id) {
-      return new FileSet$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.runsConfig = function() {
-      var a;
-      a = new APIResource$1(this);
-      a.pushSelector('runs');
-      return a.pushSelector('config');
-    };
-
-    TestdroidCloudAPIClient.prototype.runs = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('runs');
-    };
-
-    TestdroidCloudAPIClient.prototype.run = function(id) {
-      return new Run$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.projects = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('projects');
-    };
-
-    TestdroidCloudAPIClient.prototype.project = function(id) {
-      return new Project$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.labelGroups = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('label-groups');
-    };
-
-    TestdroidCloudAPIClient.prototype.labelGroup = function(id) {
-      return new LabelGroup$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.deviceStatuses = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('device-status');
-    };
-
-    TestdroidCloudAPIClient.prototype.deviceStatus = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Device Status');
-      a = new APIResource$1(this);
-      return a.pushSelector('device-status', id);
-    };
-
-    TestdroidCloudAPIClient.prototype.property = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Properties');
-      a = new APIResource$1(this, void 0);
-      return a.pushSelector('properties', id);
-    };
-
-    TestdroidCloudAPIClient.prototype.properties = function() {
-      return new Properties$1(this);
-    };
-
-    TestdroidCloudAPIClient.prototype.services = function() {
-      return new Services$1(this);
-    };
-
-    TestdroidCloudAPIClient.prototype.filePath = function(id) {
-      var a;
-      Utils$1.throwUnlessId(id, 'Files Path');
-      a = new APIPageable$1(this);
-      a.pushSelector('files', id);
-      return a.pushSelector('file');
-    };
-
-    TestdroidCloudAPIClient.prototype.deviceSessions = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('device-sessions');
-    };
-
-    TestdroidCloudAPIClient.prototype.deviceSession = function(id) {
-      return new DeviceSession$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.sessions = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('sessions');
-    };
-
-    TestdroidCloudAPIClient.prototype.deviceGroups = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('device-groups');
-    };
-
-    TestdroidCloudAPIClient.prototype.deviceGroup = function(id) {
-      return new DeviceGroup$1(this, null, id);
-    };
-
-    TestdroidCloudAPIClient.prototype.userSessions = function() {
-      var a;
-      a = new APIPageable$1(this);
-      return a.pushSelector('user-session');
-    };
-
-    TestdroidCloudAPIClient.prototype.userSession = function() {
-      return new UserSession$1(this);
-    };
-
-    TestdroidCloudAPIClient.prototype.license = function() {
-      var a;
-      a = new APIResource$1(this);
-      a.cacheTTL = Date.ms.HOUR;
-      return a.pushSelector('license');
-    };
-
-    TestdroidCloudAPIClient.prototype.sso = function(name) {
-      var a;
-      a = new APIResource$1(this);
-      a.pushSelector('user-sessions');
-      a.pushSelector(name + '-login');
-      return a.getAbsoluteResourcePath();
-    };
-
-    return TestdroidCloudAPIClient;
+    return API;
 
   })();
 
+  var API$1 = API;
+
+  var TestdroidCloudAPIClient;
+
+  TestdroidCloudAPIClient = {
+    API: API$1,
+    Utils: Utils$1,
+    FilterBuilder: FilterBuilder$1
+  };
+
   var TestdroidCloudAPIClient$1 = TestdroidCloudAPIClient;
-
-  TestdroidCloudAPIClient$1.Utils = Utils$1;
-
-  TestdroidCloudAPIClient$1.FilterBuilder = FilterBuilder$1;
 
   return TestdroidCloudAPIClient$1;
 

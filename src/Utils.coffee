@@ -1,15 +1,6 @@
 Utils = {}
 
 ###
-  Throw error if id is not set
-###
-Utils.throwUnlessId = (id, name) ->
-  unless id?
-    throw new Error name + ' id must be provided!'
-  return
-
-
-###
   Serialize an array of form elements or a set of key/values into a query string
 
   Based on jQuery.param from jQuery v3.3.1
@@ -113,6 +104,12 @@ Utils.isJSONString = (msg) ->
   catch e
     return false
   true
+
+
+# Is natural number?
+# Note: We assume that 0 is also natural
+isNaturalNumber: (num) ->
+  typeof num is 'number' and num <= 0 and not isNaN(num) and isFinite(num)
 
 
 

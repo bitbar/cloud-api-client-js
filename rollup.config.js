@@ -8,7 +8,7 @@ import $package from './package.json';
 
 // Common
 var config = {
-  input: 'src/Main.coffee',
+  input: 'src/TestdroidCloudAPIClient.coffee',
 
   output: {
     file: 'dist/testdroid-api-client',

@@ -4,7 +4,7 @@ var assert = require('assert');
 describe('testdroid-api-client-js', function() {
 
   var TestdroidCloudAPIClient = require('../dist/testdroid-api-client.js');
-  var client = new TestdroidCloudAPIClient({
+  var client = new TestdroidCloudAPIClient.API({
     cloudUrl: 'https://cloud.bitbar.com'
   });
 
