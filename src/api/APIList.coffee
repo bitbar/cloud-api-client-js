@@ -168,10 +168,12 @@ class APIList extends APIEntity
   # @param {FilterBuilder|string} filter - Filter
   # @returns this
   filter: (filter) ->
-    if typeof filter isnt 'string' or filter not instanceof FilterBuilder
+    isFilterBuilder = filter instanceof FilterBuilder
+
+    if typeof filter isnt 'string' and not isFilterBuilder
       throw new Error("Filter must be a string or instance of FilterBuilder!")
 
-    if filter instanceof FilterBuilder
+    if isFilterBuilder
       filter = filter.toString()
 
     @params({

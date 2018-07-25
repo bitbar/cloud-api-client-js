@@ -108,8 +108,8 @@ Utils.isJSONString = (msg) ->
 
 # Is natural number?
 # Note: We assume that 0 is also natural
-isNaturalNumber: (num) ->
-  typeof num is 'number' and num <= 0 and not isNaN(num) and isFinite(num)
+Utils.isNaturalNumber = (num) ->
+  typeof num is 'number' and num >= 0 and not isNaN(num) and isFinite(num)
 
 
 

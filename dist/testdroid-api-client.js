@@ -1,4 +1,4 @@
-/* Testdroid Cloud API Client for JavaScript v0.4.0-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.4.1-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -110,6 +110,10 @@
       return false;
     }
     return true;
+  };
+
+  Utils.isNaturalNumber = function(num) {
+    return typeof num === 'number' && num >= 0 && !isNaN(num) && isFinite(num);
   };
 
   var Utils$1 = Utils;
@@ -498,10 +502,12 @@
     };
 
     APIList.prototype.filter = function(filter) {
-      if (typeof filter !== 'string' || !(filter instanceof FilterBuilder$1)) {
+      var isFilterBuilder;
+      isFilterBuilder = filter instanceof FilterBuilder$1;
+      if (typeof filter !== 'string' && !isFilterBuilder) {
         throw new Error("Filter must be a string or instance of FilterBuilder!");
       }
-      if (filter instanceof FilterBuilder$1) {
+      if (isFilterBuilder) {
         filter = filter.toString();
       }
       return this.params({
@@ -1535,7 +1541,7 @@
 
   var APIResourceUserSession$1 = APIResourceUserSession;
 
-  var version = "0.4.0-beta";
+  var version = "0.4.1-beta";
 
   var API, axios;
 
