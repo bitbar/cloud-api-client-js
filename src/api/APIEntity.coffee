@@ -1,3 +1,5 @@
+qs = require('qs')
+
 import Utils from '../Utils'
 
 
@@ -27,15 +29,26 @@ class APIEntity
   # @type {Object}
   _config: null
 
+  # Root
+  #
+  # @public
+  root: null
+
   # @constructor
   # @param {APIEntity} [parent] - Specifies a parent from which should be inherited properties
   constructor: (parent) ->
     @_stack = []
     @_config = {}
 
-    # inherit if parent exist
-    if parent?
+    if parent.root is true
+      @root = parent
+    else
+      @root = parent.root
+
+    if parent._stack?
       @push.apply(this, parent._stack)
+
+    if parent._config?
       @config(parent._config)
 
     this
@@ -125,6 +138,28 @@ class APIEntity
       data: data
     })
     this
+
+  # Send request
+  #
+  # @public
+  # @returns Promise
+  send: ->
+    config = Utils.extend({}, @_config, {
+      url: '/' + @_stack.join('/')
+    })
+
+    # Set default headers
+    config.headers ?= {}
+    config.headers['Content-Type'] ?= 'application/x-www-form-urlencoded'
+
+    # Convert data if needed
+    if config.method is 'POST' and
+       config.headers['Content-Type'] is 'application/x-www-form-urlencoded' and
+       config.data?
+      config.data = qs.stringify(config.data)
+
+    # Send request
+    @root.axios.request(config)
 
 
 

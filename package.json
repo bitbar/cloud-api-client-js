@@ -1,6 +1,6 @@
 {
   "name": "testdroid-api-client-js",
-  "version": "0.3.0-alpha",
+  "version": "0.4.0-beta",
   "description": "Testdroid Cloud API Client for JavaScript",
   "main": "dist/testdroid-api-client.js",
   "scripts": {
@@ -29,10 +29,12 @@
     "rollup": "^0.58.2",
     "rollup-plugin-coffee-script": "<2.0.0",
     "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-json": "^3.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "qs": "^6.5.2"
   }
 }

@@ -1,6 +1,7 @@
 // Imports
 import commonjs from 'rollup-plugin-commonjs';
 import coffee from 'rollup-plugin-coffee-script';
+import json from 'rollup-plugin-json';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import uglify from 'rollup-plugin-uglify';
 
@@ -40,6 +41,7 @@ export default [
   
     plugins: [
       coffee(),
+      json(),
       nodeResolve({
         extensions: config.extensions
       }),
@@ -64,6 +66,7 @@ export default [
   
     plugins: [
       coffee(),
+      json(),
       nodeResolve({
         extensions: config.extensions
       }),

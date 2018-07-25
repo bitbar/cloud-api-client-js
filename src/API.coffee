@@ -1,3 +1,5 @@
+axios = require('axios')
+
 import APIList from './api/APIList'
 import APIListDevices from './api/APIListDevices'
 import APIListProperties from './api/APIListProperties'
@@ -15,12 +17,63 @@ import APIResourceRun from './api/APIResourceRun'
 import APIResourceUser from './api/APIResourceUser'
 import APIResourceUserSession from './api/APIResourceUserSession'
 
+import {version} from '../package.json'
+
+
+# Set User-Agent
+axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version
+
 
 # API
 # Root for other API resources
 #
 # @class
 class API
+
+  # Mark as root
+  root: true
+
+  # Main config
+  config: null
+
+  # axios instance
+  axios: null
+
+  # @constructor
+  constructor: (config) ->
+    unless config?
+      throw new Error('config cannot be empty!')
+
+    @config = {}
+
+    # Validate and correct cloudUrl if needed
+    if config.cloudUrl?
+      if typeof config.cloudUrl is 'string' and config.cloudUrl.length > 1
+        @config.baseURL = config.cloudUrl.replace(/\/+$/, '') + '/api'
+      else
+        throw new Error('Invalid config.cloudUrl!')
+    else
+      throw new Error('config.cloudUrl is required!')
+
+    # Check v2
+    if config.v2
+      @config.baseURL += '/v2'
+
+    # Check if apiKey is set
+    if config.apiKey?
+      if typeof config.apiKey is 'string' and /^[A-Za-z0-9]{32}$/.test(config.apiKey)
+        @config.auth = {
+          username: config.apiKey
+          password: ''
+        }
+      else
+        throw new Error('Invalid config.apiKey!')
+
+    # Create axios instance
+    @axios = axios.create(@config)
+
+    this
+    
 
   # /me
   me: ->
@@ -30,7 +83,7 @@ class API
   #
   # @param {number} id - Resource ID
   user: (id) ->
-    new APIResourceUser(null, id)
+    new APIResourceUser(this, id)
 
   # /admin
   #
@@ -40,31 +93,31 @@ class API
 
   # /user-session
   userSession: ->
-    new APIResourceUserSession()
+    new APIResourceUserSession(this)
 
   # /devices
   devices: ->
-    new APIListDevices()
+    new APIListDevices(this)
     
   # /device/{id}
   #
   # @param {number} id - Resource ID
   device: (id) ->
-    new APIResourceDevice(null, id)
+    new APIResourceDevice(this, id)
 
   # /device-groups
   deviceGroups: ->
-    new APIList().push('device-groups')
+    new APIList(this).push('device-groups')
 
   # /device-groups/{id}
   #
   # @param {number} id - Resource ID
   deviceGroup: (id) ->
-    new APIResourceDeviceGroup(null, id)
+    new APIResourceDeviceGroup(this, id)
 
   # /device-status
   deviceStatuses: ->
-    new APIList().push('device-status')
+    new APIList(this).push('device-status')
 
   # /device-status/{id}
   #
@@ -73,27 +126,27 @@ class API
     unless id?
       throw new Error('Resource ID cannot be null!')
 
-    new APIResource().push('device-status', id)
+    new APIResource(this).push('device-status', id)
 
   # /device-sessions
   deviceSessions: ->
-    new APIList().push('device-sessions')
+    new APIList(this).push('device-sessions')
 
   # /device-sessions/{id}
   #
   # @param {number} id - Resource ID
   deviceSession: (id) ->
-    new APIResourceDeviceSession(null, id)
+    new APIResourceDeviceSession(this, id)
 
   # /files
   files: ->
-    new APIList().push('files')
+    new APIList(this).push('files')
 
   # /files/{id}
   #
   # @param {number} id - Resource ID
   file: (id) ->
-    new APIResourceFile(null, id)
+    new APIResourceFile(this, id)
 
   # /files/{id}/file
   #
@@ -106,51 +159,51 @@ class API
 
   # /file-sets
   fileSets: ->
-    new APIList().push('file-sets')
+    new APIList(this).push('file-sets')
 
   # /file-sets/{id}
   #
   # @param {number} id - Resource ID
   fileSet: (id) ->
-    new APIResourceFileSet(null, id)
+    new APIResourceFileSet(this, id)
 
   # /runs/config
   runsConfig: ->
-    new APIResource().push('runs', 'config')
+    new APIResource(this).push('runs', 'config')
 
   # /runs
   runs: ->
-    new APIList().push('runs')
+    new APIList(this).push('runs')
 
   # /run
   #
   # @param {number} id - Resource ID
   run: (id) ->
-    new APIResourceRun(null, id)
+    new APIResourceRun(this, id)
 
   # /projects
   projects: ->
-    new APIList().push('projects')
+    new APIList(this).push('projects')
 
   # /projects/{id}
   #
   # @param {number} id - Resource ID
   project: (id) ->
-    new APIResourceProject(null, id)
+    new APIResourceProject(this, id)
 
   # /label-groups
   labelGroups: ->
-    new APIList().push('label-groups')
+    new APIList(this).push('label-groups')
 
   # /label-groups/{id}
   #
   # @param {number} id - Resource ID
   labelGroup: (id) ->
-    new APIResourceLabelGroup(null, id)
+    new APIResourceLabelGroup(this, id)
 
   # /properties
   properties: ->
-    new APIListProperties()
+    new APIListProperties(this)
 
   # /properties/{id}
   #
@@ -159,19 +212,19 @@ class API
     unless id?
       throw new Error('Resource ID cannot be null!')
 
-    new APIResource().push('properties', id)
+    new APIResource(this).push('properties', id)
 
   # /services
   services: ->
-    new APIListServices()
+    new APIListServices(this)
 
   # /sessions
   sessions: ->
-    new APIList().push('sessions')
+    new APIList(this).push('sessions')
 
   # /license
   license: ->
-    new APIResource().push('license')
+    new APIResource(this).push('license')
 
 
 

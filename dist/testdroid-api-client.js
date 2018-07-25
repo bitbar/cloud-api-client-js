@@ -1,4 +1,4 @@
-/* Testdroid Cloud API Client for JavaScript v0.3.0-alpha | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.4.0-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -114,9 +114,11 @@
 
   var Utils$1 = Utils;
 
-  var ALLOWED_HTTP_METHODS, APIEntity,
+  var ALLOWED_HTTP_METHODS, APIEntity, qs,
     slice = [].slice,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  qs = require('qs');
 
   ALLOWED_HTTP_METHODS = ['GET', 'POST', 'DELETE'];
 
@@ -125,11 +127,20 @@
 
     APIEntity.prototype._config = null;
 
+    APIEntity.prototype.root = null;
+
     function APIEntity(parent) {
       this._stack = [];
       this._config = {};
-      if (parent != null) {
+      if (parent.root === true) {
+        this.root = parent;
+      } else {
+        this.root = parent.root;
+      }
+      if (parent._stack != null) {
         this.push.apply(this, parent._stack);
+      }
+      if (parent._config != null) {
         this.config(parent._config);
       }
     }
@@ -188,6 +199,23 @@
         data: data
       });
       return this;
+    };
+
+    APIEntity.prototype.send = function() {
+      var base, config;
+      config = Utils$1.extend({}, this._config, {
+        url: '/' + this._stack.join('/')
+      });
+      if (config.headers == null) {
+        config.headers = {};
+      }
+      if ((base = config.headers)['Content-Type'] == null) {
+        base['Content-Type'] = 'application/x-www-form-urlencoded';
+      }
+      if (config.method === 'POST' && config.headers['Content-Type'] === 'application/x-www-form-urlencoded' && (config.data != null)) {
+        config.data = qs.stringify(config.data);
+      }
+      return this.root.axios.request(config);
     };
 
     return APIEntity;
@@ -1507,17 +1535,57 @@
 
   var APIResourceUserSession$1 = APIResourceUserSession;
 
-  var API;
+  var version = "0.4.0-beta";
+
+  var API, axios;
+
+  axios = require('axios');
+
+  axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version;
 
   API = (function() {
-    function API() {}
+    API.prototype.root = true;
+
+    API.prototype.config = null;
+
+    API.prototype.axios = null;
+
+    function API(config) {
+      if (config == null) {
+        throw new Error('config cannot be empty!');
+      }
+      this.config = {};
+      if (config.cloudUrl != null) {
+        if (typeof config.cloudUrl === 'string' && config.cloudUrl.length > 1) {
+          this.config.baseURL = config.cloudUrl.replace(/\/+$/, '') + '/api';
+        } else {
+          throw new Error('Invalid config.cloudUrl!');
+        }
+      } else {
+        throw new Error('config.cloudUrl is required!');
+      }
+      if (config.v2) {
+        this.config.baseURL += '/v2';
+      }
+      if (config.apiKey != null) {
+        if (typeof config.apiKey === 'string' && /^[A-Za-z0-9]{32}$/.test(config.apiKey)) {
+          this.config.auth = {
+            username: config.apiKey,
+            password: ''
+          };
+        } else {
+          throw new Error('Invalid config.apiKey!');
+        }
+      }
+      this.axios = axios.create(this.config);
+    }
 
     API.prototype.me = function() {
       return new APIResourceUser$1(this, 'me');
     };
 
     API.prototype.user = function(id) {
-      return new APIResourceUser$1(null, id);
+      return new APIResourceUser$1(this, id);
     };
 
     API.prototype.admin = function() {
@@ -1525,50 +1593,50 @@
     };
 
     API.prototype.userSession = function() {
-      return new APIResourceUserSession$1();
+      return new APIResourceUserSession$1(this);
     };
 
     API.prototype.devices = function() {
-      return new APIListDevices$1();
+      return new APIListDevices$1(this);
     };
 
     API.prototype.device = function(id) {
-      return new APIResourceDevice$1(null, id);
+      return new APIResourceDevice$1(this, id);
     };
 
     API.prototype.deviceGroups = function() {
-      return new APIList$1().push('device-groups');
+      return new APIList$1(this).push('device-groups');
     };
 
     API.prototype.deviceGroup = function(id) {
-      return new APIResourceDeviceGroup$1(null, id);
+      return new APIResourceDeviceGroup$1(this, id);
     };
 
     API.prototype.deviceStatuses = function() {
-      return new APIList$1().push('device-status');
+      return new APIList$1(this).push('device-status');
     };
 
     API.prototype.deviceStatus = function(id) {
       if (id == null) {
         throw new Error('Resource ID cannot be null!');
       }
-      return new APIResource$2().push('device-status', id);
+      return new APIResource$2(this).push('device-status', id);
     };
 
     API.prototype.deviceSessions = function() {
-      return new APIList$1().push('device-sessions');
+      return new APIList$1(this).push('device-sessions');
     };
 
     API.prototype.deviceSession = function(id) {
-      return new APIResourceDeviceSession$1(null, id);
+      return new APIResourceDeviceSession$1(this, id);
     };
 
     API.prototype.files = function() {
-      return new APIList$1().push('files');
+      return new APIList$1(this).push('files');
     };
 
     API.prototype.file = function(id) {
-      return new APIResourceFile$1(null, id);
+      return new APIResourceFile$1(this, id);
     };
 
     API.prototype.filePath = function(id) {
@@ -1579,62 +1647,62 @@
     };
 
     API.prototype.fileSets = function() {
-      return new APIList$1().push('file-sets');
+      return new APIList$1(this).push('file-sets');
     };
 
     API.prototype.fileSet = function(id) {
-      return new APIResourceFileSet$1(null, id);
+      return new APIResourceFileSet$1(this, id);
     };
 
     API.prototype.runsConfig = function() {
-      return new APIResource$2().push('runs', 'config');
+      return new APIResource$2(this).push('runs', 'config');
     };
 
     API.prototype.runs = function() {
-      return new APIList$1().push('runs');
+      return new APIList$1(this).push('runs');
     };
 
     API.prototype.run = function(id) {
-      return new APIResourceRun$1(null, id);
+      return new APIResourceRun$1(this, id);
     };
 
     API.prototype.projects = function() {
-      return new APIList$1().push('projects');
+      return new APIList$1(this).push('projects');
     };
 
     API.prototype.project = function(id) {
-      return new APIResourceProject$1(null, id);
+      return new APIResourceProject$1(this, id);
     };
 
     API.prototype.labelGroups = function() {
-      return new APIList$1().push('label-groups');
+      return new APIList$1(this).push('label-groups');
     };
 
     API.prototype.labelGroup = function(id) {
-      return new APIResourceLabelGroup$1(null, id);
+      return new APIResourceLabelGroup$1(this, id);
     };
 
     API.prototype.properties = function() {
-      return new APIListProperties$1();
+      return new APIListProperties$1(this);
     };
 
     API.prototype.property = function(id) {
       if (id == null) {
         throw new Error('Resource ID cannot be null!');
       }
-      return new APIResource$2().push('properties', id);
+      return new APIResource$2(this).push('properties', id);
     };
 
     API.prototype.services = function() {
-      return new APIListServices$1();
+      return new APIListServices$1(this);
     };
 
     API.prototype.sessions = function() {
-      return new APIList$1().push('sessions');
+      return new APIList$1(this).push('sessions');
     };
 
     API.prototype.license = function() {
-      return new APIResource$2().push('license');
+      return new APIResource$2(this).push('license');
     };
 
     return API;
