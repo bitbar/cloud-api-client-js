@@ -1,6 +1,5 @@
-qs = require('qs')
-
 import Utils from '../Utils'
+import qs from 'qs'
 
 
 # Allowed methods

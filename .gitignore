@@ -8,3 +8,6 @@ package-lock.json
 
 # Refactoring
 *.old.coffee
+
+# Demo
+demo/

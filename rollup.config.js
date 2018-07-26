@@ -7,6 +7,14 @@ import uglify from 'rollup-plugin-uglify';
 
 import $package from './package.json';
 
+var externals = Object.keys($package.dependencies || []);
+var globals = {};
+
+for(let ext of externals) {
+  globals[ext] = ext;
+}
+
+
 // Common
 var config = {
   input: 'src/TestdroidCloudAPIClient.coffee',
@@ -18,12 +26,13 @@ var config = {
     banner: '/* Testdroid Cloud API Client for JavaScript v'
           + $package.version
           + ' | (c) Marek Sierociński and other contributors'
-          + ' | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */'
+          + ' | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */',
+    globals: globals
   },
 
   extensions: ['.js', '.coffee'],
 
-  external: Object.keys($package.dependencies || [])
+  external: externals
 };
 
 // Export
@@ -36,7 +45,8 @@ export default [
       file: config.output.file + '.js',
       format: config.output.format,
       name:  config.output.name,
-      banner: config.output.banner
+      banner: config.output.banner,
+      globals: config.output.globals
     },
   
     plugins: [
@@ -61,7 +71,8 @@ export default [
       file: config.output.file + '.min.js',
       format: config.output.format,
       name:  config.output.name,
-      banner: config.output.banner
+      banner: config.output.banner,
+      globals: config.output.globals
     },
   
     plugins: [

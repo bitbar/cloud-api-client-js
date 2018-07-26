@@ -11,6 +11,7 @@ import APIResourceNotification from './APIResourceNotification'
 
 import APIList from './APIList'
 import APIListDeviceTime from './APIListDeviceTime'
+import APIListFiles from './APIListFiles'
 import APIListServices from './APIListServices'
 import APIListRuns from './APIListRuns'
 import APIListNotifications from './APIListNotifications'
@@ -112,7 +113,7 @@ class APIResourceUser extends APIResource
 
   # /users/{id}/files
   files: ->
-    new APIList(this).push('files')
+    new APIListFiles(this)
 
   # /users/{id}/files/{id}
   file: (id) ->

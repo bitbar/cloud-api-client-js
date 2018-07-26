@@ -1,4 +1,4 @@
-axios = require('axios')
+import axios from 'axios'
 
 import APIList from './api/APIList'
 import APIListDevices from './api/APIListDevices'
@@ -18,10 +18,11 @@ import APIResourceUser from './api/APIResourceUser'
 import APIResourceUserSession from './api/APIResourceUserSession'
 
 import {version} from '../package.json'
+import Utils from './Utils'
 
-
-# Set User-Agent
-axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version
+if Utils.isNodeJs
+  # Set User-Agent
+  axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version
 
 # Disable max content length
 axios.defaults.maxContentLength = 1073741824 # 1GB

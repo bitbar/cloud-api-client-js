@@ -1,4 +1,6 @@
-Utils = {}
+Utils = {
+  isNodeJs: module?.exports?
+}
 
 ###
   Serialize an array of form elements or a set of key/values into a query string

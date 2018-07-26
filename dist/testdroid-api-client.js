@@ -1,13 +1,18 @@
-/* Testdroid Cloud API Client for JavaScript v0.5.0-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Testdroid Cloud API Client for JavaScript v0.6.0-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global['testdroid-api-client-js'] = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('qs'), require('axios')) :
+  typeof define === 'function' && define.amd ? define(['qs', 'axios'], factory) :
+  (global['testdroid-api-client-js'] = factory(global.qs,global.axios));
+}(this, (function (qs,axios) { 'use strict';
+
+  qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
+  axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
 
   var Utils, buildParams;
 
-  Utils = {};
+  Utils = {
+    isNodeJs: (typeof module !== "undefined" && module !== null ? module.exports : void 0) != null
+  };
 
 
   /*
@@ -118,11 +123,9 @@
 
   var Utils$1 = Utils;
 
-  var ALLOWED_HTTP_METHODS, APIEntity, qs,
+  var ALLOWED_HTTP_METHODS, APIEntity,
     slice = [].slice,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-  qs = require('qs');
 
   ALLOWED_HTTP_METHODS = ['GET', 'POST', 'DELETE'];
 
@@ -1308,12 +1311,45 @@
 
   var APIListDeviceTime$1 = APIListDeviceTime;
 
-  var APIListRuns,
+  var APIListFiles,
     extend$20 = function(child, parent) { for (var key in parent) { if (hasProp$20.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp$20 = {}.hasOwnProperty;
 
+  APIListFiles = (function(superClass) {
+    extend$20(APIListFiles, superClass);
+
+    function APIListFiles(parent) {
+      APIListFiles.__super__.constructor.call(this, parent);
+      this.push('files');
+    }
+
+    APIListFiles.prototype.upload = function(obj) {
+      var FormData, form, fs;
+      if (Utils$1.isNodeJs) {
+        fs = require('fs');
+        FormData = require('form-data');
+        form = new FormData();
+        form.append('file', fs.createReadStream(obj.dir + '/' + obj.filename), {
+          filename: obj.filename
+        });
+      } else {
+        throw new Error('Not supported yet!');
+      }
+      return this.post().headers(form.getHeaders()).data(form);
+    };
+
+    return APIListFiles;
+
+  })(APIList$1);
+
+  var APIListFiles$1 = APIListFiles;
+
+  var APIListRuns,
+    extend$21 = function(child, parent) { for (var key in parent) { if (hasProp$21.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$21 = {}.hasOwnProperty;
+
   APIListRuns = (function(superClass) {
-    extend$20(APIListRuns, superClass);
+    extend$21(APIListRuns, superClass);
 
     function APIListRuns(parent) {
       APIListRuns.__super__.constructor.call(this, parent);
@@ -1331,11 +1367,11 @@
   var APIListRuns$1 = APIListRuns;
 
   var APIListNotifications,
-    extend$21 = function(child, parent) { for (var key in parent) { if (hasProp$21.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$21 = {}.hasOwnProperty;
+    extend$22 = function(child, parent) { for (var key in parent) { if (hasProp$22.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$22 = {}.hasOwnProperty;
 
   APIListNotifications = (function(superClass) {
-    extend$21(APIListNotifications, superClass);
+    extend$22(APIListNotifications, superClass);
 
     function APIListNotifications(parent) {
       APIListNotifications.__super__.constructor.call(this, parent);
@@ -1357,11 +1393,11 @@
   var APIListNotifications$1 = APIListNotifications;
 
   var APIResourceUser,
-    extend$22 = function(child, parent) { for (var key in parent) { if (hasProp$22.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$22 = {}.hasOwnProperty;
+    extend$23 = function(child, parent) { for (var key in parent) { if (hasProp$23.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$23 = {}.hasOwnProperty;
 
   APIResourceUser = (function(superClass) {
-    extend$22(APIResourceUser, superClass);
+    extend$23(APIResourceUser, superClass);
 
     function APIResourceUser(parent, id) {
       if (id == null) {
@@ -1450,7 +1486,7 @@
     };
 
     APIResourceUser.prototype.files = function() {
-      return new APIList$1(this).push('files');
+      return new APIListFiles$1(this);
     };
 
     APIResourceUser.prototype.file = function(id) {
@@ -1534,11 +1570,11 @@
   var APIResourceUser$1 = APIResourceUser;
 
   var APIResourceUserSession,
-    extend$23 = function(child, parent) { for (var key in parent) { if (hasProp$23.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$23 = {}.hasOwnProperty;
+    extend$24 = function(child, parent) { for (var key in parent) { if (hasProp$24.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp$24 = {}.hasOwnProperty;
 
   APIResourceUserSession = (function(superClass) {
-    extend$23(APIResourceUserSession, superClass);
+    extend$24(APIResourceUserSession, superClass);
 
     function APIResourceUserSession(parent) {
       APIResourceUserSession.__super__.constructor.call(this, parent);
@@ -1563,13 +1599,13 @@
 
   var APIResourceUserSession$1 = APIResourceUserSession;
 
-  var version = "0.5.0-beta";
+  var version = "0.6.0-beta";
 
-  var API, axios;
+  var API;
 
-  axios = require('axios');
-
-  axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version;
+  if (Utils$1.isNodeJs) {
+    axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version;
+  }
 
   axios.defaults.maxContentLength = 1073741824;
 
