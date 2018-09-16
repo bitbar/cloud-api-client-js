@@ -8,7 +8,7 @@ import APIList from './APIList'
 class APIListNotifications extends APIList
 
   # /notifications
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('notifications')

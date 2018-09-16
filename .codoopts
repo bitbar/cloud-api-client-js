@@ -1,0 +1,10 @@
+--name       "@bitbar/cloud-api-client"
+--readme     README.md
+--title      "Bitbar Cloud API Client for JavaScript"
+--quiet
+--extension  coffee
+--output     ./docs
+./src
+-
+LICENSE.md
+CHANGELOG.md

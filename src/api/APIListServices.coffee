@@ -8,7 +8,7 @@ import APIListPurchased from './APIListPurchased'
 # @extends APIList
 class APIListServices extends APIList
 
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('services')

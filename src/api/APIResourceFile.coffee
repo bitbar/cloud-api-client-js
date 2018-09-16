@@ -10,7 +10,7 @@ class APIResourceFile extends APIResource
 
   # /files/{id}
   #
-  # @constructor
+  # Constructor
   constructor: (parent, id) ->
     unless id?
       throw new Error('Resource ID cannot be null!')

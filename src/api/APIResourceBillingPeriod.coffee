@@ -9,7 +9,7 @@ class APIResourceBillingPeriod extends APIResource
 
   # /billing-periods/{id}
   #
-  # @constructor
+  # Constructor
   constructor: (parent, id) ->
     unless id?
       throw new Error('Resource ID cannot be null!')

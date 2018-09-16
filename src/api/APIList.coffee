@@ -1,5 +1,4 @@
 import APIEntity from './APIEntity'
-import Utils from '../Utils'
 import FilterBuilder from '../FilterBuilder'
 
 
@@ -52,7 +51,7 @@ class APIList extends APIEntity
   # @param {number} [limit=DEFAULT_LIMIT] - Limit to be set
   # @returns this
   limit: (limit = DEFAULT_LIMIT) ->
-    unless Utils.isNaturalNumber(limit)
+    unless Number.isNatural(limit)
       throw new Error("Limit '#{limit}' is invalid!")
 
     @params({
@@ -82,7 +81,7 @@ class APIList extends APIEntity
   # @param {number} [offset=DEFAULT_OFFSET] - Offset to be set
   # @returns this
   offset: (offset = DEFAULT_OFFSET) ->
-    unless Utils.isNaturalNumber(offset)
+    unless Number.isNatural(offset)
       throw new Error("Offset '#{offset}' is invalid!")
 
     @params({
@@ -96,10 +95,10 @@ class APIList extends APIEntity
   # @param {number} to - To index
   # @returns this
   between: (from, to) ->
-    unless Utils.isNaturalNumber(from)
+    unless Number.isNatural(from)
       throw new Error("From '#{from}' is invalid!")
 
-    unless Utils.isNaturalNumber(to)
+    unless Number.isNatural(to)
       throw new Error("To '#{to}' is invalid!")
 
     @params({
@@ -122,7 +121,7 @@ class APIList extends APIEntity
   # @param {number} idx - Index
   # @returns this
   only: (idx) ->
-    unless Utils.isNaturalNumber(idx)
+    unless Number.isNatural(idx)
       throw new Error("Index '#{from}' is invalid!")
 
     @params({
@@ -136,7 +135,7 @@ class APIList extends APIEntity
   # @param {number} [page=1] - Page number (counted from 1)
   # @returns this
   page: (page = 1) ->
-    if not Utils.isNaturalNumber(page) or page is 0
+    if not Number.isNatural(page) or page is 0
       throw new Error("Page '#{from}' is invalid!")
 
     limit = if @_config.params?.limit? then @_config.params.limit else DEFAULT_LIMIT
@@ -148,6 +147,7 @@ class APIList extends APIEntity
     })
 
   # Sets search
+  #
   # query param is working like SQL LIKE. BE sets wraps around query with %, and replaces every white character
   # with %. So e.g. if query='my device', then it's searching for '%my%device%' in DB.
   #
@@ -156,7 +156,7 @@ class APIList extends APIEntity
   # @returns this
   search: (query) ->
     if typeof query isnt 'string'
-      throw new Error("Search query must be a string!")
+      throw new Error('Search query must be a string!')
 
     @params({
       search: query
@@ -171,7 +171,7 @@ class APIList extends APIEntity
     isFilterBuilder = filter instanceof FilterBuilder
 
     if typeof filter isnt 'string' and not isFilterBuilder
-      throw new Error("Filter must be a string or instance of FilterBuilder!")
+      throw new Error('Filter must be a string or instance of FilterBuilder!')
 
     if isFilterBuilder
       filter = filter.toString()

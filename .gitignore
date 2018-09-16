@@ -1,13 +1,6 @@
 # Common
 node_modules/
-package-lock.json
 
 # IDE
 .vscode/
 .idea/
-
-# Refactoring
-*.old.coffee
-
-# Demo
-demo/

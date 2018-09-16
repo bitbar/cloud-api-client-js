@@ -17,16 +17,16 @@ for(let ext of externals) {
 
 // Common
 var config = {
-  input: 'src/TestdroidCloudAPIClient.coffee',
+  input: 'src/CloudAPIClient.coffee',
 
   output: {
-    file: 'dist/testdroid-api-client',
+    file: 'dist/cloud-api-client',
     format: 'umd',
-    name: 'testdroid-api-client-js',
-    banner: '/* Testdroid Cloud API Client for JavaScript v'
-          + $package.version
-          + ' | (c) Marek Sierociński and other contributors'
-          + ' | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */',
+    name: 'cloud-api-client-js',
+    banner: `/* Bitbar Cloud API Client for JavaScript v${$package.version} ` +
+            '| (c) Bitbar Technologies and contributors ' +
+            '| https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md ' +
+            '*/',
     globals: globals
   },
 
@@ -35,62 +35,52 @@ var config = {
   external: externals
 };
 
+var input = config.input;
+
+var output = function(min) {
+  return {
+    file: config.output.file + (min ? '.min' : '') + '.js',
+    format: config.output.format,
+    name:  config.output.name,
+    banner: config.output.banner,
+    globals: config.output.globals
+  };
+};
+
+var plugins = [
+  coffee(),
+  json(),
+  nodeResolve({
+    extensions: config.extensions
+  }),
+  commonjs({
+    extensions: config.extensions
+  })
+];
+
+var external = config.external;
+
 // Export
 export default [
   // Uncompressed config
   {
-    input: config.input,
-  
-    output: {
-      file: config.output.file + '.js',
-      format: config.output.format,
-      name:  config.output.name,
-      banner: config.output.banner,
-      globals: config.output.globals
-    },
-  
-    plugins: [
-      coffee(),
-      json(),
-      nodeResolve({
-        extensions: config.extensions
-      }),
-      commonjs({
-        extensions: config.extensions
-      })
-    ],
-
-    external: config.external
+    input: input,
+    output: output(),
+    plugins: plugins,
+    external: external
   },
 
   // Compressed config
   {
-    input: config.input,
-  
-    output: {
-      file: config.output.file + '.min.js',
-      format: config.output.format,
-      name:  config.output.name,
-      banner: config.output.banner,
-      globals: config.output.globals
-    },
-  
-    plugins: [
-      coffee(),
-      json(),
-      nodeResolve({
-        extensions: config.extensions
-      }),
-      commonjs({
-        extensions: config.extensions
-      }),
+    input: input,
+    output: output(true),
+    plugins: plugins.concat([
       uglify({
         output: {
           comments: 'all'
         }
       })
-    ],
-
-    external: config.external
+    ]),
+    external: external
   }
 ]

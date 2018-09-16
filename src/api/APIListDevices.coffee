@@ -10,7 +10,7 @@ class APIListDevices extends APIList
 
   # /devices
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('devices')

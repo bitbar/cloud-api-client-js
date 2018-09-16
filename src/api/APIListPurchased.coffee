@@ -9,7 +9,7 @@ class APIListPurchased extends APIList
 
   # /purchased
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('purchased')

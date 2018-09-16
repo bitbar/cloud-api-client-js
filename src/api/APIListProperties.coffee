@@ -9,7 +9,7 @@ class APIListProperties extends APIList
 
   # /properties
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('properties')

@@ -12,7 +12,7 @@ class APIResourceFileSet extends APIResource
 
   # /file-sets/{id}
   #
-  # @constructor
+  # Constructor
   constructor: (parent, id) ->
     unless id?
       throw new Error('Resource ID cannot be null!')

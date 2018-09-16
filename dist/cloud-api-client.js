@@ -1,127 +1,12 @@
-/* Testdroid Cloud API Client for JavaScript v0.6.0-beta | (c) Marek Sierociński and other contributors | https://github.com/marverix/testdroid-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.7.0-beta | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('qs'), require('axios')) :
-  typeof define === 'function' && define.amd ? define(['qs', 'axios'], factory) :
-  (global['testdroid-api-client-js'] = factory(global.qs,global.axios));
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('qs'), require('axios'), require('finka')) :
+  typeof define === 'function' && define.amd ? define(['qs', 'axios', 'finka'], factory) :
+  (global['cloud-api-client-js'] = factory(global.qs,global.axios));
 }(this, (function (qs,axios) { 'use strict';
 
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
-
-  var Utils, buildParams;
-
-  Utils = {
-    isNodeJs: (typeof module !== "undefined" && module !== null ? module.exports : void 0) != null
-  };
-
-
-  /*
-    Serialize an array of form elements or a set of key/values into a query string
-
-    Based on jQuery.param from jQuery v3.3.1
-
-    jQuery JavaScript Library v3.3.1
-    https://jquery.com/
-   
-    Copyright JS Foundation and other contributors
-    Released under the MIT license
-    https://jquery.org/license
-   */
-
-  buildParams = function(prefix, obj, add) {
-    var i, j, k, len, v;
-    if (Array.isArray(obj)) {
-      for (i in obj) {
-        v = obj[i];
-        if (/\[\]$/.test(prefix)) {
-          add(prefix, v);
-        } else {
-          buildParams(prefix + '[' + ((v != null) && typeof v === 'object' ? i : '') + ']', v, add);
-        }
-      }
-    } else if ((obj != null) && typeof obj === 'object') {
-      for (v = j = 0, len = obj.length; j < len; v = ++j) {
-        k = obj[v];
-        buildParams(prefix + '[' + k + ']', v, add);
-      }
-    } else {
-      add(prefix, obj);
-    }
-  };
-
-  Utils.param = function(a) {
-    var add, item, j, k, len, s, v;
-    s = [];
-    add = function(key, valueOrFunction) {
-      var value;
-      value = typeof valueOrFunction === 'function' ? valueOrFunction() : valueOrFunction;
-      return s[s.length] = encodeURIComponent(key) + '=' + encodeURIComponent(value != null ? value : '');
-    };
-    if (Array.isArray(a)) {
-      for (j = 0, len = a.length; j < len; j++) {
-        item = a[j];
-        add(item.name, item.value);
-      }
-    } else {
-      for (k in a) {
-        v = a[k];
-        buildParams(k, v, add);
-      }
-    }
-    return s.join('&');
-  };
-
-  Utils.getUrl = function(resource, settings, cloudUrl) {
-    var params, paramsString;
-    if (settings == null) {
-      settings = {};
-    }
-    if (cloudUrl == null) {
-      cloudUrl = '';
-    }
-    params = Utils.extend({}, settings.params || {});
-    delete params.important;
-    delete params.cacheTTL;
-    paramsString = Utils.param(params).replace('%25', '');
-    if (paramsString.length > 0) {
-      paramsString = '?' + paramsString;
-    }
-    return cloudUrl + resource + paramsString;
-  };
-
-  Utils.extend = function() {
-    var i, j, key, ref;
-    for (i = j = 1, ref = arguments.length - 1; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
-      for (key in arguments[i]) {
-        if (arguments[i].hasOwnProperty(key)) {
-          if (typeof arguments[0][key] === 'object' && typeof arguments[i][key] === 'object') {
-            Utils.extend(arguments[0][key], arguments[i][key]);
-          } else {
-            arguments[0][key] = arguments[i][key];
-          }
-        }
-      }
-    }
-    return arguments[0];
-  };
-
-  Utils.isJSONString = function(msg) {
-    if (typeof msg !== 'string') {
-      return false;
-    }
-    try {
-      JSON.parse(msg);
-    } catch (error) {
-      return false;
-    }
-    return true;
-  };
-
-  Utils.isNaturalNumber = function(num) {
-    return typeof num === 'number' && num >= 0 && !isNaN(num) && isFinite(num);
-  };
-
-  var Utils$1 = Utils;
 
   var ALLOWED_HTTP_METHODS, APIEntity,
     slice = [].slice,
@@ -163,7 +48,7 @@
     };
 
     APIEntity.prototype.config = function(config) {
-      Utils$1.extend(this._config, config);
+      Object.deepAssign(this._config, config);
       return this;
     };
 
@@ -205,7 +90,7 @@
     };
 
     APIEntity.prototype.params = function(params) {
-      Utils$1.extend(this._config, {
+      Object.deepAssign(this._config, {
         params: params
       });
       return this;
@@ -217,7 +102,7 @@
     };
 
     APIEntity.prototype.data = function(data) {
-      Utils$1.extend(this._config, {
+      Object.deepAssign(this._config, {
         data: data
       });
       return this;
@@ -232,7 +117,7 @@
 
     APIEntity.prototype.send = function() {
       var base, config;
-      config = Utils$1.extend({}, this._config, {
+      config = Object.deepAssign({}, this._config, {
         url: '/' + this._stack.join('/')
       });
       if (config.headers == null) {
@@ -356,6 +241,25 @@
     };
 
     FilterBuilder.prototype.isnull = function(name, type) {
+      if (typeof type !== 'string') {
+        type = (function() {
+          switch (type) {
+            case Boolean:
+              return 'b';
+            case Date:
+              return 'd';
+            case Number:
+              return 'n';
+            case String:
+              return 's';
+            default:
+              return '?';
+          }
+        })();
+      }
+      if (type !== 'b' && type !== 'd' && type !== 'n' && type !== 's') {
+        throw new TypeError('Unsupported type');
+      }
       return this._add(name, void 0, 'isnull', type);
     };
 
@@ -367,20 +271,21 @@
       return this._add(name, value, 'notin', void 0, true);
     };
 
-    FilterBuilder.prototype.raw = function(filter) {
-      var f, j, len;
-      if (Array.isArray(filter)) {
-        for (j = 0, len = filter.length; j < len; j++) {
-          f = filter[j];
-          this.filters.push(f);
+    FilterBuilder.prototype.raw = function(_filters) {
+      var filter, filters, j, len;
+      filters = Array.wrap(_filters);
+      for (j = 0, len = filters.length; j < len; j++) {
+        filter = filters[j];
+        if (this.isFilterPart(filter)) {
+          this.filters.push(filter);
+        } else {
+          throw new SyntaxError("Filter " + filter + " has invalid syntax");
         }
-      } else {
-        this.filters.push(filter);
       }
     };
 
-    FilterBuilder.prototype.ifFilterPart = function(str) {
-      return /^l?[ndsb]_[a-zA-Z]{1}_[a-z]{2,12}/.test(str);
+    FilterBuilder.prototype.isFilterPart = function(str) {
+      return /^l?[bdns]_[a-zA-Z0-9.]{2,12}_(?:gt|lt|after|before|on|eq|contains|in|notin)_/.test(str) || /^[bdns]_[a-zA-Z0-9.]{2,12}_isnull$/.test(str);
     };
 
     FilterBuilder.prototype.toString = function() {
@@ -444,7 +349,7 @@
       if (limit == null) {
         limit = DEFAULT_LIMIT;
       }
-      if (!Utils$1.isNaturalNumber(limit)) {
+      if (!Number.isNatural(limit)) {
         throw new Error("Limit '" + limit + "' is invalid!");
       }
       return this.params({
@@ -466,7 +371,7 @@
       if (offset == null) {
         offset = DEFAULT_OFFSET;
       }
-      if (!Utils$1.isNaturalNumber(offset)) {
+      if (!Number.isNatural(offset)) {
         throw new Error("Offset '" + offset + "' is invalid!");
       }
       return this.params({
@@ -475,10 +380,10 @@
     };
 
     APIList.prototype.between = function(from, to) {
-      if (!Utils$1.isNaturalNumber(from)) {
+      if (!Number.isNatural(from)) {
         throw new Error("From '" + from + "' is invalid!");
       }
-      if (!Utils$1.isNaturalNumber(to)) {
+      if (!Number.isNatural(to)) {
         throw new Error("To '" + to + "' is invalid!");
       }
       return this.params({
@@ -492,7 +397,7 @@
     };
 
     APIList.prototype.only = function(idx) {
-      if (!Utils$1.isNaturalNumber(idx)) {
+      if (!Number.isNatural(idx)) {
         throw new Error("Index '" + from + "' is invalid!");
       }
       return this.params({
@@ -506,7 +411,7 @@
       if (page == null) {
         page = 1;
       }
-      if (!Utils$1.isNaturalNumber(page) || page === 0) {
+      if (!Number.isNatural(page) || page === 0) {
         throw new Error("Page '" + from + "' is invalid!");
       }
       limit = ((ref = this._config.params) != null ? ref.limit : void 0) != null ? this._config.params.limit : DEFAULT_LIMIT;
@@ -1325,7 +1230,7 @@
 
     APIListFiles.prototype.upload = function(obj) {
       var FormData, form, fs;
-      if (Utils$1.isNodeJs) {
+      if (global.isNodeJs) {
         fs = require('fs');
         FormData = require('form-data');
         form = new FormData();
@@ -1599,12 +1504,12 @@
 
   var APIResourceUserSession$1 = APIResourceUserSession;
 
-  var version = "0.6.0-beta";
+  var version = "0.7.0-beta";
 
   var API;
 
-  if (Utils$1.isNodeJs) {
-    axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version;
+  if (global.isNodeJs) {
+    axios.defaults.headers.common['User-Agent'] = "Bitbar Cloud API Client for JavaScript v" + version;
   }
 
   axios.defaults.maxContentLength = 1073741824;
@@ -1777,16 +1682,15 @@
 
   var API$1 = API;
 
-  var TestdroidCloudAPIClient;
+  var CloudAPIClient;
 
-  TestdroidCloudAPIClient = {
+  CloudAPIClient = {
     API: API$1,
-    Utils: Utils$1,
     FilterBuilder: FilterBuilder$1
   };
 
-  var TestdroidCloudAPIClient$1 = TestdroidCloudAPIClient;
+  var CloudAPIClient$1 = CloudAPIClient;
 
-  return TestdroidCloudAPIClient$1;
+  return CloudAPIClient$1;
 
 })));

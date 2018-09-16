@@ -1,7 +1,7 @@
 #
 # FilterBuilder
 #
-# Builds filter string according to Testdroid backend convention
+# Builds filter string according to Bitbar Cloud backend convention
 #
 
 class FilterBuilder
@@ -104,6 +104,22 @@ class FilterBuilder
 
   # Add filter: Is null
   isnull: (name, type) ->
+    if typeof type isnt 'string'
+      type = switch type
+        when Boolean
+          'b'
+        when Date
+          'd'
+        when Number
+          'n'
+        when String
+          's'
+        else
+          '?'
+
+    if type not in ['b', 'd', 'n', 's']
+      throw new TypeError('Unsupported type')
+
     @_add(name, undefined, 'isnull', type)
 
   # Add filter: In
@@ -115,17 +131,19 @@ class FilterBuilder
     @_add(name, value, 'notin', undefined, true)
 
   # Add raw string filter to list
-  raw: (filter) ->
-    if Array.isArray(filter)
-      for f in filter
-        @filters.push(f)
-    else
-      @filters.push(filter)
+  raw: (_filters) ->
+    filters = Array.wrap(_filters)
+    for filter in filters
+      if @isFilterPart(filter)
+        @filters.push filter
+      else
+        throw new SyntaxError("Filter #{filter} has invalid syntax")
     return
 
   # Check if given string is proper filter part
-  ifFilterPart: (str) ->
-    /^l?[ndsb]_[a-zA-Z]{1}_[a-z]{2,12}/.test(str)
+  isFilterPart: (str) ->
+    /^l?[bdns]_[a-zA-Z0-9.]{2,12}_(?:gt|lt|after|before|on|eq|contains|in|notin)_/.test(str) or
+    /^[bdns]_[a-zA-Z0-9.]{2,12}_isnull$/.test(str)
 
   # Generate string from added filters
   toString: ->

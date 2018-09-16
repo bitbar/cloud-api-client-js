@@ -7,7 +7,7 @@ import APIList from './APIList'
 # @extends APIList
 class APIListStatistics extends APIList
 
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('statistics')

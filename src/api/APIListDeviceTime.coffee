@@ -9,7 +9,7 @@ class APIListDeviceTime extends APIList
 
   # /device-time
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('device-time')

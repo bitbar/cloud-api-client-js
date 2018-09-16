@@ -7,7 +7,7 @@ import APIResource from './APIResource'
 # @extends APIResource
 class APIResourceUserSession extends APIResource
 
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('user-sessions')

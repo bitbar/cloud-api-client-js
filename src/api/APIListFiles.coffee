@@ -1,5 +1,4 @@
 import APIList from './APIList'
-import Utils from '../Utils'
 
 # APIListFiles
 #
@@ -7,7 +6,7 @@ import Utils from '../Utils'
 # @extends APIList
 class APIListFiles extends APIList
 
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('files')
@@ -15,7 +14,7 @@ class APIListFiles extends APIList
   # Siplifies process of uploading
   upload: (obj) ->
     # For NodeJS
-    if Utils.isNodeJs
+    if global.isNodeJs
       fs = require('fs')
       FormData = require('form-data')
 

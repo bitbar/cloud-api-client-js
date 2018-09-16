@@ -24,7 +24,7 @@ class APIResourceDeviceSession extends APIResource
 
   # /device-sessions/{id}
   #
-  # @constructor
+  # Constructor
   constructor: (parent, id) ->
     unless id?
       throw new Error('Resource ID cannot be null!')
@@ -120,7 +120,7 @@ class InputFileset extends APIResource
 
   # /input-file-set
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('input-file-set')
@@ -143,7 +143,7 @@ class OutputFileset extends APIResource
 
   # /output-file-set
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('output-file-set')

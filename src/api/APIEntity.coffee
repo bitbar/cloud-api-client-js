@@ -1,4 +1,3 @@
-import Utils from '../Utils'
 import qs from 'qs'
 
 
@@ -33,7 +32,7 @@ class APIEntity
   # @public
   root: null
 
-  # @constructor
+  # Constructor
   # @param {APIEntity} [parent] - Specifies a parent from which should be inherited properties
   constructor: (parent) ->
     @_stack = []
@@ -68,7 +67,7 @@ class APIEntity
   # @param {Object} config - Object of config to be set
   # @returns this
   config: (config) ->
-    Utils.extend(@_config, config)
+    Object.deepAssign(@_config, config)
     this
 
   # Remove config key
@@ -130,7 +129,7 @@ class APIEntity
   # @param {Object} params - Object of params to be set
   # @returns this
   params: (params) ->
-    Utils.extend(@_config, {
+    Object.deepAssign(@_config, {
       params: params
     })
     this
@@ -150,7 +149,7 @@ class APIEntity
   # @param {Object} data - Object of data to be set
   # @returns this
   data: (data) ->
-    Utils.extend(@_config, {
+    Object.deepAssign(@_config, {
       data: data
     })
     this
@@ -171,7 +170,7 @@ class APIEntity
   # @public
   # @returns Promise
   send: ->
-    config = Utils.extend({}, @_config, {
+    config = Object.deepAssign({}, @_config, {
       url: '/' + @_stack.join('/')
     })
 

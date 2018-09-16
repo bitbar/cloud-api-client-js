@@ -10,7 +10,7 @@ class APIListRuns extends APIList
 
   # /runs
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('runs')

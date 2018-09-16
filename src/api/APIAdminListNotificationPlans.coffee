@@ -9,7 +9,7 @@ class APIAdminListNotificationPlans extends APIList
 
   # /notification-plans
   #
-  # @constructor
+  # Constructor
   constructor: (parent) ->
     super(parent)
     @push('notification-plans')

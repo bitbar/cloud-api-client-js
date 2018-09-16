@@ -1,4 +1,5 @@
 import axios from 'axios'
+import 'finka'
 
 import APIList from './api/APIList'
 import APIListDevices from './api/APIListDevices'
@@ -18,11 +19,10 @@ import APIResourceUser from './api/APIResourceUser'
 import APIResourceUserSession from './api/APIResourceUserSession'
 
 import {version} from '../package.json'
-import Utils from './Utils'
 
-if Utils.isNodeJs
+if global.isNodeJs
   # Set User-Agent
-  axios.defaults.headers.common['User-Agent'] = 'testdroid-api-client-js/' + version
+  axios.defaults.headers.common['User-Agent'] = "Bitbar Cloud API Client for JavaScript v#{version}"
 
 # Disable max content length
 axios.defaults.maxContentLength = 1073741824 # 1GB
@@ -30,8 +30,6 @@ axios.defaults.maxContentLength = 1073741824 # 1GB
 
 # API
 # Root for other API resources
-#
-# @class
 class API
 
   # Mark as root
@@ -43,7 +41,7 @@ class API
   # axios instance
   axios: null
 
-  # @constructor
+  # Constructor
   constructor: (config) ->
     unless config?
       throw new Error('config cannot be empty!')
@@ -91,7 +89,7 @@ class API
 
   # /admin
   #
-  # @todo
+  # @todo Implement
   admin: ->
     console.log 'TODO'
 

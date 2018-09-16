@@ -1,3 +1,18 @@
+# Dirs
+_static/
+docs/
+examples/
 test/
 src/
+
+# Files
 rollup.config.js
+bower.json
+*.tgz
+.travis*
+coffeelint.json
+.codoopts
+
+# IDE
+.vscode/
+.idea/
