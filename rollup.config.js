@@ -1,9 +1,9 @@
 // Imports
-import commonjs from 'rollup-plugin-commonjs';
-import coffee from 'rollup-plugin-coffee-script';
-import json from 'rollup-plugin-json';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import uglify from 'rollup-plugin-uglify';
+import pluginCommonjs from 'rollup-plugin-commonjs';
+import pluginTypeScript from '@rollup/plugin-typescript';
+import pluginJson from '@rollup/plugin-json';
+import pluginResolve from '@rollup/plugin-node-resolve';
+import pluginUglify from 'rollup-plugin-uglify';
 
 import $package from './package.json';
 
@@ -17,7 +17,7 @@ for(let ext of externals) {
 
 // Common
 var config = {
-  input: 'src/CloudAPIClient.coffee',
+  input: 'src/CloudAPIClient.ts',
 
   output: {
     file: 'dist/cloud-api-client',
@@ -30,7 +30,7 @@ var config = {
     globals: globals
   },
 
-  extensions: ['.js', '.coffee'],
+  extensions: ['.js', '.ts'],
 
   external: externals
 };
@@ -48,12 +48,12 @@ var output = function(min) {
 };
 
 var plugins = [
-  coffee(),
-  json(),
-  nodeResolve({
+  pluginTypeScript(),
+  pluginJson(),
+  pluginResolve({
     extensions: config.extensions
   }),
-  commonjs({
+  pluginCommonjs({
     extensions: config.extensions
   })
 ];
@@ -75,9 +75,15 @@ export default [
     input: input,
     output: output(true),
     plugins: plugins.concat([
-      uglify({
+      pluginUglify.uglify({
         output: {
-          comments: 'all'
+          comments: (node, comment) => {
+            if (comment.type === "comment2") {
+              // multiline comment
+              return /LICENSE|\(c\)/.test(comment.value);
+            }
+            return false;
+          }
         }
       })
     ]),

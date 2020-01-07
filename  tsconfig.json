@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "UMD",
+        "strict": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+
+        "typeRoots": ["./typings"]
+    }
+}

@@ -1,1696 +1,1815 @@
-/* Bitbar Cloud API Client for JavaScript v0.7.0-beta | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.8.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('qs'), require('axios'), require('finka')) :
-  typeof define === 'function' && define.amd ? define(['qs', 'axios', 'finka'], factory) :
-  (global['cloud-api-client-js'] = factory(global.qs,global.axios));
-}(this, (function (qs,axios) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
+  typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
+  (global = global || self, global['cloud-api-client-js'] = factory(global.finka, global.axios, global.qs));
+}(this, (function (finka, axios, qs) { 'use strict';
 
-  qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
-
-  var ALLOWED_HTTP_METHODS, APIEntity,
-    slice = [].slice,
-    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-  ALLOWED_HTTP_METHODS = ['GET', 'POST', 'DELETE'];
-
-  APIEntity = (function() {
-    APIEntity.prototype._stack = null;
-
-    APIEntity.prototype._config = null;
-
-    APIEntity.prototype.root = null;
-
-    function APIEntity(parent) {
-      this._stack = [];
-      this._config = {};
-      if (parent.root === true) {
-        this.root = parent;
-      } else {
-        this.root = parent.root;
-      }
-      if (parent._stack != null) {
-        this.push.apply(this, parent._stack);
-      }
-      if (parent._config != null) {
-        this.config(parent._config);
-      }
-    }
-
-    APIEntity.prototype.push = function() {
-      var i, item, items, len;
-      items = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-      for (i = 0, len = items.length; i < len; i++) {
-        item = items[i];
-        this._stack.push(item);
-      }
-      return this;
-    };
-
-    APIEntity.prototype.config = function(config) {
-      Object.deepAssign(this._config, config);
-      return this;
-    };
-
-    APIEntity.prototype.removeConfig = function(key) {
-      delete this._config[key];
-      return this;
-    };
-
-    APIEntity.prototype.headers = function(headers) {
-      var _headers, key, newKey, value;
-      _headers = {};
-      for (key in headers) {
-        value = headers[key];
-        newKey = key.replace(/(?:^|-)([a-z])/g, function(letter) {
-          return letter.toUpperCase();
-        });
-        _headers[newKey] = value;
-      }
-      return this.config({
-        headers: _headers
-      });
-    };
-
-    APIEntity.prototype.method = function(name) {
-      if (indexOf.call(ALLOWED_HTTP_METHODS, name) < 0) {
-        throw new Error("Method '" + name + "' is not allowed! You can use: " + (ALLOWED_HTTP_METHODS.join(', ')));
-      }
-      return this.config({
-        method: name
-      });
-    };
-
-    APIEntity.prototype.get = function() {
-      return this.method('GET');
-    };
-
-    APIEntity.prototype.post = function() {
-      return this.method('POST');
-    };
-
-    APIEntity.prototype.params = function(params) {
-      Object.deepAssign(this._config, {
-        params: params
-      });
-      return this;
-    };
-
-    APIEntity.prototype.removeParam = function(key) {
-      delete this._config.params[key];
-      return this;
-    };
-
-    APIEntity.prototype.data = function(data) {
-      Object.deepAssign(this._config, {
-        data: data
-      });
-      return this;
-    };
-
-    APIEntity.prototype.jsonData = function(data) {
-      this.headers({
-        'Content-Type': 'application/json'
-      }).data(data);
-      return this;
-    };
-
-    APIEntity.prototype.send = function() {
-      var base, config;
-      config = Object.deepAssign({}, this._config, {
-        url: '/' + this._stack.join('/')
-      });
-      if (config.headers == null) {
-        config.headers = {};
-      }
-      if ((base = config.headers)['Content-Type'] == null) {
-        base['Content-Type'] = 'application/x-www-form-urlencoded';
-      }
-      if (config.method === 'POST' && config.headers['Content-Type'] === 'application/x-www-form-urlencoded' && (config.data != null)) {
-        config.data = qs.stringify(config.data);
-      }
-      return this.root.axios.request(config);
-    };
-
-    return APIEntity;
-
-  })();
-
-  var APIEntity$1 = APIEntity;
-
-  var FilterBuilder;
-
-  FilterBuilder = (function() {
-    function FilterBuilder() {
-      this.filters = [];
-    }
-
-    FilterBuilder.prototype._checkType = function(subject) {
-      if (typeof subject === 'boolean') {
-        return 'b';
-      } else if (/^[0-9]{13}$/.test(subject)) {
-        return 'd';
-      } else if (/^[0-9]+(?:\.[0-9]+)?$/.test(subject)) {
-        return 'n';
-      } else {
-        return 's';
-      }
-    };
-
-    FilterBuilder.prototype._add = function(name, value, operand, type, checkNull) {
-      var i, isNull, j, k, l, len, len1, len2, v;
-      if (checkNull == null) {
-        checkNull = false;
-      }
-      if (!Array.isArray(value)) {
-        value = [value];
-      }
-      if (value.length === 0) {
-        return this;
-      }
-      for (i = j = 0, len = value.length; j < len; i = ++j) {
-        v = value[i];
-        if (typeof v === 'object' && v instanceof Date) {
-          value[i] = v.getTime();
-        }
-      }
-      if (type == null) {
-        for (k = 0, len1 = value.length; k < len1; k++) {
-          v = value[k];
-          if (v === null) {
-            continue;
-          }
-          type = this._checkType(v);
-          break;
-        }
-        if (operand === 'in' || operand === 'notin') {
-          type = 'l' + type;
-        }
-      }
-      isNull = false;
-      if (checkNull) {
-        for (l = 0, len2 = value.length; l < len2; l++) {
-          v = value[l];
-          if (v !== null) {
-            continue;
-          }
-          isNull = true;
-        }
-        if (isNull) {
-          value = value.filter(function(item) {
-            return item !== null;
-          });
-          operand += 'ornull';
-        }
-      }
-      this.filters.push({
-        name: name,
-        value: value,
-        operand: operand,
-        type: type
-      });
-      return this;
-    };
-
-    FilterBuilder.prototype.gt = function(name, value) {
-      return this._add(name, value, 'gt', 'n');
-    };
-
-    FilterBuilder.prototype.lt = function(name, value) {
-      return this._add(name, value, 'lt', 'n');
-    };
-
-    FilterBuilder.prototype.after = function(name, value) {
-      return this._add(name, value, 'after', 'd', true);
-    };
-
-    FilterBuilder.prototype.before = function(name, value) {
-      return this._add(name, value, 'before', 'd', true);
-    };
-
-    FilterBuilder.prototype.on = function(name, value) {
-      return this._add(name, value, 'on', 'd');
-    };
-
-    FilterBuilder.prototype.eq = function(name, value) {
-      return this._add(name, value, 'eq', void 0);
-    };
-
-    FilterBuilder.prototype.contains = function(name, value) {
-      return this._add(name, value, 'contains', 's');
-    };
-
-    FilterBuilder.prototype.isnull = function(name, type) {
-      if (typeof type !== 'string') {
-        type = (function() {
-          switch (type) {
-            case Boolean:
-              return 'b';
-            case Date:
-              return 'd';
-            case Number:
-              return 'n';
-            case String:
-              return 's';
-            default:
-              return '?';
-          }
-        })();
-      }
-      if (type !== 'b' && type !== 'd' && type !== 'n' && type !== 's') {
-        throw new TypeError('Unsupported type');
-      }
-      return this._add(name, void 0, 'isnull', type);
-    };
-
-    FilterBuilder.prototype["in"] = function(name, value) {
-      return this._add(name, value, 'in', void 0, true);
-    };
-
-    FilterBuilder.prototype.notin = function(name, value) {
-      return this._add(name, value, 'notin', void 0, true);
-    };
-
-    FilterBuilder.prototype.raw = function(_filters) {
-      var filter, filters, j, len;
-      filters = Array.wrap(_filters);
-      for (j = 0, len = filters.length; j < len; j++) {
-        filter = filters[j];
-        if (this.isFilterPart(filter)) {
-          this.filters.push(filter);
-        } else {
-          throw new SyntaxError("Filter " + filter + " has invalid syntax");
-        }
-      }
-    };
-
-    FilterBuilder.prototype.isFilterPart = function(str) {
-      return /^l?[bdns]_[a-zA-Z0-9.]{2,12}_(?:gt|lt|after|before|on|eq|contains|in|notin)_/.test(str) || /^[bdns]_[a-zA-Z0-9.]{2,12}_isnull$/.test(str);
-    };
-
-    FilterBuilder.prototype.toString = function() {
-      var filter, j, len, part, parts, ref, val;
-      parts = [];
-      ref = this.filters;
-      for (j = 0, len = ref.length; j < len; j++) {
-        filter = ref[j];
-        if (typeof filter === 'string') {
-          part = filter;
-        } else {
-          val = '';
-          if (filter.value.length > 1 || typeof filter.value[0] !== 'undefined') {
-            val = '_' + filter.value.join('|');
-          }
-          part = filter.type + '_' + filter.name + '_' + filter.operand + val;
-        }
-        parts.push(part);
-      }
-      return parts.join(';');
-    };
-
-    return FilterBuilder;
-
-  })();
-
-  var FilterBuilder$1 = FilterBuilder;
-
-  var APIList, DEFAULT_LIMIT, DEFAULT_OFFSET,
-    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  DEFAULT_LIMIT = 20;
-
-  DEFAULT_OFFSET = 0;
-
-  APIList = (function(superClass) {
-    extend(APIList, superClass);
-
-    function APIList() {
-      return APIList.__super__.constructor.apply(this, arguments);
-    }
-
-    APIList.prototype.create = function() {
-      return this.post();
-    };
-
-    APIList.prototype.sort = function(name, order) {
-      if (order == null) {
-        order = 'a';
-      }
-      if (order !== 'a' && order !== 'd') {
-        throw new Error("Order '" + order + "' is invalid! Use 'a' for ascending or 'd' for descending.");
-      }
-      return this.params({
-        sort: name + "_" + order
-      });
-    };
-
-    APIList.prototype.limit = function(limit) {
-      if (limit == null) {
-        limit = DEFAULT_LIMIT;
-      }
-      if (!Number.isNatural(limit)) {
-        throw new Error("Limit '" + limit + "' is invalid!");
-      }
-      return this.params({
-        limit: limit
-      });
-    };
-
-    APIList.prototype.noLimit = function() {
-      return this.params({
-        limit: 0
-      });
-    };
-
-    APIList.prototype.all = function() {
-      return this.noLimit();
-    };
-
-    APIList.prototype.offset = function(offset) {
-      if (offset == null) {
-        offset = DEFAULT_OFFSET;
-      }
-      if (!Number.isNatural(offset)) {
-        throw new Error("Offset '" + offset + "' is invalid!");
-      }
-      return this.params({
-        offset: offset
-      });
-    };
-
-    APIList.prototype.between = function(from, to) {
-      if (!Number.isNatural(from)) {
-        throw new Error("From '" + from + "' is invalid!");
-      }
-      if (!Number.isNatural(to)) {
-        throw new Error("To '" + to + "' is invalid!");
-      }
-      return this.params({
-        offset: from,
-        limit: 1 + (to - from)
-      });
-    };
-
-    APIList.prototype.cut = function(from, to) {
-      return this.between(from, to);
-    };
-
-    APIList.prototype.only = function(idx) {
-      if (!Number.isNatural(idx)) {
-        throw new Error("Index '" + from + "' is invalid!");
-      }
-      return this.params({
-        offset: idx,
-        limit: 1
-      });
-    };
-
-    APIList.prototype.page = function(page) {
-      var limit, offset, ref;
-      if (page == null) {
-        page = 1;
-      }
-      if (!Number.isNatural(page) || page === 0) {
-        throw new Error("Page '" + from + "' is invalid!");
-      }
-      limit = ((ref = this._config.params) != null ? ref.limit : void 0) != null ? this._config.params.limit : DEFAULT_LIMIT;
-      offset = (page - 1) * limit;
-      return this.params({
-        offset: offset,
-        limit: limit
-      });
-    };
-
-    APIList.prototype.search = function(query) {
-      if (typeof query !== 'string') {
-        throw new Error("Search query must be a string!");
-      }
-      return this.params({
-        search: query
-      });
-    };
-
-    APIList.prototype.filter = function(filter) {
-      var isFilterBuilder;
-      isFilterBuilder = filter instanceof FilterBuilder$1;
-      if (typeof filter !== 'string' && !isFilterBuilder) {
-        throw new Error("Filter must be a string or instance of FilterBuilder!");
-      }
-      if (isFilterBuilder) {
-        filter = filter.toString();
-      }
-      return this.params({
-        filter: filter
-      });
-    };
-
-    return APIList;
-
-  })(APIEntity$1);
-
-  var APIList$1 = APIList;
-
-  var APIResource$1,
-    extend$1 = function(child, parent) { for (var key in parent) { if (hasProp$1.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$1 = {}.hasOwnProperty;
-
-  APIResource$1 = (function(superClass) {
-    extend$1(APIResource, superClass);
-
-    function APIResource() {
-      return APIResource.__super__.constructor.apply(this, arguments);
-    }
-
-    APIResource.prototype.update = function() {
-      return this.post();
-    };
-
-    APIResource.prototype["delete"] = function() {
-      return this.method('DELETE');
-    };
-
-    return APIResource;
-
-  })(APIEntity$1);
-
-  var APIResource$2 = APIResource$1;
-
-  var APIListDevices,
-    extend$2 = function(child, parent) { for (var key in parent) { if (hasProp$2.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$2 = {}.hasOwnProperty;
-
-  APIListDevices = (function(superClass) {
-    extend$2(APIListDevices, superClass);
-
-    function APIListDevices(parent) {
-      APIListDevices.__super__.constructor.call(this, parent);
-      this.push('devices');
-    }
-
-    APIListDevices.prototype.filters = function() {
-      return new APIResource$2(this).push('filters');
-    };
-
-    APIListDevices.prototype.cleanupConfigurations = function() {
-      return new APIList$1(this).push('cleanup-configurations');
-    };
-
-    APIListDevices.prototype.cleanupConfiguration = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('cleanup-configurations', id);
-    };
-
-    return APIListDevices;
-
-  })(APIList$1);
-
-  var APIListDevices$1 = APIListDevices;
-
-  var APIListProperties,
-    extend$3 = function(child, parent) { for (var key in parent) { if (hasProp$3.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$3 = {}.hasOwnProperty;
-
-  APIListProperties = (function(superClass) {
-    extend$3(APIListProperties, superClass);
-
-    function APIListProperties(parent) {
-      APIListProperties.__super__.constructor.call(this, parent);
-      this.push('properties');
-    }
-
-    APIListProperties.prototype.appBan = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return this.push('app-bans').params({
-        testRunId: id
-      });
-    };
-
-    return APIListProperties;
-
-  })(APIList$1);
-
-  var APIListProperties$1 = APIListProperties;
-
-  var APIListPurchased,
-    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend$4 = function(child, parent) { for (var key in parent) { if (hasProp$4.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$4 = {}.hasOwnProperty;
-
-  APIListPurchased = (function(superClass) {
-    extend$4(APIListPurchased, superClass);
-
-    function APIListPurchased(parent) {
-      this.active = bind(this.active, this);
-      APIListPurchased.__super__.constructor.call(this, parent);
-      this.push('purchased');
-    }
-
-    APIListPurchased.prototype.active = function() {
-      return this.addHook(function(data) {
-        var i, results;
-        i = 0;
-        results = [];
-        while (i < data.length) {
-          if (data[i].active) {
-            results.push(i++);
-          } else {
-            results.push(data.splice(i, 1));
-          }
-        }
-        return results;
-      });
-    };
-
-    return APIListPurchased;
-
-  })(APIList$1);
-
-  var APIListPurchased$1 = APIListPurchased;
-
-  var APIListServices,
-    extend$5 = function(child, parent) { for (var key in parent) { if (hasProp$5.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$5 = {}.hasOwnProperty;
-
-  APIListServices = (function(superClass) {
-    extend$5(APIListServices, superClass);
-
-    function APIListServices(parent) {
-      APIListServices.__super__.constructor.call(this, parent);
-      this.push('services');
-    }
-
-    APIListServices.prototype.purchased = function() {
-      return new APIListPurchased$1(this);
-    };
-
-    APIListServices.prototype.available = function() {
-      return this.push('available');
-    };
-
-    APIListServices.prototype.active = function() {
-      var now;
-      if (this._stack[0] === 'me') {
-        return this.push('active');
-      } else {
-        now = Date.now();
-        return this.filter("d_activateTime_before_" + now + ";d_archiveTime_afterornull_" + now).sort('name', 'a').all();
-      }
-    };
-
-    APIListServices.prototype.activated = function() {
-      var now;
-      now = Date.now();
-      return this.filter("d_startTime_before_" + now + ";d_endTime_afterornull_" + now).sort('name', 'a').all();
-    };
-
-    return APIListServices;
-
-  })(APIList$1);
-
-  var APIListServices$1 = APIListServices;
-
-  var APIResourceDevice,
-    extend$6 = function(child, parent) { for (var key in parent) { if (hasProp$6.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$6 = {}.hasOwnProperty;
-
-  APIResourceDevice = (function(superClass) {
-    extend$6(APIResourceDevice, superClass);
-
-    function APIResourceDevice(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceDevice.__super__.constructor.call(this, parent);
-      this.push('devices', id);
-    }
-
-    APIResourceDevice.prototype.properties = function() {
-      return new APIList$1(this).push('properties');
-    };
-
-    return APIResourceDevice;
-
-  })(APIResource$2);
-
-  var APIResourceDevice$1 = APIResourceDevice;
-
-  var APIResourceDeviceGroup,
-    extend$7 = function(child, parent) { for (var key in parent) { if (hasProp$7.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$7 = {}.hasOwnProperty;
-
-  APIResourceDeviceGroup = (function(superClass) {
-    extend$7(APIResourceDeviceGroup, superClass);
-
-    function APIResourceDeviceGroup(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceDeviceGroup.__super__.constructor.call(this, parent);
-      this.push('device-groups', id);
-    }
-
-    APIResourceDeviceGroup.prototype.devices = function() {
-      return new APIList$1(this).push('devices');
-    };
-
-    APIResourceDeviceGroup.prototype.device = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('devices', id);
-    };
-
-    APIResourceDeviceGroup.prototype.selectors = function() {
-      return new APIList$1(this).push('selectors');
-    };
-
-    APIResourceDeviceGroup.prototype.selector = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('selectors', id);
-    };
-
-    return APIResourceDeviceGroup;
-
-  })(APIResource$2);
-
-  var APIResourceDeviceGroup$1 = APIResourceDeviceGroup;
-
-  var APIResourceDeviceSession, InputFileset, NON_MEDIA_FILES_FILTER, OutputFileset,
-    extend$8 = function(child, parent) { for (var key in parent) { if (hasProp$8.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$8 = {}.hasOwnProperty;
-
-  NON_MEDIA_FILES_FILTER = new FilterBuilder$1();
-
-  NON_MEDIA_FILES_FILTER.eq('state', 'READY');
-
-  NON_MEDIA_FILES_FILTER.notin('mimetype', ['image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif', 'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg']);
-
-  APIResourceDeviceSession = (function(superClass) {
-    extend$8(APIResourceDeviceSession, superClass);
-
-    function APIResourceDeviceSession(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceDeviceSession.__super__.constructor.call(this, parent);
-      this.push('device-sessions', id);
-    }
-
-    APIResourceDeviceSession.prototype.clusterLogs = function() {
-      return new APIResource$2(this).push('cluster-logs');
-    };
-
-    APIResourceDeviceSession.prototype.dataAvailability = function() {
-      return new APIResource$2(this).push('data-availability');
-    };
-
-    APIResourceDeviceSession.prototype.fixturesZip = function() {
-      return new APIResource$2(this).push('fixtures.zip');
-    };
-
-    APIResourceDeviceSession.prototype.junitXml = function() {
-      return new APIResource$2(this).push('junit.xml');
-    };
-
-    APIResourceDeviceSession.prototype.logs = function() {
-      return new APIResource$2(this).push('logs');
-    };
-
-    APIResourceDeviceSession.prototype.performance = function() {
-      return new APIResource$2(this).push('performance');
-    };
-
-    APIResourceDeviceSession.prototype.release = function() {
-      return new APIResource$2(this).push('release');
-    };
-
-    APIResourceDeviceSession.prototype.resultDataZip = function() {
-      return new APIResource$2(this).push('result-data.zip');
-    };
-
-    APIResourceDeviceSession.prototype.screenshots = function() {
-      return new APIList$1(this).push('screenshots');
-    };
-
-    APIResourceDeviceSession.prototype.screenshot = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('screenshots', id);
-    };
-
-    APIResourceDeviceSession.prototype.steps = function() {
-      return new APIList$1(this).push('steps');
-    };
-
-    APIResourceDeviceSession.prototype.step = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('steps', id);
-    };
-
-    APIResourceDeviceSession.prototype.currentStep = function() {
-      return this.step('current');
-    };
-
-    APIResourceDeviceSession.prototype.testCaseRuns = function() {
-      return new APIList$1(this).push('test-case-runs');
-    };
-
-    APIResourceDeviceSession.prototype.retry = function() {
-      return new APIResource$2(this).push('retry').post();
-    };
-
-    APIResourceDeviceSession.prototype.input = function() {
-      return new InputFileset(this);
-    };
-
-    APIResourceDeviceSession.prototype.output = function() {
-      return new OutputFileset(this);
-    };
-
-    APIResourceDeviceSession.prototype.videos = function() {
-      return this.output().videos();
-    };
-
-    return APIResourceDeviceSession;
-
-  })(APIResource$2);
-
-  InputFileset = (function(superClass) {
-    extend$8(InputFileset, superClass);
-
-    function InputFileset(parent) {
-      InputFileset.__super__.constructor.call(this, parent);
-      this.push('input-file-set');
-    }
-
-    InputFileset.prototype.files = function() {
-      return new APIList$1(this).push('files');
-    };
-
-    InputFileset.prototype.filesZip = function() {
-      return new APIResource$2(this).push('files.zip');
-    };
-
-    return InputFileset;
-
-  })(APIResource$2);
-
-  OutputFileset = (function(superClass) {
-    extend$8(OutputFileset, superClass);
-
-    function OutputFileset(parent) {
-      OutputFileset.__super__.constructor.call(this, parent);
-      this.push('output-file-set');
-    }
-
-    OutputFileset.prototype.files = function() {
-      return new APIList$1(this).push('files');
-    };
-
-    OutputFileset.prototype.filesZip = function() {
-      return new APIResource$2(this).push('files.zip');
-    };
-
-    OutputFileset.prototype.screenshots = function() {
-      return new APIList$1(this).push('screenshots');
-    };
-
-    OutputFileset.prototype.screenshot = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('screenshots', id);
-    };
-
-    OutputFileset.prototype.screenshotFile = function(id) {
-      return this.screenshot(id).push('file');
-    };
-
-    OutputFileset.prototype.videos = function() {
-      return this.files().params({
-        filter: 's_state_eq_READY',
-        tag: ['video']
-      });
-    };
-
-    OutputFileset.prototype.nonMediaFiles = function() {
-      return this.files().filter(NON_MEDIA_FILES_FILTER);
-    };
-
-    return OutputFileset;
-
-  })(APIResource$2);
-
-  var APIResourceDeviceSession$1 = APIResourceDeviceSession;
-
-  var APIResourceFile,
-    extend$9 = function(child, parent) { for (var key in parent) { if (hasProp$9.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$9 = {}.hasOwnProperty;
-
-  APIResourceFile = (function(superClass) {
-    extend$9(APIResourceFile, superClass);
-
-    function APIResourceFile(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceFile.__super__.constructor.call(this, parent);
-      this.push('files', id);
-    }
-
-    APIResourceFile.prototype.file = function() {
-      return new APIResource$2(this).push('file');
-    };
-
-    APIResourceFile.prototype.icon = function() {
-      return new APIResource$2(this).push('icon');
-    };
-
-    APIResourceFile.prototype.tags = function() {
-      return new APIList$1(this).push('tags');
-    };
-
-    return APIResourceFile;
-
-  })(APIResource$2);
-
-  var APIResourceFile$1 = APIResourceFile;
-
-  var APIResourceFileSet,
-    extend$10 = function(child, parent) { for (var key in parent) { if (hasProp$10.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$10 = {}.hasOwnProperty;
-
-  APIResourceFileSet = (function(superClass) {
-    extend$10(APIResourceFileSet, superClass);
-
-    function APIResourceFileSet(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceFileSet.__super__.constructor.call(this, parent);
-      this.push('file-sets', id);
-    }
-
-    APIResourceFileSet.prototype.files = function() {
-      return new APIList$1(this).push('files');
-    };
-
-    APIResourceFileSet.prototype.file = function(id) {
-      return new APIResourceFile$1(this, id);
-    };
-
-    return APIResourceFileSet;
-
-  })(APIResource$2);
-
-  var APIResourceFileSet$1 = APIResourceFileSet;
-
-  var APIResourceLabelGroup,
-    extend$11 = function(child, parent) { for (var key in parent) { if (hasProp$11.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$11 = {}.hasOwnProperty;
-
-  APIResourceLabelGroup = (function(superClass) {
-    extend$11(APIResourceLabelGroup, superClass);
-
-    function APIResourceLabelGroup(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceLabelGroup.__super__.constructor.call(this, parent);
-      this.push('label-groups', id);
-    }
-
-    APIResourceLabelGroup.prototype.labels = function() {
-      return new APIList$1(this).push('labels');
-    };
-
-    APIResourceLabelGroup.prototype.label = function(id) {
-      return new APIResource$2(this).push('labels', id);
-    };
-
-    return APIResourceLabelGroup;
-
-  })(APIResource$2);
-
-  var APIResourceLabelGroup$1 = APIResourceLabelGroup;
-
-  var APIResourceRun,
-    extend$12 = function(child, parent) { for (var key in parent) { if (hasProp$12.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$12 = {}.hasOwnProperty;
-
-  APIResourceRun = (function(superClass) {
-    extend$12(APIResourceRun, superClass);
-
-    function APIResourceRun(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceRun.__super__.constructor.call(this, parent);
-      this.push('runs', id);
-    }
-
-    APIResourceRun.prototype.config = function() {
-      return new APIResource$2(this).push('config');
-    };
-
-    APIResourceRun.prototype.deviceSessions = function() {
-      return new APIList$1(this).push('device-sessions');
-    };
-
-    APIResourceRun.prototype.deviceSession = function(id) {
-      return new APIResourceDeviceSession$1(this, id);
-    };
-
-    APIResourceRun.prototype.steps = function() {
-      return new APIList$1(this).push('steps');
-    };
-
-    APIResourceRun.prototype.files = function() {
-      return new APIList$1(this).push('files');
-    };
-
-    APIResourceRun.prototype.filesZip = function() {
-      return new APIResource$2(this).push('files.zip');
-    };
-
-    APIResourceRun.prototype.tags = function() {
-      return new APIList$1(this).push('tags');
-    };
-
-    APIResourceRun.prototype.tag = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('tags', id);
-    };
-
-    return APIResourceRun;
-
-  })(APIResource$2);
-
-  var APIResourceRun$1 = APIResourceRun;
-
-  var APIResourceProject,
-    extend$13 = function(child, parent) { for (var key in parent) { if (hasProp$13.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$13 = {}.hasOwnProperty;
-
-  APIResourceProject = (function(superClass) {
-    extend$13(APIResourceProject, superClass);
-
-    function APIResourceProject(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceProject.__super__.constructor.call(this, parent);
-      this.push('projects', id);
-    }
-
-    APIResourceProject.prototype.runs = function() {
-      return new APIList$1(this).push('runs');
-    };
-
-    APIResourceProject.prototype.run = function(id) {
-      return new APIResourceRun$1(this, id);
-    };
-
-    APIResourceProject.prototype.runsExtended = function() {
-      return new APIList$1(this).push('runs-extended');
-    };
-
-    APIResourceProject.prototype.runExtended = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('runs-extended', id);
-    };
-
-    APIResourceProject.prototype.files = function() {
-      return new APIList$1(this).push('files');
-    };
-
-    APIResourceProject.prototype.filesZip = function() {
-      return new APIResource$2(this).push('files.zip');
-    };
-
-    APIResourceProject.prototype.sharings = function() {
-      return new APIList$1(this).push('sharings');
-    };
-
-    APIResourceProject.prototype.sharing = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('sharings', id);
-    };
-
-    return APIResourceProject;
-
-  })(APIResource$2);
-
-  var APIResourceProject$1 = APIResourceProject;
-
-  var APIResourceBillingPeriod,
-    extend$14 = function(child, parent) { for (var key in parent) { if (hasProp$14.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$14 = {}.hasOwnProperty;
-
-  APIResourceBillingPeriod = (function(superClass) {
-    extend$14(APIResourceBillingPeriod, superClass);
-
-    function APIResourceBillingPeriod(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceBillingPeriod.__super__.constructor.call(this, parent);
-      this.push('billing-periods', id);
-    }
-
-    APIResourceBillingPeriod.prototype.receipt = function() {
-      return new APIResource$2(this).push('receipt');
-    };
-
-    return APIResourceBillingPeriod;
-
-  })(APIResource$2);
-
-  var APIResourceBillingPeriod$1 = APIResourceBillingPeriod;
-
-  var APIResourceBuild,
-    extend$15 = function(child, parent) { for (var key in parent) { if (hasProp$15.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$15 = {}.hasOwnProperty;
-
-  APIResourceBuild = (function(superClass) {
-    extend$15(APIResourceBuild, superClass);
-
-    function APIResourceBuild(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceBuild.__super__.constructor.call(this, parent);
-      this.push('builds', id);
-    }
-
-    APIResourceBuild.prototype.abort = function() {
-      return new APIResource$2(this).push('abort');
-    };
-
-    APIResourceBuild.prototype.outputFiles = function() {
-      return new APIList$1(this).push('output-file-set', 'files');
-    };
-
-    return APIResourceBuild;
-
-  })(APIResource$2);
-
-  var APIResourceBuild$1 = APIResourceBuild;
-
-  var APIResourceJob,
-    extend$16 = function(child, parent) { for (var key in parent) { if (hasProp$16.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$16 = {}.hasOwnProperty;
-
-  APIResourceJob = (function(superClass) {
-    extend$16(APIResourceJob, superClass);
-
-    function APIResourceJob(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceJob.__super__.constructor.call(this, parent);
-      this.push('jobs', id);
-    }
-
-    APIResourceJob.prototype.builds = function() {
-      return new APIList$1(this).push('builds');
-    };
-
-    APIResourceJob.prototype.build = function(id) {
-      return new APIResourceBuild$1(this, id);
-    };
-
-    return APIResourceJob;
-
-  })(APIResource$2);
-
-  var APIResourceJob$1 = APIResourceJob;
-
-  var APIResourceManualSession,
-    extend$17 = function(child, parent) { for (var key in parent) { if (hasProp$17.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$17 = {}.hasOwnProperty;
-
-  APIResourceManualSession = (function(superClass) {
-    extend$17(APIResourceManualSession, superClass);
-
-    function APIResourceManualSession() {
-      return APIResourceManualSession.__super__.constructor.apply(this, arguments);
-    }
-
-    APIResourceManualSession.prototype.connections = function() {
-      var a;
-      a = new APIResource(this);
-      return a.push('connections');
-    };
-
-    return APIResourceManualSession;
-
-  })(APIResourceDeviceSession$1);
-
-  var APIResourceManualSession$1 = APIResourceManualSession;
-
-  var APIResourceNotification,
-    extend$18 = function(child, parent) { for (var key in parent) { if (hasProp$18.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$18 = {}.hasOwnProperty;
-
-  APIResourceNotification = (function(superClass) {
-    extend$18(APIResourceNotification, superClass);
-
-    function APIResourceNotification(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceNotification.__super__.constructor.call(this, parent);
-      this.push('notifications', id);
-    }
-
-    APIResourceNotification.prototype.test = function() {
-      return new APIResource$2(this).push('test');
-    };
-
-    return APIResourceNotification;
-
-  })(APIResource$2);
-
-  var APIResourceNotification$1 = APIResourceNotification;
-
-  var APIListDeviceTime,
-    extend$19 = function(child, parent) { for (var key in parent) { if (hasProp$19.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$19 = {}.hasOwnProperty;
-
-  APIListDeviceTime = (function(superClass) {
-    extend$19(APIListDeviceTime, superClass);
-
-    function APIListDeviceTime(parent) {
-      APIListDeviceTime.__super__.constructor.call(this, parent);
-      this.push('device-time');
-    }
-
-    APIListDeviceTime.prototype.reserved = function() {
-      return new APIList$1(this).push('reserved');
-    };
-
-    APIListDeviceTime.prototype.used = function() {
-      return new APIList$1(this).push('used');
-    };
-
-    return APIListDeviceTime;
-
-  })(APIList$1);
-
-  var APIListDeviceTime$1 = APIListDeviceTime;
-
-  var APIListFiles,
-    extend$20 = function(child, parent) { for (var key in parent) { if (hasProp$20.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$20 = {}.hasOwnProperty;
-
-  APIListFiles = (function(superClass) {
-    extend$20(APIListFiles, superClass);
-
-    function APIListFiles(parent) {
-      APIListFiles.__super__.constructor.call(this, parent);
-      this.push('files');
-    }
-
-    APIListFiles.prototype.upload = function(obj) {
-      var FormData, form, fs;
-      if (global.isNodeJs) {
-        fs = require('fs');
-        FormData = require('form-data');
-        form = new FormData();
-        form.append('file', fs.createReadStream(obj.dir + '/' + obj.filename), {
-          filename: obj.filename
-        });
-      } else {
-        throw new Error('Not supported yet!');
-      }
-      return this.post().headers(form.getHeaders()).data(form);
-    };
-
-    return APIListFiles;
-
-  })(APIList$1);
-
-  var APIListFiles$1 = APIListFiles;
-
-  var APIListRuns,
-    extend$21 = function(child, parent) { for (var key in parent) { if (hasProp$21.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$21 = {}.hasOwnProperty;
-
-  APIListRuns = (function(superClass) {
-    extend$21(APIListRuns, superClass);
-
-    function APIListRuns(parent) {
-      APIListRuns.__super__.constructor.call(this, parent);
-      this.push('runs');
-    }
-
-    APIListRuns.prototype.config = function() {
-      return new APIResource$2(this).push('config');
-    };
-
-    return APIListRuns;
-
-  })(APIList$1);
-
-  var APIListRuns$1 = APIListRuns;
-
-  var APIListNotifications,
-    extend$22 = function(child, parent) { for (var key in parent) { if (hasProp$22.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$22 = {}.hasOwnProperty;
-
-  APIListNotifications = (function(superClass) {
-    extend$22(APIListNotifications, superClass);
-
-    function APIListNotifications(parent) {
-      APIListNotifications.__super__.constructor.call(this, parent);
-      this.push('notifications');
-    }
-
-    APIListNotifications.prototype.scopes = function() {
-      return new APIList$1(this).push('scopes');
-    };
-
-    APIListNotifications.prototype.channels = function() {
-      return new APIList$1(this).push('channels');
-    };
-
-    return APIListNotifications;
-
-  })(APIList$1);
-
-  var APIListNotifications$1 = APIListNotifications;
-
-  var APIResourceUser,
-    extend$23 = function(child, parent) { for (var key in parent) { if (hasProp$23.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$23 = {}.hasOwnProperty;
-
-  APIResourceUser = (function(superClass) {
-    extend$23(APIResourceUser, superClass);
-
-    function APIResourceUser(parent, id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      APIResourceUser.__super__.constructor.call(this, parent);
-      if (id === 'me') {
-        this.push('me');
-      } else {
-        this.push('users', id);
-      }
-    }
-
-    APIResourceUser.prototype.deviceTime = function() {
-      return new APIListDeviceTime$1(this);
-    };
-
-    APIResourceUser.prototype.services = function() {
-      return new APIListServices$1(this);
-    };
-
-    APIResourceUser.prototype.service = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('services', id);
-    };
-
-    APIResourceUser.prototype.accountServiceBillingPeriod = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('account-services', id, 'billing-period');
-    };
-
-    APIResourceUser.prototype.billingPeriods = function() {
-      return new APIList$1(this).push('billing-periods');
-    };
-
-    APIResourceUser.prototype.billingPeriod = function(id) {
-      return new APIResourceBillingPeriod$1(this, id);
-    };
-
-    APIResourceUser.prototype.jobs = function() {
-      return new APIList$1(this).push('jobs');
-    };
-
-    APIResourceUser.prototype.job = function(id) {
-      return new APIResourceJob$1(this, id);
-    };
-
-    APIResourceUser.prototype.deviceGroups = function() {
-      return new APIList$1(this).push('device-groups');
-    };
-
-    APIResourceUser.prototype.deviceGroup = function(id) {
-      return new APIResourceDeviceGroup$1(this, id);
-    };
-
-    APIResourceUser.prototype.deviceSessions = function() {
-      return new APIList$1(this).push('device-sessions');
-    };
-
-    APIResourceUser.prototype.deviceSession = function(id) {
-      return new APIResourceDeviceSession$1(this, id);
-    };
-
-    APIResourceUser.prototype.manualSession = function(id) {
-      return new APIResourceManualSession$1(this, id);
-    };
-
-    APIResourceUser.prototype.projects = function() {
-      return new APIList$1(this).push('projects');
-    };
-
-    APIResourceUser.prototype.project = function(id) {
-      return new APIResourceProject$1(this, id);
-    };
-
-    APIResourceUser.prototype.fileSets = function() {
-      return new APIList$1(this).push('file-sets');
-    };
-
-    APIResourceUser.prototype.fileSet = function(id) {
-      return new APIResourceFileSet$1(this, id);
-    };
-
-    APIResourceUser.prototype.files = function() {
-      return new APIListFiles$1(this);
-    };
-
-    APIResourceUser.prototype.file = function(id) {
-      return new APIResourceFile$1(this, id);
-    };
-
-    APIResourceUser.prototype.runs = function() {
-      return new APIListRuns$1(this);
-    };
-
-    APIResourceUser.prototype.availableBuildExecutors = function() {
-      return new APIList$1(this).push('available-build-executors');
-    };
-
-    APIResourceUser.prototype.availableFrameworks = function() {
-      return new APIList$1(this).push('available-frameworks');
-    };
-
-    APIResourceUser.prototype.resetApiKey = function() {
-      return new APIResource$2(this).push('reset-api-key');
-    };
-
-    APIResourceUser.prototype.restore = function() {
-      return new APIResource$2(this).push('restore');
-    };
-
-    APIResourceUser.prototype.accountAdditionalUsers = function() {
-      return new APIList$1(this).push('account', 'additional-users');
-    };
-
-    APIResourceUser.prototype.accountAdditionalUser = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('account', 'additional-users', id);
-    };
-
-    APIResourceUser.prototype.feedback = function() {
-      return new APIResource$2(this).push('feedback');
-    };
-
-    APIResourceUser.prototype.notifications = function() {
-      return new APIListNotifications$1(this);
-    };
-
-    APIResourceUser.prototype.notification = function(id) {
-      return new APIResourceNotification$1(this, id);
-    };
-
-    APIResourceUser.prototype.receipts = function() {
-      return new APIList$1(this).push('receipts');
-    };
-
-    APIResourceUser.prototype.uiPreferences = function() {
-      return new APIResource$2(this).push('ui-preferences');
-    };
-
-    APIResourceUser.prototype.integrations = function() {
-      return new APIList$1(this).push('integrations');
-    };
-
-    APIResourceUser.prototype.integration = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('integrations', id);
-    };
-
-    APIResourceUser.prototype.deviceUsage = function() {
-      return new APIList$1(this).push('device-usage');
-    };
-
-    APIResourceUser.prototype.statistics = function() {
-      return new APIList$1(this).push('statistics');
-    };
-
-    return APIResourceUser;
-
-  })(APIResource$2);
-
-  var APIResourceUser$1 = APIResourceUser;
-
-  var APIResourceUserSession,
-    extend$24 = function(child, parent) { for (var key in parent) { if (hasProp$24.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp$24 = {}.hasOwnProperty;
-
-  APIResourceUserSession = (function(superClass) {
-    extend$24(APIResourceUserSession, superClass);
-
-    function APIResourceUserSession(parent) {
-      APIResourceUserSession.__super__.constructor.call(this, parent);
-      this.push('user-sessions');
-    }
-
-    APIResourceUserSession.prototype.login = function() {
-      return new APIResource$2(this).push('login');
-    };
-
-    APIResourceUserSession.prototype.logout = function() {
-      return new APIResource$2(this).push('logout');
-    };
-
-    APIResourceUserSession.prototype.sso = function(name) {
-      return new APIResource$2(this).push('user-sessions', name + '-login');
-    };
-
-    return APIResourceUserSession;
-
-  })(APIResource$2);
-
-  var APIResourceUserSession$1 = APIResourceUserSession;
-
-  var version = "0.7.0-beta";
-
-  var API;
-
-  if (global.isNodeJs) {
-    axios.defaults.headers.common['User-Agent'] = "Bitbar Cloud API Client for JavaScript v" + version;
-  }
-
-  axios.defaults.maxContentLength = 1073741824;
-
-  API = (function() {
-    API.prototype.root = true;
-
-    API.prototype.config = null;
-
-    API.prototype.axios = null;
-
-    function API(config) {
-      if (config == null) {
-        throw new Error('config cannot be empty!');
-      }
-      this.config = {};
-      if (config.cloudUrl != null) {
-        if (typeof config.cloudUrl === 'string' && config.cloudUrl.length > 1) {
-          this.config.baseURL = config.cloudUrl.replace(/\/+$/, '') + '/api';
-        } else {
-          throw new Error('Invalid config.cloudUrl!');
-        }
-      } else {
-        throw new Error('config.cloudUrl is required!');
-      }
-      if (config.v2) {
-        this.config.baseURL += '/v2';
-      }
-      if (config.apiKey != null) {
-        if (typeof config.apiKey === 'string' && /^[A-Za-z0-9]{32}$/.test(config.apiKey)) {
-          this.config.auth = {
-            username: config.apiKey,
-            password: ''
-          };
-        } else {
-          throw new Error('Invalid config.apiKey!');
-        }
-      }
-      this.axios = axios.create(this.config);
-    }
-
-    API.prototype.me = function() {
-      return new APIResourceUser$1(this, 'me');
-    };
-
-    API.prototype.user = function(id) {
-      return new APIResourceUser$1(this, id);
-    };
-
-    API.prototype.admin = function() {
-      return console.log('TODO');
-    };
-
-    API.prototype.userSession = function() {
-      return new APIResourceUserSession$1(this);
-    };
-
-    API.prototype.devices = function() {
-      return new APIListDevices$1(this);
-    };
-
-    API.prototype.device = function(id) {
-      return new APIResourceDevice$1(this, id);
-    };
-
-    API.prototype.deviceGroups = function() {
-      return new APIList$1(this).push('device-groups');
-    };
-
-    API.prototype.deviceGroup = function(id) {
-      return new APIResourceDeviceGroup$1(this, id);
-    };
-
-    API.prototype.deviceStatuses = function() {
-      return new APIList$1(this).push('device-status');
-    };
-
-    API.prototype.deviceStatus = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('device-status', id);
-    };
-
-    API.prototype.deviceSessions = function() {
-      return new APIList$1(this).push('device-sessions');
-    };
-
-    API.prototype.deviceSession = function(id) {
-      return new APIResourceDeviceSession$1(this, id);
-    };
-
-    API.prototype.files = function() {
-      return new APIList$1(this).push('files');
-    };
-
-    API.prototype.file = function(id) {
-      return new APIResourceFile$1(this, id);
-    };
-
-    API.prototype.filePath = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return this.file(id).push('file');
-    };
-
-    API.prototype.fileSets = function() {
-      return new APIList$1(this).push('file-sets');
-    };
-
-    API.prototype.fileSet = function(id) {
-      return new APIResourceFileSet$1(this, id);
-    };
-
-    API.prototype.runsConfig = function() {
-      return new APIResource$2(this).push('runs', 'config');
-    };
-
-    API.prototype.runs = function() {
-      return new APIList$1(this).push('runs');
-    };
-
-    API.prototype.run = function(id) {
-      return new APIResourceRun$1(this, id);
-    };
-
-    API.prototype.projects = function() {
-      return new APIList$1(this).push('projects');
-    };
-
-    API.prototype.project = function(id) {
-      return new APIResourceProject$1(this, id);
-    };
-
-    API.prototype.labelGroups = function() {
-      return new APIList$1(this).push('label-groups');
-    };
-
-    API.prototype.labelGroup = function(id) {
-      return new APIResourceLabelGroup$1(this, id);
-    };
-
-    API.prototype.properties = function() {
-      return new APIListProperties$1(this);
-    };
-
-    API.prototype.property = function(id) {
-      if (id == null) {
-        throw new Error('Resource ID cannot be null!');
-      }
-      return new APIResource$2(this).push('properties', id);
-    };
-
-    API.prototype.services = function() {
-      return new APIListServices$1(this);
-    };
-
-    API.prototype.sessions = function() {
-      return new APIList$1(this).push('sessions');
-    };
-
-    API.prototype.license = function() {
-      return new APIResource$2(this).push('license');
-    };
-
-    return API;
-
-  })();
-
-  var API$1 = API;
-
-  var CloudAPIClient;
-
-  CloudAPIClient = {
-    API: API$1,
-    FilterBuilder: FilterBuilder$1
+  qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
+
+  var version = "0.8.0";
+
+  /*! *****************************************************************************
+  Copyright (c) Microsoft Corporation. All rights reserved.
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+  this file except in compliance with the License. You may obtain a copy of the
+  License at http://www.apache.org/licenses/LICENSE-2.0
+
+  THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+  WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+  MERCHANTABLITY OR NON-INFRINGEMENT.
+
+  See the Apache Version 2.0 License for specific language governing permissions
+  and limitations under the License.
+  ***************************************************************************** */
+  /* global Reflect, Promise */
+
+  var extendStatics = function(d, b) {
+      extendStatics = Object.setPrototypeOf ||
+          ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+          function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+      return extendStatics(d, b);
   };
 
-  var CloudAPIClient$1 = CloudAPIClient;
+  function __extends(d, b) {
+      extendStatics(d, b);
+      function __() { this.constructor = d; }
+      d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  }
 
-  return CloudAPIClient$1;
+  /**
+   * Allowed methods
+   *
+   * @constant
+   * @type {Array}
+   * @default
+   */
+  var ALLOWED_HTTP_METHODS;
+  (function (ALLOWED_HTTP_METHODS) {
+      ALLOWED_HTTP_METHODS["GET"] = "GET";
+      ALLOWED_HTTP_METHODS["POST"] = "POST";
+      ALLOWED_HTTP_METHODS["DELETE"] = "DELETE";
+  })(ALLOWED_HTTP_METHODS || (ALLOWED_HTTP_METHODS = {}));
+  /**
+   * APIEntity
+   *
+   * @class
+   * @abstract
+   */
+  var APIEntity = /** @class */ (function () {
+      /**
+       * Constructor
+       * @param {APIEntity|object} [parent] - Specifies a parent from which should be inherited properties
+       */
+      function APIEntity(parent) {
+          this.stack = [];
+          this.requestConfig = {};
+          if (parent instanceof APIEntity) {
+              this.root = parent.root;
+              if (Array.isArray(parent.stack)) {
+                  this.push.apply(this, parent.stack);
+              }
+              if (parent.requestConfig != null) {
+                  this.setRequestConfig(parent.requestConfig);
+              }
+          }
+          else {
+              this.root = parent;
+          }
+      }
+      /**
+       * Push
+       *
+       * @public
+       * @param {string|number} items... - Items that should be pushed to stack
+       * @returns this
+       */
+      APIEntity.prototype.push = function () {
+          var items = [];
+          for (var _i = 0; _i < arguments.length; _i++) {
+              items[_i] = arguments[_i];
+          }
+          for (var _a = 0, items_1 = items; _a < items_1.length; _a++) {
+              var item = items_1[_a];
+              this.stack.push(item);
+          }
+          return this;
+      };
+      /**
+       * Pop
+       *
+       * @public
+       * @return this
+       */
+      APIEntity.prototype.pop = function () {
+          this.stack.pop();
+          return this;
+      };
+      /**
+       * Set request config
+       *
+       * @public
+       * @param {AxiosRequestConfig} requestConfig - object of request config to be set
+       * @returns this
+       */
+      APIEntity.prototype.setRequestConfig = function (requestConfig) {
+          Object.deepAssign(this.requestConfig, requestConfig);
+          return this;
+      };
+      /**
+       * Remove request config key
+       *
+       * @public
+       * @param {string} key - Key to me removed from request config
+       * @returns this
+       */
+      APIEntity.prototype.removeRequestConfig = function (key) {
+          delete this.requestConfig[key];
+          return this;
+      };
+      /**
+       * Set headers
+       *
+       * @public
+       * @param {object} headers - Headers object
+       * @returns this
+       */
+      APIEntity.prototype.headers = function (headers) {
+          var _headers = {};
+          // Unify/Standarize headers keys
+          for (var key in headers) {
+              var newKey = key.replace(/(?:^|-)([a-z])/g, function (letter) { return letter.toUpperCase(); });
+              _headers[newKey] = headers[key];
+          }
+          // Set
+          return this.setRequestConfig({
+              headers: _headers
+          });
+      };
+      /**
+       * Set HTTP method
+       *
+       * @public
+       * @param {string} name - HTTP methods name
+       * @returns this
+       */
+      APIEntity.prototype.method = function (name) {
+          var NAME = name.toLocaleUpperCase();
+          if (!ALLOWED_HTTP_METHODS[NAME]) {
+              throw new Error("Method '" + NAME + "' is not allowed! You can use: " + Object.keys(ALLOWED_HTTP_METHODS).join(', '));
+          }
+          return this.setRequestConfig({
+              method: NAME
+          });
+      };
+      /**
+       * Set GET as HTTP method
+       *
+       * @public
+       * @returns this
+       */
+      APIEntity.prototype.get = function () {
+          return this.method('GET');
+      };
+      /**
+       * Set POST as HTTP method
+       *
+       * @public
+       * @returns this
+       */
+      APIEntity.prototype.post = function () {
+          return this.method('POST');
+      };
+      /**
+       * Set params
+       *
+       * @public
+       * @param {object} params - object of params to be set
+       * @returns this
+       */
+      APIEntity.prototype.params = function (params) {
+          Object.deepAssign(this.requestConfig, {
+              params: params
+          });
+          return this;
+      };
+      /**
+       * Get params
+       *
+       * @public
+       * @returns object
+       */
+      APIEntity.prototype.getParams = function () {
+          return this.requestConfig.params == null ? {} : this.requestConfig.params;
+      };
+      /**
+       * Remove params key
+       *
+       * @public
+       * @param {string} key - Key to me removed from params
+       * @returns this
+       */
+      APIEntity.prototype.removeParam = function (key) {
+          delete this.requestConfig.params[key];
+          return this;
+      };
+      /**
+       * Set data
+       *
+       * @public
+       * @param {object} data - object of data to be set
+       * @returns this
+       */
+      APIEntity.prototype.data = function (data) {
+          Object.deepAssign(this.requestConfig, {
+              data: data
+          });
+          return this;
+      };
+      /**
+       * Set JSON data
+       *
+       * @public
+       * @param {object} data - JSON object to be set
+       * @returns this
+       */
+      APIEntity.prototype.jsonData = function (data) {
+          this.headers({
+              'Content-Type': 'application/json'
+          }).data(data);
+          return this;
+      };
+      /**
+       * Send request
+       *
+       * @public
+       * @returns Promise
+       */
+      APIEntity.prototype.send = function () {
+          var requestConfig = Object.deepAssign({}, this.requestConfig, {
+              url: "/" + this.stack.join('/')
+          });
+          // Set default headers
+          if (requestConfig.headers == null) {
+              requestConfig.headers = {};
+          }
+          // Set default Content-Type
+          if (requestConfig.headers['Content-Type'] == null) {
+              requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+          }
+          // Convert data if needed
+          if (requestConfig.method === 'POST' &&
+              requestConfig.headers['Content-Type'] === 'application/x-www-form-urlencoded' &&
+              requestConfig.data != null) {
+              requestConfig.data = qs.stringify(requestConfig.data);
+          }
+          // Send request
+          // @ts-ignore
+          return this.root.axios.request(requestConfig);
+      };
+      return APIEntity;
+  }());
+
+  /**
+   * Filter
+   */
+  var Filter = /** @class */ (function () {
+      function Filter(name, value, operand) {
+          this.name = name;
+          this.value = value;
+          this.operand = operand;
+      }
+      return Filter;
+  }());
+
+  /**
+   * FilterBuilder
+   *
+   * Builds filter string according to Bitbar Cloud backend convention
+   */
+  var FilterBuilder = /** @class */ (function () {
+      function FilterBuilder() {
+          this.filters = [];
+      }
+      /**
+       * Add filter to filters list
+       * @param name {string} Name
+       * @param value {*} Value
+       * @param operand {string} Operand
+       * @param [checkNull=false] {boolean} Check null?
+       * @returns {FilterBuilder}
+       */
+      FilterBuilder.prototype.add = function (name, value, operand, checkNull) {
+          if (checkNull === void 0) { checkNull = false; }
+          value = Array.wrap(value);
+          if (value.length === 0) {
+              return this;
+          }
+          // auto-convert
+          for (var i = 0; i < value.length; i++) {
+              var v = value[i];
+              if (typeof v === 'object' && v instanceof Date) {
+                  value[i] = v.getTime();
+              }
+          }
+          var isNull = false;
+          if (checkNull) {
+              // check null existence
+              for (var _i = 0, value_1 = value; _i < value_1.length; _i++) {
+                  var v = value_1[_i];
+                  if (v !== null) {
+                      continue;
+                  }
+              }
+              if (isNull) {
+                  value = value.filter(function (item) { return item !== null; });
+                  operand += 'ornull';
+              }
+          }
+          if (operand.endsWith('ornull') && value.length === 0) {
+              operand = 'isnull';
+          }
+          // add filter
+          this.filters.push(new Filter(name, value, operand));
+          return this;
+      };
+      FilterBuilder.prototype.gt = function (name, value) {
+          return this.add(name, value, 'gt');
+      };
+      FilterBuilder.prototype.lt = function (name, value) {
+          return this.add(name, value, 'lt');
+      };
+      FilterBuilder.prototype.after = function (name, value) {
+          return this.add(name, value, 'after', true);
+      };
+      FilterBuilder.prototype.afterorequal = function (name, value) {
+          return this.add(name, value, 'afterorequal', true);
+      };
+      FilterBuilder.prototype.before = function (name, value) {
+          return this.add(name, value, 'before', true);
+      };
+      FilterBuilder.prototype.beforeorequal = function (name, value) {
+          return this.add(name, value, 'beforeorequal', true);
+      };
+      FilterBuilder.prototype.on = function (name, value) {
+          return this.add(name, value, 'on');
+      };
+      FilterBuilder.prototype.eq = function (name, value) {
+          return this.add(name, value, 'eq');
+      };
+      FilterBuilder.prototype.contains = function (name, value) {
+          return this.add(name, value, 'contains');
+      };
+      FilterBuilder.prototype.like = function (name, value) {
+          return this.add(name, value, 'like');
+      };
+      FilterBuilder.prototype.isnull = function (name) {
+          return this.add(name, undefined, 'isnull');
+      };
+      FilterBuilder.prototype.in = function (name, value) {
+          return this.add(name, value, 'in', true);
+      };
+      FilterBuilder.prototype.notin = function (name, value) {
+          return this.add(name, value, 'notin', true);
+      };
+      FilterBuilder.prototype.raw = function (filter) {
+          var filters = Array.wrap(filter);
+          for (var _i = 0, filters_1 = filters; _i < filters_1.length; _i++) {
+              var filter_1 = filters_1[_i];
+              if (this.isFilterPart(filter_1)) {
+                  this.filters.push(filter_1);
+              }
+              else {
+                  throw new SyntaxError("Filter " + filter_1 + " has invalid syntax");
+              }
+          }
+      };
+      /**
+       * Check if given string is proper filter part
+       */
+      FilterBuilder.prototype.isFilterPart = function (str) {
+          return /^[a-zA-Z0-9.]{2,12}_(?:isnull$|(?:gt|lt|(?:after|before)(?:orequal)?|on|eq|contains|like|(?:not)?in)_)/.test(str);
+      };
+      /**
+       * To string
+       */
+      FilterBuilder.prototype.toString = function () {
+          var parts = [];
+          var part, val;
+          for (var _i = 0, _a = this.filters; _i < _a.length; _i++) {
+              var filter = _a[_i];
+              if (typeof filter === 'string') {
+                  part = filter;
+              }
+              else {
+                  val = '';
+                  if (filter.value.length > 1 || typeof filter.value[0] !== 'undefined') {
+                      val = "_" + filter.value.join('|');
+                  }
+                  part = filter.name + "_" + filter.operand + val;
+              }
+              parts.push(part);
+          }
+          return parts.join(';');
+      };
+      return FilterBuilder;
+  }());
+
+  /**
+   * Default limit
+   *
+   * @constant
+   * @type {number}
+   * @default
+   */
+  var DEFAULT_LIMIT = 20;
+  /**
+   * Default offset
+   *
+   * @constant
+   * @type {number}
+   * @default
+   */
+  var DEFAULT_OFFSET = 0;
+  /**
+   * API Order Enum
+   */
+  var APIOrder;
+  (function (APIOrder) {
+      APIOrder["asc"] = "a";
+      APIOrder["desc"] = "d";
+  })(APIOrder || (APIOrder = {}));
+  /**
+   * APIList
+   *
+   * @class
+   * @extends APIEntity
+   */
+  var APIList = /** @class */ (function (_super) {
+      __extends(APIList, _super);
+      function APIList() {
+          return _super !== null && _super.apply(this, arguments) || this;
+      }
+      /**
+       * Create
+       * Shortcut for sending data POST
+       *
+       * @param {object} data
+       */
+      APIList.prototype.create = function (data) {
+          return this.post().data(data).send();
+      };
+      /**
+       * Sets sorting
+       *
+       * @public
+       * @param {string} name - Name of the column according to which the data will be sorted
+       * @param {string} [order=a] - Sorting order. Possibilities: 'a', 'd'
+       * @returns this
+       */
+      APIList.prototype.sort = function (name, order) {
+          // if order not in ['a', 'd']
+          //   throw new Error(`Order '\${order}' is invalid! Use 'a' for ascending or 'd' for descending.`);
+          if (order === void 0) { order = APIOrder.asc; }
+          return this.params({
+              sort: name + "_" + order
+          });
+      };
+      /**
+       * Sets limit
+       *
+       * @public
+       * @param {number} [limit=DEFAULT_LIMIT] - Limit to be set
+       * @returns this
+       */
+      APIList.prototype.limit = function (limit) {
+          if (limit === void 0) { limit = DEFAULT_LIMIT; }
+          if (!Number.isNatural(limit)) {
+              throw new Error("Limit '" + limit + "' is invalid!");
+          }
+          return this.params({
+              limit: limit
+          });
+      };
+      /**
+       * Gets limit
+       *
+       * @public
+       * @returns number
+       */
+      APIList.prototype.getLimit = function () {
+          var params = this.getParams();
+          return params.limit == null ? DEFAULT_LIMIT : params.limit;
+      };
+      /**
+       * Disables limit
+       *
+       * @public
+       * @returns this
+       */
+      APIList.prototype.noLimit = function () {
+          return this.limit(0);
+      };
+      /**
+       * Sets offset
+       *
+       * @public
+       * @param {number} [offset=DEFAULT_OFFSET] - Offset to be set
+       * @returns this
+       */
+      APIList.prototype.offset = function (offset) {
+          if (offset === void 0) { offset = DEFAULT_OFFSET; }
+          if (!Number.isNatural(offset)) {
+              throw new Error("Offset '" + offset + "' is invalid!");
+          }
+          return this.params({
+              offset: offset
+          });
+      };
+      /**
+       * Sets limit and offset so that will request from BE records between range
+       *
+       * @public
+       * @param {number} from - From index
+       * @param {number} to - To index
+       * @returns this
+       */
+      APIList.prototype.between = function (from, to) {
+          if (!Number.isNatural(from)) {
+              throw new Error("From '" + from + "' is invalid!");
+          }
+          if (!Number.isNatural(to)) {
+              throw new Error("To '" + to + "' is invalid!");
+          }
+          return this.params({
+              offset: from,
+              limit: 1 + (to - from)
+          });
+      };
+      /**
+       * Sets limit and offset so that will request from BE one record on given index
+       *
+       * @public
+       * @param {number} idx - Index
+       * @returns this
+       */
+      APIList.prototype.only = function (idx) {
+          if (!Number.isNatural(idx)) {
+              throw new Error("Index '" + idx + "' is invalid!");
+          }
+          return this.params({
+              offset: idx,
+              limit: 1
+          });
+      };
+      /**
+       * Gets current limit and sets offset so that will request from BE one page of records
+       *
+       * @public
+       * @param {number} [page=1] - Page number (counted from 1)
+       * @returns this
+       */
+      APIList.prototype.page = function (page) {
+          if (page === void 0) { page = 1; }
+          if (!Number.isNatural(page) || page == 0) {
+              throw new Error("Page '" + page + "' is invalid!");
+          }
+          var limit = this.getLimit();
+          var offset = (page - 1) * limit;
+          return this.params({
+              offset: offset,
+              limit: limit
+          });
+      };
+      /**
+       * Sets search
+       *
+       * query param is working like SQL LIKE. BE sets wraps around query with %, and replaces every white character
+       * with %. So e.g. if query='my device', then it's searching for '%my%device%' in DB.
+       *
+       * @public
+       * @param {string} query - Query to search for
+       * @returns this
+       */
+      APIList.prototype.search = function (query) {
+          if (typeof query !== 'string') {
+              throw new Error('Search query must be a string!');
+          }
+          return this.params({
+              search: query
+          });
+      };
+      /**
+       * Sets filter
+       *
+       * @public
+       * @param {FilterBuilder|string} filter - Filter
+       * @returns this
+       */
+      APIList.prototype.filter = function (filter) {
+          var isFilterBuilder = filter instanceof FilterBuilder;
+          if (typeof filter !== 'string' && !isFilterBuilder) {
+              throw new Error('Filter must be either string or instance of FilterBuilder');
+          }
+          if (isFilterBuilder) {
+              filter = filter.toString();
+          }
+          return this.params({
+              filter: filter
+          });
+      };
+      return APIList;
+  }(APIEntity));
+
+  /**
+   * APIResource
+   *
+   * @class
+   * @extends APIEntity
+   */
+  var APIResource = /** @class */ (function (_super) {
+      __extends(APIResource, _super);
+      function APIResource() {
+          return _super !== null && _super.apply(this, arguments) || this;
+      }
+      /**
+       * Set DELETE as HTTP method
+       *
+       * @public
+       * @returns this
+       */
+      APIResource.prototype.delete = function () {
+          this.method('DELETE');
+      };
+      return APIResource;
+  }(APIEntity));
+
+  /**
+   * APIListDevices
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListDevices = /** @class */ (function (_super) {
+      __extends(APIListDevices, _super);
+      /**
+       * /devices
+       *
+       * Constructor
+       */
+      function APIListDevices(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('devices');
+          return _this;
+      }
+      // /devices/filters
+      APIListDevices.prototype.filters = function () {
+          return new APIResource(this).push('filters');
+      };
+      // /devices/cleanup-configurations
+      APIListDevices.prototype.cleanupConfigurations = function () {
+          return new APIList(this).push('cleanup-configurations');
+      };
+      /**
+       * /devices/cleanup-configurations/{id}
+       *
+       * @param {number} id - Resource ID
+       */
+      APIListDevices.prototype.cleanupConfiguration = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('cleanup-configurations', id);
+      };
+      return APIListDevices;
+  }(APIList));
+
+  /**
+   * APIListDevices
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListUsers = /** @class */ (function (_super) {
+      __extends(APIListUsers, _super);
+      /**
+       * /users
+       *
+       * Constructor
+       */
+      function APIListUsers(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('users');
+          return _this;
+      }
+      // /users/activate
+      APIListUsers.prototype.activate = function () {
+          return new APIResource(this).push('activate');
+      };
+      // /users/recoveries
+      APIListUsers.prototype.recoveries = function () {
+          return new APIResource(this).push('recoveries');
+      };
+      // /users/passwordRecovery
+      APIListUsers.prototype.passwordRecovery = function () {
+          return new APIResource(this).push('password-recovery');
+      };
+      // /users/resetApiKey
+      APIListUsers.prototype.resetApiKey = function () {
+          return new APIResource(this).push('reset-api-key');
+      };
+      // /users/resetApiKey
+      APIListUsers.prototype.validateVatId = function () {
+          return new APIResource(this).push('validateVatId');
+      };
+      return APIListUsers;
+  }(APIList));
+
+  /**
+   * APIResourceBillingPeriod
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceBillingPeriod = /** @class */ (function (_super) {
+      __extends(APIResourceBillingPeriod, _super);
+      /**
+       * /billing-periods/{id}
+       *
+       * Constructor
+       */
+      function APIResourceBillingPeriod(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('billing-periods', id);
+          return _this;
+      }
+      // /billing-periods/{id}/receipt
+      APIResourceBillingPeriod.prototype.receipt = function () {
+          return new APIResource(this).push('receipt');
+      };
+      return APIResourceBillingPeriod;
+  }(APIResource));
+
+  /**
+   * APIResourceBuild
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceBuild = /** @class */ (function (_super) {
+      __extends(APIResourceBuild, _super);
+      /**
+       * /builds/{id}
+       *
+       * Constructor
+       */
+      function APIResourceBuild(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('builds', id);
+          return _this;
+      }
+      // /builds/{id}/abort
+      APIResourceBuild.prototype.abort = function () {
+          return new APIResource(this).push('abort');
+      };
+      // /builds/{id}/output-file-set/files
+      APIResourceBuild.prototype.outputFiles = function () {
+          return new APIList(this).push('output-file-set', 'files');
+      };
+      return APIResourceBuild;
+  }(APIResource));
+
+  /**
+   * APIResourceFile
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceJob = /** @class */ (function (_super) {
+      __extends(APIResourceJob, _super);
+      /**
+       * /jobs/{id}
+       *
+       * Constructor
+       */
+      function APIResourceJob(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('jobs', id);
+          return _this;
+      }
+      // /jobs/{id}/builds
+      APIResourceJob.prototype.builds = function () {
+          return new APIList(this).push('builds');
+      };
+      // /jobs/{id}/builds/{id}
+      APIResourceJob.prototype.build = function (id) {
+          return new APIResourceBuild(this, id);
+      };
+      return APIResourceJob;
+  }(APIResource));
+
+  /**
+   * APIResourceBillingPeriod
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceDeviceGroup = /** @class */ (function (_super) {
+      __extends(APIResourceDeviceGroup, _super);
+      /**
+       * /device-groups/{id}
+       *
+       * Constructor
+       */
+      function APIResourceDeviceGroup(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('device-groups', id);
+          return _this;
+      }
+      // /device-groups/{id}/devices
+      APIResourceDeviceGroup.prototype.devices = function () {
+          return new APIList(this).push('devices');
+      };
+      // /device-groups/{id}/device/{id}
+      APIResourceDeviceGroup.prototype.device = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('devices', id);
+      };
+      // /device-groups/{id}/selectors
+      APIResourceDeviceGroup.prototype.selectors = function () {
+          return new APIList(this).push('selectors');
+      };
+      // /device-groups/{id}/selectors/{id}
+      APIResourceDeviceGroup.prototype.selector = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('selectors', id);
+      };
+      return APIResourceDeviceGroup;
+  }(APIResource));
+
+  // Create non-media files filter
+  var NON_MEDIA_FILES_FILTER = new FilterBuilder();
+  NON_MEDIA_FILES_FILTER.eq('state', 'READY');
+  NON_MEDIA_FILES_FILTER.notin('mimetype', [
+      // no images
+      'image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif',
+      // no videos
+      'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg'
+  ]);
+  /**
+   * APIResourceDeviceSession
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceDeviceSession = /** @class */ (function (_super) {
+      __extends(APIResourceDeviceSession, _super);
+      /**
+       * /device-sessions/{id}
+       *
+       * Constructor
+       */
+      function APIResourceDeviceSession(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('device-sessions', id);
+          return _this;
+      }
+      // /device-sessions/{id}/cluster-logs
+      APIResourceDeviceSession.prototype.clusterLogs = function () {
+          return new APIResource(this).push('cluster-logs');
+      };
+      // /device-sessions/{id}/data-availability
+      APIResourceDeviceSession.prototype.dataAvailability = function () {
+          return new APIResource(this).push('data-availability');
+      };
+      // /device-sessions/{id}/fixtures.zip
+      APIResourceDeviceSession.prototype.fixturesZip = function () {
+          return new APIResource(this).push('fixtures.zip');
+      };
+      // /device-sessions/{id}/junit.xml
+      APIResourceDeviceSession.prototype.junitXml = function () {
+          return new APIResource(this).push('junit.xml');
+      };
+      // /device-sessions/{id}/logs
+      APIResourceDeviceSession.prototype.logs = function () {
+          return new APIResource(this).push('logs');
+      };
+      // /device-sessions/{id}/performance
+      APIResourceDeviceSession.prototype.performance = function () {
+          return new APIResource(this).push('performance');
+      };
+      // /device-sessions/{id}/release
+      APIResourceDeviceSession.prototype.release = function () {
+          return new APIResource(this).push('release');
+      };
+      // /device-sessions/{id}/result-data.zip
+      APIResourceDeviceSession.prototype.resultDataZip = function () {
+          return new APIResource(this).push('result-data.zip');
+      };
+      // /device-sessions/{id}/screenshots
+      APIResourceDeviceSession.prototype.screenshots = function () {
+          return new APIList(this).push('screenshots');
+      };
+      // /device-sessions/{id}/screenshots/{id}
+      APIResourceDeviceSession.prototype.screenshot = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('screenshots', id);
+      };
+      // /device-sessions/{id}/steps
+      APIResourceDeviceSession.prototype.steps = function () {
+          return new APIList(this).push('steps');
+      };
+      // /device-sessions/{id}/steps/{id}
+      APIResourceDeviceSession.prototype.step = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('steps', id);
+      };
+      // /device-sessions/{id}/steps/current
+      APIResourceDeviceSession.prototype.currentStep = function () {
+          return this.step('current');
+      };
+      // /device-sessions/{id}/test-case-runs
+      APIResourceDeviceSession.prototype.testCaseRuns = function () {
+          return new APIList(this).push('test-case-runs');
+      };
+      // /device-sessions/{id}/retry
+      APIResourceDeviceSession.prototype.retry = function () {
+          return new APIResource(this).push('retry').post();
+      };
+      // /device-sessions/{id}/input-file-set
+      APIResourceDeviceSession.prototype.input = function () {
+          return new InputFileset(this);
+      };
+      // /device-sessions/{id}/output-file-set
+      APIResourceDeviceSession.prototype.output = function () {
+          return new OutputFileset(this);
+      };
+      // Alias for output().videos();
+      APIResourceDeviceSession.prototype.videos = function () {
+          return this.output().videos();
+      };
+      return APIResourceDeviceSession;
+  }(APIResource));
+  /**
+   * InputFileset
+   *
+   * @class
+   * @extends APIResource
+   */
+  var InputFileset = /** @class */ (function (_super) {
+      __extends(InputFileset, _super);
+      /**
+       * /input-file-set
+       *
+       * Constructor
+       */
+      function InputFileset(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('input-file-set');
+          return _this;
+      }
+      // /input-file-set/files
+      InputFileset.prototype.files = function () {
+          return new APIList(this).push('files');
+      };
+      // /input-file-set/files.zip
+      InputFileset.prototype.filesZip = function () {
+          return new APIResource(this).push('files.zip');
+      };
+      return InputFileset;
+  }(APIResource));
+  /**
+   * OutputFileset
+   *
+   * @class
+   * @extends APIResource
+   */
+  var OutputFileset = /** @class */ (function (_super) {
+      __extends(OutputFileset, _super);
+      /**
+       * /output-file-set
+       *
+       * Constructor
+       */
+      function OutputFileset(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('output-file-set');
+          return _this;
+      }
+      // /output-file-set/files
+      OutputFileset.prototype.files = function () {
+          return new APIList(this).push('files');
+      };
+      // /output-file-set/files.zip
+      OutputFileset.prototype.filesZip = function () {
+          return new APIResource(this).push('files.zip');
+      };
+      // /output-file-set/screenshots
+      OutputFileset.prototype.screenshots = function () {
+          return new APIList(this).push('screenshots');
+      };
+      // /output-file-set/screenshots/{id}
+      OutputFileset.prototype.screenshot = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('screenshots', id);
+      };
+      // /output-file-set/screenshots/{id}/file/{id}
+      OutputFileset.prototype.screenshotFile = function (id) {
+          this.screenshot(id).push('file');
+      };
+      // Filter files out by ready videos
+      OutputFileset.prototype.videos = function () {
+          this.files().params({
+              filter: 's_state_eq_READY',
+              tag: ['video']
+          });
+      };
+      // Filter files out by non-media
+      OutputFileset.prototype.nonMediaFiles = function () {
+          return this.files().filter(NON_MEDIA_FILES_FILTER);
+      };
+      return OutputFileset;
+  }(APIResource));
+
+  /**
+   * APIResourceManualSession
+   *
+   * @class
+   * @extends APIResourceDeviceSession
+   */
+  var APIResourceManualSession = /** @class */ (function (_super) {
+      __extends(APIResourceManualSession, _super);
+      function APIResourceManualSession() {
+          return _super !== null && _super.apply(this, arguments) || this;
+      }
+      // /connections
+      APIResourceManualSession.prototype.connections = function () {
+          return new APIResource(this).push('connections');
+      };
+      return APIResourceManualSession;
+  }(APIResourceDeviceSession));
+
+  /**
+   * APIResourceRun
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceRun = /** @class */ (function (_super) {
+      __extends(APIResourceRun, _super);
+      /**
+       * /runs/{id}
+       *
+       * Constructor
+       */
+      function APIResourceRun(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('runs', id);
+          return _this;
+      }
+      // /runs/{id}/config
+      APIResourceRun.prototype.config = function () {
+          return new APIResource(this).push('config');
+      };
+      // /runs/{id}/device-sessions
+      APIResourceRun.prototype.deviceSessions = function () {
+          return new APIList(this).push('device-sessions');
+      };
+      // /runs/{id}/device-sessions/{id}
+      APIResourceRun.prototype.deviceSession = function (id) {
+          return new APIResourceDeviceSession(this, id);
+      };
+      // /runs/{id}/steps
+      APIResourceRun.prototype.steps = function () {
+          return new APIList(this).push('steps');
+      };
+      // /runs/{id}/files
+      APIResourceRun.prototype.files = function () {
+          return new APIList(this).push('files');
+      };
+      // /runs/{id}/files.zip
+      APIResourceRun.prototype.filesZip = function () {
+          return new APIResource(this).push('files.zip');
+      };
+      // /runs/{id}/tags
+      APIResourceRun.prototype.tags = function () {
+          return new APIList(this).push('tags');
+      };
+      // /runs/{id}/tag
+      APIResourceRun.prototype.tag = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('tags', id);
+      };
+      return APIResourceRun;
+  }(APIResource));
+
+  /**
+   * APIResourceFile
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceProject = /** @class */ (function (_super) {
+      __extends(APIResourceProject, _super);
+      /**
+       * /projects/{id}
+       *
+       * Constructor
+       */
+      function APIResourceProject(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('projects', id);
+          return _this;
+      }
+      // /projects/{id}/runs
+      APIResourceProject.prototype.runs = function () {
+          return new APIList(this).push('runs');
+      };
+      // /projects/{id}/runs/{id}
+      APIResourceProject.prototype.run = function (id) {
+          return new APIResourceRun(this, id);
+      };
+      // /projects/{id}/runs-extended
+      APIResourceProject.prototype.runsExtended = function () {
+          return new APIList(this).push('runs-extended');
+      };
+      // /projects/{id}/runs-extended/{id}
+      APIResourceProject.prototype.runExtended = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('runs-extended', id);
+      };
+      // /projects/{id}/files
+      APIResourceProject.prototype.files = function () {
+          return new APIList(this).push('files');
+      };
+      // /projects/{id}/files.zip
+      APIResourceProject.prototype.filesZip = function () {
+          return new APIResource(this).push('files.zip');
+      };
+      // /projects/{id}/sharings
+      APIResourceProject.prototype.sharings = function () {
+          return new APIList(this).push('sharings');
+      };
+      // /projects/{id}/sharings/{id}
+      APIResourceProject.prototype.sharing = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('sharings', id);
+      };
+      return APIResourceProject;
+  }(APIResource));
+
+  /**
+   * APIResourceFile
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceFile = /** @class */ (function (_super) {
+      __extends(APIResourceFile, _super);
+      /**
+       * /files/{id}
+       *
+       * Constructor
+       */
+      function APIResourceFile(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('files', id);
+          return _this;
+      }
+      // /files/{id}/file
+      APIResourceFile.prototype.file = function () {
+          return new APIResource(this).push('file');
+      };
+      // /files/{id}/icon
+      APIResourceFile.prototype.icon = function () {
+          return new APIResource(this).push('icon');
+      };
+      // /files/{id}/tags
+      APIResourceFile.prototype.tags = function () {
+          return new APIList(this).push('tags');
+      };
+      return APIResourceFile;
+  }(APIResource));
+
+  /**
+   * APIResourceNotification
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceNotification = /** @class */ (function (_super) {
+      __extends(APIResourceNotification, _super);
+      /**
+       * /notifications/{id}
+       *
+       * Constructor
+       */
+      function APIResourceNotification(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('notifications', id);
+          return _this;
+      }
+      // /notifications/{id}/test
+      APIResourceNotification.prototype.test = function () {
+          return new APIResource(this).push('test');
+      };
+      return APIResourceNotification;
+  }(APIResource));
+
+  /**
+   * APIListDeviceTime
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListDeviceTime = /** @class */ (function (_super) {
+      __extends(APIListDeviceTime, _super);
+      /**
+       * /device-time
+       *
+       * Constructor
+       */
+      function APIListDeviceTime(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('device-time');
+          return _this;
+      }
+      // /device-time/reserved
+      APIListDeviceTime.prototype.reserved = function () {
+          return new APIList(this).push('reserved');
+      };
+      // /device-time/used
+      APIListDeviceTime.prototype.used = function () {
+          return new APIList(this).push('used');
+      };
+      return APIListDeviceTime;
+  }(APIList));
+
+  /**
+   * APIListFiles
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListFiles = /** @class */ (function (_super) {
+      __extends(APIListFiles, _super);
+      // Constructor
+      function APIListFiles(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('files');
+          return _this;
+      }
+      // Siplifies process of uploading
+      APIListFiles.prototype.upload = function (obj) {
+          var form;
+          // For NodeJS
+          if (globalThis.isNodeJs) {
+              var fs = require('fs');
+              var FormData = require('form-data');
+              form = new FormData();
+              form.append('file', fs.createReadStream(obj.dir + '/' + obj.filename), {
+                  filename: obj.filename
+              });
+              /**
+               * Browser
+               * @todo
+               */
+          }
+          else {
+              throw new Error('Not supported yet!');
+          }
+          this.post().headers(form.getHeaders()).data(form);
+      };
+      return APIListFiles;
+  }(APIList));
+
+  /**
+   * APIListPurchased
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListPurchased = /** @class */ (function (_super) {
+      __extends(APIListPurchased, _super);
+      /**
+       * /purchased
+       *
+       * Constructor
+       */
+      function APIListPurchased(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('purchased');
+          return _this;
+      }
+      return APIListPurchased;
+  }(APIList));
+
+  /**
+   * APIListServices
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListServices = /** @class */ (function (_super) {
+      __extends(APIListServices, _super);
+      // Constructor
+      function APIListServices(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('services');
+          return _this;
+      }
+      // /services/purchased
+      APIListServices.prototype.purchased = function () {
+          return new APIListPurchased(this);
+      };
+      // /services/available
+      APIListServices.prototype.available = function () {
+          this.push('available');
+      };
+      return APIListServices;
+  }(APIList));
+
+  /**
+   * APIListRuns
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListRuns = /** @class */ (function (_super) {
+      __extends(APIListRuns, _super);
+      /**
+       * /runs
+       *
+       * Constructor
+       */
+      function APIListRuns(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('runs');
+          return _this;
+      }
+      // /runs/config
+      APIListRuns.prototype.config = function () {
+          return new APIResource(this).push('config');
+      };
+      return APIListRuns;
+  }(APIList));
+
+  /**
+   * APIListNotifications
+   *
+   * @class
+   * @extends APIList
+   */
+  var APIListNotifications = /** @class */ (function (_super) {
+      __extends(APIListNotifications, _super);
+      /**
+       * /notifications
+       * Constructor
+       */
+      function APIListNotifications(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('notifications');
+          return _this;
+      }
+      // /notifications/scopes
+      APIListNotifications.prototype.scopes = function () {
+          return new APIList(this).push('scopes');
+      };
+      // /notifications/channels
+      APIListNotifications.prototype.channels = function () {
+          return new APIList(this).push('channels');
+      };
+      return APIListNotifications;
+  }(APIList));
+
+  /**
+   * APIResourceUser
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceUser = /** @class */ (function (_super) {
+      __extends(APIResourceUser, _super);
+      /**
+       * /users/{id} | /me
+       *
+       * Constructor
+       */
+      function APIResourceUser(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          if (id === 'me') {
+              _this.push('me');
+          }
+          else if (typeof id === 'number') {
+              _this.push('users', id);
+          }
+          else {
+              throw new TypeError('id is not a number');
+          }
+          return _this;
+      }
+      // /users/{id}/device-time
+      APIResourceUser.prototype.deviceTime = function () {
+          return new APIListDeviceTime(this);
+      };
+      // /users/{id}/services
+      APIResourceUser.prototype.services = function () {
+          return new APIListServices(this);
+      };
+      // /users/{id}/services/{id}
+      APIResourceUser.prototype.service = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('services', id);
+      };
+      // /users/{id}/account-services/{id}/billing-period
+      APIResourceUser.prototype.accountServiceBillingPeriod = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('account-services', id, 'billing-period');
+      };
+      // /users/{id}/billing-periods
+      APIResourceUser.prototype.billingPeriods = function () {
+          return new APIList(this).push('billing-periods');
+      };
+      // /users/{id}/billing-periods/{id}
+      APIResourceUser.prototype.billingPeriod = function (id) {
+          return new APIResourceBillingPeriod(this, id);
+      };
+      // /users/{id}/jobs
+      APIResourceUser.prototype.jobs = function () {
+          return new APIList(this).push('jobs');
+      };
+      // /users/{id}/jobs/{id}
+      APIResourceUser.prototype.job = function (id) {
+          return new APIResourceJob(this, id);
+      };
+      // /users/{id}/device-groups
+      APIResourceUser.prototype.deviceGroups = function () {
+          return new APIList(this).push('device-groups');
+      };
+      // /users/{id}/device-groups/{id}
+      APIResourceUser.prototype.deviceGroup = function (id) {
+          return new APIResourceDeviceGroup(this, id);
+      };
+      // /users/{id}/device-sessions
+      APIResourceUser.prototype.deviceSessions = function () {
+          return new APIList(this).push('device-sessions');
+      };
+      // /users/{id}/device-sessions/{id}
+      APIResourceUser.prototype.deviceSession = function (id) {
+          return new APIResourceDeviceSession(this, id);
+      };
+      // /users/{id}/device-sessions/{id} - for Manual Device Sessions only
+      APIResourceUser.prototype.manualSession = function (id) {
+          return new APIResourceManualSession(this, id);
+      };
+      // /users/{id}/projects
+      APIResourceUser.prototype.projects = function () {
+          return new APIList(this).push('projects');
+      };
+      // /users/{id}/projects/{id}
+      APIResourceUser.prototype.project = function (id) {
+          return new APIResourceProject(this, id);
+      };
+      // /users/{id}/files
+      APIResourceUser.prototype.files = function () {
+          return new APIListFiles(this);
+      };
+      // /users/{id}/files/{id}
+      APIResourceUser.prototype.file = function (id) {
+          return new APIResourceFile(this, id);
+      };
+      // /users/{id}/runs
+      APIResourceUser.prototype.runs = function () {
+          return new APIListRuns(this);
+      };
+      // /users/{id}/available-build-executors
+      APIResourceUser.prototype.availableBuildExecutors = function () {
+          return new APIList(this).push('available-build-executors');
+      };
+      // /users/{id}/available-frameworks
+      APIResourceUser.prototype.availableFrameworks = function () {
+          return new APIList(this).push('available-frameworks');
+      };
+      /**
+       * /users/{id}/
+       * /users/{id}/reset-api-key
+       */
+      APIResourceUser.prototype.resetApiKey = function () {
+          return new APIResource(this).push('reset-api-key');
+      };
+      // /users/{id}/restore
+      APIResourceUser.prototype.restore = function () {
+          return new APIResource(this).push('restore');
+      };
+      // /users/{id}/account/additional-users
+      APIResourceUser.prototype.accountAdditionalUsers = function () {
+          return new APIList(this).push('account', 'additional-users');
+      };
+      // /users/{id}/account/additional-users/{id}
+      APIResourceUser.prototype.accountAdditionalUser = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('account', 'additional-users', id);
+      };
+      // /users/{id}/feedback
+      APIResourceUser.prototype.feedback = function () {
+          return new APIResource(this).push('feedback');
+      };
+      // /users/{id}/notifications
+      APIResourceUser.prototype.notifications = function () {
+          return new APIListNotifications(this);
+      };
+      // /users/{id}/notifications/{id}
+      APIResourceUser.prototype.notification = function (id) {
+          return new APIResourceNotification(this, id);
+      };
+      // /users/{id}/receipts
+      APIResourceUser.prototype.receipts = function () {
+          return new APIList(this).push('receipts');
+      };
+      // /users/{id}/ui-preferences
+      APIResourceUser.prototype.uiPreferences = function () {
+          return new APIResource(this).push('ui-preferences');
+      };
+      // /users/{id}/integrations
+      APIResourceUser.prototype.integrations = function () {
+          return new APIList(this).push('integrations');
+      };
+      // /users/{id}/integrations/{id}
+      APIResourceUser.prototype.integration = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('integrations', id);
+      };
+      // /users/{id}/device-usage
+      APIResourceUser.prototype.deviceUsage = function () {
+          return new APIList(this).push('device-usage');
+      };
+      // /users/{id}/statistics
+      APIResourceUser.prototype.statistics = function () {
+          return new APIList(this).push('statistics');
+      };
+      return APIResourceUser;
+  }(APIResource));
+
+  /**
+   * APIResourceDevice
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceDevice = /** @class */ (function (_super) {
+      __extends(APIResourceDevice, _super);
+      /**
+       * /devices/{id}
+       *
+       * Constructor
+       */
+      function APIResourceDevice(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('devices', id);
+          return _this;
+      }
+      // /devices/{id}/properties
+      APIResourceDevice.prototype.properties = function () {
+          return new APIList(this).push('properties');
+      };
+      return APIResourceDevice;
+  }(APIResource));
+
+  /**
+   * APIResourceUserSession
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIResourceUserSession = /** @class */ (function (_super) {
+      __extends(APIResourceUserSession, _super);
+      // Constructor
+      function APIResourceUserSession(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('user-sessions');
+          return _this;
+      }
+      // /user-sessions/login
+      APIResourceUserSession.prototype.login = function (data) {
+          return new APIResource(this).push('login').post().data(data);
+      };
+      // /user-sessions/logout
+      APIResourceUserSession.prototype.logout = function () {
+          return new APIResource(this).push('logout').post();
+      };
+      // /user-sessions/{name}-login
+      APIResourceUserSession.prototype.sso = function (name) {
+          return new APIResource(this).push(name + '-login');
+      };
+      return APIResourceUserSession;
+  }(APIResource));
+
+  /**
+   * APIAdminResource
+   *
+   * @class
+   * @extends APIResource
+   */
+  var APIAdminResource = /** @class */ (function (_super) {
+      __extends(APIAdminResource, _super);
+      /**
+       * /admin
+       *
+       * Constructor
+       */
+      function APIAdminResource(parent) {
+          return _super.call(this, parent) || this;
+      }
+      // /device-status
+      APIAdminResource.prototype.deviceStatuses = function () {
+          return new APIList(this).push('device-status');
+      };
+      // /files
+      APIAdminResource.prototype.files = function () {
+          return new APIList(this).push('files');
+      };
+      // /files/{id}
+      APIAdminResource.prototype.file = function (id) {
+          return new APIResourceFile(this, id);
+      };
+      // /runs
+      APIAdminResource.prototype.runs = function () {
+          return new APIList(this).push('runs');
+      };
+      // /projects
+      APIAdminResource.prototype.projects = function () {
+          return new APIList(this).push('projects');
+      };
+      return APIAdminResource;
+  }(APIResource));
+
+  if (globalThis.isNodeJs) {
+      // Set User-Agent
+      axios.defaults.headers.common['User-Agent'] = "Bitbar Cloud API Client for JavaScript v" + version;
+  }
+  // Disable max content length
+  axios.defaults.maxContentLength = 1073741824; // 1GB
+  /**
+   * API
+   * Root for other API resources
+   */
+  var API = /** @class */ (function () {
+      function API(config) {
+          if (config == null) {
+              throw new Error('config cannot be empty');
+          }
+          this.config = config;
+          this.axiosConfig = {};
+          if (this.config.cloudUrl == null) {
+              throw new TypeError('cloudUrl cannot be empty');
+          }
+          else if (typeof this.config.cloudUrl !== 'string') {
+              throw new TypeError('cloudUrl must be a string');
+          }
+          else if (!/^https?:\/\/.{2,}/.test(this.config.cloudUrl)) {
+              throw new Error("cloudUrl doesn't look like a URL");
+          }
+          // Validate and correct cloudUrl if needed
+          this.axiosConfig.baseURL = this.config.cloudUrl.replace(/\/+$/, '') + '/api';
+          // Check v2
+          this.config.v2 = !!this.config.v2;
+          if (this.config.v2) {
+              this.axiosConfig.baseURL += '/v2';
+          }
+          // Check if apiKey is set
+          if (this.config.apiKey) {
+              if (typeof this.config.apiKey !== 'string') {
+                  throw new TypeError('apiKey must be a string');
+              }
+              else if (!/^[A-Za-z0-9]{32}$/.test(this.config.apiKey)) {
+                  throw new Error("apiKey is in the wrong format");
+              }
+              this.axiosConfig.auth = {
+                  username: this.config.apiKey,
+                  password: ''
+              };
+          }
+          // Create axios instance
+          this.axios = axios.create(this.axiosConfig);
+      }
+      // --- Resources starts here --- //
+      API.prototype.userSession = function () {
+          return new APIResourceUserSession(this);
+      };
+      // /user/{id}
+      API.prototype.user = function (id) {
+          return new APIResourceUser(this, id);
+      };
+      // /users
+      API.prototype.users = function () {
+          return new APIListUsers(this);
+      };
+      // /me
+      API.prototype.me = function () {
+          return this.user('me');
+      };
+      // /admin
+      API.prototype.admin = function () {
+          return new APIAdminResource(this);
+      };
+      // /devices
+      API.prototype.devices = function () {
+          return new APIListDevices(this);
+      };
+      // /devices/{id}
+      API.prototype.device = function (id) {
+          return new APIResourceDevice(this, id);
+      };
+      // /device-groups
+      API.prototype.deviceGroups = function () {
+          return new APIList(this).push('device-groups');
+      };
+      // /device-groups/{id}
+      API.prototype.deviceGroup = function (id) {
+          return new APIResourceDeviceGroup(this, id);
+      };
+      // /label-groups
+      API.prototype.labelGroups = function () {
+          return new APIList(this).push('label-groups');
+      };
+      return API;
+  }());
+
+  var CloudAPIClient = {
+      API: API,
+      FilterBuilder: FilterBuilder
+  };
+
+  return CloudAPIClient;
 
 })));
