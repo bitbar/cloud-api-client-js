@@ -18,7 +18,7 @@ class APIAdminResourceRun extends APIResourceRun {
 
   // /runs/{id}/retry
   public retry (ids?: Array<number>) {
-    var a = new APIResource(this).push('retry').setRequestConfig({
+    const a = new APIResource(this).push('retry').setRequestConfig({
       timeout: 0
     }).post();
 
@@ -63,7 +63,7 @@ class APIAdminResourceRun extends APIResourceRun {
 
   // /runs/{id}/build-logs.zip
   public buildLogsZip (ids?: Array<number>) {
-    var a = new APIResource(this).push('build-logs.zip');
+    const a = new APIResource(this).push('build-logs.zip');
 
     if (ids != null) {
       a.params({

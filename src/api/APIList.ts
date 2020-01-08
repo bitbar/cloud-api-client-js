@@ -9,7 +9,7 @@ import FilterBuilder from '../FilterBuilder'
  * @type {number}
  * @default
  */
-const DEFAULT_LIMIT: number = 20;
+const DEFAULT_LIMIT = 20;
 
 /**
  * Default offset
@@ -18,7 +18,7 @@ const DEFAULT_LIMIT: number = 20;
  * @type {number}
  * @default
  */
-const DEFAULT_OFFSET: number = 0;
+const DEFAULT_OFFSET = 0;
 
 /**
  * API Order Enum
@@ -88,7 +88,7 @@ class APIList extends APIEntity {
    * @returns number
    */
   public getLimit () {
-    var params = this.getParams();
+    const params = this.getParams();
     return params.limit == null ? DEFAULT_LIMIT : params.limit;
   }
 
@@ -167,13 +167,13 @@ class APIList extends APIEntity {
    * @param {number} [page=1] - Page number (counted from 1)
    * @returns this
    */
-  public page (page: number = 1) {
+  public page (page = 1) {
     if (!Number.isNatural(page) || page == 0) {
       throw new Error(`Page '${page}' is invalid!`);
     }
 
-    var limit = this.getLimit();
-    var offset = (page - 1) * limit;
+    const limit = this.getLimit();
+    const offset = (page - 1) * limit;
 
     return this.params({
       offset,
@@ -209,7 +209,7 @@ class APIList extends APIEntity {
    * @returns this
    */
   public filter (filter: FilterBuilder | string) {
-    var isFilterBuilder = filter instanceof FilterBuilder;
+    const isFilterBuilder = filter instanceof FilterBuilder;
 
     if (typeof filter !== 'string' && !isFilterBuilder) {
       throw new Error('Filter must be either string or instance of FilterBuilder');

@@ -5,7 +5,8 @@
   "main": "dist/cloud-api-client.js",
   "scripts": {
     "build": "npx rollup -c",
-    "test": "npx mocha"
+    "test": "npx mocha",
+    "lint": "npx eslint -c .eslintrc.js --ext .ts src"
   },
   "keywords": [
     "testdroid",
@@ -27,7 +28,10 @@
     "@rollup/plugin-json": "^4.0.0",
     "@rollup/plugin-node-resolve": "^6.0.0",
     "@rollup/plugin-typescript": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
     "chai": "^4.1.2",
+    "eslint": "^6.8.0",
     "mocha": "^5.1.1",
     "rollup": "^1.27.9",
     "rollup-plugin-commonjs": "^10.1.0",

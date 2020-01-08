@@ -60,7 +60,7 @@ class APIEntity {
       this.root = parent.root;
 
       if (Array.isArray(parent.stack)) {
-        this.push.apply(this, parent.stack);
+        this.push(...parent.stack);
       }
 
       if (parent.requestConfig != null) {
@@ -78,8 +78,8 @@ class APIEntity {
    * @param {string|number} items... - Items that should be pushed to stack
    * @returns this
    */
-  public push (...items : Array<string|number>) {
-    for (let item of items) {
+  public push (...items: Array<string|number>) {
+    for (const item of items) {
       this.stack.push(item);
     }
     return this;
@@ -128,11 +128,11 @@ class APIEntity {
    * @returns this
    */
   public headers (headers: object) {
-    var _headers = {};
+    const _headers = {};
 
     // Unify/Standarize headers keys
-    for (let key in headers) {
-      let newKey = key.replace(/(?:^|-)([a-z])/g, (letter) => letter.toUpperCase());
+    for (const key in headers) {
+      const newKey = key.replace(/(?:^|-)([a-z])/g, (letter) => letter.toUpperCase());
       _headers[newKey] = headers[key];
     }
 
@@ -150,7 +150,7 @@ class APIEntity {
    * @returns this
    */
   public method (name: Method) {
-    var NAME: Method = <Method> name.toLocaleUpperCase();
+    const NAME: Method = <Method> name.toLocaleUpperCase();
 
     if (!ALLOWED_HTTP_METHODS[NAME]) {
       throw new Error(`Method '${NAME}' is not allowed! You can use: ${Object.keys(ALLOWED_HTTP_METHODS).join(', ')}`);
@@ -252,7 +252,7 @@ class APIEntity {
    * @returns Promise
    */
   public send () {
-    var requestConfig = <AxiosRequestConfig> Object.deepAssign({}, this.requestConfig, {
+    const requestConfig = <AxiosRequestConfig> Object.deepAssign({}, this.requestConfig, {
       url: `/${this.stack.join('/')}`
     });
 

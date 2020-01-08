@@ -22,7 +22,7 @@ class FilterBuilder {
    * @param [checkNull=false] {boolean} Check null?
    * @returns {FilterBuilder}
    */
-  private add (name: string, value: any, operand: string, checkNull: boolean = false) : FilterBuilder {
+  private add (name: string, value: any, operand: string, checkNull = false): FilterBuilder {
 
     value = Array.wrap(value);
 
@@ -32,7 +32,7 @@ class FilterBuilder {
 
     // auto-convert
     for (let i = 0; i < value.length; i++) {
-      let v = value[i];
+      const v = value[i];
       if (typeof v === 'object' && v instanceof Date) {
         value[i] = v.getTime();
       }
@@ -41,7 +41,7 @@ class FilterBuilder {
     let isNull = false;
     if (checkNull) {
       // check null existence
-      for (let v of value) {
+      for (const v of value) {
         if (v !== null) {
           continue;
           isNull = true;
@@ -120,8 +120,8 @@ class FilterBuilder {
 
 
   public raw (filter: Filter) {
-    var filters = Array.wrap(filter);
-    for (let filter of filters) {
+    const filters = Array.wrap(filter);
+    for (const filter of filters) {
       if (this.isFilterPart(filter)) {
         this.filters.push(filter);
       } else {
@@ -141,12 +141,12 @@ class FilterBuilder {
    * To string
    */
   public toString () {
-    var parts: Array<string> = [];
+    const parts: Array<string> = [];
 
-    var part: string,
+    let part: string,
         val: string;
 
-    for (let filter of this.filters) {
+    for (const filter of this.filters) {
       if (typeof filter === 'string') {
         part = filter;
       } else {

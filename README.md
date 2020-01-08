@@ -200,14 +200,12 @@ npm run test
 npm run build
 ```
 
-
 ## Authors
 
 * **Marek Sierociński** - [marverix](https://github.com/marverix)
 
 See also the list of [contributors](https://github.com/bitbar/cloud-api-client-js/contributors)
 who participated in this project.
-
 
 ## License
 
