@@ -3,7 +3,12 @@ import 'finka';
 import API from './API';
 import FilterBuilder from './FilterBuilder';
 
-export default {
+/**
+ * Cloud API Client
+ */
+const CloudAPIClient = {
   API,
   FilterBuilder
-};
+}
+
+export default CloudAPIClient;

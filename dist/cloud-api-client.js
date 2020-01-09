@@ -1808,6 +1808,9 @@
       return API;
   }());
 
+  /**
+   * Cloud API Client
+   */
   var CloudAPIClient = {
       API: API,
       FilterBuilder: FilterBuilder

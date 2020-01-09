@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npx rollup -c",
     "test": "npx mocha",
-    "lint": "npx eslint -c .eslintrc.js --ext .ts src"
+    "lint": "npx eslint -c .eslintrc.js --ext .ts src",
+    "docs": "npx typedoc --out ./docs --ignoreCompilerErrors --mode modules --module umd --target ES5 --theme default --includes ./src src/CloudAPIClient.ts"
   },
   "keywords": [
     "testdroid",
@@ -37,6 +38,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-uglify": "^6.0.4",
     "tslib": "^1.10.0",
+    "typedoc": "^0.15.6",
     "typescript": "^3.7.3"
   },
   "dependencies": {
