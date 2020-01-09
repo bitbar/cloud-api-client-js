@@ -1656,6 +1656,7 @@
   var APIResourceUserSession = /** @class */ (function (_super) {
       __extends(APIResourceUserSession, _super);
       // Constructor
+      // /user-sessions
       function APIResourceUserSession(parent) {
           var _this = _super.call(this, parent) || this;
           _this.push('user-sessions');
