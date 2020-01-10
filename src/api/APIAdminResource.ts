@@ -1,5 +1,3 @@
-import APIEntity from './APIEntity'
-
 import APIList from './APIList'
 
 import APIResource from './APIResource'

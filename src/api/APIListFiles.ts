@@ -16,12 +16,12 @@ class APIListFiles extends APIList {
 
   // Siplifies process of uploading
   public upload (obj) {
-    var form;
+    let form;
 
     // For NodeJS
     if (globalThis.isNodeJs) {
-      let fs = require('fs');
-      let FormData = require('form-data');
+      const fs = require('fs');
+      const FormData = require('form-data');
 
       form = new FormData();
       form.append('file', fs.createReadStream(obj.dir + '/' + obj.filename), {

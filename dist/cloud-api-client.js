@@ -869,6 +869,35 @@
       return APIResourceDeviceGroup;
   }(APIResource));
 
+  /**
+   * InputFileset
+   *
+   * @class
+   * @extends APIResource
+   */
+  var InputFileset = /** @class */ (function (_super) {
+      __extends(InputFileset, _super);
+      /**
+       * /input-file-set
+       *
+       * Constructor
+       */
+      function InputFileset(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('input-file-set');
+          return _this;
+      }
+      // /input-file-set/files
+      InputFileset.prototype.files = function () {
+          return new APIList(this).push('files');
+      };
+      // /input-file-set/files.zip
+      InputFileset.prototype.filesZip = function () {
+          return new APIResource(this).push('files.zip');
+      };
+      return InputFileset;
+  }(APIResource));
+
   // Create non-media files filter
   var NON_MEDIA_FILES_FILTER = new FilterBuilder();
   NON_MEDIA_FILES_FILTER.eq('state', 'READY');
@@ -878,6 +907,61 @@
       // no videos
       'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg'
   ]);
+  /**
+   * OutputFileset
+   *
+   * @class
+   * @extends APIResource
+   */
+  var OutputFileset = /** @class */ (function (_super) {
+      __extends(OutputFileset, _super);
+      /**
+       * /output-file-set
+       *
+       * Constructor
+       */
+      function OutputFileset(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('output-file-set');
+          return _this;
+      }
+      // /output-file-set/files
+      OutputFileset.prototype.files = function () {
+          return new APIList(this).push('files');
+      };
+      // /output-file-set/files.zip
+      OutputFileset.prototype.filesZip = function () {
+          return new APIResource(this).push('files.zip');
+      };
+      // /output-file-set/screenshots
+      OutputFileset.prototype.screenshots = function () {
+          return new APIList(this).push('screenshots');
+      };
+      // /output-file-set/screenshots/{id}
+      OutputFileset.prototype.screenshot = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('screenshots', id);
+      };
+      // /output-file-set/screenshots/{id}/file/{id}
+      OutputFileset.prototype.screenshotFile = function (id) {
+          this.screenshot(id).push('file');
+      };
+      // Filter files out by ready videos
+      OutputFileset.prototype.videos = function () {
+          this.files().params({
+              filter: 's_state_eq_READY',
+              tag: ['video']
+          });
+      };
+      // Filter files out by non-media
+      OutputFileset.prototype.nonMediaFiles = function () {
+          return this.files().filter(NON_MEDIA_FILES_FILTER);
+      };
+      return OutputFileset;
+  }(APIResource));
+
   /**
    * APIResourceDeviceSession
    *
@@ -979,88 +1063,6 @@
           return this.output().videos();
       };
       return APIResourceDeviceSession;
-  }(APIResource));
-  /**
-   * InputFileset
-   *
-   * @class
-   * @extends APIResource
-   */
-  var InputFileset = /** @class */ (function (_super) {
-      __extends(InputFileset, _super);
-      /**
-       * /input-file-set
-       *
-       * Constructor
-       */
-      function InputFileset(parent) {
-          var _this = _super.call(this, parent) || this;
-          _this.push('input-file-set');
-          return _this;
-      }
-      // /input-file-set/files
-      InputFileset.prototype.files = function () {
-          return new APIList(this).push('files');
-      };
-      // /input-file-set/files.zip
-      InputFileset.prototype.filesZip = function () {
-          return new APIResource(this).push('files.zip');
-      };
-      return InputFileset;
-  }(APIResource));
-  /**
-   * OutputFileset
-   *
-   * @class
-   * @extends APIResource
-   */
-  var OutputFileset = /** @class */ (function (_super) {
-      __extends(OutputFileset, _super);
-      /**
-       * /output-file-set
-       *
-       * Constructor
-       */
-      function OutputFileset(parent) {
-          var _this = _super.call(this, parent) || this;
-          _this.push('output-file-set');
-          return _this;
-      }
-      // /output-file-set/files
-      OutputFileset.prototype.files = function () {
-          return new APIList(this).push('files');
-      };
-      // /output-file-set/files.zip
-      OutputFileset.prototype.filesZip = function () {
-          return new APIResource(this).push('files.zip');
-      };
-      // /output-file-set/screenshots
-      OutputFileset.prototype.screenshots = function () {
-          return new APIList(this).push('screenshots');
-      };
-      // /output-file-set/screenshots/{id}
-      OutputFileset.prototype.screenshot = function (id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('screenshots', id);
-      };
-      // /output-file-set/screenshots/{id}/file/{id}
-      OutputFileset.prototype.screenshotFile = function (id) {
-          this.screenshot(id).push('file');
-      };
-      // Filter files out by ready videos
-      OutputFileset.prototype.videos = function () {
-          this.files().params({
-              filter: 's_state_eq_READY',
-              tag: ['video']
-          });
-      };
-      // Filter files out by non-media
-      OutputFileset.prototype.nonMediaFiles = function () {
-          return this.files().filter(NON_MEDIA_FILES_FILTER);
-      };
-      return OutputFileset;
   }(APIResource));
 
   /**
@@ -1654,6 +1656,7 @@
   var APIResourceUserSession = /** @class */ (function (_super) {
       __extends(APIResourceUserSession, _super);
       // Constructor
+      // /user-sessions
       function APIResourceUserSession(parent) {
           var _this = _super.call(this, parent) || this;
           _this.push('user-sessions');
@@ -1805,6 +1808,9 @@
       return API;
   }());
 
+  /**
+   * Cloud API Client
+   */
   var CloudAPIClient = {
       API: API,
       FilterBuilder: FilterBuilder

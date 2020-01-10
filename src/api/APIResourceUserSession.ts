@@ -10,6 +10,7 @@ import APIResource from './APIResource'
 class APIResourceUserSession extends APIResource {
 
   // Constructor
+  // /user-sessions
   constructor (parent: object) {
     super(parent);
     this.push('user-sessions');
