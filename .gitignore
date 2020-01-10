@@ -4,3 +4,6 @@ node_modules/
 # IDE
 .vscode/
 .idea/
+
+# Files
+*.tgz

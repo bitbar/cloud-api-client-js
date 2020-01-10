@@ -49,7 +49,7 @@ class FilterBuilder {
       }
 
       if (isNull) {
-        value = value.filter((item) => item !== null);
+        value = value.filter((item: any) => item !== null);
         operand += 'ornull';
       }
     }

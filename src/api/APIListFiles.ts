@@ -1,5 +1,17 @@
 import APIList from './APIList'
 
+interface UploadObj {
+  /**
+   * Directory
+   */
+  dir: string;
+
+  /**
+   * Filename
+   */
+  filename: string;
+}
+
 /**
  * APIListFiles
  *
@@ -15,7 +27,7 @@ class APIListFiles extends APIList {
   }
 
   // Siplifies process of uploading
-  public upload (obj) {
+  public upload (obj: UploadObj) {
     let form;
 
     // For NodeJS

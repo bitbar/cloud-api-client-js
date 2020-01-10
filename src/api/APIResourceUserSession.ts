@@ -27,7 +27,7 @@ class APIResourceUserSession extends APIResource {
   }
 
   // /user-sessions/{name}-login
-  public sso (name) {
+  public sso (name: string) {
     return new APIResource(this).push(name + '-login');
   }
 
