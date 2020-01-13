@@ -88,6 +88,7 @@ class API {
 
   // --- Resources starts here --- //
 
+  // /user-sessions
   public userSession () {
     return new APIResourceUserSession(this);
   }

@@ -4,15 +4,17 @@ docs/
 examples/
 test/
 src/
+typings/
 
 # Files
 rollup.config.js
 bower.json
 *.tgz
 .travis*
-coffeelint.json
-.codoopts
+.eslintrc.js
+tsconfig.json
 
 # IDE
 .vscode/
 .idea/
+.editorconfig
