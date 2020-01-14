@@ -25,7 +25,9 @@ class APIResourceBillingPeriod extends APIResource {
 
   // /billing-periods/{id}/receipt
   public receipt () {
-    return new APIResource(this).push('receipt');
+    return new APIResource(this).push('receipt').setRequestConfig({
+      responseType: 'arraybuffer'
+    });
   }
 
 }

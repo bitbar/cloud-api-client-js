@@ -12,3 +12,5 @@ Resource | Call | Comment
 `/users/password-recovery` | `apiClient.users().passwordRecovery()` |
 `/users/reset-api-key` | `apiClient.users().resetApiKey()` |
 `/users/validateVatId` | `apiClient.users().validateVatId()` | resource URL is proper - no idea why only this one is in _camelCase_
+`/me/billing-periods/{bpId}/receipt` | `apiClient.me().billingPeriod(bpId).receipt()` |
+`/users/{uId}/billing-periods/{bpId}/receipt` | `apiClient.user(uId).billingPeriod(bpId).receipt()` |
