@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.8.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.8.1 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
@@ -8,7 +8,7 @@
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
 
-  var version = "0.8.0";
+  var version = "0.8.1";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -447,7 +447,9 @@
           return _this;
       }
       APIResourceBillingPeriod.prototype.receipt = function () {
-          return new APIResource(this).push('receipt');
+          return new APIResource(this).push('receipt').setRequestConfig({
+              responseType: 'arraybuffer'
+          });
       };
       return APIResourceBillingPeriod;
   }(APIResource));
