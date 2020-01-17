@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.8.1 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.8.2 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
@@ -8,7 +8,7 @@
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
 
-  var version = "0.8.1";
+  var version = "0.8.2";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -76,6 +76,14 @@
       APIEntity.prototype.pop = function () {
           this.stack.pop();
           return this;
+      };
+      APIEntity.prototype.toUrl = function (absolute) {
+          if (absolute === void 0) { absolute = false; }
+          var url = "/" + this.stack.join('/');
+          if (absolute) {
+              url = this.root.axiosConfig.baseURL + url;
+          }
+          return url;
       };
       APIEntity.prototype.setRequestConfig = function (requestConfig) {
           Object.deepAssign(this.requestConfig, requestConfig);
