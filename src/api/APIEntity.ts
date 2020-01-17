@@ -97,6 +97,22 @@ class APIEntity {
   }
 
   /**
+   * To URL
+   *
+   * @param {boolean} absolute
+   */
+  public toUrl (absolute = false) {
+    let url = `/${this.stack.join('/')}`;
+
+    if (absolute) {
+      // @ts-ignore
+      url = this.root.axiosConfig.baseURL + url;
+    }
+
+    return url;
+  }
+
+  /**
    * Set request config
    *
    * @public
