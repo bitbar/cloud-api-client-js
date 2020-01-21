@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.8.2 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.8.3 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
@@ -8,7 +8,7 @@
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
 
-  var version = "0.8.2";
+  var version = "0.8.3";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -151,10 +151,10 @@
               requestConfig.headers = {};
           }
           if (requestConfig.headers['Content-Type'] == null) {
-              requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+              requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
           }
           if (requestConfig.method === 'POST' &&
-              requestConfig.headers['Content-Type'] === 'application/x-www-form-urlencoded' &&
+              requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
               requestConfig.data != null) {
               requestConfig.data = qs.stringify(requestConfig.data);
           }
