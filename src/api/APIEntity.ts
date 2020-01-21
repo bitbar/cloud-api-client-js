@@ -279,12 +279,12 @@ class APIEntity {
 
     // Set default Content-Type
     if (requestConfig.headers['Content-Type'] == null) {
-      requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     }
 
     // Convert data if needed
     if (requestConfig.method === 'POST' &&
-    requestConfig.headers['Content-Type'] === 'application/x-www-form-urlencoded' &&
+    requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
     requestConfig.data != null) {
       requestConfig.data = qs.stringify(requestConfig.data);
     }
