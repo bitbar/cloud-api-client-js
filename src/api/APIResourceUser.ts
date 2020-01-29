@@ -1,4 +1,5 @@
 import APIResource from './APIResource'
+import APIResourceAccount from './APIResourceAccount';
 import APIResourceBillingPeriod from './APIResourceBillingPeriod'
 import APIResourceJob from './APIResourceJob'
 import APIResourceDeviceGroup from './APIResourceDeviceGroup'
@@ -43,6 +44,11 @@ class APIResourceUser extends APIResource {
     } else {
       throw new TypeError('id is not a number');
     }
+  }
+
+  // /users/{id}/account
+  public account () {
+    return new APIResourceAccount(this);
   }
 
   // /users/{id}/device-time
@@ -168,7 +174,7 @@ class APIResourceUser extends APIResource {
 
   // /users/{id}/account/additional-users
   public accountAdditionalUsers () {
-    return new APIList(this).push('account', 'additional-users');
+    return new APIList(this) .push('account', 'additional-users');
   }
 
   // /users/{id}/account/additional-users/{id}
