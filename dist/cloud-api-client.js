@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.8.3 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.9.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
@@ -8,7 +8,7 @@
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
 
-  var version = "0.8.3";
+  var version = "0.9.0";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -442,6 +442,48 @@
       };
       return APIListUsers;
   }(APIList));
+
+  var APIResourceAdditionalUser = (function (_super) {
+      __extends(APIResourceAdditionalUser, _super);
+      function APIResourceAdditionalUser(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('additional-users', id);
+          return _this;
+      }
+      APIResourceAdditionalUser.prototype.resendActivation = function () {
+          return new APIResource(this).push('resend-activation');
+      };
+      return APIResourceAdditionalUser;
+  }(APIResource));
+
+  var APIResourceAccount = (function (_super) {
+      __extends(APIResourceAccount, _super);
+      function APIResourceAccount(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('account');
+          return _this;
+      }
+      APIResourceAccount.prototype.roles = function () {
+          return new APIList(this).push('roles');
+      };
+      APIResourceAccount.prototype.role = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('roles', id);
+      };
+      APIResourceAccount.prototype.additionalUsers = function () {
+          return new APIList(this).push('additional-users');
+      };
+      APIResourceAccount.prototype.additionalUser = function (id) {
+          return new APIResourceAdditionalUser(this, id);
+      };
+      return APIResourceAccount;
+  }(APIResource));
 
   var APIResourceBillingPeriod = (function (_super) {
       __extends(APIResourceBillingPeriod, _super);
@@ -918,6 +960,9 @@
           }
           return _this;
       }
+      APIResourceUser.prototype.account = function () {
+          return new APIResourceAccount(this);
+      };
       APIResourceUser.prototype.deviceTime = function () {
           return new APIListDeviceTime(this);
       };
@@ -1068,13 +1113,73 @@
       return APIResourceUserSession;
   }(APIResource));
 
+  var APIAdminResourceCluster = (function (_super) {
+      __extends(APIAdminResourceCluster, _super);
+      function APIAdminResourceCluster(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('clusters', id);
+          return _this;
+      }
+      APIAdminResourceCluster.prototype.devices = function () {
+          return new APIList(this).push('devices');
+      };
+      return APIAdminResourceCluster;
+  }(APIResource));
+
+  var APIAdminResourceDeviceTime = (function (_super) {
+      __extends(APIAdminResourceDeviceTime, _super);
+      function APIAdminResourceDeviceTime(parent) {
+          var _this = _super.call(this, parent) || this;
+          _this.push('device-time');
+          return _this;
+      }
+      APIAdminResourceDeviceTime.prototype.countSessionReport = function () {
+          return new APIList(this).push('count-session-report');
+      };
+      APIAdminResourceDeviceTime.prototype.stepTimeReport = function () {
+          return new APIList(this).push('step-time-report');
+      };
+      return APIAdminResourceDeviceTime;
+  }(APIResource));
+
   var APIAdminResource = (function (_super) {
       __extends(APIAdminResource, _super);
       function APIAdminResource(parent) {
           return _super.call(this, parent) || this;
       }
+      APIAdminResource.prototype.withAdmin = function () {
+          return new APIResource(this).push('admin');
+      };
+      APIAdminResource.prototype.clusters = function () {
+          return new APIList(this).push('clusters');
+      };
+      APIAdminResource.prototype.cluster = function (id) {
+          return new APIAdminResourceCluster(this, id);
+      };
+      APIAdminResource.prototype.devices = function () {
+          return new APIList(this).push('admin', 'devices');
+      };
+      APIAdminResource.prototype.device = function (id) {
+          return new APIResource(this).push('admin', 'devices', id);
+      };
+      APIAdminResource.prototype.deviceModels = function () {
+          return new APIList(this).push('admin', 'device-models');
+      };
+      APIAdminResource.prototype.deviceModel = function (id) {
+          return new APIResource(this).push('admin', 'device-models', id);
+      };
       APIAdminResource.prototype.deviceStatuses = function () {
           return new APIList(this).push('device-status');
+      };
+      APIAdminResource.prototype.deviceTime = function () {
+          return new APIAdminResourceDeviceTime(this.withAdmin());
+      };
+      APIAdminResource.prototype.interactiveQueue = function () {
+          return new APIList(this).push('admin', 'interactive-queue');
       };
       APIAdminResource.prototype.files = function () {
           return new APIList(this).push('files');
@@ -1082,11 +1187,17 @@
       APIAdminResource.prototype.file = function (id) {
           return new APIResourceFile(this, id);
       };
-      APIAdminResource.prototype.runs = function () {
-          return new APIList(this).push('runs');
+      APIAdminResource.prototype.overview = function () {
+          return new APIResource(this).push('admin', 'overview');
       };
       APIAdminResource.prototype.projects = function () {
           return new APIList(this).push('projects');
+      };
+      APIAdminResource.prototype.runs = function () {
+          return new APIList(this).push('admin', 'runs');
+      };
+      APIAdminResource.prototype.users = function () {
+          return new APIList(this).push('users');
       };
       return APIAdminResource;
   }(APIResource));
