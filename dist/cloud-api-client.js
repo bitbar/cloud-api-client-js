@@ -143,6 +143,11 @@
           }).data(data);
           return this;
       };
+      APIEntity.prototype.paramsSerializer = function (params) {
+          return qs.stringify(params, {
+              arrayFormat: 'brackets'
+          });
+      };
       APIEntity.prototype.send = function () {
           var requestConfig = Object.deepAssign({}, this.requestConfig, {
               url: "/" + this.stack.join('/')
@@ -157,6 +162,9 @@
               requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
               requestConfig.data != null) {
               requestConfig.data = qs.stringify(requestConfig.data);
+          }
+          if (requestConfig.params) {
+              requestConfig.paramsSerializer = this.paramsSerializer;
           }
           return this.root.axios.request(requestConfig);
       };
