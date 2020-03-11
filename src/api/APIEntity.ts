@@ -262,6 +262,17 @@ class APIEntity {
   }
 
   /**
+   * Custom params serializer
+   * @private
+   * @param {object} params
+   */
+  private paramsSerializer (params: object) {
+    return qs.stringify(params, {
+      arrayFormat: 'brackets'
+    });
+  }
+
+  /**
    * Send request
    *
    * @public
@@ -287,6 +298,10 @@ class APIEntity {
     requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
     requestConfig.data != null) {
       requestConfig.data = qs.stringify(requestConfig.data);
+    }
+
+    if (requestConfig.params) {
+      requestConfig.paramsSerializer = this.paramsSerializer;
     }
 
     // Send request
