@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.9.1 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.10.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
@@ -8,7 +8,7 @@
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
 
-  var version = "0.9.1";
+  var version = "0.10.0";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1154,6 +1154,79 @@
       return APIAdminResourceDeviceTime;
   }(APIResource));
 
+  var APIAdminResourceRun = (function (_super) {
+      __extends(APIAdminResourceRun, _super);
+      function APIAdminResourceRun() {
+          return _super !== null && _super.apply(this, arguments) || this;
+      }
+      APIAdminResourceRun.prototype.abort = function () {
+          return new APIResource(this).push('abort').post();
+      };
+      APIAdminResourceRun.prototype.retry = function (ids) {
+          var a = new APIResource(this).push('retry').setRequestConfig({
+              timeout: 0
+          }).post();
+          if (ids != null) {
+              a.params({
+                  deviceRunIds: ids
+              });
+          }
+          return a;
+      };
+      APIAdminResourceRun.prototype.changeBillable = function () {
+          return new APIResource(this).push('changebillable');
+      };
+      APIAdminResourceRun.prototype.changePriority = function () {
+          return new APIResource(this).push('changepriority');
+      };
+      APIAdminResourceRun.prototype.screenshotNames = function () {
+          return new APIList(this).push('screenshot-names');
+      };
+      APIAdminResourceRun.prototype.screenshots = function () {
+          return new APIList(this).push('screenshots');
+      };
+      APIAdminResourceRun.prototype.dataAvailability = function () {
+          return new APIList(this).push('data-availability');
+      };
+      APIAdminResourceRun.prototype.buildLogsZip = function (ids) {
+          var a = new APIResource(this).push('build-logs.zip');
+          if (ids != null) {
+              a.params({
+                  deviceRunIds: ids
+              });
+          }
+          return a;
+      };
+      APIAdminResourceRun.prototype.logsZip = function () {
+          return new APIResource(this).push('logs.zip');
+      };
+      APIAdminResourceRun.prototype.performanceZip = function () {
+          return new APIResource(this).push('performance.zip');
+      };
+      APIAdminResourceRun.prototype.screenshotsZip = function () {
+          return new APIResource(this).push('screenshots.zip');
+      };
+      return APIAdminResourceRun;
+  }(APIResourceRun));
+
+  var APIAdminResourceDevice = (function (_super) {
+      __extends(APIAdminResourceDevice, _super);
+      function APIAdminResourceDevice(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('admin');
+          _this.push('devices', id);
+          return _this;
+      }
+      APIAdminResourceDevice.prototype.queue = function () {
+          return new APIList(this).push('queue');
+      };
+      return APIAdminResourceDevice;
+  }(APIResource));
+
   var APIAdminResource = (function (_super) {
       __extends(APIAdminResource, _super);
       function APIAdminResource(parent) {
@@ -1172,13 +1245,19 @@
           return new APIList(this).push('admin', 'devices');
       };
       APIAdminResource.prototype.device = function (id) {
-          return new APIResource(this).push('admin', 'devices', id);
+          return new APIAdminResourceDevice(this, id);
       };
       APIAdminResource.prototype.deviceModels = function () {
           return new APIList(this).push('admin', 'device-models');
       };
       APIAdminResource.prototype.deviceModel = function (id) {
           return new APIResource(this).push('admin', 'device-models', id);
+      };
+      APIAdminResource.prototype.deviceSessions = function () {
+          return new APIList(this).push('admin', 'device-sessions');
+      };
+      APIAdminResource.prototype.deviceSession = function (id) {
+          return new APIResourceDeviceSession(this, id);
       };
       APIAdminResource.prototype.deviceStatuses = function () {
           return new APIList(this).push('device-status');
@@ -1203,6 +1282,9 @@
       };
       APIAdminResource.prototype.runs = function () {
           return new APIList(this).push('admin', 'runs');
+      };
+      APIAdminResource.prototype.run = function (id) {
+          return new APIAdminResourceRun(this, id);
       };
       APIAdminResource.prototype.users = function () {
           return new APIList(this).push('users');
