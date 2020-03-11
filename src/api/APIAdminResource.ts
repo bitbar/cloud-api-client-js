@@ -2,9 +2,12 @@ import APIList from './APIList'
 
 import APIResource from './APIResource'
 import APIResourceFile from './APIResourceFile'
+import APIResourceDeviceSession from './APIResourceDeviceSession';
 
 import APIAdminResourceCluster from './APIAdminResourceCluster';
 import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
+import APIAdminResourceRun from './APIAdminResourceRun';
+import APIAdminResourceDevice from './APIAdminResourceDevice';
 
 
 /**
@@ -45,7 +48,7 @@ class APIAdminResource extends APIResource {
 
   // /admin/devices/{id}
   public device (id: number) {
-    return new APIResource(this).push('admin', 'devices', id);
+    return new APIAdminResourceDevice(this, id);
   }
 
   // /admin/device-models
@@ -56,6 +59,16 @@ class APIAdminResource extends APIResource {
   // /admin/device-models/{id}
   public deviceModel (id: number) {
     return new APIResource(this).push('admin', 'device-models', id);
+  }
+
+  // /device-sessions
+  public deviceSessions () {
+    return new APIList(this).push('admin', 'device-sessions');
+  }
+
+  // /device-sessions/{id}
+  public deviceSession (id: number) {
+    return new APIResourceDeviceSession(this, id);
   }
 
   // /device-status
@@ -96,6 +109,11 @@ class APIAdminResource extends APIResource {
   // /runs
   public runs () {
     return new APIList(this).push('admin', 'runs');
+  }
+
+  // /runs/{id}
+  public run (id: number) {
+    return new APIAdminResourceRun(this, id);
   }
 
   // /users
