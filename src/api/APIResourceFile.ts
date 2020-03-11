@@ -24,7 +24,7 @@ class APIResourceFile extends APIResource {
     this.push('files', id);
   }
 
-  // /files/{id}/file
+  // use this to download file content
   public file () {
     return new APIResource(this).push('file');
   }
