@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.9.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.9.1 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
@@ -8,7 +8,7 @@
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
 
-  var version = "0.9.0";
+  var version = "0.9.1";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -143,6 +143,11 @@
           }).data(data);
           return this;
       };
+      APIEntity.prototype.paramsSerializer = function (params) {
+          return qs.stringify(params, {
+              arrayFormat: 'brackets'
+          });
+      };
       APIEntity.prototype.send = function () {
           var requestConfig = Object.deepAssign({}, this.requestConfig, {
               url: "/" + this.stack.join('/')
@@ -157,6 +162,9 @@
               requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
               requestConfig.data != null) {
               requestConfig.data = qs.stringify(requestConfig.data);
+          }
+          if (requestConfig.params) {
+              requestConfig.paramsSerializer = this.paramsSerializer;
           }
           return this.root.axios.request(requestConfig);
       };
