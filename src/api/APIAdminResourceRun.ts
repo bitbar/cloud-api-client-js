@@ -56,11 +56,6 @@ class APIAdminResourceRun extends APIResourceRun {
     return new APIList(this).push('data-availability');
   }
 
-  // /runs/{id}/apps-data.zip
-  public appsDataZip () {
-    return new APIResource(this).push('apps-data.zip');
-  }
-
   // /runs/{id}/build-logs.zip
   public buildLogsZip (ids?: Array<number>) {
     const a = new APIResource(this).push('build-logs.zip');

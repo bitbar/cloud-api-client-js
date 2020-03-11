@@ -1188,9 +1188,6 @@
       APIAdminResourceRun.prototype.dataAvailability = function () {
           return new APIList(this).push('data-availability');
       };
-      APIAdminResourceRun.prototype.appsDataZip = function () {
-          return new APIResource(this).push('apps-data.zip');
-      };
       APIAdminResourceRun.prototype.buildLogsZip = function (ids) {
           var a = new APIResource(this).push('build-logs.zip');
           if (ids != null) {
