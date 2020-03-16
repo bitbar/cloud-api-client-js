@@ -26,6 +26,10 @@
     "type": "git",
     "url": "https://github.com/bitbar/cloud-api-client-js.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "devDependencies": {
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^6.1.0",
