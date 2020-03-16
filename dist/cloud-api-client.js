@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.10.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.11.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
@@ -8,7 +8,7 @@
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
   qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
 
-  var version = "0.10.0";
+  var version = "0.11.0";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1227,6 +1227,24 @@
       return APIAdminResourceDevice;
   }(APIResource));
 
+  var APIAdminResourceDeviceSession = (function (_super) {
+      __extends(APIAdminResourceDeviceSession, _super);
+      function APIAdminResourceDeviceSession(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('admin');
+          _this.push('device-sessions', id);
+          return _this;
+      }
+      APIAdminResourceDeviceSession.prototype.changeBillable = function () {
+          return new APIResource(this).push('changebillable').post();
+      };
+      return APIAdminResourceDeviceSession;
+  }(APIResource));
+
   var APIAdminResource = (function (_super) {
       __extends(APIAdminResource, _super);
       function APIAdminResource(parent) {
@@ -1257,7 +1275,7 @@
           return new APIList(this).push('admin', 'device-sessions');
       };
       APIAdminResource.prototype.deviceSession = function (id) {
-          return new APIResourceDeviceSession(this, id);
+          return new APIAdminResourceDeviceSession(this, id);
       };
       APIAdminResource.prototype.deviceStatuses = function () {
           return new APIList(this).push('device-status');
