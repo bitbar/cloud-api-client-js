@@ -1,14 +1,14 @@
-/* Bitbar Cloud API Client for JavaScript v0.11.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.12.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['finka', 'axios', 'qs'], factory) :
   (global = global || self, global['cloud-api-client-js'] = factory(global.finka, global.axios, global.qs));
 }(this, (function (finka, axios, qs) { 'use strict';
 
-  axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
-  qs = qs && qs.hasOwnProperty('default') ? qs['default'] : qs;
+  axios = axios && Object.prototype.hasOwnProperty.call(axios, 'default') ? axios['default'] : axios;
+  qs = qs && Object.prototype.hasOwnProperty.call(qs, 'default') ? qs['default'] : qs;
 
-  var version = "0.11.0";
+  var version = "0.12.0";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -196,17 +196,12 @@
                   value[i] = v.getTime();
               }
           }
-          var isNull = false;
           if (checkNull) {
               for (var _i = 0, value_1 = value; _i < value_1.length; _i++) {
                   var v = value_1[_i];
                   if (v !== null) {
                       continue;
                   }
-              }
-              if (isNull) {
-                  value = value.filter(function (item) { return item !== null; });
-                  operand += 'ornull';
               }
           }
           if (operand.endsWith('ornull') && value.length === 0) {
@@ -1235,12 +1230,52 @@
               throw new Error('Resource ID cannot be null!');
           }
           _this = _super.call(this, parent) || this;
-          _this.push('admin');
           _this.push('device-sessions', id);
           return _this;
       }
       APIAdminResourceDeviceSession.prototype.changeBillable = function () {
-          return new APIResource(this).push('changebillable').post();
+          var a = new APIResource(this);
+          a.stack.splice(a.stack.length - 2, 0, 'admin');
+          return a.push('changebillable').post();
+      };
+      APIAdminResourceDeviceSession.prototype.connections = function () {
+          return new APIList(this).push('connections');
+      };
+      APIAdminResourceDeviceSession.prototype.connection = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('connections', id);
+      };
+      APIAdminResourceDeviceSession.prototype.output = function () {
+          return new OutputFileset(this);
+      };
+      APIAdminResourceDeviceSession.prototype.release = function () {
+          return new APIResource(this).push('release').post();
+      };
+      APIAdminResourceDeviceSession.prototype.screenshots = function () {
+          return new APIList(this).push('screenshots');
+      };
+      APIAdminResourceDeviceSession.prototype.screenshot = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('screenshots', id);
+      };
+      APIAdminResourceDeviceSession.prototype.steps = function () {
+          return new APIList(this).push('steps');
+      };
+      APIAdminResourceDeviceSession.prototype.step = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('steps', id);
+      };
+      APIAdminResourceDeviceSession.prototype.currentStep = function () {
+          return this.step('current');
+      };
+      APIAdminResourceDeviceSession.prototype.testCaseRuns = function () {
+          return new APIList(this).push('test-case-runs');
       };
       return APIAdminResourceDeviceSession;
   }(APIResource));
