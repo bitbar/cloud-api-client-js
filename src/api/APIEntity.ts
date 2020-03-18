@@ -27,10 +27,10 @@ class APIEntity {
   /**
    * Stack
    *
-   * @protected
+   * @public
    * @type {Array}
    */
-  protected stack: Array<string|number>;
+  public stack: Array<string|number>;
 
   /**
    * object of request config
