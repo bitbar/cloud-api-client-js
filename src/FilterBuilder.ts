@@ -1,3 +1,4 @@
+import './finka';
 import Filter from './Filter';
 
 /**
@@ -54,6 +55,7 @@ class FilterBuilder {
       }
     }
 
+    // @ts-ignore
     if (operand.endsWith('ornull') && value.length === 0) {
       operand = 'isnull';
     }

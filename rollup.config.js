@@ -1,10 +1,13 @@
-import 'finka';
-import pluginCommonjs from 'rollup-plugin-commonjs';
+import finka from '@bitbar/finka';
+
+import pluginCommonjs from '@rollup/plugin-commonjs';
 import pluginTypeScript from '@rollup/plugin-typescript';
 import pluginJson from '@rollup/plugin-json';
 import pluginUglify from 'rollup-plugin-uglify';
 
 import $package from './package.json';
+
+finka();
 
 const external = Object.keys($package.dependencies || []);
 const globals = {};
