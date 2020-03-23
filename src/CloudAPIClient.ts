@@ -1,5 +1,3 @@
-import 'finka';
-
 import API from './API';
 import FilterBuilder from './FilterBuilder';
 

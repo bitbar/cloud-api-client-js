@@ -31,8 +31,11 @@ class APIListFiles extends APIList {
     let form;
 
     // For NodeJS
+    // @ts-ignore
     if (globalThis.isNodeJs) {
+      // @ts-ignore
       const fs = require('fs');
+      // @ts-ignore
       const FormData = require('form-data');
 
       form = new FormData();

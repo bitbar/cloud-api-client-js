@@ -132,6 +132,7 @@ class APIEntity {
    * @returns this
    */
   public removeRequestConfig (key: string) {
+    // @ts-ignore
     delete this.requestConfig[key];
     return this;
   }
@@ -149,6 +150,7 @@ class APIEntity {
     // Unify/Standarize headers keys
     for (const key in headers) {
       const newKey = key.replace(/(?:^|-)([a-z])/g, (letter) => letter.toUpperCase());
+      // @ts-ignore
       _headers[newKey] = headers[key];
     }
 
@@ -168,6 +170,7 @@ class APIEntity {
   public method (name: Method) {
     const NAME: Method = <Method> name.toLocaleUpperCase();
 
+    // @ts-ignore
     if (!ALLOWED_HTTP_METHODS[NAME]) {
       throw new Error(`Method '${NAME}' is not allowed! You can use: ${Object.keys(ALLOWED_HTTP_METHODS).join(', ')}`);
     }

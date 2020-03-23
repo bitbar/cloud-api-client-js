@@ -1,4 +1,4 @@
-import 'finka';
+import '@bitbar/finka';
 
 declare global {
 

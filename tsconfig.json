@@ -1,12 +1,16 @@
 {
-    "compilerOptions": {
-        "target": "ES5",
-        "module": "ES2015",
-        "esModuleInterop": true,
-        "strict": true,
-        "removeComments": true,
-        "sourceMap": true,
-        "declaration": true,
-        "declarationDir": "./dist"
-    }
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ES2015",
+    "esModuleInterop": true,
+    "strict": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "moduleResolution": "Node",
+    "typeRoots": [
+      "./typings"
+    ]
+  }
 }
