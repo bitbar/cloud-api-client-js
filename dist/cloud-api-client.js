@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.12.1 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.13.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.12.1";
+  var version = "0.13.0";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1061,6 +1061,9 @@
       };
       APIResourceUser.prototype.receipts = function () {
           return new APIList(this).push('receipts');
+      };
+      APIResourceUser.prototype.preferences = function () {
+          return new APIResource(this).push('preferences');
       };
       APIResourceUser.prototype.uiPreferences = function () {
           return new APIResource(this).push('ui-preferences');
