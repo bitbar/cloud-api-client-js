@@ -206,6 +206,11 @@ class APIResourceUser extends APIResource {
     return new APIList(this).push('receipts');
   }
 
+  // /users/{id}/preferences
+  public preferences () {
+    return new APIResource(this).push('preferences');
+  }
+
   // /users/{id}/ui-preferences
   public uiPreferences () {
     return new APIResource(this).push('ui-preferences');
