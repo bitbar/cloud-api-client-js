@@ -8,6 +8,7 @@ import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
 import APIAdminResourceRun from './APIAdminResourceRun';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
+import APIResourceProject from './APIResourceProject';
 
 
 /**
@@ -104,6 +105,11 @@ class APIAdminResource extends APIResource {
   // /projects
   public projects () {
     return new APIList(this).push('projects');
+  }
+
+  // /projects/{id}
+  public project (id: number) {
+    return new APIResourceProject(this, id);
   }
 
   // /runs

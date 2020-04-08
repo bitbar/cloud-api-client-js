@@ -11,6 +11,10 @@
     "moduleResolution": "Node",
     "typeRoots": [
       "./typings"
-    ]
-  }
+    ],
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
