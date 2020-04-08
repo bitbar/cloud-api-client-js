@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/cloud-api-client.js",
   "types": "dist/index.d.ts",
@@ -48,7 +48,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@bitbar/finka": "^2.0.0",
+    "@bitbar/finka": "^2.0.1",
     "axios": "^0.19.2",
     "form-data": "^3.0.0",
     "qs": "^6.9.2"
