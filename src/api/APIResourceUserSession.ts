@@ -31,6 +31,11 @@ class APIResourceUserSession extends APIResource {
     return new APIResource(this).push(name + '-login');
   }
 
+  // /user-sessions/portal-login
+  public portalLogin () {
+    return new APIResource(this).push('portal-login').post();
+  }
+
 }
 
 export default APIResourceUserSession
