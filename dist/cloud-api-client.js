@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.15.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.16.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.15.0";
+  var version = "0.16.0";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1083,6 +1083,9 @@
       APIResourceUser.prototype.statistics = function () {
           return new APIList(this).push('statistics');
       };
+      APIResourceUser.prototype.deviceStatistics = function () {
+        return new APIList(this).push('device-statistics');
+      };
       return APIResourceUser;
   }(APIResource));
 
@@ -1425,6 +1428,9 @@
       };
       API.prototype.labelGroups = function () {
           return new APIList(this).push('label-groups');
+      };
+      API.prototype.deviceStatistics = function () {
+        return new APIList(this).push('device-statistics');
       };
       return API;
   }());

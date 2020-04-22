@@ -240,6 +240,11 @@ class APIResourceUser extends APIResource {
     return new APIList(this).push('statistics');
   }
 
+  // /users/{id}/statistics
+  public deviceStatistics () {
+    return new APIList(this).push('device-statistics');
+  }
+
 }
 
 export default APIResourceUser

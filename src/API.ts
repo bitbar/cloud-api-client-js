@@ -138,6 +138,11 @@ class API {
   public labelGroups () {
     return new APIList(this).push('label-groups');
   }
+
+  // /device-statistics
+  public deviceStatistics () {
+    return new APIList(this).push('device-statistics');
+  }
 }
 
 
