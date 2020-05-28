@@ -1259,6 +1259,9 @@
           }
           return new APIResource(this).push('connections', id);
       };
+      APIAdminResourceDeviceSession.prototype.input = function () {
+          return new InputFileset(this);
+      };
       APIAdminResourceDeviceSession.prototype.output = function () {
           return new OutputFileset(this);
       };
