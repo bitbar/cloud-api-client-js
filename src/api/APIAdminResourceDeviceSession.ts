@@ -1,6 +1,7 @@
 import APIResource from './APIResource'
 import APIList from './APIList';
 
+import InputFileset from './extra-class/InputFileset';
 import OutputFileset from './extra-class/OutputFileset';
 
 
@@ -45,6 +46,11 @@ class APIAdminResourceDeviceSession extends APIResource {
     }
 
     return new APIResource(this).push('connections', id);
+  }
+
+  // /device-sessions/{id}/output-file-set
+  public input () {
+    return new InputFileset(this);
   }
 
   // /device-sessions/{id}/output-file-set
