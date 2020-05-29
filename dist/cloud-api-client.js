@@ -1,4 +1,4 @@
-/* Bitbar Cloud API Client for JavaScript v0.17.1 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
+/* Bitbar Cloud API Client for JavaScript v0.18.0 | (c) Bitbar Technologies and contributors | https://github.com/bitbar/cloud-api-client-js/blob/master/LICENSE.md */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.17.1";
+  var version = "0.18.0";
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -851,6 +851,38 @@
       return APIResourceNotification;
   }(APIResource));
 
+  var APIResourceAccessGroup = (function (_super) {
+      __extends(APIResourceAccessGroup, _super);
+      function APIResourceAccessGroup(parent, id) {
+          var _this = this;
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          _this = _super.call(this, parent) || this;
+          _this.push('access-groups', id);
+          return _this;
+      }
+      APIResourceAccessGroup.prototype.users = function () {
+          return new APIList(this).push('users');
+      };
+      APIResourceAccessGroup.prototype.user = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('users', id);
+      };
+      APIResourceAccessGroup.prototype.resources = function () {
+          return new APIList(this).push('resources');
+      };
+      APIResourceAccessGroup.prototype.resource = function (id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('resources', id);
+      };
+      return APIResourceAccessGroup;
+  }(APIResource));
+
   var APIListDeviceTime = (function (_super) {
       __extends(APIListDeviceTime, _super);
       function APIListDeviceTime(parent) {
@@ -1085,6 +1117,12 @@
       };
       APIResourceUser.prototype.deviceStatistics = function () {
           return new APIList(this).push('device-statistics');
+      };
+      APIResourceUser.prototype.accessGroups = function () {
+          return new APIList(this).push('access-groups');
+      };
+      APIResourceUser.prototype.accessGroup = function (id) {
+          return new APIResourceAccessGroup(this, id);
       };
       return APIResourceUser;
   }(APIResource));
@@ -1434,6 +1472,12 @@
       };
       API.prototype.deviceStatistics = function () {
           return new APIList(this).push('device-statistics');
+      };
+      API.prototype.accessGroups = function () {
+          return new APIList(this).push('access-groups');
+      };
+      API.prototype.accessGroup = function (id) {
+          return new APIResourceAccessGroup(this, id);
       };
       return API;
   }());

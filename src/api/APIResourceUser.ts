@@ -8,6 +8,7 @@ import APIResourceManualSession from './APIResourceManualSession'
 import APIResourceProject from './APIResourceProject'
 import APIResourceFile from './APIResourceFile'
 import APIResourceNotification from './APIResourceNotification'
+import APIResourceAccessGroup from './APIResourceAccessGroup'
 
 import APIList from './APIList'
 import APIListDeviceTime from './APIListDeviceTime'
@@ -243,6 +244,16 @@ class APIResourceUser extends APIResource {
   // /users/{id}/statistics
   public deviceStatistics () {
     return new APIList(this).push('device-statistics');
+  }
+
+  // /users/{id}/access-groups
+  public accessGroups () {
+    return new APIList(this).push('access-groups');
+  }
+
+  // /users/{id}/access-groups/{id}
+  public accessGroup (id: number) {
+    return new APIResourceAccessGroup(this, id);
   }
 
 }
