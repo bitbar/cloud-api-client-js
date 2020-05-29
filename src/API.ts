@@ -14,6 +14,7 @@ import APIResourceUser from './api/APIResourceUser';
 import APIResourceDevice from './api/APIResourceDevice';
 import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
 import APIResourceUserSession from './api/APIResourceUserSession';
+import APIResourceAccessGroup from './api/APIResourceAccessGroup';
 
 import APIAdminResource from './api/APIAdminResource';
 
@@ -143,6 +144,17 @@ class API {
   public deviceStatistics () {
     return new APIList(this).push('device-statistics');
   }
+
+  // /access-groups
+  public accessGroups () {
+    return new APIList(this).push('access-groups');
+  }
+
+  // /access-groups/{id}
+  public accessGroup (id: number) {
+    return new APIResourceAccessGroup(this, id);
+  }
+
 }
 
 
