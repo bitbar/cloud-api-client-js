@@ -4,7 +4,6 @@ import APIResourceBillingPeriod from './APIResourceBillingPeriod'
 import APIResourceJob from './APIResourceJob'
 import APIResourceDeviceGroup from './APIResourceDeviceGroup'
 import APIResourceDeviceSession from './APIResourceDeviceSession'
-import APIResourceManualSession from './APIResourceManualSession'
 import APIResourceProject from './APIResourceProject'
 import APIResourceFile from './APIResourceFile'
 import APIResourceNotification from './APIResourceNotification'
@@ -118,11 +117,6 @@ class APIResourceUser extends APIResource {
   // /users/{id}/device-sessions/{id}
   public deviceSession (id: number) {
     return new APIResourceDeviceSession(this, id);
-  }
-
-  // /users/{id}/device-sessions/{id} - for Manual Device Sessions only
-  public manualSession (id: number) {
-    return new APIResourceManualSession(this, id);
   }
 
   // /users/{id}/projects
