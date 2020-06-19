@@ -265,6 +265,20 @@ class APIEntity {
   }
 
   /**
+   * Set form data
+   *
+   * @public
+   * @param {object} data - JSON object to be set
+   * @returns this
+   */
+  public formData (data: FormData) {
+    this.headers({
+      'Content-Type': 'multipart/form-data'
+    }).data(data);
+    return this;
+  }
+
+  /**
    * Custom params serializer
    * @private
    * @param {object} params

@@ -1,5 +1,5 @@
 import APIResource from './APIResource'
-import APIList from './APIList'
+import APIList from './APIList';
 
 import InputFileset from './extra-class/InputFileset'
 import OutputFileset from './extra-class/OutputFileset'
@@ -123,6 +123,11 @@ class APIResourceDeviceSession extends APIResource {
   // Alias for output().videos();
   public videos () {
     return this.output().videos();
+  }
+
+  // Live Testing Connections
+  public connections () {
+    return new APIList(this).push('connections');
   }
 
 }
