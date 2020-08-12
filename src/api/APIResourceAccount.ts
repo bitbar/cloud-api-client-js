@@ -16,9 +16,22 @@ class APIResourceAccount extends APIResource {
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: object, id: number) {
     super(parent);
-    this.push('account');
+    if(id)
+      this.push('accounts', id)
+    else
+      this.push('account');
+  }
+
+  // /accounts/{id}/preferences
+  public preferences () {
+    return new APIResource(this).push('preferences');
+  }
+
+  // /accounts/{id}/concurrency-status
+  public concurrencyStatus () {
+    return new APIResource(this).push('concurrency-status');
   }
 
   // /account/roles

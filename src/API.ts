@@ -17,6 +17,7 @@ import APIResourceUserSession from './api/APIResourceUserSession';
 import APIResourceAccessGroup from './api/APIResourceAccessGroup';
 
 import APIAdminResource from './api/APIAdminResource';
+import APIResourceAccount from "./api/APIResourceAccount";
 
 // @ts-ignore
 if (globalThis.isNodeJs) {
@@ -153,6 +154,11 @@ class API {
   // /access-groups/{id}
   public accessGroup (id: number) {
     return new APIResourceAccessGroup(this, id);
+  }
+
+  //accounts/{id}
+  public account (id: number) {
+    return new APIResourceAccount(this, id)
   }
 
 }
