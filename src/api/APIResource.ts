@@ -16,7 +16,7 @@ class APIResource extends APIEntity {
    * @returns this
    */
   public delete () {
-    this.method('DELETE');
+    return this.method('DELETE');
   }
 }
 
