@@ -247,4 +247,7 @@ interface APIList {
   cut: typeof APIList.prototype.between;
 }
 
+APIList.prototype.all = APIList.prototype.noLimit;
+APIList.prototype.cut = APIList.prototype.between;
+
 export default APIList;
