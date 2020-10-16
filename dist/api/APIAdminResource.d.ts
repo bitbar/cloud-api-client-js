@@ -1,0 +1,33 @@
+import APIList from './APIList';
+import APIResource from './APIResource';
+import APIResourceFile from './APIResourceFile';
+import APIAdminResourceCluster from './APIAdminResourceCluster';
+import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
+import APIAdminResourceRun from './APIAdminResourceRun';
+import APIAdminResourceDevice from './APIAdminResourceDevice';
+import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
+import APIResourceProject from './APIResourceProject';
+declare class APIAdminResource extends APIResource {
+    constructor(parent: object);
+    private withAdmin;
+    clusters(): APIList;
+    cluster(id: number): APIAdminResourceCluster;
+    devices(): APIList;
+    device(id: number): APIAdminResourceDevice;
+    deviceModels(): APIList;
+    deviceModel(id: number): APIResource;
+    deviceSessions(): APIList;
+    deviceSession(id: number): APIAdminResourceDeviceSession;
+    deviceStatuses(): APIList;
+    deviceTime(): APIAdminResourceDeviceTime;
+    interactiveQueue(): APIList;
+    files(): APIList;
+    file(id: number): APIResourceFile;
+    overview(): APIResource;
+    projects(): APIList;
+    project(id: number): APIResourceProject;
+    runs(): APIList;
+    run(id: number): APIAdminResourceRun;
+    users(): APIList;
+}
+export default APIAdminResource;

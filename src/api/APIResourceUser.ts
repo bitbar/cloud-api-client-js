@@ -56,6 +56,11 @@ class APIResourceUser extends APIResource {
     return new APIListDeviceTime(this);
   }
 
+  // /users/{id}/device-time-summary
+  public deviceTimeSummary () {
+    return new APIList(this).push('device-time-summary');
+  }
+
   // /users/{id}/services
   public services () {
     return new APIListServices(this);

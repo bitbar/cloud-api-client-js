@@ -1,0 +1,34 @@
+import './finka';
+import ApiConfig from './ApiConfig';
+import { AxiosInstance } from 'axios';
+import APIList from './api/APIList';
+import APIListDevices from './api/APIListDevices';
+import APIListUsers from './api/APIListUsers';
+import APIResourceUser from './api/APIResourceUser';
+import APIResourceDevice from './api/APIResourceDevice';
+import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
+import APIResourceUserSession from './api/APIResourceUserSession';
+import APIResourceAccessGroup from './api/APIResourceAccessGroup';
+import APIAdminResource from './api/APIAdminResource';
+import APIResourceAccount from "./api/APIResourceAccount";
+declare class API {
+    private config;
+    private axiosConfig;
+    axios: AxiosInstance;
+    constructor(config: ApiConfig);
+    userSession(): APIResourceUserSession;
+    user(id: number | 'me'): APIResourceUser;
+    users(): APIListUsers;
+    me(): APIResourceUser;
+    admin(): APIAdminResource;
+    devices(): APIListDevices;
+    device(id: number): APIResourceDevice;
+    deviceGroups(): APIList;
+    deviceGroup(id: number): APIResourceDeviceGroup;
+    labelGroups(): APIList;
+    deviceStatistics(): APIList;
+    accessGroups(): APIList;
+    accessGroup(id: number): APIResourceAccessGroup;
+    account(id: number): APIResourceAccount;
+}
+export default API;
