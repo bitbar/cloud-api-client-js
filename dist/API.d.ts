@@ -8,7 +8,6 @@ import APIResourceUser from './api/APIResourceUser';
 import APIResourceDevice from './api/APIResourceDevice';
 import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
 import APIResourceUserSession from './api/APIResourceUserSession';
-import APIResourceAccessGroup from './api/APIResourceAccessGroup';
 import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from "./api/APIResourceAccount";
 declare class API {
@@ -27,8 +26,6 @@ declare class API {
     deviceGroup(id: number): APIResourceDeviceGroup;
     labelGroups(): APIList;
     deviceStatistics(): APIList;
-    accessGroups(): APIList;
-    accessGroup(id: number): APIResourceAccessGroup;
     account(id: number): APIResourceAccount;
 }
 export default API;
