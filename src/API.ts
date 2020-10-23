@@ -14,13 +14,12 @@ import APIResourceUser from './api/APIResourceUser';
 import APIResourceDevice from './api/APIResourceDevice';
 import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
 import APIResourceUserSession from './api/APIResourceUserSession';
-import APIResourceAccessGroup from './api/APIResourceAccessGroup';
 
 import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from "./api/APIResourceAccount";
 
 // @ts-ignore
-if (globalThis.isNodeJs) {
+if (global.isNodeJs) {
   // Set User-Agent
   axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
 }
@@ -146,17 +145,7 @@ class API {
     return new APIList(this).push('device-statistics');
   }
 
-  // /access-groups
-  public accessGroups () {
-    return new APIList(this).push('access-groups');
-  }
-
-  // /access-groups/{id}
-  public accessGroup (id: number) {
-    return new APIResourceAccessGroup(this, id);
-  }
-
-  //accounts/{id}
+  // /accounts/{id}
   public account (id: number) {
     return new APIResourceAccount(this, id)
   }

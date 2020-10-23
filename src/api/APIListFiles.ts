@@ -32,7 +32,7 @@ class APIListFiles extends APIList {
 
     // For NodeJS
     // @ts-ignore
-    if (globalThis.isNodeJs) {
+    if (global.isNodeJs) {
       // @ts-ignore
       const fs = require('fs');
       // @ts-ignore

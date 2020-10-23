@@ -9,6 +9,7 @@ import APIAdminResourceRun from './APIAdminResourceRun';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
 import APIResourceProject from './APIResourceProject';
+import APIResourceAccessGroup from './APIResourceAccessGroup';
 
 
 /**
@@ -125,6 +126,16 @@ class APIAdminResource extends APIResource {
   // /users
   public users () {
     return new APIList(this).push('users');
+  }
+
+  // /access-groups
+  public accessGroups () {
+    return new APIList(this).push('access-groups');
+  }
+
+  // /access-groups/{id}
+  public accessGroup (id: number) {
+    return new APIResourceAccessGroup(this, id);
   }
 
 }

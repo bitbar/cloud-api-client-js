@@ -7,6 +7,7 @@ import APIAdminResourceRun from './APIAdminResourceRun';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
 import APIResourceProject from './APIResourceProject';
+import APIResourceAccessGroup from './APIResourceAccessGroup';
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     private withAdmin;
@@ -29,5 +30,7 @@ declare class APIAdminResource extends APIResource {
     runs(): APIList;
     run(id: number): APIAdminResourceRun;
     users(): APIList;
+    accessGroups(): APIList;
+    accessGroup(id: number): APIResourceAccessGroup;
 }
 export default APIAdminResource;
