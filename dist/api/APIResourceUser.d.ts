@@ -14,6 +14,7 @@ import APIListFiles from './APIListFiles';
 import APIListServices from './APIListServices';
 import APIListRuns from './APIListRuns';
 import APIListNotifications from './APIListNotifications';
+import APIResourceAccountService from './APIResourceAccountService';
 declare class APIResourceUser extends APIResource {
     constructor(parent: object, id: number | 'me');
     account(): APIResourceAccount;
@@ -21,7 +22,8 @@ declare class APIResourceUser extends APIResource {
     deviceTimeSummary(): APIList;
     services(): APIListServices;
     service(id: number): APIResource;
-    accountServiceBillingPeriod(id: number): APIResource;
+    accountServices(): APIList;
+    accountService(id: number): APIResourceAccountService;
     billingPeriods(): APIList;
     billingPeriod(id: number): APIResourceBillingPeriod;
     jobs(): APIList;
