@@ -15,6 +15,7 @@ import APIListFiles from './APIListFiles'
 import APIListServices from './APIListServices'
 import APIListRuns from './APIListRuns'
 import APIListNotifications from './APIListNotifications'
+import APIResourceAccountService from './APIResourceAccountService';
 
 
 /**
@@ -75,13 +76,14 @@ class APIResourceUser extends APIResource {
     return new APIResource(this).push('services', id);
   }
 
-  // /users/{id}/account-services/{id}/billing-period
-  public accountServiceBillingPeriod (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
+  // /users/{id}/account-services
+  public accountServices () {
+    return new APIList(this).push('account-services');
+  }
 
-    return new APIResource(this).push('account-services', id, 'billing-period');
+  // /users/{id}/account-services/{id}
+  public accountService (id: number) {
+    return new APIResourceAccountService(this, id);
   }
 
   // /users/{id}/billing-periods

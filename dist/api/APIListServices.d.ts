@@ -3,6 +3,7 @@ import APIListPurchased from './APIListPurchased';
 declare class APIListServices extends APIList {
     constructor(parent: object);
     purchased(): APIListPurchased;
-    available(): void;
+    available(): APIList;
+    active(): APIList;
 }
 export default APIListServices;

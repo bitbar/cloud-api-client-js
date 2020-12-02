@@ -23,7 +23,19 @@ class APIListServices extends APIList {
 
   // /services/available
   public available () {
-    this.push('available');
+    return new APIList(this).push('available');
+  }
+
+  public active () {
+    const a = new APIList(this);
+    if (this.stack[0] === 'me') {
+      a.push('active');
+    } else {
+      a.params({
+        notArchived: true
+      });
+    }
+    return a;
   }
 
 }
