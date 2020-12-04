@@ -83,6 +83,9 @@ class API {
       };
     }
 
+    // With credentials
+    this.axiosConfig.withCredentials = config.withCredentials == null ? false : config.withCredentials;
+
     // Create axios instance
     this.axios = axios.create(this.axiosConfig);
   }

@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.24.0 | Copyright 2020 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.24.1 | Copyright 2020 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.24.0";
+  var version = "0.24.1";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -1318,6 +1318,7 @@
                   password: ''
               };
           }
+          this.axiosConfig.withCredentials = config.withCredentials == null ? false : config.withCredentials;
           this.axios = axios.create(this.axiosConfig);
       }
       userSession() {
