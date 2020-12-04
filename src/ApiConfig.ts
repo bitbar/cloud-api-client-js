@@ -29,6 +29,13 @@ interface ApiConfig {
    *
    */
   auth?: AxiosBasicCredentials;
+
+
+  /**
+   * With credentials?
+   * 
+   */
+  withCredentials?: boolean;
 }
 
 export default ApiConfig;

@@ -5,5 +5,6 @@ interface ApiConfig {
     v2?: boolean;
     apiKey?: string;
     auth?: AxiosBasicCredentials;
+    withCredentials?: boolean;
 }
 export default ApiConfig;

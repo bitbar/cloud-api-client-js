@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "0.24.0",
+  "version": "0.24.1",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/bitbar-cloud-api-client.min.js",
   "types": "dist/index.d.ts",
@@ -42,7 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "chai": "^4.1.2",
-    "core-js": "^3.8.0",
+    "core-js": "^3.6.5",
     "eslint": "^6.8.0",
     "mocha": "^7.2.0",
     "rollup": "^1.32.1",
