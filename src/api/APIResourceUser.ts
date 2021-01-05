@@ -257,6 +257,15 @@ class APIResourceUser extends APIResource {
     return new APIResourceAccessGroup(this, id);
   }
 
+  // /users/{id}/tunnels/{id}
+  public smartbearTunnel (id: number) {
+    return new APIResource(this).push('tunnels', id);
+  }
+
+  // /users/{id}/tunnels
+  public smartbearTunnels () {
+    return new APIList(this).push('tunnels');
+  }
 }
 
 export default APIResourceUser
