@@ -56,5 +56,7 @@ declare class APIResourceUser extends APIResource {
     deviceStatistics(): APIList;
     accessGroups(): APIList;
     accessGroup(id: number): APIResourceAccessGroup;
+    smartbearTunnel(id: number): APIResource;
+    smartbearTunnels(): APIList;
 }
 export default APIResourceUser;
