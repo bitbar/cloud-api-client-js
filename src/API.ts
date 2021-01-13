@@ -16,7 +16,7 @@ import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
 import APIResourceUserSession from './api/APIResourceUserSession';
 
 import APIAdminResource from './api/APIAdminResource';
-import APIResourceAccount from "./api/APIResourceAccount";
+import APIResourceAccount from './api/APIResourceAccount';
 
 // @ts-ignore
 if (global.isNodeJs) {
@@ -108,6 +108,11 @@ class API {
     return new APIListUsers(this);
   }
 
+  // /account/{id}
+  public account (id: number) {
+    return new APIResourceAccount(this, id);
+  }
+
   // /me
   public me () {
     return this.user('me');
@@ -146,11 +151,6 @@ class API {
   // /device-statistics
   public deviceStatistics () {
     return new APIList(this).push('device-statistics');
-  }
-
-  // /accounts/{id}
-  public account (id: number) {
-    return new APIResourceAccount(this, id)
   }
 
 }

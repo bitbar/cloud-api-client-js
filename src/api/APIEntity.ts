@@ -97,6 +97,34 @@ class APIEntity {
   }
 
   /**
+   * Get first element of the stack
+   */
+  public get first () {
+    return this.stack[0];
+  }
+
+  /**
+   * Set first element of the stack
+   */
+  public set first (val) {
+    this.stack[0] = val;
+  }
+
+  /**
+   * Get last element of the stack
+   */
+  public get last () {
+    return this.stack[this.stack.length - 1];
+  }
+
+  /**
+   * Set last element of the stack
+   */
+  public set last (val) {
+    this.stack[this.stack.length - 1] = val;
+  }
+
+  /**
    * To URL
    *
    * @param {boolean} absolute

@@ -1,17 +1,15 @@
 import APIResource from './APIResource'
-import APIList from './APIList'
-
 
 /**
- * APIAdminResourceService
+ * APIAdminResourceAccountService
  *
  * @class
  * @extends APIResource
  */
-class APIAdminResourceService extends APIResource {
+class APIAdminResourceAccountService extends APIResource {
 
   /**
-   * /services/{id}
+   * /account-services/{id}
    *
    * Constructor
    */
@@ -21,24 +19,19 @@ class APIAdminResourceService extends APIResource {
     }
 
     super(parent);
-    this.push('services', id);
+    this.push('account-services', id);
   }
 
-  // /services/{id}/activate
+  // /account-services/{id}/activate
   public activate () {
     return new APIResource(this).push('activate').post();
   }
 
-  // /services/{id}/deactivate
+  // /account-services/{id}/deactivate
   public deactivate () {
     return new APIResource(this).push('deactivate').post();
   }
 
-  // /services/{id}/roles
-  public roles () {
-    return new APIList(this).push('roles');
-  }
-
 }
 
-export default APIAdminResourceService
+export default APIAdminResourceAccountService

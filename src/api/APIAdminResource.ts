@@ -2,14 +2,16 @@ import APIList from './APIList'
 
 import APIResource from './APIResource'
 import APIResourceFile from './APIResourceFile'
+import APIResourceProject from './APIResourceProject';
+import APIResourceAccessGroup from './APIResourceAccessGroup';
 
 import APIAdminResourceCluster from './APIAdminResourceCluster';
 import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
 import APIAdminResourceRun from './APIAdminResourceRun';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
-import APIResourceProject from './APIResourceProject';
-import APIResourceAccessGroup from './APIResourceAccessGroup';
+import APIAdminResourceAccountService from './APIAdminResourceAccountService';
+import APIAdminResourceUser from './APIAdminResourceUser';
 
 
 /**
@@ -60,6 +62,10 @@ class APIAdminResource extends APIResource {
 
   // /admin/device-models/{id}
   public deviceModel (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    
     return new APIResource(this).push('admin', 'device-models', id);
   }
 
@@ -113,7 +119,7 @@ class APIAdminResource extends APIResource {
     return new APIResourceProject(this, id);
   }
 
-  // /runs
+  // /admin/runs
   public runs () {
     return new APIList(this).push('admin', 'runs');
   }
@@ -128,6 +134,11 @@ class APIAdminResource extends APIResource {
     return new APIList(this).push('users');
   }
 
+  // /users/{id}
+  public user (id: number) {
+    return new APIAdminResourceUser(this, id);
+  }
+
   // /access-groups
   public accessGroups () {
     return new APIList(this).push('access-groups');
@@ -136,6 +147,30 @@ class APIAdminResource extends APIResource {
   // /access-groups/{id}
   public accessGroup (id: number) {
     return new APIResourceAccessGroup(this, id);
+  }
+
+  // /admin/accounts
+  public accounts () {
+    return new APIList(this).push('admin', 'accounts');
+  }
+
+  // /admin/accounts/{id}
+  public account (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    
+    return new APIResource(this).push('admin', 'accounts', id);
+  }
+
+  // /admin/account-services
+  public accountServices () {
+    return new APIList(this).push('admin', 'account-services');
+  }
+
+  // /admin/account-services/{id}
+  public accountService (id: number) {
+    return new APIAdminResourceAccountService(this, id);
   }
 
 }

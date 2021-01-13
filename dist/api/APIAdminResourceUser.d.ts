@@ -1,14 +1,12 @@
 import APIResource from './APIResource';
 import APIList from './APIList';
+import APIAdminResourceUserAccount from './APIAdminResourceUserAccount';
 declare class APIAdminResourceUser extends APIResource {
     constructor(parent: object, id: number);
-    accountRoles(): APIList;
-    accountRole(): APIResource;
-    accountServices(): APIList;
     disable(): APIResource;
     enable(): APIResource;
     licenses(): APIList;
     resendActivation(): APIResource;
-    updateAccount(): APIResource;
+    account(): APIAdminResourceUserAccount;
 }
 export default APIAdminResourceUser;

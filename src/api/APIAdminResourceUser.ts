@@ -1,6 +1,8 @@
 import APIResource from './APIResource'
 import APIList from './APIList'
 
+import APIAdminResourceUserAccount from './APIAdminResourceUserAccount';
+
 
 /**
  * APIAdminResourceUser
@@ -21,22 +23,7 @@ class APIAdminResourceUser extends APIResource {
     }
 
     super(parent);
-    this.push('users', id);
-  }
-
-  // /users/{id}/account/roles
-  public accountRoles () {
-    return new APIList(this).push('account', 'roles');
-  }
-
-  // /users/{id}/account/roles/{id}
-  public accountRole () {
-    return new APIResource(this).push('account', 'roles', 'id');
-  }
-
-  // /users/{id}/account/services
-  public accountServices () {
-    return new APIList(this).push('account', 'services');
+    this.push('admin', 'users', id);
   }
 
   // /users/{id}/disable
@@ -56,12 +43,12 @@ class APIAdminResourceUser extends APIResource {
 
   // /users/{id}/resend-activation
   public resendActivation () {
-    return new APIResource(this).push('resend-activation');
+    return new APIResource(this).push('resend-activation').post();
   }
 
-  // /users/{id}/update-account
-  public updateAccount () {
-    return new APIResource(this).push('update-account');
+  // users/{id}/account
+  public account () {
+    return new APIAdminResourceUserAccount(this);
   }
 
 }

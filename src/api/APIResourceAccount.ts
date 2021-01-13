@@ -1,7 +1,4 @@
 import APIResource from './APIResource'
-import APIResourceAdditionalUser from './APIResourceAdditionalUser';
-
-import APIList from './APIList'
 
 /**
  * APIResourceAccount
@@ -12,21 +9,17 @@ import APIList from './APIList'
 class APIResourceAccount extends APIResource {
 
   /**
-   * /account
+   * /accounts/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id?: number) {
-    super(parent);
-    if(id)
-      this.push('accounts', id)
-    else
-      this.push('account');
-  }
+  constructor (parent: object, id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
 
-  // /accounts/{id}/preferences
-  public preferences () {
-    return new APIResource(this).push('preferences');
+    super(parent);
+    this.push('accounts', id);
   }
 
   // /accounts/{id}/concurrency-status
@@ -34,28 +27,9 @@ class APIResourceAccount extends APIResource {
     return new APIResource(this).push('concurrency-status');
   }
 
-  // /account/roles
-  public roles () {
-    return new APIList(this).push('roles');
-  }
-
-  // /account/roles/{id}
-  public role (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource(this).push('roles', id);
-  }
-
-  // /account/additional-users
-  public additionalUsers () {
-    return new APIList(this).push('additional-users');
-  }
-
-  // /account/additional-users/{id}
-  public additionalUser (id: number) {
-    return new APIResourceAdditionalUser(this, id);
+  // /accounts/{id}/preferences
+  public preferences () {
+    return new APIResource(this).push('preferences');
   }
 
 }

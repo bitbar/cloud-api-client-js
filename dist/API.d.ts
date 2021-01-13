@@ -9,7 +9,7 @@ import APIResourceDevice from './api/APIResourceDevice';
 import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
 import APIResourceUserSession from './api/APIResourceUserSession';
 import APIAdminResource from './api/APIAdminResource';
-import APIResourceAccount from "./api/APIResourceAccount";
+import APIResourceAccount from './api/APIResourceAccount';
 declare class API {
     private config;
     private axiosConfig;
@@ -18,6 +18,7 @@ declare class API {
     userSession(): APIResourceUserSession;
     user(id: number | 'me'): APIResourceUser;
     users(): APIListUsers;
+    account(id: number): APIResourceAccount;
     me(): APIResourceUser;
     admin(): APIAdminResource;
     devices(): APIListDevices;
@@ -26,6 +27,5 @@ declare class API {
     deviceGroup(id: number): APIResourceDeviceGroup;
     labelGroups(): APIList;
     deviceStatistics(): APIList;
-    account(id: number): APIResourceAccount;
 }
 export default API;

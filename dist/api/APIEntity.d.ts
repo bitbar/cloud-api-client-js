@@ -6,6 +6,10 @@ declare class APIEntity {
     constructor(parent: APIEntity | object);
     push(...items: Array<string | number>): this;
     pop(): this;
+    get first(): string | number;
+    set first(val: string | number);
+    get last(): string | number;
+    set last(val: string | number);
     toUrl(absolute?: boolean): string;
     setRequestConfig(requestConfig: AxiosRequestConfig): this;
     removeRequestConfig(key: string): this;
