@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.25.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.26.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.25.0";
+  var version = "0.26.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -45,6 +45,18 @@
       pop() {
           this.stack.pop();
           return this;
+      }
+      get first() {
+          return this.stack[0];
+      }
+      set first(val) {
+          this.stack[0] = val;
+      }
+      get last() {
+          return this.stack[this.stack.length - 1];
+      }
+      set last(val) {
+          this.stack[this.stack.length - 1] = val;
       }
       toUrl(absolute = false) {
           let url = `/${this.stack.join('/')}`;
@@ -379,7 +391,7 @@
           this.push('users');
       }
       activate() {
-          return new APIResource(this).push('activate');
+          return new APIResource(this).push('activate').post();
       }
       recoveries() {
           return new APIResource(this).push('recoveries');
@@ -392,50 +404,6 @@
       }
       validateVatId() {
           return new APIResource(this).push('validateVatId');
-      }
-  }
-
-  class APIResourceAdditionalUser extends APIResource {
-      constructor(parent, id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          super(parent);
-          this.push('additional-users', id);
-      }
-      resendActivation() {
-          return new APIResource(this).push('resend-activation');
-      }
-  }
-
-  class APIResourceAccount extends APIResource {
-      constructor(parent, id) {
-          super(parent);
-          if (id)
-              this.push('accounts', id);
-          else
-              this.push('account');
-      }
-      preferences() {
-          return new APIResource(this).push('preferences');
-      }
-      concurrencyStatus() {
-          return new APIResource(this).push('concurrency-status');
-      }
-      roles() {
-          return new APIList(this).push('roles');
-      }
-      role(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('roles', id);
-      }
-      additionalUsers() {
-          return new APIList(this).push('additional-users');
-      }
-      additionalUser(id) {
-          return new APIResourceAdditionalUser(this, id);
       }
   }
 
@@ -777,6 +745,41 @@
       }
   }
 
+  class APIResourceAdditionalUser extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('additional-users', id);
+      }
+      resendActivation() {
+          return new APIResource(this).push('resend-activation');
+      }
+  }
+
+  class APIUserResourceAccount extends APIResource {
+      constructor(parent) {
+          super(parent);
+          this.push('account');
+      }
+      additionalUsers() {
+          return new APIList(this).push('additional-users');
+      }
+      additionalUser(id) {
+          return new APIResourceAdditionalUser(this, id);
+      }
+      serviceBillingPeriod(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          const a = new APIResource(this);
+          a.last += '-services';
+          a.push(id, 'billing-period');
+          return a;
+      }
+  }
+
   class APIListDeviceTime extends APIList {
       constructor(parent) {
           super(parent);
@@ -832,7 +835,7 @@
       }
       active() {
           const a = new APIList(this);
-          if (this.stack[0] === 'me') {
+          if (this.first === 'me') {
               a.push('active');
           }
           else {
@@ -867,25 +870,6 @@
       }
   }
 
-  class APIResourceAccountService extends APIResource {
-      constructor(parent, id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          super(parent);
-          this.push('account-services', id);
-      }
-      activate() {
-          return new APIResource(this).push('activate');
-      }
-      deactivate() {
-          return new APIResource(this).push('deactivate');
-      }
-      billingPeriod() {
-          return new APIResource(this).push('billing-period');
-      }
-  }
-
   class APIResourceUser extends APIResource {
       constructor(parent, id) {
           if (id == null) {
@@ -903,7 +887,7 @@
           }
       }
       account() {
-          return new APIResourceAccount(this);
+          return new APIUserResourceAccount(this);
       }
       deviceTime() {
           return new APIListDeviceTime(this);
@@ -919,12 +903,6 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('services', id);
-      }
-      accountServices() {
-          return new APIList(this).push('account-services');
-      }
-      accountService(id) {
-          return new APIResourceAccountService(this, id);
       }
       billingPeriods() {
           return new APIList(this).push('billing-periods');
@@ -976,15 +954,6 @@
       }
       restore() {
           return new APIResource(this).push('restore');
-      }
-      accountAdditionalUsers() {
-          return new APIList(this).push('account', 'additional-users');
-      }
-      accountAdditionalUser(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('account', 'additional-users', id);
       }
       feedback() {
           return new APIResource(this).push('feedback');
@@ -1150,8 +1119,7 @@
               throw new Error('Resource ID cannot be null!');
           }
           super(parent);
-          this.push('admin');
-          this.push('devices', id);
+          this.push('admin', 'devices', id);
       }
       queue() {
           return new APIList(this).push('queue');
@@ -1215,6 +1183,73 @@
       }
   }
 
+  class APIAdminResourceAccountService extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('account-services', id);
+      }
+      activate() {
+          return new APIResource(this).push('activate').post();
+      }
+      deactivate() {
+          return new APIResource(this).push('deactivate').post();
+      }
+  }
+
+  class APIAdminResourceUserAccount extends APIResource {
+      constructor(parent) {
+          super(parent);
+          this.push('account');
+      }
+      roles() {
+          return new APIList(this).push('roles');
+      }
+      role(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('roles', id);
+      }
+      services() {
+          const a = new APIList(this);
+          a.last += '-services';
+          return a;
+      }
+      update() {
+          const a = new APIResource(this);
+          a.last = 'update-account';
+          return a.post();
+      }
+  }
+
+  class APIAdminResourceUser extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('admin', 'users', id);
+      }
+      disable() {
+          return new APIResource(this).push('disable');
+      }
+      enable() {
+          return new APIResource(this).push('enable');
+      }
+      licenses() {
+          return new APIList(this).push('licenses');
+      }
+      resendActivation() {
+          return new APIResource(this).push('resend-activation').post();
+      }
+      account() {
+          return new APIAdminResourceUserAccount(this);
+      }
+  }
+
   class APIAdminResource extends APIResource {
       constructor(parent) {
           super(parent);
@@ -1238,6 +1273,9 @@
           return new APIList(this).push('admin', 'device-models');
       }
       deviceModel(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
           return new APIResource(this).push('admin', 'device-models', id);
       }
       deviceSessions() {
@@ -1279,11 +1317,45 @@
       users() {
           return new APIList(this).push('users');
       }
+      user(id) {
+          return new APIAdminResourceUser(this, id);
+      }
       accessGroups() {
           return new APIList(this).push('access-groups');
       }
       accessGroup(id) {
           return new APIResourceAccessGroup(this, id);
+      }
+      accounts() {
+          return new APIList(this).push('admin', 'accounts');
+      }
+      account(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('admin', 'accounts', id);
+      }
+      accountServices() {
+          return new APIList(this).push('admin', 'account-services');
+      }
+      accountService(id) {
+          return new APIAdminResourceAccountService(this, id);
+      }
+  }
+
+  class APIResourceAccount extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('accounts', id);
+      }
+      concurrencyStatus() {
+          return new APIResource(this).push('concurrency-status');
+      }
+      preferences() {
+          return new APIResource(this).push('preferences');
       }
   }
 
@@ -1336,6 +1408,9 @@
       users() {
           return new APIListUsers(this);
       }
+      account(id) {
+          return new APIResourceAccount(this, id);
+      }
       me() {
           return this.user('me');
       }
@@ -1359,9 +1434,6 @@
       }
       deviceStatistics() {
           return new APIList(this).push('device-statistics');
-      }
-      account(id) {
-          return new APIResourceAccount(this, id);
       }
   }
 

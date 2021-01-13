@@ -10,13 +10,17 @@ import APIResource from './APIResource'
 class APIAdminResourceAccount extends APIResource {
 
   /**
-   * /services/{id}
+   * /admin/accounts/{id}
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: object, id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+
     super(parent);
-    this.push('account');
+    this.push('admin', 'accounts', id);
   }
 
 }

@@ -1,13 +1,15 @@
 import APIList from './APIList';
 import APIResource from './APIResource';
 import APIResourceFile from './APIResourceFile';
+import APIResourceProject from './APIResourceProject';
+import APIResourceAccessGroup from './APIResourceAccessGroup';
 import APIAdminResourceCluster from './APIAdminResourceCluster';
 import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
 import APIAdminResourceRun from './APIAdminResourceRun';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
-import APIResourceProject from './APIResourceProject';
-import APIResourceAccessGroup from './APIResourceAccessGroup';
+import APIAdminResourceAccountService from './APIAdminResourceAccountService';
+import APIAdminResourceUser from './APIAdminResourceUser';
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     private withAdmin;
@@ -30,7 +32,12 @@ declare class APIAdminResource extends APIResource {
     runs(): APIList;
     run(id: number): APIAdminResourceRun;
     users(): APIList;
+    user(id: number): APIAdminResourceUser;
     accessGroups(): APIList;
     accessGroup(id: number): APIResourceAccessGroup;
+    accounts(): APIList;
+    account(id: number): APIResource;
+    accountServices(): APIList;
+    accountService(id: number): APIAdminResourceAccountService;
 }
 export default APIAdminResource;

@@ -21,8 +21,7 @@ class APIAdminResourceDevice extends APIResource {
     }
 
     super(parent);
-    this.push('admin');
-    this.push('devices', id);
+    this.push('admin', 'devices', id);
   }
 
   // /admin/devices/{id}/queue

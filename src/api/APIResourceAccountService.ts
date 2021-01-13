@@ -22,16 +22,6 @@ class APIResourceAccountService extends APIResource {
     this.push('account-services', id);
   }
 
-  // /account-services/{id}/activate
-  public activate () {
-    return new APIResource(this).push('activate');
-  }
-
-  // /account-services/{id}/deactivate
-  public deactivate () {
-    return new APIResource(this).push('deactivate');
-  }
-
   // /account-services/{id}/billing-period
   public billingPeriod () {
     return new APIResource(this).push('billing-period');

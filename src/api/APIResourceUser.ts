@@ -1,5 +1,4 @@
 import APIResource from './APIResource'
-import APIResourceAccount from './APIResourceAccount';
 import APIResourceBillingPeriod from './APIResourceBillingPeriod'
 import APIResourceJob from './APIResourceJob'
 import APIResourceDeviceGroup from './APIResourceDeviceGroup'
@@ -9,13 +8,14 @@ import APIResourceFile from './APIResourceFile'
 import APIResourceNotification from './APIResourceNotification'
 import APIResourceAccessGroup from './APIResourceAccessGroup'
 
+import APIUserResourceAccount from './APIUserResourceAccount';
+
 import APIList from './APIList'
 import APIListDeviceTime from './APIListDeviceTime'
 import APIListFiles from './APIListFiles'
 import APIListServices from './APIListServices'
 import APIListRuns from './APIListRuns'
 import APIListNotifications from './APIListNotifications'
-import APIResourceAccountService from './APIResourceAccountService';
 
 
 /**
@@ -49,7 +49,7 @@ class APIResourceUser extends APIResource {
 
   // /users/{id}/account
   public account () {
-    return new APIResourceAccount(this);
+    return new APIUserResourceAccount(this);
   }
 
   // /users/{id}/device-time
@@ -75,17 +75,7 @@ class APIResourceUser extends APIResource {
 
     return new APIResource(this).push('services', id);
   }
-
-  // /users/{id}/account-services
-  public accountServices () {
-    return new APIList(this).push('account-services');
-  }
-
-  // /users/{id}/account-services/{id}
-  public accountService (id: number) {
-    return new APIResourceAccountService(this, id);
-  }
-
+  
   // /users/{id}/billing-periods
   public billingPeriods () {
     return new APIList(this).push('billing-periods');
@@ -172,20 +162,6 @@ class APIResourceUser extends APIResource {
   // /users/{id}/restore
   public restore () {
     return new APIResource(this).push('restore');
-  }
-
-  // /users/{id}/account/additional-users
-  public accountAdditionalUsers () {
-    return new APIList(this) .push('account', 'additional-users');
-  }
-
-  // /users/{id}/account/additional-users/{id}
-  public accountAdditionalUser (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource(this).push('account', 'additional-users', id);
   }
 
   // /users/{id}/feedback

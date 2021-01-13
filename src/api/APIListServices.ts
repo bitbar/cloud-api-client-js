@@ -28,7 +28,7 @@ class APIListServices extends APIList {
 
   public active () {
     const a = new APIList(this);
-    if (this.stack[0] === 'me') {
+    if (this.first === 'me') {
       a.push('active');
     } else {
       a.params({

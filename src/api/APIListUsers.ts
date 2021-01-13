@@ -22,7 +22,7 @@ class APIListUsers extends APIList {
 
   // /users/activate
   public activate () {
-    return new APIResource(this).push('activate');
+    return new APIResource(this).push('activate').post();
   }
 
   // /users/recoveries

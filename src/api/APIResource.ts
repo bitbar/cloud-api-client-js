@@ -21,17 +21,4 @@ class APIResource extends APIEntity {
 }
 
 
-interface APIResource {
-
-  /**
-   * Alias for 'post'
-   *
-   * @public
-   * @see post
-   * @returns this
-   */
-  update: typeof APIResource.prototype.post;
-}
-
-
 export default APIResource
