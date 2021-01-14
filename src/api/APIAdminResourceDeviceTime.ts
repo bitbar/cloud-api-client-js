@@ -17,7 +17,7 @@ class APIAdminResourceDeviceTime extends APIResource {
    */
   constructor (parent: object) {
     super(parent);
-    this.push('device-time');
+    this.push('admin', 'device-time');
   }
 
   // /device-time/count-session-report
