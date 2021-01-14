@@ -31,8 +31,57 @@ class APIAdminResource extends APIResource {
     super(parent);
   }
 
-  private withAdmin () {
-    return new APIResource(this).push('admin');
+  // /access-groups
+  public accessGroups () {
+    return new APIList(this).push('access-groups');
+  }
+
+  // /access-groups/{id}
+  public accessGroup (id: number) {
+    return new APIResourceAccessGroup(this, id);
+  }
+
+  // /admin/accounts
+  public accounts () {
+    return new APIList(this).push('admin', 'accounts');
+  }
+
+  // /admin/accounts/{id}
+  public account (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    
+    return new APIResource(this).push('admin', 'accounts', id);
+  }
+
+  // /admin/account-services
+  public accountServices () {
+    return new APIList(this).push('admin', 'account-services');
+  }
+
+  // /admin/account-services/{id}
+  public accountService (id: number) {
+    return new APIAdminResourceAccountService(this, id);
+  }
+
+  // activities
+  public activities () {
+    return new APIList(this).push('admin', 'activities');
+  }
+
+  // /admin/billing-periods
+  public billingPeriods () {
+    return new APIList(this).push('admin', 'billing-periods');
+  }
+
+  // /admin/billing-periods/{id}
+  public billingPeriod (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    
+    return new APIResource(this).push('admin', 'billing-periods', id);
   }
 
   // /clusters
@@ -43,6 +92,20 @@ class APIAdminResource extends APIResource {
   // /clusters/{id}
   public cluster (id: number) {
     return new APIAdminResourceCluster(this, id);
+  }
+  
+  // /admin/country-vat-rates
+  public countryVatRates () {
+    return new APIList(this).push('admin', 'country-vat-rates');
+  }
+
+  // /admin/country-vat-rates/{id}
+  public countryVatRate (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    
+    return new APIResource(this).push('admin', 'country-vat-rates', id);
   }
 
   // /admin/devices
@@ -69,6 +132,20 @@ class APIAdminResource extends APIResource {
     return new APIResource(this).push('admin', 'device-models', id);
   }
 
+  // /admin/device-model-criteria
+  public deviceModelCriterias () {
+    return new APIList(this).push('admin', 'device-model-criteria');
+  }
+
+  // /admin/device-model-criteria/{id}
+  public deviceModelCriteria (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    
+    return new APIResource(this).push('admin', 'device-model-criteria', id);
+  }
+
   // /device-sessions
   public deviceSessions () {
     return new APIList(this).push('admin', 'device-sessions');
@@ -86,7 +163,7 @@ class APIAdminResource extends APIResource {
 
   // /device-time
   public deviceTime () {
-    return new APIAdminResourceDeviceTime(this.withAdmin());
+    return new APIAdminResourceDeviceTime(this);
   }
 
   // /admin/interactive-queue
@@ -137,40 +214,6 @@ class APIAdminResource extends APIResource {
   // /users/{id}
   public user (id: number) {
     return new APIAdminResourceUser(this, id);
-  }
-
-  // /access-groups
-  public accessGroups () {
-    return new APIList(this).push('access-groups');
-  }
-
-  // /access-groups/{id}
-  public accessGroup (id: number) {
-    return new APIResourceAccessGroup(this, id);
-  }
-
-  // /admin/accounts
-  public accounts () {
-    return new APIList(this).push('admin', 'accounts');
-  }
-
-  // /admin/accounts/{id}
-  public account (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-    
-    return new APIResource(this).push('admin', 'accounts', id);
-  }
-
-  // /admin/account-services
-  public accountServices () {
-    return new APIList(this).push('admin', 'account-services');
-  }
-
-  // /admin/account-services/{id}
-  public accountService (id: number) {
-    return new APIAdminResourceAccountService(this, id);
   }
 
 }

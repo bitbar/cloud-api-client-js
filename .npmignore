@@ -13,6 +13,8 @@ bower.json
 .travis*
 .eslintrc.js
 tsconfig.json
+.browserslistrc
+.whitesource
 
 # IDE
 .vscode/
