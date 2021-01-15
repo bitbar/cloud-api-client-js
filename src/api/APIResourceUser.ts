@@ -16,6 +16,7 @@ import APIListFiles from './APIListFiles'
 import APIListServices from './APIListServices'
 import APIListRuns from './APIListRuns'
 import APIListNotifications from './APIListNotifications'
+import APIListSmartbearTunnels from './APIListSmartbearTunnels'
 
 
 /**
@@ -75,7 +76,7 @@ class APIResourceUser extends APIResource {
 
     return new APIResource(this).push('services', id);
   }
-  
+
   // /users/{id}/billing-periods
   public billingPeriods () {
     return new APIList(this).push('billing-periods');
@@ -240,7 +241,7 @@ class APIResourceUser extends APIResource {
 
   // /users/{id}/tunnels
   public smartbearTunnels () {
-    return new APIList(this).push('tunnels');
+    return new APIListSmartbearTunnels(this);
   }
 }
 
