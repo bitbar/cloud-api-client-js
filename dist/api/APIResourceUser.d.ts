@@ -14,6 +14,7 @@ import APIListFiles from './APIListFiles';
 import APIListServices from './APIListServices';
 import APIListRuns from './APIListRuns';
 import APIListNotifications from './APIListNotifications';
+import APIListSmartbearTunnels from './APIListSmartbearTunnels';
 declare class APIResourceUser extends APIResource {
     constructor(parent: object, id: number | 'me');
     account(): APIUserResourceAccount;
@@ -52,6 +53,6 @@ declare class APIResourceUser extends APIResource {
     accessGroups(): APIList;
     accessGroup(id: number): APIResourceAccessGroup;
     smartbearTunnel(id: number): APIResource;
-    smartbearTunnels(): APIList;
+    smartbearTunnels(): APIListSmartbearTunnels;
 }
 export default APIResourceUser;
