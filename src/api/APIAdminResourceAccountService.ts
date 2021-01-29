@@ -19,7 +19,7 @@ class APIAdminResourceAccountService extends APIResource {
     }
 
     super(parent);
-    this.push('account-services', id);
+    this.push('admin', 'account-services', id);
   }
 
   // /account-services/{id}/activate
