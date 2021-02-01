@@ -211,6 +211,11 @@ class APIAdminResource extends APIResource {
     return new APIList(this).push('users');
   }
 
+  // /admin/users
+  public createUser () {
+    return new APIList(this).push('admin', 'users').post();
+  }
+
   // /users/{id}
   public user (id: number) {
     return new APIAdminResourceUser(this, id);

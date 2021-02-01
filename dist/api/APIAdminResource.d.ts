@@ -44,6 +44,7 @@ declare class APIAdminResource extends APIResource {
     runs(): APIList;
     run(id: number): APIAdminResourceRun;
     users(): APIList;
+    createUser(): APIList;
     user(id: number): APIAdminResourceUser;
 }
 export default APIAdminResource;
