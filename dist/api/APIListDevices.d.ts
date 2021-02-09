@@ -5,5 +5,6 @@ declare class APIListDevices extends APIList {
     filters(): APIResource;
     cleanupConfigurations(): APIList;
     cleanupConfiguration(id: number): APIResource;
+    desktopBrowserCapabilities(): APIResource;
 }
 export default APIListDevices;

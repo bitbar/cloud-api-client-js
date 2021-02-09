@@ -43,6 +43,11 @@ class APIListDevices extends APIList {
     return new APIResource(this).push('cleanup-configurations', id);
   }
 
+  // /devices/desktop-browser-capabilities
+  public desktopBrowserCapabilities () {
+    return new APIResource(this).push('desktop-browser-capabilities');
+  }
+
 }
 
 export default APIListDevices;
