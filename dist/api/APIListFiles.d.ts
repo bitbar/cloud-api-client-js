@@ -5,6 +5,6 @@ interface UploadObj {
 }
 declare class APIListFiles extends APIList {
     constructor(parent: object);
-    upload(obj: UploadObj): void;
+    upload(obj: UploadObj): this;
 }
 export default APIListFiles;
