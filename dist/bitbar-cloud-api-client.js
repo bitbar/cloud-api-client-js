@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.29.1 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.29.2 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.29.1";
+  var version = "0.29.2";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -814,7 +814,7 @@
           else {
               throw new Error('Not supported yet!');
           }
-          this.post().headers(form.getHeaders()).data(form);
+          return this.post().headers(form.getHeaders()).data(form);
       }
   }
 

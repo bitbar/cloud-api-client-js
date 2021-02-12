@@ -51,7 +51,7 @@ class APIListFiles extends APIList {
       throw new Error('Not supported yet!');
     }
 
-    this.post().headers(form.getHeaders()).data(form);
+    return this.post().headers(form.getHeaders()).data(form);
   }
 
 }
