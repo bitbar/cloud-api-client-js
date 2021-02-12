@@ -5,6 +5,8 @@ import APIResourceFile from './APIResourceFile'
 import APIResourceProject from './APIResourceProject';
 import APIResourceAccessGroup from './APIResourceAccessGroup';
 
+import APIAdminListRuns from './APIAdminListRuns';
+
 import APIAdminResourceCluster from './APIAdminResourceCluster';
 import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
 import APIAdminResourceRun from './APIAdminResourceRun';
@@ -198,7 +200,7 @@ class APIAdminResource extends APIResource {
 
   // /admin/runs
   public runs () {
-    return new APIList(this).push('admin', 'runs');
+    return new APIAdminListRuns(this);
   }
 
   // /runs/{id}
