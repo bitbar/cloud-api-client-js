@@ -7,7 +7,7 @@ declare class OutputFileset extends APIResource {
     screenshots(): APIList;
     screenshot(id: number): APIResource;
     screenshotFile(id: number): void;
-    videos(): void;
+    videos(): APIList;
     nonMediaFiles(): APIList;
 }
 export default OutputFileset;
