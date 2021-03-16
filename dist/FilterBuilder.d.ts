@@ -14,6 +14,7 @@ declare class FilterBuilder {
     eq(name: string, value: any): FilterBuilder;
     contains(name: string, value: string): FilterBuilder;
     like(name: string, value: string): FilterBuilder;
+    notlike(name: string, value: string): FilterBuilder;
     isnull(name: string): FilterBuilder;
     in(name: string, value: Array<any>): FilterBuilder;
     notin(name: string, value: Array<any>): FilterBuilder;

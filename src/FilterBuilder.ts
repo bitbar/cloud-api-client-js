@@ -108,6 +108,10 @@ class FilterBuilder {
     return this.add(name, value, 'like');
   }
 
+  public notlike (name: string, value: string) {
+    return this.add(name, value, 'notlike');
+  }
+
   public isnull (name: string) {
     return this.add(name, undefined, 'isnull');
   }

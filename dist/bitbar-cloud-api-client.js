@@ -222,6 +222,9 @@
       like(name, value) {
           return this.add(name, value, 'like');
       }
+      notlike(name, value) {
+          return this.add(name, value, 'notlike');
+      }
       isnull(name) {
           return this.add(name, undefined, 'isnull');
       }
