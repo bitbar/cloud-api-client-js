@@ -63,14 +63,14 @@ class OutputFileset extends APIResource {
 
   // Filter files out by ready videos
   public videos () {
-    this.files().params({
+    return this.files().params({
       filter: 's_state_eq_READY',
       tag: ['video']
     });
   }
 
   // Filter files out by non-media
-  nonMediaFiles () {
+  public nonMediaFiles () {
     return this.files().filter(NON_MEDIA_FILES_FILTER);
   }
 

@@ -21,7 +21,7 @@ declare class APIResourceDeviceSession extends APIResource {
     retry(): APIResource;
     input(): InputFileset;
     output(): OutputFileset;
-    videos(): void;
+    videos(): APIList;
     connections(): APIList;
 }
 export default APIResourceDeviceSession;

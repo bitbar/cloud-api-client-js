@@ -528,7 +528,7 @@
           this.screenshot(id).push('file');
       }
       videos() {
-          this.files().params({
+          return this.files().params({
               filter: 's_state_eq_READY',
               tag: ['video']
           });
