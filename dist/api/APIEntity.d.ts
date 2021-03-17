@@ -6,6 +6,9 @@ declare class APIEntity {
     constructor(parent: APIEntity | object);
     push(...items: Array<string | number>): this;
     pop(): this;
+    shift(): this;
+    unshift(...items: Array<string | number>): this;
+    restack(...items: Array<string | number>): this;
     get first(): string | number;
     set first(val: string | number);
     get last(): string | number;

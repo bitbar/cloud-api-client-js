@@ -2,7 +2,6 @@ import APIResource from './APIResource';
 import APIResourceBillingPeriod from './APIResourceBillingPeriod';
 import APIResourceJob from './APIResourceJob';
 import APIResourceDeviceGroup from './APIResourceDeviceGroup';
-import APIResourceDeviceSession from './APIResourceDeviceSession';
 import APIResourceProject from './APIResourceProject';
 import APIResourceFile from './APIResourceFile';
 import APIResourceNotification from './APIResourceNotification';
@@ -15,6 +14,7 @@ import APIListServices from './APIListServices';
 import APIListRuns from './APIListRuns';
 import APIListNotifications from './APIListNotifications';
 import APIListSmartbearTunnels from './APIListSmartbearTunnels';
+import APIResourceDeviceSessionStandalone from './APIResourceDeviceSessionStandalone';
 declare class APIResourceUser extends APIResource {
     constructor(parent: object, id: number | 'me');
     account(): APIUserResourceAccount;
@@ -29,7 +29,7 @@ declare class APIResourceUser extends APIResource {
     deviceGroups(): APIList;
     deviceGroup(id: number): APIResourceDeviceGroup;
     deviceSessions(): APIList;
-    deviceSession(id: number): APIResourceDeviceSession;
+    deviceSession(id: number): APIResourceDeviceSessionStandalone;
     projects(): APIList;
     project(id: number): APIResourceProject;
     files(): APIListFiles;

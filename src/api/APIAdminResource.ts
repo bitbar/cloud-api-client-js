@@ -11,9 +11,9 @@ import APIAdminResourceCluster from './APIAdminResourceCluster';
 import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
 import APIAdminResourceRunStandalone from './APIAdminResourceRunStandalone';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
-import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
 import APIAdminResourceAccountService from './APIAdminResourceAccountService';
 import APIAdminResourceUser from './APIAdminResourceUser';
+import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
 
 
 /**
@@ -155,7 +155,7 @@ class APIAdminResource extends APIResource {
 
   // /device-sessions/{id}
   public deviceSession (id: number) {
-    return new APIAdminResourceDeviceSession(this, id);
+    return new APIAdminResourceDeviceSessionStandalone(this, id);
   }
 
   // /device-status

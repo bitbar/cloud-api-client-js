@@ -1,4 +1,6 @@
+import APIList from './APIList';
 import APIResource from './APIResource'
+import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
 import postDeviceRunIds from './factory/postDeviceRunIds';
 
 
@@ -48,6 +50,16 @@ class APIAdminResourceRunStandalone extends APIResource {
     return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
       timeout: 0
     });
+  }
+
+  // /runs/{id}/device-sessions
+  public deviceSessions () {
+    return new APIList(this).shift().push('device-sessions');
+  }
+
+  // /runs/{id}/device-sessions/{id}
+  public deviceSession (id: number) {
+    return new APIResourceDeviceSessionCommon(this, id).shift();
   }
 
 }

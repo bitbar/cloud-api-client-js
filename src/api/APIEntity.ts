@@ -97,6 +97,35 @@ class APIEntity {
   }
 
   /**
+   * Shift
+   *
+   * @public
+   * @return this
+   */
+  public shift () {
+    this.stack.shift();
+    return this;
+  }
+
+  /**
+   * Unshift
+   *
+   * @public
+   * @return this
+   */
+   public unshift (...items: Array<string|number>) {
+    for (const item of items) {
+      this.stack.unshift(item);
+    }
+    return this;
+  }
+
+  public restack (...items: Array<string|number>) {
+    this.stack = items;
+    return this;
+  }
+
+  /**
    * Get first element of the stack
    */
   public get first () {
