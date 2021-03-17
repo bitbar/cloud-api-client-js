@@ -6,7 +6,7 @@ import APIResourceAccessGroup from './APIResourceAccessGroup';
 import APIAdminListRuns from './APIAdminListRuns';
 import APIAdminResourceCluster from './APIAdminResourceCluster';
 import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
-import APIAdminResourceRun from './APIAdminResourceRun';
+import APIAdminResourceRunStandalone from './APIAdminResourceRunStandalone';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
 import APIAdminResourceAccountService from './APIAdminResourceAccountService';
@@ -43,7 +43,7 @@ declare class APIAdminResource extends APIResource {
     projects(): APIList;
     project(id: number): APIResourceProject;
     runs(): APIAdminListRuns;
-    run(id: number): APIAdminResourceRun;
+    run(id: number): APIAdminResourceRunStandalone;
     users(): APIList;
     createUser(): APIList;
     user(id: number): APIAdminResourceUser;

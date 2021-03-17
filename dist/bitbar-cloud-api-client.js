@@ -614,7 +614,17 @@
       }
   }
 
-  class APIResourceRun extends APIResource {
+  function postDeviceRunIds(parent, name, ids) {
+      const a = new APIResource(parent).push(name);
+      if (ids != null) {
+          a.params({
+              deviceRunIds: ids
+          });
+      }
+      return a.post();
+  }
+
+  class APIResourceRunCommon extends APIResource {
       constructor(parent, id) {
           if (id == null) {
               throw new Error('Resource ID cannot be null!');
@@ -622,23 +632,40 @@
           super(parent);
           this.push('runs', id);
       }
-      config() {
-          return new APIResource(this).push('config');
+      abort() {
+          return new APIResource(this).push('abort').post();
+      }
+      dataAvailability() {
+          return new APIList(this).push('data-availability');
       }
       deviceSessions() {
           return new APIList(this).push('device-sessions');
       }
-      deviceSession(id) {
-          return new APIResourceDeviceSession(this, id);
+      filesZip(ids) {
+          return postDeviceRunIds(this, 'files.zip', ids);
+      }
+      logsZip(ids) {
+          return postDeviceRunIds(this, 'logs.zip', ids);
+      }
+      performanceZip(ids) {
+          return postDeviceRunIds(this, 'performance.zip', ids);
+      }
+      retry(ids) {
+          return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
+              timeout: 0
+          });
+      }
+      screenshotNames() {
+          return new APIList(this).push('screenshot-names');
+      }
+      screenshots() {
+          return new APIList(this).push('screenshots');
+      }
+      screenshotsZip(ids) {
+          return postDeviceRunIds(this, 'screenshots.zip', ids);
       }
       steps() {
           return new APIList(this).push('steps');
-      }
-      files() {
-          return new APIList(this).push('files');
-      }
-      filesZip() {
-          return new APIResource(this).push('files.zip');
       }
       tags() {
           return new APIList(this).push('tags');
@@ -648,6 +675,12 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('tags', id);
+      }
+  }
+
+  class APIResourceRun extends APIResourceRunCommon {
+      deviceSession(id) {
+          return new APIResourceDeviceSession(this, id);
       }
   }
 
@@ -1091,53 +1124,31 @@
       }
   }
 
-  class APIAdminResourceRun extends APIResourceRun {
+  class APIAdminResourceRunStandalone extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('admin', 'runs', id);
+      }
       abort() {
           return new APIResource(this).push('abort').post();
       }
+      changeBillable(billable) {
+          return new APIResource(this).push('changebillable').post().params({
+              billable
+          });
+      }
+      changePriority(priority) {
+          return new APIResource(this).push('changepriority').post().params({
+              priority
+          });
+      }
       retry(ids) {
-          const a = new APIResource(this).push('retry').setRequestConfig({
+          return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
               timeout: 0
-          }).post();
-          if (ids != null) {
-              a.params({
-                  deviceRunIds: ids
-              });
-          }
-          return a;
-      }
-      changeBillable() {
-          return new APIResource(this).push('changebillable');
-      }
-      changePriority() {
-          return new APIResource(this).push('changepriority');
-      }
-      screenshotNames() {
-          return new APIList(this).push('screenshot-names');
-      }
-      screenshots() {
-          return new APIList(this).push('screenshots');
-      }
-      dataAvailability() {
-          return new APIList(this).push('data-availability');
-      }
-      buildLogsZip(ids) {
-          const a = new APIResource(this).push('build-logs.zip');
-          if (ids != null) {
-              a.params({
-                  deviceRunIds: ids
-              });
-          }
-          return a;
-      }
-      logsZip() {
-          return new APIResource(this).push('logs.zip');
-      }
-      performanceZip() {
-          return new APIResource(this).push('performance.zip');
-      }
-      screenshotsZip() {
-          return new APIResource(this).push('screenshots.zip');
+          });
       }
   }
 
@@ -1388,7 +1399,7 @@
           return new APIAdminListRuns(this);
       }
       run(id) {
-          return new APIAdminResourceRun(this, id);
+          return new APIAdminResourceRunStandalone(this, id);
       }
       users() {
           return new APIList(this).push('users');

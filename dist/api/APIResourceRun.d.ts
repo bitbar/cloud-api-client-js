@@ -1,15 +1,6 @@
-import APIResource from './APIResource';
+import APIResourceRunCommon from './APIResourceRunCommon';
 import APIResourceDeviceSession from './APIResourceDeviceSession';
-import APIList from './APIList';
-declare class APIResourceRun extends APIResource {
-    constructor(parent: object, id: number);
-    config(): APIResource;
-    deviceSessions(): APIList;
+declare class APIResourceRun extends APIResourceRunCommon {
     deviceSession(id: number): APIResourceDeviceSession;
-    steps(): APIList;
-    files(): APIList;
-    filesZip(): APIResource;
-    tags(): APIList;
-    tag(id: number): APIResource;
 }
 export default APIResourceRun;

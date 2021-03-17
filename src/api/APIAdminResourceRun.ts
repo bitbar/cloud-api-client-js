@@ -1,6 +1,7 @@
-import APIList from './APIList'
 import APIResource from './APIResource'
-import APIResourceRun from './APIResourceRun'
+import APIResourceRunCommon from './APIResourceRunCommon'
+import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
+import postDeviceRunIds from './factory/postDeviceRunIds';
 
 
 /**
@@ -9,79 +10,16 @@ import APIResourceRun from './APIResourceRun'
  * @class
  * @extends APIResourceRun
  */
-class APIAdminResourceRun extends APIResourceRun {
-
-  // /runs/{id}/abort
-  public abort () {
-    return new APIResource(this).push('abort').post();
-  }
-
-  // /runs/{id}/retry
-  public retry (ids?: Array<number>) {
-    const a = new APIResource(this).push('retry').setRequestConfig({
-      timeout: 0
-    }).post();
-
-    if (ids != null) {
-      a.params({
-        deviceRunIds: ids
-      });
-    }
-
-    return a;
-  }
-
-  // /runs/{id}/changebillable
-  public changeBillable () {
-    return new APIResource(this).push('changebillable');
-  }
-
-  // /runs/{id}/changepriority
-  public changePriority () {
-    return new APIResource(this).push('changepriority');
-  }
-
-  // /runs/{id}/screenshot-names
-  public screenshotNames () {
-    return new APIList(this).push('screenshot-names');
-  }
-
-  // /runs/{id}/screenshots
-  public screenshots () {
-    return new APIList(this).push('screenshots');
-  }
-
-  // /runs/{id}/data-availability
-  public dataAvailability () {
-    return new APIList(this).push('data-availability');
-  }
+class APIAdminResourceRun extends APIResourceRunCommon {
 
   // /runs/{id}/build-logs.zip
   public buildLogsZip (ids?: Array<number>) {
-    const a = new APIResource(this).push('build-logs.zip');
-
-    if (ids != null) {
-      a.params({
-        deviceRunIds: ids
-      });
-    }
-
-    return a;
+    return postDeviceRunIds(this, 'build-logs.zip', ids);
   }
 
-  // /runs/{id}/logs.zip
-  public logsZip () {
-    return new APIResource(this).push('logs.zip');
-  }
-
-  // /runs/{id}/performance.zip
-  public performanceZip () {
-    return new APIResource(this).push('performance.zip');
-  }
-
-  // /runs/{id}/screenshots.zip
-  public screenshotsZip () {
-    return new APIResource(this).push('screenshots.zip');
+  // /runs/{id}/device-sessions/{id}
+  public deviceSession (id: number) {
+    return new APIAdminResourceDeviceSession(this, id);
   }
 
 }
