@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@bitbar/cloud-api-client - v0.8.3</title>
-	<meta name="description" content="">
+	<title>@bitbar/cloud-api-client</title>
+	<meta name="description" content="Documentation for @bitbar/cloud-api-client">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@bitbar/cloud-api-client - v0.8.3</a>
+					<a href="index.html" class="title">@bitbar/cloud-api-client</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> @bitbar/cloud-api-client - v0.8.3</h1>
+			<h1>@bitbar/cloud-api-client</h1>
 		</div>
 	</div>
 </header>
@@ -112,13 +112,13 @@
 					<h4>2. Every URL Part is a Method</h4>
 				</a>
 				<p>Example: API resource to download list of device sessions of run with ID <code>10</code> in project with ID <code>20</code> will be:</p>
-				<pre><code>GET https:<span class="hljs-regexp">//</span>cloud.bitbar.com<span class="hljs-regexp">/api/m</span>e<span class="hljs-regexp">/projects/</span><span class="hljs-number">20</span><span class="hljs-regexp">/runs/</span><span class="hljs-number">10</span><span class="hljs-regexp">/device-sessions</span></code></pre><p>First part is <code>/me</code> (<code>/api</code> doesn&#39;t count because it&#39;s &quot;directory&quot; where API is stored). So:</p>
+				<pre><code>GET https:<span class="hljs-regexp">//</span>cloud.bitbar.com<span class="hljs-regexp">/api/m</span>e<span class="hljs-regexp">/projects/</span><span class="hljs-number">20</span><span class="hljs-regexp">/runs/</span><span class="hljs-number">10</span>/device-sessions</code></pre><p>First part is <code>/me</code> (<code>/api</code> doesn&#39;t count because it&#39;s &quot;directory&quot; where API is stored). So:</p>
 				<pre><code class="language-js">apiClient.me();</code></pre>
 				<p>Second is <code>/projects</code>, but next is the ID, so method will be in singular form:</p>
 				<pre><code class="language-js">apiClient.me().project(<span class="hljs-number">20</span>);</code></pre>
 				<p>Third is <code>/runs</code>, but again - there is the ID, so (again) singular form:</p>
 				<pre><code class="language-js">apiClient.me().project(<span class="hljs-number">20</span>).run(<span class="hljs-number">10</span>);</code></pre>
-				<p>Last one is <code>/device-dessions</code>. Because it&#39;s <em>kebab-case</em>, we need to transform it to <em>camelCase</em>:</p>
+				<p>Last one is <code>/device-dessions</code>. Because it&#39;s <em>kebab-case_, we need to transform it to _camelCase</em>:</p>
 				<pre><code class="language-js">apiclient.me().project(<span class="hljs-number">20</span>).runs(<span class="hljs-number">10</span>).deviceSessions();</code></pre>
 				<p>Now, because <code>GET</code> method is default one in <code>axios</code>, then we don&#39;t need to explicit set it (but you can if you want).
 				So what&#39;s left is to send it:</p>
@@ -154,11 +154,11 @@
 					<h4>CommonJS</h4>
 				</a>
 				<pre><code class="language-sh">npm install @bitbar/cloud-api-client --save</code></pre>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> CloudApiClient = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@bitbar/cloud-api-client'</span>);
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> CloudApiClient = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@bitbar/cloud-api-client&#x27;</span>);
 
 <span class="hljs-keyword">const</span> apiClient = <span class="hljs-keyword">new</span> CloudApiClient.API({
-  <span class="hljs-attr">cloudUrl</span>: <span class="hljs-string">'https://cloud.bitbar.com'</span>,
-  <span class="hljs-attr">apiKey</span>: <span class="hljs-string">'PASTE_HERE_YOUR_OWN_KEY'</span>
+  <span class="hljs-attr">cloudUrl</span>: <span class="hljs-string">&#x27;https://cloud.bitbar.com&#x27;</span>,
+  <span class="hljs-attr">apiKey</span>: <span class="hljs-string">&#x27;PASTE_HERE_YOUR_OWN_KEY&#x27;</span>
 });
 
 apiClient.me().send().then( <span class="hljs-function">(<span class="hljs-params">resp</span>) =&gt;</span> {
@@ -169,20 +169,20 @@ apiClient.me().send().then( <span class="hljs-function">(<span class="hljs-param
 				<a href="#amd" id="amd" style="color: inherit; text-decoration: none;">
 					<h4>AMD</h4>
 				</a>
-				<pre><code class="language-js">requirejs([<span class="hljs-string">'cloud-api-client'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">CloudApiClient</span>) </span>{
+				<pre><code class="language-js">requirejs([<span class="hljs-string">&#x27;cloud-api-client&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">CloudApiClient</span>) </span>{
   <span class="hljs-keyword">var</span> api = <span class="hljs-keyword">new</span> CloudApiClient.API({
-    <span class="hljs-attr">cloudUrl</span>: <span class="hljs-string">'https://cloud.bitbar.com'</span>,
-    <span class="hljs-attr">apiKey</span>: <span class="hljs-string">'PASTE_HERE_YOUR_OWN_KEY'</span>
+    <span class="hljs-attr">cloudUrl</span>: <span class="hljs-string">&#x27;https://cloud.bitbar.com&#x27;</span>,
+    <span class="hljs-attr">apiKey</span>: <span class="hljs-string">&#x27;PASTE_HERE_YOUR_OWN_KEY&#x27;</span>
   });
 });</code></pre>
 				<a href="#old-school" id="old-school" style="color: inherit; text-decoration: none;">
 					<h4>Old School</h4>
 				</a>
 				<pre><code class="language-html"><span class="hljs-comment">&lt;!-- note that this is URL to version 0.8.0 -- please check which version is latest --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://github.com/bitbar/cloud-api-client-js/releases/download/v0.8.0/cloud-api-client.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://github.com/bitbar/cloud-api-client-js/releases/download/v0.8.0/cloud-api-client.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
 				<pre><code class="language-js"><span class="hljs-keyword">var</span> api = <span class="hljs-keyword">new</span> CloudApiClient.API({
-  <span class="hljs-attr">cloudUrl</span>: <span class="hljs-string">'https://cloud.bitbar.com'</span>,
-  <span class="hljs-attr">apiKey</span>: <span class="hljs-string">'PASTE_HERE_YOUR_OWN_KEY'</span>
+  <span class="hljs-attr">cloudUrl</span>: <span class="hljs-string">&#x27;https://cloud.bitbar.com&#x27;</span>,
+  <span class="hljs-attr">apiKey</span>: <span class="hljs-string">&#x27;PASTE_HERE_YOUR_OWN_KEY&#x27;</span>
 });</code></pre>
 				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
 					<h3>Examples</h3>
@@ -230,104 +230,152 @@ apiClient.me().send().then( <span class="hljs-function">(<span class="hljs-param
 					<li class="label tsd-is-external">
 						<span>Internals</span>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="modules/_cloudapiclient_.html">&quot;<wbr>CloudAPIClient&quot;</a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Externals</span>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_.html">&quot;API&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_apiconfig_.html">&quot;<wbr>Api<wbr>Config&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_filter_.html">&quot;<wbr>Filter&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_filterbuilder_.html">&quot;<wbr>Filter<wbr>Builder&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminlistruns_.html">&quot;api/APIAdmin<wbr>List<wbr>Runs&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiadminresource_.html">&quot;api/APIAdmin<wbr>Resource&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourceaccountservice_.html">&quot;api/APIAdmin<wbr>Resource<wbr>Account<wbr>Service&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourcecluster_.html">&quot;api/APIAdmin<wbr>Resource<wbr>Cluster&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourcedevice_.html">&quot;api/APIAdmin<wbr>Resource<wbr>Device&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourcedevicesession_.html">&quot;api/APIAdmin<wbr>Resource<wbr>Device<wbr>Session&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourcedevicetime_.html">&quot;api/APIAdmin<wbr>Resource<wbr>Device<wbr>Time&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourcerunstandalone_.html">&quot;api/APIAdmin<wbr>Resource<wbr>Run<wbr>Standalone&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourceuser_.html">&quot;api/APIAdmin<wbr>Resource<wbr>User&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiadminresourceuseraccount_.html">&quot;api/APIAdmin<wbr>Resource<wbr>User<wbr>Account&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apientity_.html">&quot;api/APIEntity&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilist_.html">&quot;api/APIList&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistdevicetime_.html">&quot;api/APIList<wbr>Device<wbr>Time&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistdevices_.html">&quot;api/APIList<wbr>Devices&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistfiles_.html">&quot;api/APIList<wbr>Files&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistnotifications_.html">&quot;api/APIList<wbr>Notifications&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistpurchased_.html">&quot;api/APIList<wbr>Purchased&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistruns_.html">&quot;api/APIList<wbr>Runs&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistservices_.html">&quot;api/APIList<wbr>Services&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apilistsmartbeartunnels_.html">&quot;api/APIList<wbr>Smartbear<wbr>Tunnels&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apilistusers_.html">&quot;api/APIList<wbr>Users&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresource_.html">&quot;api/APIResource&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiresourceaccessgroup_.html">&quot;api/APIResource<wbr>Access<wbr>Group&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiresourceaccount_.html">&quot;api/APIResource<wbr>Account&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiresourceadditionaluser_.html">&quot;api/APIResource<wbr>Additional<wbr>User&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcebillingperiod_.html">&quot;api/APIResource<wbr>Billing<wbr>Period&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcebuild_.html">&quot;api/APIResource<wbr>Build&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcedevice_.html">&quot;api/APIResource<wbr>Device&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcedevicegroup_.html">&quot;api/APIResource<wbr>Device<wbr>Group&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcedevicesession_.html">&quot;api/APIResource<wbr>Device<wbr>Session&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcefile_.html">&quot;api/APIResource<wbr>File&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcejob_.html">&quot;api/APIResource<wbr>Job&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/_api_apiresourcemanualsession_.html">&quot;api/APIResource<wbr>Manual<wbr>Session&quot;</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcenotification_.html">&quot;api/APIResource<wbr>Notification&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourceproject_.html">&quot;api/APIResource<wbr>Project&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourcerun_.html">&quot;api/APIResource<wbr>Run&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiresourceruncommon_.html">&quot;api/APIResource<wbr>Run<wbr>Common&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourceuser_.html">&quot;api/APIResource<wbr>User&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_apiresourceusersession_.html">&quot;api/APIResource<wbr>User<wbr>Session&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_apiuserresourceaccount_.html">&quot;api/APIUser<wbr>Resource<wbr>Account&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_extra_class_inputfileset_.html">&quot;api/extra-<wbr>class/<wbr>Input<wbr>Fileset&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
+					<li class=" tsd-kind-module tsd-is-external">
 						<a href="modules/_api_extra_class_outputfileset_.html">&quot;api/extra-<wbr>class/<wbr>Output<wbr>Fileset&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_api_factory_postdevicerunids_.html">&quot;api/factory/post<wbr>Device<wbr>Run<wbr>Ids&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/_finka_.html">&quot;finka&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -343,57 +391,7 @@ apiClient.me().send().then( <span class="hljs-function">(<span class="hljs-param
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
 				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -403,6 +401,5 @@ apiClient.me().send().then( <span class="hljs-function">(<span class="hljs-param
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

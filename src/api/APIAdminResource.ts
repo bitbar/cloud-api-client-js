@@ -9,7 +9,7 @@ import APIAdminListRuns from './APIAdminListRuns';
 
 import APIAdminResourceCluster from './APIAdminResourceCluster';
 import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
-import APIAdminResourceRun from './APIAdminResourceRun';
+import APIAdminResourceRunStandalone from './APIAdminResourceRunStandalone';
 import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
 import APIAdminResourceAccountService from './APIAdminResourceAccountService';
@@ -205,7 +205,7 @@ class APIAdminResource extends APIResource {
 
   // /runs/{id}
   public run (id: number) {
-    return new APIAdminResourceRun(this, id);
+    return new APIAdminResourceRunStandalone(this, id);
   }
 
   // /users

@@ -1,17 +1,8 @@
-import APIList from './APIList';
 import APIResource from './APIResource';
-import APIResourceRun from './APIResourceRun';
-declare class APIAdminResourceRun extends APIResourceRun {
-    abort(): APIResource;
-    retry(ids?: Array<number>): APIResource;
-    changeBillable(): APIResource;
-    changePriority(): APIResource;
-    screenshotNames(): APIList;
-    screenshots(): APIList;
-    dataAvailability(): APIList;
+import APIResourceRunCommon from './APIResourceRunCommon';
+import APIAdminResourceDeviceSession from './APIAdminResourceDeviceSession';
+declare class APIAdminResourceRun extends APIResourceRunCommon {
     buildLogsZip(ids?: Array<number>): APIResource;
-    logsZip(): APIResource;
-    performanceZip(): APIResource;
-    screenshotsZip(): APIResource;
+    deviceSession(id: number): APIAdminResourceDeviceSession;
 }
 export default APIAdminResourceRun;
