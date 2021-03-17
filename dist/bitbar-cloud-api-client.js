@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.31.1 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.32.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.31.1";
+  var version = "0.32.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -44,6 +44,20 @@
       }
       pop() {
           this.stack.pop();
+          return this;
+      }
+      shift() {
+          this.stack.shift();
+          return this;
+      }
+      unshift(...items) {
+          for (const item of items) {
+              this.stack.unshift(item);
+          }
+          return this;
+      }
+      restack(...items) {
+          this.stack = items;
           return this;
       }
       get first() {
@@ -488,132 +502,6 @@
       }
   }
 
-  class InputFileset extends APIResource {
-      constructor(parent) {
-          super(parent);
-          this.push('input-file-set');
-      }
-      files() {
-          return new APIList(this).push('files');
-      }
-      filesZip() {
-          return new APIResource(this).push('files.zip');
-      }
-  }
-
-  const NON_MEDIA_FILES_FILTER = new FilterBuilder();
-  NON_MEDIA_FILES_FILTER.eq('state', 'READY');
-  NON_MEDIA_FILES_FILTER.notin('mimetype', [
-      'image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif',
-      'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg'
-  ]);
-  class OutputFileset extends APIResource {
-      constructor(parent) {
-          super(parent);
-          this.push('output-file-set');
-      }
-      files() {
-          return new APIList(this).push('files');
-      }
-      filesZip() {
-          return new APIResource(this).push('files.zip');
-      }
-      screenshots() {
-          return new APIList(this).push('screenshots');
-      }
-      screenshot(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('screenshots', id);
-      }
-      screenshotFile(id) {
-          this.screenshot(id).push('file');
-      }
-      videos() {
-          return this.files().params({
-              filter: 's_state_eq_READY',
-              tag: ['video']
-          });
-      }
-      nonMediaFiles() {
-          return this.files().filter(NON_MEDIA_FILES_FILTER);
-      }
-  }
-
-  class APIResourceDeviceSession extends APIResource {
-      constructor(parent, id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          super(parent);
-          this.push('device-sessions', id);
-      }
-      clusterLogs() {
-          return new APIResource(this).push('cluster-logs');
-      }
-      dataAvailability() {
-          return new APIResource(this).push('data-availability');
-      }
-      fixturesZip() {
-          return new APIResource(this).push('fixtures.zip');
-      }
-      junitXml() {
-          return new APIResource(this).push('junit.xml');
-      }
-      logs() {
-          return new APIResource(this).push('logs');
-      }
-      performance() {
-          return new APIResource(this).push('performance');
-      }
-      release() {
-          return new APIResource(this).push('release');
-      }
-      resultDataZip() {
-          return new APIResource(this).push('result-data.zip');
-      }
-      screenshots() {
-          return new APIList(this).push('screenshots');
-      }
-      screenshot(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('screenshots', id);
-      }
-      steps() {
-          return new APIList(this).push('steps');
-      }
-      step(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('steps', id);
-      }
-      currentStep() {
-          return this.step('current');
-      }
-      testCaseRuns() {
-          return new APIList(this).push('test-case-runs');
-      }
-      retry() {
-          return new APIResource(this).push('retry').post();
-      }
-      input() {
-          return new InputFileset(this);
-      }
-      output() {
-          return new OutputFileset(this);
-      }
-      videos() {
-          return this.output().videos();
-      }
-      connections() {
-          return new APIList(this).push('connections');
-      }
-  }
-
   function postDeviceRunIds(parent, name, ids) {
       const a = new APIResource(parent).push(name);
       if (ids != null) {
@@ -675,6 +563,114 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('tags', id);
+      }
+  }
+
+  class InputFileset extends APIResource {
+      constructor(parent) {
+          super(parent);
+          this.push('input-file-set');
+      }
+      files() {
+          return new APIList(this).push('files');
+      }
+      filesZip() {
+          return new APIResource(this).push('files.zip');
+      }
+  }
+
+  const NON_MEDIA_FILES_FILTER = new FilterBuilder();
+  NON_MEDIA_FILES_FILTER.eq('state', 'READY');
+  NON_MEDIA_FILES_FILTER.notin('mimetype', [
+      'image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif',
+      'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg'
+  ]);
+  class OutputFileset extends APIResource {
+      constructor(parent) {
+          super(parent);
+          this.push('output-file-set');
+      }
+      files() {
+          return new APIList(this).push('files');
+      }
+      file(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('files', id);
+      }
+      filesZip() {
+          return new APIResource(this).push('files.zip');
+      }
+      screenshots() {
+          return new APIList(this).push('screenshots');
+      }
+      screenshot(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('screenshots', id);
+      }
+      screenshotFile(id) {
+          this.screenshot(id).push('file');
+      }
+      videos() {
+          return this.files().params({
+              filter: 's_state_eq_READY',
+              tag: ['video']
+          });
+      }
+      nonMediaFiles() {
+          return this.files().filter(NON_MEDIA_FILES_FILTER);
+      }
+  }
+
+  class APIResourceDeviceSessionCommon extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('device-sessions', id);
+      }
+      input() {
+          return new InputFileset(this);
+      }
+      output() {
+          return new OutputFileset(this);
+      }
+      screenshots() {
+          return new APIList(this).push('screenshots');
+      }
+      screenshot(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('screenshots', id);
+      }
+      steps() {
+          return new APIList(this).push('steps');
+      }
+      step(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('steps', id);
+      }
+      currentStep() {
+          return this.step('current');
+      }
+      testCaseRuns() {
+          return new APIList(this).push('test-case-runs');
+      }
+  }
+
+  class APIResourceDeviceSession extends APIResourceDeviceSessionCommon {
+      abort() {
+          return new APIResource(this).push('abort').post();
+      }
+      retry() {
+          return new APIResource(this).push('retry').post();
       }
   }
 
@@ -919,6 +915,31 @@
       }
   }
 
+  class APIResourceDeviceSessionStandalone extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('device-sessions', id);
+      }
+      connections() {
+          return new APIList(this).push('connections');
+      }
+      connection(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('connections', id);
+      }
+      output() {
+          return new OutputFileset(this);
+      }
+      release() {
+          return new APIResource(this).push('release').post();
+      }
+  }
+
   class APIResourceUser extends APIResource {
       constructor(parent, id) {
           if (id == null) {
@@ -975,7 +996,7 @@
           return new APIList(this).push('device-sessions');
       }
       deviceSession(id) {
-          return new APIResourceDeviceSession(this, id);
+          return new APIResourceDeviceSessionStandalone(this, id);
       }
       projects() {
           return new APIList(this).push('projects');
@@ -1150,6 +1171,12 @@
               timeout: 0
           });
       }
+      deviceSessions() {
+          return new APIList(this).shift().push('device-sessions');
+      }
+      deviceSession(id) {
+          return new APIResourceDeviceSessionCommon(this, id).shift();
+      }
   }
 
   class APIAdminResourceDevice extends APIResource {
@@ -1162,65 +1189,6 @@
       }
       queue() {
           return new APIList(this).push('queue');
-      }
-  }
-
-  class APIAdminResourceDeviceSession extends APIResource {
-      constructor(parent, id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          super(parent);
-          this.push('device-sessions', id);
-      }
-      changeBillable(billable) {
-          const a = new APIResource(this);
-          a.stack.splice(a.stack.length - 2, 0, 'admin');
-          return a.push('changebillable').post().params({
-              billable
-          });
-      }
-      connections() {
-          return new APIList(this).push('connections');
-      }
-      connection(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('connections', id);
-      }
-      input() {
-          return new InputFileset(this);
-      }
-      output() {
-          return new OutputFileset(this);
-      }
-      release() {
-          return new APIResource(this).push('release').post();
-      }
-      screenshots() {
-          return new APIList(this).push('screenshots');
-      }
-      screenshot(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('screenshots', id);
-      }
-      steps() {
-          return new APIList(this).push('steps');
-      }
-      step(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('steps', id);
-      }
-      currentStep() {
-          return this.step('current');
-      }
-      testCaseRuns() {
-          return new APIList(this).push('test-case-runs');
       }
   }
 
@@ -1288,6 +1256,32 @@
       }
       account() {
           return new APIAdminResourceUserAccount(this);
+      }
+  }
+
+  function postAdminDeviceSessionChangeBillable(parent, billable) {
+      const a = new APIResource(parent);
+      const deviceSessionId = a.last;
+      return a.restack('admin', 'device-sessions', deviceSessionId, 'changebillable').params({
+          billable
+      }).post();
+  }
+
+  class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCommon {
+      changeBillable(billable) {
+          return postAdminDeviceSessionChangeBillable(this, billable);
+      }
+      connections() {
+          return new APIList(this).push('connections');
+      }
+      connection(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('connections', id);
+      }
+      release() {
+          return new APIResource(this).push('release').post();
       }
   }
 
@@ -1371,7 +1365,7 @@
           return new APIList(this).push('admin', 'device-sessions');
       }
       deviceSession(id) {
-          return new APIAdminResourceDeviceSession(this, id);
+          return new APIAdminResourceDeviceSessionStandalone(this, id);
       }
       deviceStatuses() {
           return new APIList(this).push('device-status');

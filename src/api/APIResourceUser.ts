@@ -2,13 +2,12 @@ import APIResource from './APIResource'
 import APIResourceBillingPeriod from './APIResourceBillingPeriod'
 import APIResourceJob from './APIResourceJob'
 import APIResourceDeviceGroup from './APIResourceDeviceGroup'
-import APIResourceDeviceSession from './APIResourceDeviceSession'
 import APIResourceProject from './APIResourceProject'
 import APIResourceFile from './APIResourceFile'
 import APIResourceNotification from './APIResourceNotification'
 import APIResourceAccessGroup from './APIResourceAccessGroup'
 
-import APIUserResourceAccount from './APIUserResourceAccount';
+import APIUserResourceAccount from './APIUserResourceAccount'
 
 import APIList from './APIList'
 import APIListDeviceTime from './APIListDeviceTime'
@@ -17,6 +16,7 @@ import APIListServices from './APIListServices'
 import APIListRuns from './APIListRuns'
 import APIListNotifications from './APIListNotifications'
 import APIListSmartbearTunnels from './APIListSmartbearTunnels'
+import APIResourceDeviceSessionStandalone from './APIResourceDeviceSessionStandalone'
 
 
 /**
@@ -114,7 +114,7 @@ class APIResourceUser extends APIResource {
 
   // /users/{id}/device-sessions/{id}
   public deviceSession (id: number) {
-    return new APIResourceDeviceSession(this, id);
+    return new APIResourceDeviceSessionStandalone(this, id);
   }
 
   // /users/{id}/projects

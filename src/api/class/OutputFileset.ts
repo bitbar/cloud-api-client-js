@@ -37,6 +37,15 @@ class OutputFileset extends APIResource {
     return new APIList(this).push('files');
   }
 
+  // /output-file-set/files/{id}
+  public file (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+
+    return new APIResource(this).push('files', id);
+  }
+
   // /output-file-set/files.zip
   public filesZip () {
     return new APIResource(this).push('files.zip');
