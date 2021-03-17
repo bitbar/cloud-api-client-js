@@ -4,7 +4,7 @@ import InputFileset from './extra-class/InputFileset';
 import OutputFileset from './extra-class/OutputFileset';
 declare class APIAdminResourceDeviceSession extends APIResource {
     constructor(parent: object, id: number);
-    changeBillable(): APIResource;
+    changeBillable(billable: boolean): APIResource;
     connections(): APIList;
     connection(id: number): APIResource;
     input(): InputFileset;

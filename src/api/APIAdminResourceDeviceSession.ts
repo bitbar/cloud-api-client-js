@@ -28,10 +28,12 @@ class APIAdminResourceDeviceSession extends APIResource {
   }
 
   // /admin/device-sessions/{id}/changebillable
-  public changeBillable () {
+  public changeBillable (billable: boolean) {
     const a = new APIResource(this);
     a.stack.splice(a.stack.length - 2, 0, 'admin');
-    return a.push('changebillable').post();
+    return a.push('changebillable').post().params({
+      billable
+    });
   }
 
   // /device-sessions/{id}/connections
