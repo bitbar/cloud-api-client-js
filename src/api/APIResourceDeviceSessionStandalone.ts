@@ -1,5 +1,8 @@
+import DeviceSessionStandalone from './interface/DeviceSessionStandalone';
 import APIList from './APIList';
 import APIResource from './APIResource';
+
+import InputFileset from './class/InputFileset';
 import OutputFileset from './class/OutputFileset';
 
 
@@ -9,7 +12,7 @@ import OutputFileset from './class/OutputFileset';
  * @class
  * @extends APIResource
  */
-class APIResourceDeviceSessionStandalone extends APIResource {
+class APIResourceDeviceSessionStandalone extends APIResource implements DeviceSessionStandalone {
 
   /**
    * /device-sessions/{id}
@@ -37,6 +40,11 @@ class APIResourceDeviceSessionStandalone extends APIResource {
     }
 
     return new APIResource(this).push('connections', id);
+  }
+
+  // /device-sessions/{id}/input-file-set
+  public input () {
+    return new InputFileset(this);
   }
 
   // /device-sessions/{id}/output-file-set

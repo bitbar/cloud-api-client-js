@@ -29,6 +29,11 @@ class APIResourceDeviceSessionCommon extends APIResource implements DeviceSessio
     this.push('device-sessions', id);
   }
 
+  // /device-sessions/{id}/commands
+  public commands () {
+    return new APIList(this).push('commands');
+  }
+
   // /device-sessions/{id}/input-file-set
   public input () {
     return new InputFileset(this);
