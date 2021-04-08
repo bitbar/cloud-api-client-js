@@ -14,6 +14,7 @@ import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceAccountService from './APIAdminResourceAccountService';
 import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
+import { PoolsRangeData } from './interface/BrowsersPool';
 
 
 /**
@@ -84,6 +85,17 @@ class APIAdminResource extends APIResource {
     }
     
     return new APIResource(this).push('admin', 'billing-periods', id);
+  }
+
+  public browserPools () {
+    return new APIList(this).push('admin', 'pools');
+  }
+
+  public poolsRange (data: PoolsRangeData) {
+    return new APIResource(this).push('admin', 'pools', data.id).post().data({
+      minAvailable: data.minValue,
+      maxTotal: data.maxValue
+    });
   }
 
   // /clusters
