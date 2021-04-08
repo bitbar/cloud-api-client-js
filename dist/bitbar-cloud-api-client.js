@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.33.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.35.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.33.0";
+  var version = "0.35.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -1327,6 +1327,15 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('admin', 'billing-periods', id);
+      }
+      browserPools() {
+          return new APIList(this).push('admin', 'pools');
+      }
+      poolsRange(data) {
+          return new APIResource(this).push('admin', 'pools', data.id).post().data({
+              minAvailable: data.minValue,
+              maxTotal: data.maxValue
+          });
       }
       clusters() {
           return new APIList(this).push('clusters');
