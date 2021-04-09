@@ -195,20 +195,6 @@ class APIResourceUser extends APIResource {
     return new APIResource(this).push('ui-preferences');
   }
 
-  // /users/{id}/integrations
-  public integrations () {
-    return new APIList(this).push('integrations');
-  }
-
-  // /users/{id}/integrations/{id}
-  public integration (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource(this).push('integrations', id);
-  }
-
   // /users/{id}/device-usage
   public deviceUsage () {
     return new APIList(this).push('device-usage');
