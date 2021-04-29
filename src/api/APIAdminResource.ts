@@ -54,7 +54,7 @@ class APIAdminResource extends APIResource {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
-    
+
     return new APIResource(this).push('admin', 'accounts', id);
   }
 
@@ -83,7 +83,7 @@ class APIAdminResource extends APIResource {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
-    
+
     return new APIResource(this).push('admin', 'billing-periods', id);
   }
 
@@ -107,7 +107,7 @@ class APIAdminResource extends APIResource {
   public cluster (id: number) {
     return new APIAdminResourceCluster(this, id);
   }
-  
+
   // /admin/country-vat-rates
   public countryVatRates () {
     return new APIList(this).push('admin', 'country-vat-rates');
@@ -118,7 +118,7 @@ class APIAdminResource extends APIResource {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
-    
+
     return new APIResource(this).push('admin', 'country-vat-rates', id);
   }
 
@@ -142,7 +142,7 @@ class APIAdminResource extends APIResource {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
-    
+
     return new APIResource(this).push('admin', 'device-models', id);
   }
 
@@ -156,7 +156,7 @@ class APIAdminResource extends APIResource {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
-    
+
     return new APIResource(this).push('admin', 'device-model-criteria', id);
   }
 
@@ -233,6 +233,11 @@ class APIAdminResource extends APIResource {
   // /users/{id}
   public user (id: number) {
     return new APIAdminResourceUser(this, id);
+  }
+
+  // /admin/maintenance
+  public maintenance () {
+    return new APIResource(this).push('admin', 'maintenance');
   }
 
 }
