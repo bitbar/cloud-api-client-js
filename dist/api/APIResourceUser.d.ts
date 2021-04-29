@@ -45,8 +45,6 @@ declare class APIResourceUser extends APIResource {
     receipts(): APIList;
     preferences(): APIResource;
     uiPreferences(): APIResource;
-    integrations(): APIList;
-    integration(id: number): APIResource;
     deviceUsage(): APIList;
     statistics(): APIList;
     deviceStatistics(): APIList;

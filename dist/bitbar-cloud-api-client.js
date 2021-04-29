@@ -1049,15 +1049,6 @@
       uiPreferences() {
           return new APIResource(this).push('ui-preferences');
       }
-      integrations() {
-          return new APIList(this).push('integrations');
-      }
-      integration(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('integrations', id);
-      }
       deviceUsage() {
           return new APIList(this).push('device-usage');
       }
