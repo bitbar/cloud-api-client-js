@@ -146,6 +146,11 @@ class APIAdminResource extends APIResource {
     return new APIResource(this).push('admin', 'device-models', id);
   }
 
+  // /admin/device-problems
+  public deviceProblems () {
+    return new APIList(this).push('admin', 'device-problems');
+  }
+
   // /admin/device-model-criteria
   public deviceModelCriterias () {
     return new APIList(this).push('admin', 'device-model-criteria');
