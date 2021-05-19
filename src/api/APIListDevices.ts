@@ -1,5 +1,6 @@
 import APIList from './APIList'
 import APIResource from './APIResource'
+import APIListCleanupConfigurations from "./APIListCleanupConfigurations";
 
 
 /**
@@ -27,7 +28,7 @@ class APIListDevices extends APIList {
 
   // /devices/cleanup-configurations
   public cleanupConfigurations () {
-    return new APIList(this).push('cleanup-configurations');
+    return new APIListCleanupConfigurations(this);
   }
 
   /**
