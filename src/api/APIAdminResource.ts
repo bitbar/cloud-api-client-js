@@ -190,6 +190,16 @@ class APIAdminResource extends APIResource {
     return new APIList(this).push('admin', 'device-time-summary');
   }
 
+  // /device-types
+  public deviceTypes () {
+    return new APIList(this).push('admin', 'device-types');
+  }
+
+  // /device-types/{id}
+  public deviceType (id: number) {
+    return new APIResource(this).push('admin', 'device-types', id);
+  }
+
   // /admin/interactive-queue
   public interactiveQueue () {
     return new APIList(this).push('admin', 'interactive-queue');
