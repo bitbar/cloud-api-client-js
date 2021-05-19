@@ -132,6 +132,11 @@ class APIAdminResource extends APIResource {
     return new APIAdminResourceDevice(this, id);
   }
 
+  // /admin/device/statuses
+  public deviceStatuses () {
+    return new APIList(this).push('device', 'statuses');
+  }
+
   // /admin/device-models
   public deviceModels () {
     return new APIList(this).push('admin', 'device-models');
@@ -173,11 +178,6 @@ class APIAdminResource extends APIResource {
   // /device-sessions/{id}
   public deviceSession (id: number) {
     return new APIAdminResourceDeviceSessionStandalone(this, id);
-  }
-
-  // /device-status
-  public deviceStatuses () {
-    return new APIList(this).push('device-status');
   }
 
   // /device-time
