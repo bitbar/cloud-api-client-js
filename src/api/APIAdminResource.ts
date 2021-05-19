@@ -185,6 +185,11 @@ class APIAdminResource extends APIResource {
     return new APIAdminResourceDeviceTime(this);
   }
 
+  // /device-time-summary
+  public deviceTimeSummary () {
+    return new APIList(this).push('admin', 'device-time-summary');
+  }
+
   // /admin/interactive-queue
   public interactiveQueue () {
     return new APIList(this).push('admin', 'interactive-queue');
