@@ -15,6 +15,7 @@ import APIAdminResourceAccountService from './APIAdminResourceAccountService';
 import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
 import { PoolsRangeData } from './interface/BrowsersPool';
+import APIListDevices from "./APIListDevices";
 
 
 /**
@@ -124,7 +125,7 @@ class APIAdminResource extends APIResource {
 
   // /admin/devices
   public devices () {
-    return new APIList(this).push('admin', 'devices');
+    return new APIListDevices(this);
   }
 
   // /admin/devices/{id}
