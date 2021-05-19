@@ -6,7 +6,7 @@ import APIList from './APIList'
  * APIListCleanupConfigurations
  *
  * @class
- * @extends APIResource
+ * @extends APIList
  */
 class APIListCleanupConfigurations extends APIList {
 
