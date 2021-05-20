@@ -15,6 +15,7 @@ import APIAdminResourceAccountService from './APIAdminResourceAccountService';
 import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
 import { PoolsRangeData } from './interface/BrowsersPool';
+import APIListDevices from "./APIListDevices";
 
 
 /**
@@ -124,12 +125,17 @@ class APIAdminResource extends APIResource {
 
   // /admin/devices
   public devices () {
-    return new APIList(this).push('admin', 'devices');
+    return new APIListDevices(this);
   }
 
   // /admin/devices/{id}
   public device (id: number) {
     return new APIAdminResourceDevice(this, id);
+  }
+
+  // /admin/device/statuses
+  public deviceStatuses () {
+    return new APIList(this).push('device', 'statuses');
   }
 
   // /admin/device-models
@@ -144,6 +150,11 @@ class APIAdminResource extends APIResource {
     }
 
     return new APIResource(this).push('admin', 'device-models', id);
+  }
+
+  // /admin/device-problems
+  public deviceProblems () {
+    return new APIList(this).push('admin', 'device-problems');
   }
 
   // /admin/device-model-criteria
@@ -170,14 +181,24 @@ class APIAdminResource extends APIResource {
     return new APIAdminResourceDeviceSessionStandalone(this, id);
   }
 
-  // /device-status
-  public deviceStatuses () {
-    return new APIList(this).push('device-status');
-  }
-
   // /device-time
   public deviceTime () {
     return new APIAdminResourceDeviceTime(this);
+  }
+
+  // /device-time-summary
+  public deviceTimeSummary () {
+    return new APIList(this).push('admin', 'device-time-summary');
+  }
+
+  // /device-types
+  public deviceTypes () {
+    return new APIList(this).push('admin', 'device-types');
+  }
+
+  // /device-types/{id}
+  public deviceType (id: number) {
+    return new APIResource(this).push('admin', 'device-types', id);
   }
 
   // /admin/interactive-queue

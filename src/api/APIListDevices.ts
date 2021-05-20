@@ -1,5 +1,7 @@
 import APIList from './APIList'
 import APIResource from './APIResource'
+import APIListCleanupConfigurations from "./APIListCleanupConfigurations";
+import APIResourceCleanupConfiguration from "./APIResourceCleanupConfiguration";
 
 
 /**
@@ -27,7 +29,7 @@ class APIListDevices extends APIList {
 
   // /devices/cleanup-configurations
   public cleanupConfigurations () {
-    return new APIList(this).push('cleanup-configurations');
+    return new APIListCleanupConfigurations(this);
   }
 
   /**
@@ -36,11 +38,7 @@ class APIListDevices extends APIList {
    * @param {number} id - Resource ID
    */
   public cleanupConfiguration (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource(this).push('cleanup-configurations', id);
+    return new APIResourceCleanupConfiguration(this, id);
   }
 
   // /devices/desktop-browser-capabilities

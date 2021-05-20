@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.37.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.38.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.37.0";
+  var version = "0.38.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -383,6 +383,29 @@
       }
   }
 
+  class APIListCleanupConfigurations extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('cleanup-configurations');
+      }
+      specific() {
+          return new APIResource(this).push('specific');
+      }
+  }
+
+  class APIResourceCleanupConfiguration extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('cleanup-configurations', id);
+      }
+      devices() {
+          return new APIList(this).push('devices');
+      }
+  }
+
   class APIListDevices extends APIList {
       constructor(parent) {
           super(parent);
@@ -392,13 +415,10 @@
           return new APIResource(this).push('filters');
       }
       cleanupConfigurations() {
-          return new APIList(this).push('cleanup-configurations');
+          return new APIListCleanupConfigurations(this);
       }
       cleanupConfiguration(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('cleanup-configurations', id);
+          return new APIResourceCleanupConfiguration(this, id);
       }
       desktopBrowserCapabilities() {
           return new APIResource(this).push('desktop-browser-capabilities');
@@ -1344,10 +1364,13 @@
           return new APIResource(this).push('admin', 'country-vat-rates', id);
       }
       devices() {
-          return new APIList(this).push('admin', 'devices');
+          return new APIListDevices(this);
       }
       device(id) {
           return new APIAdminResourceDevice(this, id);
+      }
+      deviceStatuses() {
+          return new APIList(this).push('device', 'statuses');
       }
       deviceModels() {
           return new APIList(this).push('admin', 'device-models');
@@ -1357,6 +1380,9 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('admin', 'device-models', id);
+      }
+      deviceProblems() {
+          return new APIList(this).push('admin', 'device-problems');
       }
       deviceModelCriterias() {
           return new APIList(this).push('admin', 'device-model-criteria');
@@ -1373,11 +1399,17 @@
       deviceSession(id) {
           return new APIAdminResourceDeviceSessionStandalone(this, id);
       }
-      deviceStatuses() {
-          return new APIList(this).push('device-status');
-      }
       deviceTime() {
           return new APIAdminResourceDeviceTime(this);
+      }
+      deviceTimeSummary() {
+          return new APIList(this).push('admin', 'device-time-summary');
+      }
+      deviceTypes() {
+          return new APIList(this).push('admin', 'device-types');
+      }
+      deviceType(id) {
+          return new APIResource(this).push('admin', 'device-types', id);
       }
       interactiveQueue() {
           return new APIList(this).push('admin', 'interactive-queue');
