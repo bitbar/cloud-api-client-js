@@ -135,7 +135,7 @@ class APIAdminResource extends APIResource {
 
   // /admin/device/statuses
   public deviceStatuses () {
-    return new APIList(this).push('device', 'statuses');
+    return new APIList(this).push('admin', 'device', 'statuses');
   }
 
   // /admin/device-models
