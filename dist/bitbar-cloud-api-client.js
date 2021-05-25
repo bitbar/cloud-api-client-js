@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.38.1 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.38.2 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.38.1";
+  var version = "0.38.2";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -1302,6 +1302,25 @@
       }
   }
 
+  class APIAdminListDevices extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('admin', 'devices');
+      }
+      filters() {
+          return new APIResource(this).push('filters');
+      }
+      cleanupConfigurations() {
+          return new APIListCleanupConfigurations(this);
+      }
+      cleanupConfiguration(id) {
+          return new APIResourceCleanupConfiguration(this, id);
+      }
+      desktopBrowserCapabilities() {
+          return new APIResource(this).push('desktop-browser-capabilities');
+      }
+  }
+
   class APIAdminResource extends APIResource {
       constructor(parent) {
           super(parent);
@@ -1339,14 +1358,11 @@
           }
           return new APIResource(this).push('admin', 'billing-periods', id);
       }
-      browserPools() {
+      pools() {
           return new APIList(this).push('admin', 'pools');
       }
-      poolsRange(data) {
-          return new APIResource(this).push('admin', 'pools', data.id).post().data({
-              minAvailable: data.minValue,
-              maxTotal: data.maxValue
-          });
+      pool(id) {
+          return new APIResource(this).push('admin', 'pools', id);
       }
       clusters() {
           return new APIList(this).push('clusters');
@@ -1364,7 +1380,7 @@
           return new APIResource(this).push('admin', 'country-vat-rates', id);
       }
       devices() {
-          return new APIListDevices(this);
+          return new APIAdminListDevices(this);
       }
       device(id) {
           return new APIAdminResourceDevice(this, id);
