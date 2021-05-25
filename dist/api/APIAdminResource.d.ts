@@ -11,8 +11,7 @@ import APIAdminResourceDevice from './APIAdminResourceDevice';
 import APIAdminResourceAccountService from './APIAdminResourceAccountService';
 import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
-import { PoolsRangeData } from './interface/BrowsersPool';
-import APIListDevices from "./APIListDevices";
+import APIAdminListDevices from "./APIAdminListDevices";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -24,13 +23,13 @@ declare class APIAdminResource extends APIResource {
     activities(): APIList;
     billingPeriods(): APIList;
     billingPeriod(id: number): APIResource;
-    browserPools(): APIList;
-    poolsRange(data: PoolsRangeData): APIResource;
+    pools(): APIList;
+    pool(id: number): APIResource;
     clusters(): APIList;
     cluster(id: number): APIAdminResourceCluster;
     countryVatRates(): APIList;
     countryVatRate(id: number): APIResource;
-    devices(): APIListDevices;
+    devices(): APIAdminListDevices;
     device(id: number): APIAdminResourceDevice;
     deviceStatuses(): APIList;
     deviceModels(): APIList;
