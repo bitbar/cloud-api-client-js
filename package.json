@@ -31,7 +31,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.14.5",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-json": "^4.1.0",
@@ -52,7 +52,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.16",
+    "@babel/runtime": "^7.14.5",
     "@bitbar/finka": "^2.3.0",
     "axios": "^0.21.1",
     "form-data": "^3.0.0",
