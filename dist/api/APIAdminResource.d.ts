@@ -12,6 +12,7 @@ import APIAdminResourceAccountService from './APIAdminResourceAccountService';
 import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
 import APIAdminListDevices from "./APIAdminListDevices";
+import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -43,6 +44,8 @@ declare class APIAdminResource extends APIResource {
     deviceTimeSummary(): APIList;
     deviceTypes(): APIList;
     deviceType(id: number): APIResource;
+    deviceGroups(): APIList;
+    deviceGroup(id: number): APIResourceDeviceGroup;
     interactiveQueue(): APIList;
     files(): APIList;
     file(id: number): APIResourceFile;

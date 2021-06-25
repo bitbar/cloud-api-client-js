@@ -15,6 +15,7 @@ import APIAdminResourceAccountService from './APIAdminResourceAccountService';
 import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
 import APIAdminListDevices from "./APIAdminListDevices";
+import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
 
 
 /**
@@ -195,6 +196,15 @@ class APIAdminResource extends APIResource {
   // /device-types/{id}
   public deviceType (id: number) {
     return new APIResource(this).push('admin', 'device-types', id);
+  }
+
+  // /device-groups
+  public deviceGroups () {
+    return new APIList(this).push('device-groups');
+  }
+  // /device-groups/{id}
+  public deviceGroup (id: number) {
+    return new APIResourceDeviceGroup(this, id);
   }
 
   // /admin/interactive-queue
