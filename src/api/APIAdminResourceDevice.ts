@@ -29,6 +29,21 @@ class APIAdminResourceDevice extends APIResource {
     return new APIList(this).push('queue');
   }
 
+  // /admin/devices/{id}/cleanup-configuration
+  public cleanupConfiguration () {
+    return new APIResource(this).push('cleanup-configuration');
+  }
+
+  // /admin/devices/{id}/labels
+  public labels () {
+    return new APIList(this).push('labels');
+  }
+
+  // /admin/devices/{id}/labels/{id}
+  public label (id: number) {
+    return new APIResource(this).push('labels', id);
+  }
+
 }
 
 export default APIAdminResourceDevice
