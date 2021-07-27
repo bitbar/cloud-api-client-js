@@ -130,6 +130,18 @@ class APIAdminResource extends APIResource {
     return new APIAdminResourceDevice(this, id);
   }
 
+  public devicesForModel (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+
+    const a = this.devices();
+    a.params({
+      filter: 'deviceModelId_eq_' + id
+    });
+    return a;
+  }
+
   // /admin/device/statuses
   public deviceStatuses () {
     return new APIList(this).push('admin', 'device', 'statuses');

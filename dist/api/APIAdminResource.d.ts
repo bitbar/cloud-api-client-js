@@ -32,6 +32,7 @@ declare class APIAdminResource extends APIResource {
     countryVatRate(id: number): APIResource;
     devices(): APIAdminListDevices;
     device(id: number): APIAdminResourceDevice;
+    devicesForModel(id: number): APIAdminListDevices;
     deviceStatuses(): APIList;
     deviceModels(): APIList;
     deviceModel(id: number): APIResource;
