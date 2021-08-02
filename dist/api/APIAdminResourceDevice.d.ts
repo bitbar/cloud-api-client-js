@@ -6,5 +6,6 @@ declare class APIAdminResourceDevice extends APIResource {
     cleanupConfiguration(): APIResource;
     labels(): APIList;
     label(id: number): APIResource;
+    blink(): APIResource;
 }
 export default APIAdminResourceDevice;

@@ -44,6 +44,11 @@ class APIAdminResourceDevice extends APIResource {
     return new APIResource(this).push('labels', id);
   }
 
+  // /admin/devices/{id}/blink
+  public blink () {
+    return new APIResource(this).push('blink').post();
+  }
+
 }
 
 export default APIAdminResourceDevice
