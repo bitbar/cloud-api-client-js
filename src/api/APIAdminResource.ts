@@ -279,6 +279,17 @@ class APIAdminResource extends APIResource {
     return new APIResource(this).push('admin', 'maintenance');
   }
 
+  public emails () {
+    return new APIList(this).push('admin', 'emails');
+  }
+
+  public resendEmail (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    return new APIResource(this).push('admin', 'emails', id, 'resend').post();
+  }
+
 }
 
 export default APIAdminResource
