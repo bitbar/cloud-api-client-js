@@ -59,5 +59,7 @@ declare class APIAdminResource extends APIResource {
     createUser(): APIList;
     user(id: number): APIAdminResourceUser;
     maintenance(): APIResource;
+    emails(): APIList;
+    resendEmail(id: number): APIResource;
 }
 export default APIAdminResource;
