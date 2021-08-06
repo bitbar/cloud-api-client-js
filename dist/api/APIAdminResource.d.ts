@@ -13,6 +13,7 @@ import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
 import APIAdminListDevices from "./APIAdminListDevices";
 import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
+import APIAdminResourceFramework from "./APIAdminResourceFramework";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -61,5 +62,9 @@ declare class APIAdminResource extends APIResource {
     maintenance(): APIResource;
     emails(): APIList;
     resendEmail(id: number): APIResource;
+    frameworks(): APIList;
+    framework(id: number): APIAdminResourceFramework;
+    frameworkAvailableLabels(): APIList;
+    errors(): APIList;
 }
 export default APIAdminResource;
