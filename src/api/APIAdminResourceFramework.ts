@@ -21,7 +21,7 @@ class APIAdminResourceFramework extends APIResource {
     }
 
     super(parent);
-    this.push('frameworks', id);
+    this.push('admin', 'frameworks', id);
   }
 
   // /frameworks/{id}/config
