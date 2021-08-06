@@ -16,6 +16,7 @@ import APIAdminResourceUser from './APIAdminResourceUser';
 import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
 import APIAdminListDevices from "./APIAdminListDevices";
 import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
+import APIAdminResourceFramework from "./APIAdminResourceFramework";
 
 
 /**
@@ -279,15 +280,39 @@ class APIAdminResource extends APIResource {
     return new APIResource(this).push('admin', 'maintenance');
   }
 
+  // /admin/emails
   public emails () {
     return new APIList(this).push('admin', 'emails');
   }
 
+  // /admin/emails/{id}/resend
   public resendEmail (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
     return new APIResource(this).push('admin', 'emails', id, 'resend').post();
+  }
+
+  // /admin/frameworks
+  public frameworks () {
+    return new APIList(this).push('admin', 'frameworks')
+  }
+
+  // /admin/frameworks/{id}
+  public framework (id: number) {
+    return new APIAdminResourceFramework(this, id)
+  }
+
+  // /admin/frameworks/available-labels
+  public frameworkAvailableLabels () {
+    const a = this.frameworks();
+    a.push('available-labels');
+    return a;
+  }
+
+  // /admin/errors
+  public errors () {
+    return new APIList(this).push('admin', 'errors')
   }
 
 }
