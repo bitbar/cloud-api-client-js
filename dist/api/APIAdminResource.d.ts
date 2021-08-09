@@ -14,6 +14,7 @@ import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSes
 import APIAdminListDevices from "./APIAdminListDevices";
 import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
 import APIAdminResourceFramework from "./APIAdminResourceFramework";
+import APIAdminResourceLicense from "./APIAdminResourceLicense";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -66,5 +67,7 @@ declare class APIAdminResource extends APIResource {
     framework(id: number): APIAdminResourceFramework;
     frameworkAvailableLabels(): APIList;
     errors(): APIList;
+    licenses(): APIList;
+    license(id: number): APIAdminResourceLicense;
 }
 export default APIAdminResource;

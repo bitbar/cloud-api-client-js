@@ -17,6 +17,7 @@ import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSes
 import APIAdminListDevices from "./APIAdminListDevices";
 import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
 import APIAdminResourceFramework from "./APIAdminResourceFramework";
+import APIAdminResourceLicense from "./APIAdminResourceLicense";
 
 
 /**
@@ -313,6 +314,16 @@ class APIAdminResource extends APIResource {
   // /admin/errors
   public errors () {
     return new APIList(this).push('admin', 'errors')
+  }
+
+  // /admin/licenses
+  public licenses () {
+    return new APIList(this).push('admin', 'licenses')
+  }
+
+  // /admin/licenses/{id}
+  public license (id: number) {
+    return new APIAdminResourceLicense(this, id)
   }
 
 }
