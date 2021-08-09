@@ -326,6 +326,11 @@ class APIAdminResource extends APIResource {
     return new APIAdminResourceLicense(this, id)
   }
 
+  // /admin/market-shares
+  public marketShares () {
+    return new APIList(this).push('admin', 'market-shares')
+  }
+
 }
 
 export default APIAdminResource

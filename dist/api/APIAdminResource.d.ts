@@ -69,5 +69,6 @@ declare class APIAdminResource extends APIResource {
     errors(): APIList;
     licenses(): APIList;
     license(id: number): APIAdminResourceLicense;
+    marketShares(): APIList;
 }
 export default APIAdminResource;
