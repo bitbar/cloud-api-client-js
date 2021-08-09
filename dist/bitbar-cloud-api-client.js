@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.43.1 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.44.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.43.1";
+  var version = "0.44.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -1349,6 +1349,28 @@
       }
   }
 
+  class APIAdminResourceLicense extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('admin', 'licenses', id);
+      }
+      activate() {
+          return new APIResource(this).push('activate');
+      }
+      deactivate() {
+          return new APIResource(this).push('deactivate');
+      }
+      resend() {
+          return new APIResource(this).push('resend');
+      }
+      download() {
+          return new APIResource(this).push('download');
+      }
+  }
+
   class APIAdminResource extends APIResource {
       constructor(parent) {
           super(parent);
@@ -1529,6 +1551,12 @@
       }
       errors() {
           return new APIList(this).push('admin', 'errors');
+      }
+      licenses() {
+          return new APIList(this).push('admin', 'licenses');
+      }
+      license(id) {
+          return new APIAdminResourceLicense(this, id);
       }
   }
 
