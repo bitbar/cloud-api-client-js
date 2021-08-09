@@ -1371,6 +1371,38 @@
       }
   }
 
+  class APIAdminListNotificationPlans extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('admin', 'notification-plans');
+      }
+      channels() {
+          return new APIList(this).push('channels');
+      }
+      scopes() {
+          return new APIList(this).push('scopes');
+      }
+  }
+
+  class APIAdminResourceNotificationPlan extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('admin', 'notification-plans', id);
+      }
+      check() {
+          return new APIList(this).push('check');
+      }
+      test() {
+          return new APIResource(this).push('test');
+      }
+      execute() {
+          return new APIResource(this).push('execute');
+      }
+  }
+
   class APIAdminResource extends APIResource {
       constructor(parent) {
           super(parent);
@@ -1560,6 +1592,12 @@
       }
       marketShares() {
           return new APIList(this).push('admin', 'market-shares');
+      }
+      notificationPlans() {
+          return new APIAdminListNotificationPlans(this);
+      }
+      notificationPlan(id) {
+          return new APIAdminResourceNotificationPlan(this, id);
       }
   }
 
