@@ -15,6 +15,8 @@ import APIAdminListDevices from "./APIAdminListDevices";
 import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
 import APIAdminResourceFramework from "./APIAdminResourceFramework";
 import APIAdminResourceLicense from "./APIAdminResourceLicense";
+import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
+import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -69,5 +71,8 @@ declare class APIAdminResource extends APIResource {
     errors(): APIList;
     licenses(): APIList;
     license(id: number): APIAdminResourceLicense;
+    marketShares(): APIList;
+    notificationPlans(): APIAdminListNotificationPlans;
+    notificationPlan(id: number): APIAdminResourceNotificationPlan;
 }
 export default APIAdminResource;

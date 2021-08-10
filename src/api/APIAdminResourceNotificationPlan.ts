@@ -21,7 +21,7 @@ class APIAdminResourceNotificationPlan extends APIResource {
     }
 
     super(parent);
-    this.push('notification-plans', id);
+    this.push('admin', 'notification-plans', id);
   }
 
   // /notification-plans/{id}/check

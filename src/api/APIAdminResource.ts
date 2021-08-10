@@ -18,6 +18,8 @@ import APIAdminListDevices from "./APIAdminListDevices";
 import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
 import APIAdminResourceFramework from "./APIAdminResourceFramework";
 import APIAdminResourceLicense from "./APIAdminResourceLicense";
+import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
+import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
 
 
 /**
@@ -324,6 +326,21 @@ class APIAdminResource extends APIResource {
   // /admin/licenses/{id}
   public license (id: number) {
     return new APIAdminResourceLicense(this, id)
+  }
+
+  // /admin/market-shares
+  public marketShares () {
+    return new APIList(this).push('admin', 'market-shares')
+  }
+
+  // /admin/notification-plans
+  public notificationPlans () {
+    return new APIAdminListNotificationPlans(this)
+  }
+
+  // /admin/notification-plans/{id}
+  public notificationPlan (id: number) {
+    return new APIAdminResourceNotificationPlan(this, id)
   }
 
 }

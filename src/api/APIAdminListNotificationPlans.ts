@@ -15,7 +15,7 @@ class APIAdminListNotificationPlans extends APIList {
    */
   constructor (parent: object) {
     super(parent);
-    this.push('notification-plans');
+    this.push('admin', 'notification-plans');
   }
 
   // /notification-plans/channels

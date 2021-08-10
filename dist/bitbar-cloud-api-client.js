@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.44.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.45.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.44.0";
+  var version = "0.45.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -1371,6 +1371,38 @@
       }
   }
 
+  class APIAdminListNotificationPlans extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('admin', 'notification-plans');
+      }
+      channels() {
+          return new APIList(this).push('channels');
+      }
+      scopes() {
+          return new APIList(this).push('scopes');
+      }
+  }
+
+  class APIAdminResourceNotificationPlan extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('admin', 'notification-plans', id);
+      }
+      check() {
+          return new APIList(this).push('check');
+      }
+      test() {
+          return new APIResource(this).push('test');
+      }
+      execute() {
+          return new APIResource(this).push('execute');
+      }
+  }
+
   class APIAdminResource extends APIResource {
       constructor(parent) {
           super(parent);
@@ -1557,6 +1589,15 @@
       }
       license(id) {
           return new APIAdminResourceLicense(this, id);
+      }
+      marketShares() {
+          return new APIList(this).push('admin', 'market-shares');
+      }
+      notificationPlans() {
+          return new APIAdminListNotificationPlans(this);
+      }
+      notificationPlan(id) {
+          return new APIAdminResourceNotificationPlan(this, id);
       }
   }
 
