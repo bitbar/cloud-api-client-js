@@ -371,7 +371,9 @@ class APIEntity {
     if (requestConfig.method === 'POST' &&
     requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
     requestConfig.data != null) {
-      requestConfig.data = qs.stringify(requestConfig.data);
+      requestConfig.data = qs.stringify(requestConfig.data, {
+        arrayFormat: 'brackets'
+      });
     }
 
     if (requestConfig.params) {
