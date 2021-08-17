@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.45.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.45.1 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.45.0";
+  var version = "0.45.1";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -161,7 +161,9 @@
           if (requestConfig.method === 'POST' &&
               requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
               requestConfig.data != null) {
-              requestConfig.data = qs.stringify(requestConfig.data);
+              requestConfig.data = qs.stringify(requestConfig.data, {
+                  arrayFormat: 'brackets'
+              });
           }
           if (requestConfig.params) {
               requestConfig.paramsSerializer = this.paramsSerializer;
