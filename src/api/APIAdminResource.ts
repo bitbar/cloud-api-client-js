@@ -343,6 +343,11 @@ class APIAdminResource extends APIResource {
     return new APIAdminResourceNotificationPlan(this, id)
   }
 
+  // /admin/roles
+  public roles () {
+    return new APIList(this).push('admin', 'roles')
+  }
+
 }
 
 export default APIAdminResource
