@@ -348,6 +348,19 @@ class APIAdminResource extends APIResource {
     return new APIList(this).push('admin', 'roles')
   }
 
+  // /admin/samples
+  public samples () {
+    return new APIList(this).push('admin', 'samples')
+  }
+
+  // /admin/samples/{id}
+  public sample (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    return new APIResource(this).push('admin', 'samples', id);
+  }
+
 }
 
 export default APIAdminResource
