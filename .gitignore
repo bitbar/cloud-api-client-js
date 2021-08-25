@@ -8,3 +8,7 @@ node_modules/
 
 # Files
 *.tgz
+
+# nyc coverage report
+.nyc_output
+coverage
