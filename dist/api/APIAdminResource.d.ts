@@ -75,5 +75,7 @@ declare class APIAdminResource extends APIResource {
     notificationPlans(): APIAdminListNotificationPlans;
     notificationPlan(id: number): APIAdminResourceNotificationPlan;
     roles(): APIList;
+    samples(): APIList;
+    sample(id: number): APIResource;
 }
 export default APIAdminResource;
