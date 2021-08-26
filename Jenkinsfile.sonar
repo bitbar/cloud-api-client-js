@@ -1,0 +1,53 @@
+#!/usr/bin/env groovy
+
+@Library('CloudOrchestrationLibrary')
+import com.bitbar.Config
+
+node('npm && chromium && docker') {
+    ansiColor('xterm') {
+        stage('Checkout') {
+            git([
+                url          : 'git@github.com:bitbar/cloud-api-client-js.git',
+                branch       : env.BRANCH_NAME,
+                credentialsId: Config.github.credentialsId,
+                poll         : true
+            ])
+        }
+
+        stage('Install') {
+          sh('npm ci')
+        }
+
+        stage('Build') {
+          sh('npm run build')
+        }
+
+        stage('Tests with coverage') {
+          timeout([
+            time: 5,
+            activity: true,
+            unit: 'MINUTES'
+          ]) {
+            sh('npm run test:coverage')
+          }
+        }
+
+        stage('Sonar') {
+
+            sh('echo $(jq -r .version package.json) > VERSION')
+
+            withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                sh("""
+                docker run -i --rm --name sonarqube-scanner-cloud-api-client-js-${env.BUILD_ID} \
+                  -e SONAR_HOST_URL='https://sonarqube.smartbear.io' \
+                  -e SONAR_LOGIN=$SONAR_TOKEN \
+                  -v \"\$(pwd)\":/usr/src \
+                  sonarsource/sonar-scanner-cli \
+                  -Dsonar.projectVersion=`cat VERSION` \
+                  -Dsonar.branch.name=${env.BRANCH_NAME} \
+                  -Dsonar.javascript.lcov.reportPaths=\"coverage/lcov.info\"
+              """)
+            }
+        }
+    }
+}
