@@ -1546,42 +1546,6 @@
       deviceGroup(id) {
           return new APIResourceDeviceGroup(this, id);
       }
-      interactiveQueue() {
-          return new APIList(this).push('admin', 'interactive-queue');
-      }
-      files() {
-          return new APIList(this).push('files');
-      }
-      file(id) {
-          return new APIResourceFile(this, id);
-      }
-      overview() {
-          return new APIResource(this).push('admin', 'overview');
-      }
-      projects() {
-          return new APIList(this).push('projects');
-      }
-      project(id) {
-          return new APIResourceProject(this, id);
-      }
-      runs() {
-          return new APIAdminListRuns(this);
-      }
-      run(id) {
-          return new APIAdminResourceRunStandalone(this, id);
-      }
-      users() {
-          return new APIList(this).push('users');
-      }
-      createUser() {
-          return new APIList(this).push('admin', 'users').post();
-      }
-      user(id) {
-          return new APIAdminResourceUser(this, id);
-      }
-      maintenance() {
-          return new APIResource(this).push('admin', 'maintenance');
-      }
       emails() {
           return new APIList(this).push('admin', 'emails');
       }
@@ -1590,6 +1554,15 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('admin', 'emails', id, 'resend').post();
+      }
+      errors() {
+          return new APIList(this).push('admin', 'errors');
+      }
+      files() {
+          return new APIList(this).push('files');
+      }
+      file(id) {
+          return new APIResourceFile(this, id);
       }
       frameworks() {
           return new APIList(this).push('admin', 'frameworks');
@@ -1602,14 +1575,17 @@
           a.push('available-labels');
           return a;
       }
-      errors() {
-          return new APIList(this).push('admin', 'errors');
+      interactiveQueue() {
+          return new APIList(this).push('admin', 'interactive-queue');
       }
       licenses() {
           return new APIList(this).push('admin', 'licenses');
       }
       license(id) {
           return new APIAdminResourceLicense(this, id);
+      }
+      maintenance() {
+          return new APIResource(this).push('admin', 'maintenance');
       }
       marketShares() {
           return new APIList(this).push('admin', 'market-shares');
@@ -1620,8 +1596,23 @@
       notificationPlan(id) {
           return new APIAdminResourceNotificationPlan(this, id);
       }
+      overview() {
+          return new APIResource(this).push('admin', 'overview');
+      }
+      projects() {
+          return new APIList(this).push('projects');
+      }
+      project(id) {
+          return new APIResourceProject(this, id);
+      }
       roles() {
           return new APIList(this).push('admin', 'roles');
+      }
+      runs() {
+          return new APIAdminListRuns(this);
+      }
+      run(id) {
+          return new APIAdminResourceRunStandalone(this, id);
       }
       samples() {
           return new APIList(this).push('admin', 'samples');
@@ -1637,6 +1628,15 @@
       }
       service(id) {
           return new APIAdminResourceService(this, id);
+      }
+      users() {
+          return new APIList(this).push('users');
+      }
+      createUser() {
+          return new APIList(this).push('admin', 'users').post();
+      }
+      user(id) {
+          return new APIAdminResourceUser(this, id);
       }
   }
 
