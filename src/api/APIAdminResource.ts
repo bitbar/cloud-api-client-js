@@ -20,6 +20,7 @@ import APIAdminResourceFramework from "./APIAdminResourceFramework";
 import APIAdminResourceLicense from "./APIAdminResourceLicense";
 import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
 import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
+import APIAdminResourceService from "./APIAdminResourceService";
 
 
 /**
@@ -359,6 +360,16 @@ class APIAdminResource extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
     return new APIResource(this).push('admin', 'samples', id);
+  }
+
+  // /admin/services
+  public services () {
+    return new APIList(this).push('admin', 'services')
+  }
+
+  // /admin/services/{id}
+  public service (id: number) {
+    return new APIAdminResourceService(this, id)
   }
 
 }

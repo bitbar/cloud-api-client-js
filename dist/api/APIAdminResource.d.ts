@@ -17,6 +17,7 @@ import APIAdminResourceFramework from "./APIAdminResourceFramework";
 import APIAdminResourceLicense from "./APIAdminResourceLicense";
 import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
 import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
+import APIAdminResourceService from "./APIAdminResourceService";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -77,5 +78,7 @@ declare class APIAdminResource extends APIResource {
     roles(): APIList;
     samples(): APIList;
     sample(id: number): APIResource;
+    services(): APIList;
+    service(id: number): APIAdminResourceService;
 }
 export default APIAdminResource;
