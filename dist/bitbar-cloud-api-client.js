@@ -1629,6 +1629,9 @@
       service(id) {
           return new APIAdminResourceService(this, id);
       }
+      settings() {
+          return new APIResource(this).push('admin', 'settings');
+      }
       users() {
           return new APIList(this).push('users');
       }

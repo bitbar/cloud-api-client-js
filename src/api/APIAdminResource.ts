@@ -357,6 +357,11 @@ class APIAdminResource extends APIResource {
     return new APIAdminResourceService(this, id)
   }
 
+  // /admin/settings
+  public settings () {
+    return new APIResource(this).push('admin', 'settings')
+  }
+
   // /users
   public users () {
     return new APIList(this).push('users');

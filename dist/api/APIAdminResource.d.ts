@@ -77,6 +77,7 @@ declare class APIAdminResource extends APIResource {
     sample(id: number): APIResource;
     services(): APIList;
     service(id: number): APIAdminResourceService;
+    settings(): APIResource;
     users(): APIList;
     createUser(): APIList;
     user(id: number): APIAdminResourceUser;
