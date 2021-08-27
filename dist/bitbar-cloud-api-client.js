@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.47.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.49.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.47.0";
+  var version = "0.49.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -1405,6 +1405,25 @@
       }
   }
 
+  class APIAdminResourceService extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('admin', 'services', id);
+      }
+      activate() {
+          return new APIResource(this).push('activate').post();
+      }
+      deactivate() {
+          return new APIResource(this).push('deactivate').post();
+      }
+      roles() {
+          return new APIList(this).push('roles');
+      }
+  }
+
   class APIAdminResource extends APIResource {
       constructor(parent) {
           super(parent);
@@ -1527,42 +1546,6 @@
       deviceGroup(id) {
           return new APIResourceDeviceGroup(this, id);
       }
-      interactiveQueue() {
-          return new APIList(this).push('admin', 'interactive-queue');
-      }
-      files() {
-          return new APIList(this).push('files');
-      }
-      file(id) {
-          return new APIResourceFile(this, id);
-      }
-      overview() {
-          return new APIResource(this).push('admin', 'overview');
-      }
-      projects() {
-          return new APIList(this).push('projects');
-      }
-      project(id) {
-          return new APIResourceProject(this, id);
-      }
-      runs() {
-          return new APIAdminListRuns(this);
-      }
-      run(id) {
-          return new APIAdminResourceRunStandalone(this, id);
-      }
-      users() {
-          return new APIList(this).push('users');
-      }
-      createUser() {
-          return new APIList(this).push('admin', 'users').post();
-      }
-      user(id) {
-          return new APIAdminResourceUser(this, id);
-      }
-      maintenance() {
-          return new APIResource(this).push('admin', 'maintenance');
-      }
       emails() {
           return new APIList(this).push('admin', 'emails');
       }
@@ -1571,6 +1554,15 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('admin', 'emails', id, 'resend').post();
+      }
+      errors() {
+          return new APIList(this).push('admin', 'errors');
+      }
+      files() {
+          return new APIList(this).push('files');
+      }
+      file(id) {
+          return new APIResourceFile(this, id);
       }
       frameworks() {
           return new APIList(this).push('admin', 'frameworks');
@@ -1583,14 +1575,17 @@
           a.push('available-labels');
           return a;
       }
-      errors() {
-          return new APIList(this).push('admin', 'errors');
+      interactiveQueue() {
+          return new APIList(this).push('admin', 'interactive-queue');
       }
       licenses() {
           return new APIList(this).push('admin', 'licenses');
       }
       license(id) {
           return new APIAdminResourceLicense(this, id);
+      }
+      maintenance() {
+          return new APIResource(this).push('admin', 'maintenance');
       }
       marketShares() {
           return new APIList(this).push('admin', 'market-shares');
@@ -1601,8 +1596,23 @@
       notificationPlan(id) {
           return new APIAdminResourceNotificationPlan(this, id);
       }
+      overview() {
+          return new APIResource(this).push('admin', 'overview');
+      }
+      projects() {
+          return new APIList(this).push('projects');
+      }
+      project(id) {
+          return new APIResourceProject(this, id);
+      }
       roles() {
           return new APIList(this).push('admin', 'roles');
+      }
+      runs() {
+          return new APIAdminListRuns(this);
+      }
+      run(id) {
+          return new APIAdminResourceRunStandalone(this, id);
       }
       samples() {
           return new APIList(this).push('admin', 'samples');
@@ -1612,6 +1622,24 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('admin', 'samples', id);
+      }
+      services() {
+          return new APIList(this).push('admin', 'services');
+      }
+      service(id) {
+          return new APIAdminResourceService(this, id);
+      }
+      settings() {
+          return new APIResource(this).push('admin', 'settings');
+      }
+      users() {
+          return new APIList(this).push('users');
+      }
+      createUser() {
+          return new APIList(this).push('admin', 'users').post();
+      }
+      user(id) {
+          return new APIAdminResourceUser(this, id);
       }
   }
 
