@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v0.49.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.50.0 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
@@ -11,7 +11,7 @@
 
   finka();
 
-  var version = "0.49.0";
+  var version = "0.50.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -1424,6 +1424,53 @@
       }
   }
 
+  class APIAdminListServices extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('admin', 'services');
+      }
+      purchased() {
+          return new APIListPurchased(this);
+      }
+      available() {
+          return new APIList(this).push('available');
+      }
+      active() {
+          const a = new APIList(this);
+          if (this.first === 'me') {
+              a.push('active');
+          }
+          else {
+              a.params({
+                  notArchived: true
+              });
+          }
+          return a;
+      }
+      activated() {
+          const a = new APIList(this);
+          a.params({
+              filter: 'activated_eq_true',
+              limit: 0,
+              sort: 'name_a'
+          });
+      }
+      inUse() {
+          const a = new APIList(this);
+          a.params({
+              inUse: true,
+              limit: 0,
+              sort: 'name_a'
+          });
+      }
+      byPrice() {
+          const a = new APIList(this);
+          a.params({
+              sort: 'centPrice_a'
+          });
+      }
+  }
+
   class APIAdminResource extends APIResource {
       constructor(parent) {
           super(parent);
@@ -1624,7 +1671,7 @@
           return new APIResource(this).push('admin', 'samples', id);
       }
       services() {
-          return new APIList(this).push('admin', 'services');
+          return new APIAdminListServices(this);
       }
       service(id) {
           return new APIAdminResourceService(this, id);

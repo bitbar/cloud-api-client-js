@@ -21,6 +21,7 @@ import APIAdminResourceLicense from "./APIAdminResourceLicense";
 import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
 import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
 import APIAdminResourceService from "./APIAdminResourceService";
+import APIAdminListServices from "./APIAdminListServices";
 
 
 /**
@@ -349,7 +350,7 @@ class APIAdminResource extends APIResource {
 
   // /admin/services
   public services () {
-    return new APIList(this).push('admin', 'services')
+    return new APIAdminListServices(this)
   }
 
   // /admin/services/{id}
