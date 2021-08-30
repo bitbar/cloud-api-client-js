@@ -39,7 +39,7 @@ class APIAdminListServices extends APIList {
   }
 
   public activated () {
-    const a = new APIList(this);
+    const a = this.active();
     a.params({
       filter: 'activated_eq_true',
       limit: 0,
