@@ -19,6 +19,7 @@ import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
 import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
 import APIAdminResourceService from "./APIAdminResourceService";
 import APIAdminListServices from "./APIAdminListServices";
+import APIAdminListStatistics from "./APIAdminListStatistics";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -79,6 +80,7 @@ declare class APIAdminResource extends APIResource {
     services(): APIAdminListServices;
     service(id: number): APIAdminResourceService;
     settings(): APIResource;
+    statistics(): APIAdminListStatistics;
     users(): APIList;
     createUser(): APIList;
     user(id: number): APIAdminResourceUser;

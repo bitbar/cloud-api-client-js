@@ -22,6 +22,7 @@ import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
 import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
 import APIAdminResourceService from "./APIAdminResourceService";
 import APIAdminListServices from "./APIAdminListServices";
+import APIAdminListStatistics from "./APIAdminListStatistics";
 
 
 /**
@@ -361,6 +362,11 @@ class APIAdminResource extends APIResource {
   // /admin/settings
   public settings () {
     return new APIResource(this).push('admin', 'settings')
+  }
+
+  // /admin/statistics
+  public statistics () {
+    return new APIAdminListStatistics(this)
   }
 
   // /users
