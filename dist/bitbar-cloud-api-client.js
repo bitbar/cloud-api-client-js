@@ -1482,6 +1482,9 @@
       deviceSessions() {
           return new APIList(this).push('device-sessions');
       }
+      frameworks() {
+          return new APIList(this).push('frameworks');
+      }
   }
 
   class APIAdminResource extends APIResource {

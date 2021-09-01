@@ -23,6 +23,12 @@ class APIAdminListStatistics extends APIList {
     return new APIList(this).push('device-sessions');
   }
 
+  // /statistics/frameworks
+  public frameworks () {
+    return new APIList(this).push('frameworks');
+  }
+
+
 }
 
 
