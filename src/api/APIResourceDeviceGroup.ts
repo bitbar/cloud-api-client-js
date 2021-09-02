@@ -52,6 +52,11 @@ class APIResourceDeviceGroup extends APIResource {
     return new APIResource(this).push('selectors', id);
   }
 
+  // /device-groups/{id}/share
+  public share () {
+    return new APIResource(this).push('share');
+  }
+
 }
 
 export default APIResourceDeviceGroup
