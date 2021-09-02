@@ -6,5 +6,6 @@ declare class APIResourceDeviceGroup extends APIResource {
     device(id: number): APIResource;
     selectors(): APIList;
     selector(id: number): APIResource;
+    share(): APIResource;
 }
 export default APIResourceDeviceGroup;
