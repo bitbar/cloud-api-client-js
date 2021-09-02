@@ -1798,6 +1798,12 @@
       deviceGroup(id) {
           return new APIResourceDeviceGroup(this, id);
       }
+      deviceSessions() {
+          return new APIList(this).push('device-sessions');
+      }
+      deviceSession(id) {
+          return new APIResourceDeviceSession(this, id);
+      }
       labelGroups() {
           return new APIList(this).push('label-groups');
       }

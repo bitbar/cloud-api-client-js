@@ -11,6 +11,7 @@ import APIResourceUserSession from './api/APIResourceUserSession';
 import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from './api/APIResourceAccount';
 import APIResource from "./api/APIResource";
+import APIResourceDeviceSession from "./api/APIResourceDeviceSession";
 declare class API {
     private config;
     private axiosConfig;
@@ -26,6 +27,8 @@ declare class API {
     device(id: number): APIResourceDevice;
     deviceGroups(): APIList;
     deviceGroup(id: number): APIResourceDeviceGroup;
+    deviceSessions(): APIList;
+    deviceSession(id: number): APIResourceDeviceSession;
     labelGroups(): APIList;
     deviceStatistics(): APIList;
     enums(): APIResource;
