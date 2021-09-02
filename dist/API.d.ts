@@ -10,6 +10,7 @@ import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
 import APIResourceUserSession from './api/APIResourceUserSession';
 import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from './api/APIResourceAccount';
+import APIResource from "./api/APIResource";
 declare class API {
     private config;
     private axiosConfig;
@@ -27,5 +28,8 @@ declare class API {
     deviceGroup(id: number): APIResourceDeviceGroup;
     labelGroups(): APIList;
     deviceStatistics(): APIList;
+    enums(): APIResource;
+    licenses(): APIResource;
+    labels(): APIList;
 }
 export default API;

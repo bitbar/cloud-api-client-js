@@ -17,6 +17,7 @@ import APIResourceUserSession from './api/APIResourceUserSession';
 
 import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from './api/APIResourceAccount';
+import APIResource from "./api/APIResource";
 
 // @ts-ignore
 if (global.isNodeJs) {
@@ -151,6 +152,21 @@ class API {
   // /device-statistics
   public deviceStatistics () {
     return new APIList(this).push('device-statistics');
+  }
+
+  // /enums
+  public enums () {
+    return new APIResource(this).push('enums');
+  }
+
+  // /licenses
+  public licenses () {
+    return new APIResource(this).push('licenses');
+  }
+
+  // /labels
+  public labels () {
+    return new APIList(this).push('labels');
   }
 
 }
