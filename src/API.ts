@@ -17,6 +17,8 @@ import APIResourceUserSession from './api/APIResourceUserSession';
 
 import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from './api/APIResourceAccount';
+import APIResource from "./api/APIResource";
+import APIResourceDeviceSession from "./api/APIResourceDeviceSession";
 
 // @ts-ignore
 if (global.isNodeJs) {
@@ -143,6 +145,16 @@ class API {
     return new APIResourceDeviceGroup(this, id);
   }
 
+  // /device-sessions
+  public deviceSessions () {
+    return new APIList(this).push('device-sessions');
+  }
+
+  // /device-sessions/{id}
+  public deviceSession (id: number) {
+    return new APIResourceDeviceSession(this, id);
+  }
+
   // /label-groups
   public labelGroups () {
     return new APIList(this).push('label-groups');
@@ -151,6 +163,21 @@ class API {
   // /device-statistics
   public deviceStatistics () {
     return new APIList(this).push('device-statistics');
+  }
+
+  // /enums
+  public enums () {
+    return new APIResource(this).push('enums');
+  }
+
+  // /licenses
+  public licenses () {
+    return new APIResource(this).push('licenses');
+  }
+
+  // /labels
+  public labels () {
+    return new APIList(this).push('labels');
   }
 
 }
