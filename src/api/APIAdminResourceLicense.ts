@@ -1,5 +1,4 @@
 import APIResource from './APIResource'
-import APIList from './APIList'
 
 
 /**
