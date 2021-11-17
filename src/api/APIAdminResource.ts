@@ -95,12 +95,18 @@ class APIAdminResource extends APIResource {
     return new APIResource(this).push('admin', 'billing-periods', id);
   }
 
-  public pools () {
-    return new APIList(this).push('admin', 'pools');
+  // /admin/browsers
+  public browsers () {
+    return new APIList(this).push('admin', 'browsers');
   }
 
-  public pool (id: number) {
-    return new APIResource(this).push('admin', 'pools', id);
+  // /admin/browsers/{id}
+  public browser (id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+
+    return new APIResource(this).push('admin', 'browsers', id);
   }
 
   // /clusters
@@ -309,6 +315,14 @@ class APIAdminResource extends APIResource {
   // /admin/overview
   public overview () {
     return new APIResource(this).push('admin', 'overview');
+  }
+
+  public pools () {
+    return new APIList(this).push('admin', 'pools');
+  }
+
+  public pool (id: number) {
+    return new APIResource(this).push('admin', 'pools', id);
   }
 
   // /projects

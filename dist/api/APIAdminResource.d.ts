@@ -31,8 +31,8 @@ declare class APIAdminResource extends APIResource {
     activities(): APIList;
     billingPeriods(): APIList;
     billingPeriod(id: number): APIResource;
-    pools(): APIList;
-    pool(id: number): APIResource;
+    browsers(): APIList;
+    browser(id: number): APIResource;
     clusters(): APIList;
     cluster(id: number): APIAdminResourceCluster;
     countryVatRates(): APIList;
@@ -70,6 +70,8 @@ declare class APIAdminResource extends APIResource {
     notificationPlans(): APIAdminListNotificationPlans;
     notificationPlan(id: number): APIAdminResourceNotificationPlan;
     overview(): APIResource;
+    pools(): APIList;
+    pool(id: number): APIResource;
     projects(): APIList;
     project(id: number): APIResourceProject;
     roles(): APIList;

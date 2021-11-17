@@ -1,6 +1,3 @@
-import APIResource from './APIResource'
-import APIList from './APIList';
-
 import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
 import postAdminDeviceSessionChangeBillable from './factory/postAdminDeviceSessionChangeBillable';
 
@@ -9,7 +6,6 @@ import postAdminDeviceSessionChangeBillable from './factory/postAdminDeviceSessi
  * APIAdminResourceDevice
  *
  * @class
- * @extends APIResource
  */
 class APIAdminResourceDeviceSession extends APIResourceDeviceSessionCommon {
 
