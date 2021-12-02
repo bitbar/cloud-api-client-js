@@ -20,6 +20,7 @@ import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan
 import APIAdminResourceService from "./APIAdminResourceService";
 import APIAdminListServices from "./APIAdminListServices";
 import APIAdminListStatistics from "./APIAdminListStatistics";
+import APIAdminResourceDeviceModel from "./APIAdminResourceDeviceModel";
 declare class APIAdminResource extends APIResource {
     constructor(parent: object);
     accessGroups(): APIList;
@@ -42,7 +43,7 @@ declare class APIAdminResource extends APIResource {
     devicesForModel(id: number): APIAdminListDevices;
     deviceStatuses(): APIList;
     deviceModels(): APIList;
-    deviceModel(id: number): APIResource;
+    deviceModel(id: number): APIAdminResourceDeviceModel;
     deviceProblems(): APIList;
     deviceModelCriterias(): APIList;
     deviceModelCriteria(id: number): APIResource;
