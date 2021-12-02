@@ -23,6 +23,7 @@ import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan
 import APIAdminResourceService from "./APIAdminResourceService";
 import APIAdminListServices from "./APIAdminListServices";
 import APIAdminListStatistics from "./APIAdminListStatistics";
+import APIAdminResourceDeviceModel from "./APIAdminResourceDeviceModel";
 
 
 /**
@@ -167,11 +168,7 @@ class APIAdminResource extends APIResource {
 
   // /admin/device-models/{id}
   public deviceModel (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource(this).push('admin', 'device-models', id);
+    return new APIAdminResourceDeviceModel(this, id);
   }
 
   // /admin/device-problems
