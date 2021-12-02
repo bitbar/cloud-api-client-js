@@ -21,7 +21,7 @@ class APIAdminResourceDeviceModel extends APIResource {
     }
 
     super(parent);
-    this.push('device-models', id);
+    this.push('admin', 'device-models', id);
   }
 
   // /device-models/{id}/browsers
