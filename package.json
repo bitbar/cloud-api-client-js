@@ -37,7 +37,7 @@
     "@babel/preset-env": "^7.16.10",
     "@babel/register": "^7.16.7",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^7.1.3",
