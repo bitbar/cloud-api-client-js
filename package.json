@@ -47,7 +47,7 @@
     "chai": "^4.3.6",
     "core-js": "^3.19.3",
     "eslint": "^6.8.0",
-    "mocha": "^7.2.0",
+    "mocha": "^8.0.0",
     "nyc": "^15.1.0",
     "rollup": "^1.32.1",
     "rollup-plugin-delete": "^2.0.0",
