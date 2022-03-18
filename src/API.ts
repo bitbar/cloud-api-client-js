@@ -19,6 +19,7 @@ import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from './api/APIResourceAccount';
 import APIResource from "./api/APIResource";
 import APIResourceDeviceSession from "./api/APIResourceDeviceSession";
+import APIResourceBroker from "./api/APIResourceBroker";
 
 // @ts-ignore
 if (global.isNodeJs) {
@@ -180,6 +181,9 @@ class API {
     return new APIList(this).push('labels');
   }
 
+  public broker () {
+    return new APIResourceBroker(this);
+  }
 }
 
 
