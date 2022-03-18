@@ -12,7 +12,8 @@
     "typeRoots": [
       "./typings"
     ],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "newLine": "lf"
   },
   "exclude": [
     "node_modules"

@@ -1,17 +1,19 @@
-/* @bitbar/cloud-api-client v0.55.1 | Copyright 2021 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v0.56.0 | Copyright 2022 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@bitbar/finka'), require('axios'), require('qs')) :
   typeof define === 'function' && define.amd ? define(['@bitbar/finka', 'axios', 'qs'], factory) :
-  (global = global || self, global['bitbar-cloud-api-client'] = factory(global['@bitbar/finka'], global.axios, global.qs));
-}(this, (function (finka, axios, qs) { 'use strict';
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global["bitbar-cloud-api-client"] = factory(global["@bitbar/finka"], global.axios, global.qs));
+})(this, (function (finka, axios, qs) { 'use strict';
 
-  finka = finka && Object.prototype.hasOwnProperty.call(finka, 'default') ? finka['default'] : finka;
-  axios = axios && Object.prototype.hasOwnProperty.call(axios, 'default') ? axios['default'] : axios;
-  qs = qs && Object.prototype.hasOwnProperty.call(qs, 'default') ? qs['default'] : qs;
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-  finka();
+  var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
+  var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
+  var qs__default = /*#__PURE__*/_interopDefaultLegacy(qs);
 
-  var version = "0.55.1";
+  finka__default["default"]();
+
+  var version = "0.56.0";
 
   var ALLOWED_HTTP_METHODS;
   (function (ALLOWED_HTTP_METHODS) {
@@ -144,7 +146,7 @@
           return this;
       }
       paramsSerializer(params) {
-          return qs.stringify(params, {
+          return qs__default["default"].stringify(params, {
               arrayFormat: 'brackets'
           });
       }
@@ -161,7 +163,7 @@
           if (requestConfig.method === 'POST' &&
               requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
               requestConfig.data != null) {
-              requestConfig.data = qs.stringify(requestConfig.data, {
+              requestConfig.data = qs__default["default"].stringify(requestConfig.data, {
                   arrayFormat: 'brackets'
               });
           }
@@ -1747,10 +1749,20 @@
       }
   }
 
-  if (global.isNodeJs) {
-      axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
+  class APIResourceBroker extends APIResource {
+      constructor(parent) {
+          super(parent);
+          this.push('broker');
+      }
+      hubs() {
+          return new APIList(this).push('hubs');
+      }
   }
-  axios.defaults.maxContentLength = 1073741824;
+
+  if (global.isNodeJs) {
+      axios__default["default"].defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
+  }
+  axios__default["default"].defaults.maxContentLength = 1073741824;
   class API {
       constructor(config) {
           if (config == null) {
@@ -1785,7 +1797,7 @@
               };
           }
           this.axiosConfig.withCredentials = config.withCredentials == null ? false : config.withCredentials;
-          this.axios = axios.create(this.axiosConfig);
+          this.axios = axios__default["default"].create(this.axiosConfig);
       }
       userSession() {
           return new APIResourceUserSession(this);
@@ -1838,6 +1850,9 @@
       labels() {
           return new APIList(this).push('labels');
       }
+      broker() {
+          return new APIResourceBroker(this);
+      }
   }
 
   const CloudAPIClient = {
@@ -1847,5 +1862,5 @@
 
   return CloudAPIClient;
 
-})));
+}));
 //# sourceMappingURL=bitbar-cloud-api-client.js.map
