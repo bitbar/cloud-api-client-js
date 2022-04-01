@@ -1,8 +1,8 @@
-import APIList from '../APIList';
-import APIResource from '../APIResource';
-import DeviceSessionBase from './DeviceSessionBase';
+import {APIList} from '../APIList';
+import {APIResource} from '../APIResource';
+import {DeviceSessionBase} from './DeviceSessionBase';
 
-interface DeviceSessionCommon extends DeviceSessionBase {
+export interface DeviceSessionCommon extends DeviceSessionBase {
   commands (): APIList;
   screenshots (): APIList;
   screenshot (id: number): APIResource;

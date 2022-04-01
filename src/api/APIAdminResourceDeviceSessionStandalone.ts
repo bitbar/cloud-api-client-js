@@ -1,12 +1,9 @@
-import APIResource from './APIResource'
-import APIList from './APIList';
-
-import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
-
-import postAdminDeviceSessionChangeBillable from './factory/postAdminDeviceSessionChangeBillable';
-
-import DeviceSessionStandalone from './interface/DeviceSessionStandalone';
-import DeviceSessionCommon from './interface/DeviceSessionCommon';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource'
+import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
+import {postAdminDeviceSessionChangeBillable} from './factory/postAdminDeviceSessionChangeBillable';
+import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
+import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 
 
 /**
@@ -15,20 +12,20 @@ import DeviceSessionCommon from './interface/DeviceSessionCommon';
  * @class
  * @extends APIResource
  */
-class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCommon implements DeviceSessionCommon, DeviceSessionStandalone {
+export class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCommon implements DeviceSessionCommon, DeviceSessionStandalone {
 
   // /admin/device-sessions/{id}/changebillable
-  public changeBillable (billable: boolean) {
+  public changeBillable(billable: boolean) {
     return postAdminDeviceSessionChangeBillable(this, billable);
   }
 
   // /device-sessions/{id}/connections
-  public connections () {
+  public connections() {
     return new APIList(this).push('connections');
   }
 
   // /device-sessions/{id}/connections/{id}
-  public connection (id: number) {
+  public connection(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -37,7 +34,7 @@ class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCo
   }
 
   // /device-sessions/{id}/release
-  public release () {
+  public release() {
     return new APIResource(this).push('release').post();
   }
 

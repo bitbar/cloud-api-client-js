@@ -1,5 +1,7 @@
-import APIResource from './APIResource'
-import APIList from './APIList'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
 
 
 /**
@@ -8,14 +10,14 @@ import APIList from './APIList'
  * @class
  * @extends APIList
  */
-class APIListCleanupConfigurations extends APIList {
+export class APIListCleanupConfigurations extends APIList {
 
   /**
    * /builds/{id}
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('cleanup-configurations');
   }

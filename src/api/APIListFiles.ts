@@ -1,4 +1,6 @@
-import APIList from './APIList'
+import {API} from "../API";
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
 
 interface UploadObj {
   /**
@@ -18,10 +20,10 @@ interface UploadObj {
  * @class
  * @extends APIList
  */
-class APIListFiles extends APIList {
+export class APIListFiles extends APIList<any> {
 
   // Constructor
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('files');
   }
@@ -31,11 +33,8 @@ class APIListFiles extends APIList {
     let form;
 
     // For NodeJS
-    // @ts-ignore
     if (global.isNodeJs) {
-      // @ts-ignore
       const fs = require('fs');
-      // @ts-ignore
       const FormData = require('form-data');
 
       form = new FormData();

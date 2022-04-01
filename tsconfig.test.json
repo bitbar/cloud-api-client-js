@@ -1,20 +1,6 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "strict": true,
-    "removeComments": true,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationDir": "./dist",
-    "moduleResolution": "Node",
-    "typeRoots": [
-      "./typings"
-    ],
-    "skipLibCheck": true
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    "module": "commonjs"
+  }
 }

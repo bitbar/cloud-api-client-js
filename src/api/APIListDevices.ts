@@ -1,7 +1,9 @@
-import APIList from './APIList'
-import APIResource from './APIResource'
-import APIListCleanupConfigurations from "./APIListCleanupConfigurations";
-import APIResourceCleanupConfiguration from "./APIResourceCleanupConfiguration";
+import {API} from "../API";
+import {APIEntity} from "./APIEntity";
+import {APIList} from './APIList';
+import {APIListCleanupConfigurations} from "./APIListCleanupConfigurations";
+import {APIResource} from './APIResource';
+import {APIResourceCleanupConfiguration} from "./APIResourceCleanupConfiguration";
 
 
 /**
@@ -10,14 +12,14 @@ import APIResourceCleanupConfiguration from "./APIResourceCleanupConfiguration";
  * @class
  * @extends APIList
  */
-class APIListDevices extends APIList {
+export class APIListDevices extends APIList<any> {
 
   /**
    * /devices
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('devices');
   }

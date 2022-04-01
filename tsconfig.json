@@ -10,7 +10,8 @@
     "declarationDir": "./dist",
     "moduleResolution": "Node",
     "typeRoots": [
-      "./typings"
+      "./typings",
+      "node_modules/@types"
     ],
     "skipLibCheck": true
   },

@@ -1,6 +1,7 @@
-import APIResource from './APIResource'
-import APIList from './APIList'
-
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
 
 /**
  * APIResourceBillingPeriod
@@ -8,14 +9,14 @@ import APIList from './APIList'
  * @class
  * @extends APIResource
  */
-class APIResourceDeviceGroup extends APIResource {
+export class APIResourceDeviceGroup extends APIResource {
 
   /**
    * /device-groups/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -25,12 +26,12 @@ class APIResourceDeviceGroup extends APIResource {
   }
 
   // /device-groups/{id}/devices
-  public devices () {
+  public devices() {
     return new APIList(this).push('devices');
   }
 
   // /device-groups/{id}/device/{id}
-  public device (id: number) {
+  public device(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -39,12 +40,12 @@ class APIResourceDeviceGroup extends APIResource {
   }
 
   // /device-groups/{id}/selectors
-  public selectors () {
+  public selectors() {
     return new APIList(this).push('selectors');
   }
 
   // /device-groups/{id}/selectors/{id}
-  public selector (id: number) {
+  public selector(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -53,7 +54,7 @@ class APIResourceDeviceGroup extends APIResource {
   }
 
   // /device-groups/{id}/share
-  public share () {
+  public share() {
     return new APIResource(this).push('share');
   }
 

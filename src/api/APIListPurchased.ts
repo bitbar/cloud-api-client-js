@@ -1,5 +1,6 @@
-import APIList from './APIList'
-
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
 
 /**
  * APIListPurchased
@@ -7,14 +8,14 @@ import APIList from './APIList'
  * @class
  * @extends APIList
  */
-class APIListPurchased extends APIList {
+export class APIListPurchased extends APIList {
 
   /**
    * /purchased
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor(parent: APIEntity<any> | API) {
     super(parent);
     this.push('purchased');
   }

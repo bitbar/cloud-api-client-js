@@ -1,7 +1,6 @@
-import APIResource from './APIResource';
-import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
-
-import DeviceSession from './interface/DeviceSession';
+import {APIResource} from './APIResource';
+import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
+import {DeviceSession} from './interface/DeviceSession';
 
 
 /**
@@ -10,15 +9,15 @@ import DeviceSession from './interface/DeviceSession';
  * @class
  * @extends APIResource
  */
-class APIResourceDeviceSession extends APIResourceDeviceSessionCommon implements DeviceSession {
+export class APIResourceDeviceSession extends APIResourceDeviceSessionCommon implements DeviceSession {
 
   // /device-sessions/{id}/abort
-  public abort () {
+  public abort() {
     return new APIResource(this).push('abort').post();
   }
 
   // /device-sessions/{id}/retry
-  public retry () {
+  public retry() {
     return new APIResource(this).push('retry').post();
   }
 

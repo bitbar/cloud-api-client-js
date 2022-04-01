@@ -1,5 +1,5 @@
-import APIResourceRunCommon from './APIResourceRunCommon'
-import APIResourceDeviceSession from './APIResourceDeviceSession'
+import {APIResourceDeviceSession} from './APIResourceDeviceSession'
+import {APIResourceRunCommon} from './APIResourceRunCommon'
 
 
 /**
@@ -8,10 +8,10 @@ import APIResourceDeviceSession from './APIResourceDeviceSession'
  * @class
  * @extends APIResource
  */
-class APIResourceRun extends APIResourceRunCommon {
+export class APIResourceRun extends APIResourceRunCommon {
 
   // /runs/{id}/device-sessions/{id}
-  public deviceSession (id: number) {
+  public deviceSession(id: number) {
     return new APIResourceDeviceSession(this, id);
   }
 

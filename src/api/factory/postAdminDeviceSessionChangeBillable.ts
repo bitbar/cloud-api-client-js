@@ -1,7 +1,7 @@
-import APIEntity from '../APIEntity';
-import APIResource from '../APIResource';
+import {APIEntity} from '../APIEntity';
+import {APIResource} from '../APIResource';
 
-function postAdminDeviceSessionChangeBillable (parent: APIEntity, billable: boolean) {
+export function postAdminDeviceSessionChangeBillable (parent: APIEntity<any>, billable: boolean) {
     const a = new APIResource(parent);
     const deviceSessionId = a.last;
 

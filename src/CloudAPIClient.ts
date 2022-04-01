@@ -1,10 +1,10 @@
-import API from './API';
-import FilterBuilder from './FilterBuilder';
+import {API} from './API';
+import {FilterBuilder} from './FilterBuilder';
 
 /**
  * Cloud API Client
  */
-const CloudAPIClient = {
+export const CloudAPIClient = {
   API,
   FilterBuilder
 }

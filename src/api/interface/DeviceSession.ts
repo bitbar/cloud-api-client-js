@@ -1,7 +1,7 @@
-import APIResource from '../APIResource';
-import DeviceSessionCommon from './DeviceSessionCommon';
+import {APIResource} from '../APIResource';
+import {DeviceSessionCommon} from './DeviceSessionCommon';
 
-interface DeviceSession extends DeviceSessionCommon {
+export interface DeviceSession extends DeviceSessionCommon {
   abort (): APIResource;
   retry (): APIResource;
 }

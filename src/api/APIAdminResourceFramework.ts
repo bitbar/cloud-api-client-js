@@ -1,6 +1,7 @@
-import APIResource from './APIResource'
-import APIList from './APIList'
-
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
 
 /**
  * APIAdminResourceFramework
@@ -8,14 +9,14 @@ import APIList from './APIList'
  * @class
  * @extends APIResource
  */
-class APIAdminResourceFramework extends APIResource {
+export class APIAdminResourceFramework extends APIResource {
 
   /**
    * /frameworks/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor (parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

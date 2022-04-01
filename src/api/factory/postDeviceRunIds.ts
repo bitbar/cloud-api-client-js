@@ -1,7 +1,7 @@
-import APIEntity from '../APIEntity';
-import APIResource from '../APIResource';
+import {APIEntity} from '../APIEntity';
+import {APIResource} from '../APIResource';
 
-function postDeviceRunIds (parent: APIEntity, name: string, ids?: Array<number>) {
+export function postDeviceRunIds (parent: APIEntity, name: string, ids?: Array<number>) {
     const a = new APIResource(parent).push(name);
 
     if (ids != null) {
@@ -10,7 +10,7 @@ function postDeviceRunIds (parent: APIEntity, name: string, ids?: Array<number>)
       });
     }
 
-    return a.post(); 
+    return a.post();
 }
 
 export default postDeviceRunIds;

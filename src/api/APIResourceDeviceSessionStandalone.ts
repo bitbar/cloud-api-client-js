@@ -1,9 +1,10 @@
-import DeviceSessionStandalone from './interface/DeviceSessionStandalone';
-import APIList from './APIList';
-import APIResource from './APIResource';
-
-import InputFileset from './class/InputFileset';
-import OutputFileset from './class/OutputFileset';
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {InputFileset} from './class/InputFileset';
+import {OutputFileset} from './class/OutputFileset';
+import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 
 
 /**
@@ -12,14 +13,14 @@ import OutputFileset from './class/OutputFileset';
  * @class
  * @extends APIResource
  */
-class APIResourceDeviceSessionStandalone extends APIResource implements DeviceSessionStandalone {
+export class APIResourceDeviceSessionStandalone extends APIResource implements DeviceSessionStandalone {
 
   /**
    * /device-sessions/{id}
    *
    * Constructor
    */
-   constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -29,12 +30,12 @@ class APIResourceDeviceSessionStandalone extends APIResource implements DeviceSe
   }
 
   // /device-sessions/{id}/connections
-  public connections () {
+  public connections() {
     return new APIList(this).push('connections');
   }
 
   // /device-sessions/{id}/connections/{id}
-  public connection (id: number) {
+  public connection(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -43,17 +44,17 @@ class APIResourceDeviceSessionStandalone extends APIResource implements DeviceSe
   }
 
   // /device-sessions/{id}/input-file-set
-  public input () {
+  public input() {
     return new InputFileset(this);
   }
 
   // /device-sessions/{id}/output-file-set
-  public output () {
+  public output() {
     return new OutputFileset(this);
   }
 
   // /device-sessions/{id}/release
-  public release () {
+  public release() {
     return new APIResource(this).push('release').post();
   }
 

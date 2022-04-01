@@ -1,5 +1,6 @@
-import APIEntity from './APIEntity'
-import FilterBuilder from '../FilterBuilder'
+import {AxiosResponse} from "axios";
+import {FilterBuilder} from '../FilterBuilder'
+import {APIEntity} from './APIEntity'
 
 
 /**
@@ -26,7 +27,7 @@ const DEFAULT_OFFSET = 0;
 enum APIOrder {
   'asc' = 'a',
   'desc' = 'd'
-};
+}
 
 
 /**
@@ -35,7 +36,7 @@ enum APIOrder {
  * @class
  * @extends APIEntity
  */
-class APIList extends APIEntity {
+export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
 
   /**
    * Create
@@ -43,7 +44,7 @@ class APIList extends APIEntity {
    *
    * @param {object} data
    */
-  public create (data: object) {
+  public create(data: object): Promise<AxiosResponse<Array<T>>> {
     return this.post().data(data).send();
   }
 
@@ -55,10 +56,7 @@ class APIList extends APIEntity {
    * @param {string} [order=a] - Sorting order. Possibilities: 'a', 'd'
    * @returns this
    */
-  public sort (name: string, order: APIOrder = APIOrder.asc) {
-    // if order not in ['a', 'd']
-    //   throw new Error(`Order '\${order}' is invalid! Use 'a' for ascending or 'd' for descending.`);
-
+  public sort(name: string, order: APIOrder = APIOrder.asc): this {
     return this.params({
       sort: `${name}_${order}`
     });
@@ -71,7 +69,7 @@ class APIList extends APIEntity {
    * @param {number} [limit=DEFAULT_LIMIT] - Limit to be set
    * @returns this
    */
-  public limit (limit = DEFAULT_LIMIT) {
+  public limit(limit = DEFAULT_LIMIT): this {
     if (!Number.isNatural(limit)) {
       throw new Error(`Limit '${limit}' is invalid!`);
     }
@@ -87,7 +85,7 @@ class APIList extends APIEntity {
    * @public
    * @returns number
    */
-  public getLimit () {
+  public getLimit(): number {
     const params = this.getParams();
     return params.limit == null ? DEFAULT_LIMIT : params.limit;
   }
@@ -98,7 +96,7 @@ class APIList extends APIEntity {
    * @public
    * @returns this
    */
-  public noLimit () {
+  public noLimit(): this {
     return this.limit(0);
   }
 
@@ -109,7 +107,7 @@ class APIList extends APIEntity {
    * @param {number} [offset=DEFAULT_OFFSET] - Offset to be set
    * @returns this
    */
-  public offset (offset: number = DEFAULT_OFFSET) {
+  public offset(offset: number = DEFAULT_OFFSET): this {
     if (!Number.isNatural(offset)) {
       throw new Error(`Offset '${offset}' is invalid!`);
     }
@@ -127,7 +125,7 @@ class APIList extends APIEntity {
    * @param {number} to - To index
    * @returns this
    */
-  public between (from: number, to: number) {
+  public between(from: number, to: number): this {
     if (!Number.isNatural(from)) {
       throw new Error(`From '${from}' is invalid!`);
     }
@@ -149,7 +147,7 @@ class APIList extends APIEntity {
    * @param {number} idx - Index
    * @returns this
    */
-  public only (idx: number) {
+  public only(idx: number): this {
     if (!Number.isNatural(idx)) {
       throw new Error(`Index '${idx}' is invalid!`);
     }
@@ -167,7 +165,7 @@ class APIList extends APIEntity {
    * @param {number} [page=1] - Page number (counted from 1)
    * @returns this
    */
-  public page (page = 1) {
+  public page(page = 1): this {
     if (!Number.isNatural(page) || page == 0) {
       throw new Error(`Page '${page}' is invalid!`);
     }
@@ -191,7 +189,7 @@ class APIList extends APIEntity {
    * @param {string} query - Query to search for
    * @returns this
    */
-  public search (query: string) {
+  public search(query: string): this {
     if (typeof query !== 'string') {
       throw new Error('Search query must be a string!');
     }
@@ -208,7 +206,7 @@ class APIList extends APIEntity {
    * @param {FilterBuilder|string} filter - Filter
    * @returns this
    */
-  public filter (filter: FilterBuilder | string) {
+  public filter(filter: FilterBuilder | string): this {
     const isFilterBuilder = filter instanceof FilterBuilder;
 
     if (typeof filter !== 'string' && !isFilterBuilder) {
@@ -223,9 +221,6 @@ class APIList extends APIEntity {
       filter
     });
   }
-}
-
-interface APIList {
 
   /**
    * Alias for 'noLimit'
@@ -234,7 +229,7 @@ interface APIList {
    * @see noLimit
    * @returns this
    */
-  all: typeof APIList.prototype.noLimit;
+  all: typeof APIList.prototype.noLimit = this.noLimit;
 
   /**
    * Alias for 'between'
@@ -244,10 +239,7 @@ interface APIList {
    * @param {number} to - To idx
    * @returns this
    */
-  cut: typeof APIList.prototype.between;
+  cut: typeof APIList.prototype.between = this.between;
 }
-
-APIList.prototype.all = APIList.prototype.noLimit;
-APIList.prototype.cut = APIList.prototype.between;
 
 export default APIList;
