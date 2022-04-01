@@ -1,4 +1,6 @@
-import APIList from './APIList'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
 
 
 /**
@@ -7,14 +9,14 @@ import APIList from './APIList'
  * @class
  * @extends APIList
  */
-class APIListDeviceTime extends APIList {
+export class APIListDeviceTime extends APIList {
 
   /**
    * /device-time
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('device-time');
   }

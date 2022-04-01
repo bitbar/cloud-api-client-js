@@ -1,7 +1,9 @@
-import APIList from './APIList';
-import APIResource from './APIResource'
-import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
-import postDeviceRunIds from './factory/postDeviceRunIds';
+import {API} from "../API";
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource'
+import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
+import {postDeviceRunIds} from './factory/postDeviceRunIds';
 
 
 /**
@@ -10,14 +12,14 @@ import postDeviceRunIds from './factory/postDeviceRunIds';
  * @class
  * @extends APIResourceRun
  */
-class APIAdminResourceRunStandalone extends APIResource {
+export class APIAdminResourceRunStandalone extends APIResource<any> {
 
   /**
    * /runs/{id}
    *
    * Constructor
    */
-   constructor (parent: object, id: number) {
+   constructor (parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -29,7 +31,7 @@ class APIAdminResourceRunStandalone extends APIResource {
   // /runs/{id}/abort
   public abort () {
     return new APIResource(this).push('abort').post();
-  }  
+  }
 
   // /runs/{id}/changebillable
   public changeBillable (billable: boolean) {

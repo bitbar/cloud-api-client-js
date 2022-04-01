@@ -1,29 +1,28 @@
-import APIList from './APIList'
-
-import APIResource from './APIResource'
-import APIResourceFile from './APIResourceFile'
-import APIResourceProject from './APIResourceProject';
-import APIResourceAccessGroup from './APIResourceAccessGroup';
-
-import APIAdminListRuns from './APIAdminListRuns';
-
-import APIAdminResourceCluster from './APIAdminResourceCluster';
-import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
-import APIAdminResourceRunStandalone from './APIAdminResourceRunStandalone';
-import APIAdminResourceDevice from './APIAdminResourceDevice';
-import APIAdminResourceAccountService from './APIAdminResourceAccountService';
-import APIAdminResourceUser from './APIAdminResourceUser';
-import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
-import APIAdminListDevices from "./APIAdminListDevices";
-import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
-import APIAdminResourceFramework from "./APIAdminResourceFramework";
-import APIAdminResourceLicense from "./APIAdminResourceLicense";
-import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
-import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
-import APIAdminResourceService from "./APIAdminResourceService";
-import APIAdminListServices from "./APIAdminListServices";
-import APIAdminListStatistics from "./APIAdminListStatistics";
-import APIAdminResourceDeviceModel from "./APIAdminResourceDeviceModel";
+import {API} from '../API';
+import {APIAdminListDevices} from "./APIAdminListDevices";
+import {APIAdminListNotificationPlans} from "./APIAdminListNotificationPlans";
+import {APIAdminListRuns} from './APIAdminListRuns';
+import {APIAdminListServices} from "./APIAdminListServices";
+import {APIAdminListStatistics} from "./APIAdminListStatistics";
+import {APIAdminResourceAccountService} from './APIAdminResourceAccountService';
+import {APIAdminResourceCluster} from './APIAdminResourceCluster';
+import {APIAdminResourceDevice} from './APIAdminResourceDevice';
+import {APIAdminResourceDeviceModel} from "./APIAdminResourceDeviceModel";
+import {APIAdminResourceDeviceSessionStandalone} from './APIAdminResourceDeviceSessionStandalone';
+import {APIAdminResourceDeviceTime} from './APIAdminResourceDeviceTime';
+import {APIAdminResourceFramework} from "./APIAdminResourceFramework";
+import {APIAdminResourceLicense} from "./APIAdminResourceLicense";
+import {APIAdminResourceNotificationPlan} from "./APIAdminResourceNotificationPlan";
+import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
+import {APIAdminResourceService} from "./APIAdminResourceService";
+import {APIAdminResourceUser} from './APIAdminResourceUser';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
+import {APIResourceAccessGroup} from './APIResourceAccessGroup';
+import {APIResourceDeviceGroup} from "./APIResourceDeviceGroup";
+import {APIResourceFile} from './APIResourceFile'
+import {APIResourceProject} from './APIResourceProject';
 
 
 /**
@@ -32,14 +31,14 @@ import APIAdminResourceDeviceModel from "./APIAdminResourceDeviceModel";
  * @class
  * @extends APIResource
  */
-class APIAdminResource extends APIResource {
+export class APIAdminResource extends APIResource {
 
   /**
    * /admin
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
   }
 

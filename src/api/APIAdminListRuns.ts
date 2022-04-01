@@ -1,5 +1,7 @@
-import APIList from './APIList'
-import APIResource from './APIResource';
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource';
 
 
 /**
@@ -8,13 +10,13 @@ import APIResource from './APIResource';
  * @class
  * @extends APIList
  */
-class APIAdminListRuns extends APIList {
+export class APIAdminListRuns extends APIList {
 
   /**
    * /admin/runs
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('admin', 'runs');
   }
@@ -22,7 +24,7 @@ class APIAdminListRuns extends APIList {
   // /runs/config
   public config () {
     const a = new APIResource(this);
-    a.stack = ['runs', 'config'];
+    a.restack('runs', 'config');
     return a;
   }
 

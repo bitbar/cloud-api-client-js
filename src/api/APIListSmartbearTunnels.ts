@@ -1,4 +1,6 @@
-import APIList from './APIList'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
 
 /**
  * APIListSmartbearTunnels
@@ -6,14 +8,14 @@ import APIList from './APIList'
  * @class
  * @extends APIList
  */
-class APIListSmartbearTunnels extends APIList {
+export class APIListSmartbearTunnels extends APIList {
 
   /**
    * /tunnels
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor(parent: APIEntity<any> | API) {
     super(parent);
     this.push('tunnels');
   }
@@ -25,8 +27,8 @@ class APIListSmartbearTunnels extends APIList {
    * @param {number} active - fetching active or inactive tunnels
    * @returns this
    */
-  public active (active: boolean) {
-    return this.params({ active: active });
+  public active(active: boolean) {
+    return this.params({active: active});
   }
 }
 

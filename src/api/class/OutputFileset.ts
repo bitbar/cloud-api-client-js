@@ -1,7 +1,8 @@
-import APIResource from '../APIResource'
-import APIList from '../APIList'
-
-import FilterBuilder from '../../FilterBuilder'
+import {API} from '../../API';
+import {FilterBuilder} from '../../FilterBuilder'
+import {APIEntity} from '../APIEntity';
+import {APIList} from '../APIList'
+import {APIResource} from '../APIResource'
 
 // Create non-media files filter
 const NON_MEDIA_FILES_FILTER = new FilterBuilder();
@@ -20,14 +21,14 @@ NON_MEDIA_FILES_FILTER.notin('mimetype', [
  * @class
  * @extends APIResource
  */
-class OutputFileset extends APIResource {
+export class OutputFileset extends APIResource {
 
   /**
    * /output-file-set
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity | API) {
     super(parent);
     this.push('output-file-set');
   }

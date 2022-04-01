@@ -1,4 +1,6 @@
-import APIResource from './APIResource'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIResource} from './APIResource'
 
 /**
  * APIResourceAdditionalUser
@@ -6,14 +8,14 @@ import APIResource from './APIResource'
  * @class
  * @extends APIResource
  */
-class APIResourceAdditionalUser extends APIResource {
+export class APIResourceAdditionalUser extends APIResource {
 
   /**
    * /additional-users/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -23,7 +25,7 @@ class APIResourceAdditionalUser extends APIResource {
   }
 
   // /account/resend-activation
-  public resendActivation () {
+  public resendActivation() {
     return new APIResource(this).push('resend-activation');
   }
 
