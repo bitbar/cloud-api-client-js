@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.16.7",
-    "@babel/core": "^7.16.12",
+    "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.10",
     "@babel/register": "^7.16.7",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -59,7 +59,7 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@babel/runtime": "^7.16.7",
+    "@babel/runtime": "^7.17.9",
     "@bitbar/finka": "^2.3.0",
     "axios": "^0.21.4",
     "form-data": "^3.0.0",
