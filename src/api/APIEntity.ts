@@ -16,6 +16,8 @@ enum ALLOWED_HTTP_METHODS {
   DELETE = 'DELETE'
 }
 
+export type QueryParam = string | number | boolean;
+export type QueryParams = Record<string, QueryParam | Array<QueryParam>>;
 
 /**
  * APIEntity
@@ -233,7 +235,7 @@ export class APIEntity<T = any, P = T> {
    * @param {object} params - object of params to be set
    * @returns this
    */
-  public params(params: object): this {
+  public params(params: QueryParams): this {
     Object.deepAssign(this.requestConfig, {
       params
     });
@@ -246,7 +248,7 @@ export class APIEntity<T = any, P = T> {
    * @public
    * @returns object
    */
-  public getParams(): Record<string, any> {
+  public getParams(): QueryParams {
     return this.requestConfig.params == null ? {} : this.requestConfig.params;
   }
 
@@ -294,25 +296,14 @@ export class APIEntity<T = any, P = T> {
    * Set form data
    *
    * @public
-   * @param {FormData} data - JSON object to be set
+   * @param {Record<string, any>} data - JSON object to be set
    * @returns this
    */
-  public formData(data: FormData): this {
+  public formData(data: Record<string, any>): this {
     this.headers({
       'Content-Type': 'multipart/form-data'
     }).data(data);
     return this;
-  }
-
-  /**
-   * Custom params serializer
-   * @private
-   * @param {Record<string, any>} params
-   */
-  private static paramsSerializer(params: Record<string, any>): string {
-    return stringify(params, {
-      arrayFormat: 'brackets'
-    });
   }
 
   /**
@@ -340,17 +331,26 @@ export class APIEntity<T = any, P = T> {
     if (requestConfig.method === 'POST' &&
       (<string>requestConfig.headers['Content-Type']).startsWith('application/x-www-form-urlencoded') &&
       requestConfig.data != null) {
-      requestConfig.data = stringify(requestConfig.data, {
-        arrayFormat: 'brackets'
-      });
+      requestConfig.data = this.paramsSerializer(requestConfig.data);
     }
 
     if (requestConfig.params) {
-      requestConfig.paramsSerializer = APIEntity.paramsSerializer;
+      requestConfig.paramsSerializer = this.paramsSerializer;
     }
 
     // Send request
     return this.root.axios.request<T>(requestConfig);
+  }
+
+  /**
+   * Custom params serializer
+   * @private
+   * @param {Record<string, any>} params
+   */
+  private paramsSerializer(params: Record<string, any>): string {
+    return stringify(params, {
+      arrayFormat: 'brackets'
+    });
   }
 }
 

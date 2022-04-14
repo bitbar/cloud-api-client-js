@@ -87,7 +87,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    */
   public getLimit(): number {
     const params = this.getParams();
-    return params.limit == null ? DEFAULT_LIMIT : params.limit;
+    return params.limit == null ? DEFAULT_LIMIT : <number>params.limit;
   }
 
   /**
@@ -213,12 +213,8 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
       throw new Error('Filter must be either string or instance of FilterBuilder');
     }
 
-    if (isFilterBuilder) {
-      filter = filter.toString();
-    }
-
     return this.params({
-      filter
+      filter: filter.toString()
     });
   }
 

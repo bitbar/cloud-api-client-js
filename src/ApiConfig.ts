@@ -10,7 +10,7 @@ export type ApiConfig = {
   /**
    * Cloud URL
    */
-  cloudUrl?: string;
+  cloudUrl: string;
 
   /**
    * v2 Flag
