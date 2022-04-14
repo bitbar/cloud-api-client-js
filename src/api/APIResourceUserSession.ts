@@ -18,22 +18,22 @@ export class APIResourceUserSession extends APIResource {
   }
 
   // /user-sessions/login
-  public login(data: object) {
+  login(data: object) {
     return new APIResource(this).push('login').post().data(data);
   }
 
   // /user-sessions/logout
-  public logout() {
+  logout() {
     return new APIResource(this).push('logout').post();
   }
 
   // /user-sessions/{name}-login
-  public sso(name: string) {
+  sso(name: string) {
     return new APIResource(this).push(name + '-login');
   }
 
   // /user-sessions/portal-login
-  public portalLogin() {
+  portalLogin() {
     return new APIResource(this).push('portal-login').post();
   }
 

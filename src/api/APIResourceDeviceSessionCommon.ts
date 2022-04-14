@@ -30,27 +30,27 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
   }
 
   // /device-sessions/{id}/commands
-  public commands() {
+  commands() {
     return new APIList(this).push('commands');
   }
 
   // /device-sessions/{id}/input-file-set
-  public input() {
+  input() {
     return new InputFileset(this);
   }
 
   // /device-sessions/{id}/output-file-set
-  public output() {
+  output() {
     return new OutputFileset(this);
   }
 
   // /device-sessions/{id}/screenshots
-  public screenshots() {
+  screenshots() {
     return new APIList(this).push('screenshots');
   }
 
   // /device-sessions/{id}/screenshots/{id}
-  public screenshot(id: number) {
+  screenshot(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -59,12 +59,12 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
   }
 
   // /device-sessions/{id}/steps
-  public steps() {
+  steps() {
     return new APIList(this).push('steps');
   }
 
   // /device-sessions/{id}/steps/{id}
-  public step(id: number | 'current') {
+  step(id: number | 'current') {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -73,12 +73,12 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
   }
 
   // /device-sessions/{id}/steps/current
-  public currentStep() {
+  currentStep() {
     return this.step('current');
   }
 
   // /device-sessions/{id}/test-case-runs
-  public testCaseRuns() {
+  testCaseRuns() {
     return new APIList(this).push('test-case-runs');
   }
 

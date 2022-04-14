@@ -25,7 +25,7 @@ export class APIResourceAccountService extends APIResource {
   }
 
   // /account-services/{id}/billing-period
-  public billingPeriod() {
+  billingPeriod() {
     return new APIResource(this).push('billing-period');
   }
 

@@ -27,7 +27,7 @@ export class APIListSmartbearTunnels extends APIList {
    * @param {number} active - fetching active or inactive tunnels
    * @returns this
    */
-  public active(active: boolean) {
+  active(active: boolean) {
     return this.params({active: active});
   }
 }

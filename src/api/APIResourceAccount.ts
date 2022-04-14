@@ -25,12 +25,12 @@ export class APIResourceAccount extends APIResource {
   }
 
   // /accounts/{id}/concurrency-status
-  public concurrencyStatus() {
+  concurrencyStatus() {
     return new APIResource(this).push('concurrency-status');
   }
 
   // /accounts/{id}/preferences
-  public preferences() {
+  preferences() {
     return new APIResource(this).push('preferences');
   }
 

@@ -22,7 +22,7 @@ export class APIAdminListRuns extends APIList {
   }
 
   // /runs/config
-  public config () {
+  config () {
     const a = new APIResource(this);
     a.restack('runs', 'config');
     return a;

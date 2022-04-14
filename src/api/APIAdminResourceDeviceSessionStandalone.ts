@@ -1,7 +1,6 @@
 import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
-import {postAdminDeviceSessionChangeBillable} from './factory/postAdminDeviceSessionChangeBillable';
 import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 
@@ -15,17 +14,22 @@ import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 export class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCommon implements DeviceSessionCommon, DeviceSessionStandalone {
 
   // /admin/device-sessions/{id}/changebillable
-  public changeBillable(billable: boolean) {
-    return postAdminDeviceSessionChangeBillable(this, billable);
+  changeBillable(billable: boolean) {
+    const a = new APIResource(this);
+    const deviceSessionId = a.last;
+
+    return a.restack('admin', 'device-sessions', deviceSessionId, 'changebillable').params({
+      billable
+    }).post();
   }
 
   // /device-sessions/{id}/connections
-  public connections() {
+  connections() {
     return new APIList(this).push('connections');
   }
 
   // /device-sessions/{id}/connections/{id}
-  public connection(id: number) {
+  connection(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -34,7 +38,7 @@ export class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSe
   }
 
   // /device-sessions/{id}/release
-  public release() {
+  release() {
     return new APIResource(this).push('release').post();
   }
 

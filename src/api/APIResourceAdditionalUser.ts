@@ -25,7 +25,7 @@ export class APIResourceAdditionalUser extends APIResource {
   }
 
   // /account/resend-activation
-  public resendActivation() {
+  resendActivation() {
     return new APIResource(this).push('resend-activation');
   }
 

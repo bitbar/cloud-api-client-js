@@ -1,26 +1,13 @@
+import {AxiosResponse} from "axios";
 import {API} from '../../API';
-import {FilterBuilder} from '../../FilterBuilder'
 import {APIEntity} from '../APIEntity';
 import {APIList} from '../APIList'
 import {APIResource} from '../APIResource'
+import {Screenshot} from "../models/Screenshot";
+import {UserFile} from "../models/UserFile";
+import {NON_MEDIA_FILES_FILTER} from "./NonMedia.filter";
 
-// Create non-media files filter
-const NON_MEDIA_FILES_FILTER = new FilterBuilder();
-NON_MEDIA_FILES_FILTER.eq('state', 'READY');
-NON_MEDIA_FILES_FILTER.notin('mimetype', [
-  // no images
-  'image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif',
 
-  // no videos
-  'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg'
-]);
-
-/**
- * OutputFileset
- *
- * @class
- * @extends APIResource
- */
 export class OutputFileset extends APIResource {
 
   /**
@@ -28,51 +15,43 @@ export class OutputFileset extends APIResource {
    *
    * Constructor
    */
-  constructor (parent: APIEntity | API) {
+  constructor(parent: APIEntity | API) {
     super(parent);
     this.push('output-file-set');
   }
 
   // /output-file-set/files
-  public files () {
+  files(): APIList<UserFile> {
     return new APIList(this).push('files');
   }
 
   // /output-file-set/files/{id}
-  public file (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
+  file(id: number): APIResource<UserFile> {
     return new APIResource(this).push('files', id);
   }
 
   // /output-file-set/files.zip
-  public filesZip () {
+  filesZip(): APIResource<Blob> {
     return new APIResource(this).push('files.zip');
   }
 
   // /output-file-set/screenshots
-  public screenshots () {
+  screenshots(): APIList<Screenshot> {
     return new APIList(this).push('screenshots');
   }
 
   // /output-file-set/screenshots/{id}
-  public screenshot (id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
+  screenshot(id: number): APIResource<Screenshot> {
     return new APIResource(this).push('screenshots', id);
   }
 
   // /output-file-set/screenshots/{id}/file/{id}
-  public screenshotFile (id: number) {
-    this.screenshot(id).push('file');
+  screenshotFile(id: number): APIResource<UserFile> {
+    return this.screenshot(id).push('file');
   }
 
   // Filter files out by ready videos
-  public videos () {
+  videos(): APIList<UserFile> {
     return this.files().params({
       filter: 's_state_eq_READY',
       tag: ['video']
@@ -80,8 +59,14 @@ export class OutputFileset extends APIResource {
   }
 
   // Filter files out by non-media
-  public nonMediaFiles () {
+  nonMediaFiles(): APIList<UserFile> {
     return this.files().filter(NON_MEDIA_FILES_FILTER);
+  }
+
+  // Not handled in API so locking possibility to send requests
+  /* istanbul ignore next */
+  send(): Promise<AxiosResponse> {
+    return Promise.reject();
   }
 
 }

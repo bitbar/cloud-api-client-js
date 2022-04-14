@@ -19,18 +19,18 @@ export class APIAdminListDevices extends APIList {
    *
    * Constructor
    */
-  constructor (parent: APIEntity<any> | API) {
+  constructor (parent: APIEntity | API) {
     super(parent);
     this.push('admin', 'devices');
   }
 
   // /devices/filters
-  public filters () {
+  filters () {
     return new APIResource(this).push('filters');
   }
 
   // /devices/cleanup-configurations
-  public cleanupConfigurations () {
+  cleanupConfigurations () {
     return new APIListCleanupConfigurations(this);
   }
 
@@ -39,12 +39,12 @@ export class APIAdminListDevices extends APIList {
    *
    * @param {number} id - Resource ID
    */
-  public cleanupConfiguration (id: number) {
+  cleanupConfiguration (id: number) {
     return new APIResourceCleanupConfiguration(this, id);
   }
 
   // /devices/desktop-browser-capabilities
-  public desktopBrowserCapabilities () {
+  desktopBrowserCapabilities () {
     return new APIResource(this).push('desktop-browser-capabilities');
   }
 

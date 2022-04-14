@@ -10,7 +10,7 @@ import {postAdminDeviceSessionChangeBillable} from './factory/postAdminDeviceSes
 export class APIAdminResourceDeviceSession extends APIResourceDeviceSessionCommon {
 
   // /admin/device-sessions/{id}/changebillable
-  public changeBillable (billable: boolean) {
+  changeBillable (billable: boolean) {
     return postAdminDeviceSessionChangeBillable(this, billable);
   }
 

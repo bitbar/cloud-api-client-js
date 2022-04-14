@@ -26,12 +26,12 @@ export class APIResourceBuild extends APIResource {
   }
 
   // /builds/{id}/abort
-  public abort() {
+  abort() {
     return new APIResource(this).push('abort');
   }
 
   // /builds/{id}/output-file-set/files
-  public outputFiles() {
+  outputFiles() {
     return new APIList(this).push('output-file-set', 'files');
   }
 

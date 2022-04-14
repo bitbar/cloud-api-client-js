@@ -25,12 +25,12 @@ export class APIAdminResourceAccountService extends APIResource {
   }
 
   // /account-services/{id}/activate
-  public activate () {
+  activate () {
     return new APIResource(this).push('activate').post();
   }
 
   // /account-services/{id}/deactivate
-  public deactivate () {
+  deactivate () {
     return new APIResource(this).push('deactivate').post();
   }
 

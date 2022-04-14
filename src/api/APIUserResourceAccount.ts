@@ -23,17 +23,17 @@ export class APIUserResourceAccount extends APIResource {
   }
 
   // /account/additional-users
-  public additionalUsers() {
+  additionalUsers() {
     return new APIList(this).push('additional-users');
   }
 
   // /account/additional-users/{id}
-  public additionalUser(id: number) {
+  additionalUser(id: number) {
     return new APIResourceAdditionalUser(this, id);
   }
 
   // /account-services/{id}/billing-period
-  public serviceBillingPeriod(id: number) {
+  serviceBillingPeriod(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

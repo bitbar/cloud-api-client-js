@@ -26,12 +26,12 @@ export class APIResourceAccessGroup extends APIResource {
   }
 
   // /access-groups/{id}/users
-  public users() {
+  users() {
     return new APIList(this).push('users');
   }
 
   // /access-groups/{id}/users/{id}
-  public user(id: number) {
+  user(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -40,12 +40,12 @@ export class APIResourceAccessGroup extends APIResource {
   }
 
   // /access-groups/{id}/resources
-  public resources() {
+  resources() {
     return new APIList(this).push('resources');
   }
 
   // /access-groups/{id}/resources/{id}
-  public resource(id: number) {
+  resource(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

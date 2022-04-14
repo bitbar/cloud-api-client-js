@@ -29,38 +29,38 @@ export class APIAdminResourceRunStandalone extends APIResource<any> {
   }
 
   // /runs/{id}/abort
-  public abort () {
+  abort () {
     return new APIResource(this).push('abort').post();
   }
 
   // /runs/{id}/changebillable
-  public changeBillable (billable: boolean) {
+  changeBillable (billable: boolean) {
     return new APIResource(this).push('changebillable').post().params({
       billable
     });
   }
 
   // /runs/{id}/changepriority
-  public changePriority (priority: boolean) {
+  changePriority (priority: boolean) {
     return new APIResource(this).push('changepriority').post().params({
       priority
     });
   }
 
   // /runs/{id}/retry
-  public retry (ids?: Array<number>) {
+  retry (ids?: Array<number>) {
     return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
       timeout: 0
     });
   }
 
   // /runs/{id}/device-sessions
-  public deviceSessions () {
+  deviceSessions () {
     return new APIList(this).shift().push('device-sessions');
   }
 
   // /runs/{id}/device-sessions/{id}
-  public deviceSession (id: number) {
+  deviceSession (id: number) {
     return new APIResourceDeviceSessionCommon(this, id).shift();
   }
 

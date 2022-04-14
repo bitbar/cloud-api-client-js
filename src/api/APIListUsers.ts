@@ -22,27 +22,27 @@ export class APIListUsers extends APIList {
   }
 
   // /users/activate
-  public activate() {
+  activate() {
     return new APIResource(this).push('activate').post();
   }
 
   // /users/recoveries
-  public recoveries() {
+  recoveries() {
     return new APIResource(this).push('recoveries');
   }
 
   // /users/passwordRecovery
-  public passwordRecovery() {
+  passwordRecovery() {
     return new APIResource(this).push('password-recovery');
   }
 
   // /users/resetApiKey
-  public resetApiKey() {
+  resetApiKey() {
     return new APIResource(this).push('reset-api-key');
   }
 
   // /users/resetApiKey
-  public validateVatId() {
+  validateVatId() {
     return new APIResource(this).push('validateVatId');
   }
 

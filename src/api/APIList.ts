@@ -1,51 +1,46 @@
 import {AxiosResponse} from "axios";
 import {FilterBuilder} from '../FilterBuilder'
 import {APIEntity} from './APIEntity'
+import {QueryParams} from "./HTTP.model";
 
 
-/**
- * Default limit
- *
- * @constant
- * @type {number}
- * @default
- */
-const DEFAULT_LIMIT = 20;
+export const DEFAULT_LIMIT: number = 20;
+export const DEFAULT_OFFSET: number = 0;
 
-/**
- * Default offset
- *
- * @constant
- * @type {number}
- * @default
- */
-const DEFAULT_OFFSET = 0;
+export enum APIOrder {
+  asc = 'a',
+  desc = 'd'
+}
 
-/**
- * API Order Enum
- */
-enum APIOrder {
-  'asc' = 'a',
-  'desc' = 'd'
+export interface CollectionQueryParams extends QueryParams {
+  sort: string;
+  limit: number;
+  offset: number;
+}
+
+export type CollectionResponse<T> = {
+  data: Array<T>;
+  empty: boolean;
+  id: number;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  search: string;
+  selfURI: string;
+  sort: string;
+  total: number;
 }
 
 
-/**
- * APIList
- *
- * @class
- * @extends APIEntity
- */
-export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
+export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA = any>
+  extends APIEntity<CollectionResponse<RESPONSE>, Partial<CollectionQueryParams>, DATA> {
 
   /**
-   * Create
    * Shortcut for sending data POST
-   *
-   * @param {object} data
    */
-  public create(data: object): Promise<AxiosResponse<Array<T>>> {
-    return this.post().data(data).send();
+  create(data: DATA): Promise<AxiosResponse<RESPONSE>> {
+    return this.post().data(data).send<RESPONSE>();
   }
 
   /**
@@ -54,9 +49,8 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @public
    * @param {string} name - Name of the column according to which the data will be sorted
    * @param {string} [order=a] - Sorting order. Possibilities: 'a', 'd'
-   * @returns this
    */
-  public sort(name: string, order: APIOrder = APIOrder.asc): this {
+  sort(name: string, order: APIOrder = APIOrder.asc): this {
     return this.params({
       sort: `${name}_${order}`
     });
@@ -69,7 +63,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @param {number} [limit=DEFAULT_LIMIT] - Limit to be set
    * @returns this
    */
-  public limit(limit = DEFAULT_LIMIT): this {
+  limit(limit = DEFAULT_LIMIT): this {
     if (!Number.isNatural(limit)) {
       throw new Error(`Limit '${limit}' is invalid!`);
     }
@@ -85,7 +79,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @public
    * @returns number
    */
-  public getLimit(): number {
+  getLimit(): number {
     const params = this.getParams();
     return params.limit == null ? DEFAULT_LIMIT : <number>params.limit;
   }
@@ -96,7 +90,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @public
    * @returns this
    */
-  public noLimit(): this {
+  noLimit(): this {
     return this.limit(0);
   }
 
@@ -107,7 +101,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @param {number} [offset=DEFAULT_OFFSET] - Offset to be set
    * @returns this
    */
-  public offset(offset: number = DEFAULT_OFFSET): this {
+  offset(offset: number = DEFAULT_OFFSET): this {
     if (!Number.isNatural(offset)) {
       throw new Error(`Offset '${offset}' is invalid!`);
     }
@@ -125,7 +119,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @param {number} to - To index
    * @returns this
    */
-  public between(from: number, to: number): this {
+  between(from: number, to: number): this {
     if (!Number.isNatural(from)) {
       throw new Error(`From '${from}' is invalid!`);
     }
@@ -147,7 +141,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @param {number} idx - Index
    * @returns this
    */
-  public only(idx: number): this {
+  only(idx: number): this {
     if (!Number.isNatural(idx)) {
       throw new Error(`Index '${idx}' is invalid!`);
     }
@@ -165,7 +159,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @param {number} [page=1] - Page number (counted from 1)
    * @returns this
    */
-  public page(page = 1): this {
+  page(page = 1): this {
     if (!Number.isNatural(page) || page == 0) {
       throw new Error(`Page '${page}' is invalid!`);
     }
@@ -189,7 +183,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @param {string} query - Query to search for
    * @returns this
    */
-  public search(query: string): this {
+  search(query: string): this {
     if (typeof query !== 'string') {
       throw new Error('Search query must be a string!');
     }
@@ -206,7 +200,7 @@ export class APIList<T = any, P = T> extends APIEntity<Array<T>, P> {
    * @param {FilterBuilder|string} filter - Filter
    * @returns this
    */
-  public filter(filter: FilterBuilder | string): this {
+  filter(filter: FilterBuilder | string): this {
     const isFilterBuilder = filter instanceof FilterBuilder;
 
     if (typeof filter !== 'string' && !isFilterBuilder) {

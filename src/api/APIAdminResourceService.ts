@@ -27,17 +27,17 @@ export class APIAdminResourceService extends APIResource {
   }
 
   // /services/{id}/activate
-  public activate() {
+  activate() {
     return new APIResource(this).push('activate').post();
   }
 
   // /services/{id}/deactivate
-  public deactivate() {
+  deactivate() {
     return new APIResource(this).push('deactivate').post();
   }
 
   // /services/{id}/roles
-  public roles() {
+  roles() {
     return new APIList(this).push('roles');
   }
 

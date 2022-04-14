@@ -11,7 +11,7 @@ import {APIResourceRunCommon} from './APIResourceRunCommon'
 export class APIResourceRun extends APIResourceRunCommon {
 
   // /runs/{id}/device-sessions/{id}
-  public deviceSession(id: number) {
+  deviceSession(id: number) {
     return new APIResourceDeviceSession(this, id);
   }
 

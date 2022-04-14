@@ -27,7 +27,7 @@ export class APIResourceDevice extends APIResource {
   }
 
   // /devices/{id}/properties
-  public properties() {
+  properties() {
     return new APIList(this).push('properties');
   }
 

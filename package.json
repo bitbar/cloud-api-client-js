@@ -6,8 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "npx rollup -c",
-    "test": "npx jest",
-    "test:coverage": "npx jest --coverage=true",
+    "test": "npx jest --runInBand",
+    "test:coverage": "npx jest --coverage=true --runInBand",
     "lint": "npx eslint -c .eslintrc.js --ext .ts src",
     "docs": "npx typedoc --out ./docs --ignoreCompilerErrors --mode modules --module umd --target ES5 --theme default --includes ./src src/CloudAPIClient.ts"
   },

@@ -1,123 +1,155 @@
-import {CloudAPIClient} from '../src/CloudAPIClient';
+import {CloudAPIClient} from './CloudAPIClient';
 
-// FilterBuilder
+
 describe('FilterBuilder', () => {
   const FilterBuilder = CloudAPIClient.FilterBuilder;
 
-  describe('Instance', () => {
-    it('Is created properly', () => {
-      const f = new FilterBuilder();
-      expect(f).not.toBeUndefined();
-      expect(f).toBeInstanceOf(FilterBuilder);
-    });
-
-    it('Empty instace returns empty string', () => {
-      const f = new FilterBuilder();
-      expect(f.toString()).toEqual('');
-    });
+  it('Empty instance should return empty string', () => {
+    const f = new FilterBuilder();
+    expect(f).not.toBeUndefined();
+    expect(f).toBeInstanceOf(FilterBuilder);
+    expect(f.toString()).toEqual('');
   });
 
-  describe('.gt', () => {
-    it('Is generating proper string for number', () => {
+  describe('@gt', () => {
+    it('should generate proper string for number', () => {
       const f = new FilterBuilder();
       f.gt('test', 1);
       expect(f.toString()).toEqual('test_gt_1');
     });
   });
 
-  describe('.lt', () => {
-    it('Is generating proper string for number', () => {
+  describe('@lt', () => {
+    it('should generate proper string for number', () => {
       const f = new FilterBuilder();
       f.lt('test', 1);
       expect(f.toString()).toEqual('test_lt_1');
     });
   });
 
-  describe('.after', () => {
+  describe('@after', () => {
     const test = new Date();
 
-    it('Is generating proper string for timestamp', () => {
+    it('should generate proper string for timestamp', () => {
       const f = new FilterBuilder();
       f.after('test', test.getTime());
       expect(f.toString()).toEqual('test_after_' + test.getTime());
     });
 
-    it('Is generating proper string for Date instance', () => {
+    it('should generate proper string for Date instance', () => {
       const f = new FilterBuilder();
       f.after('test', test);
       expect(f.toString()).toEqual('test_after_' + test.getTime());
     });
   });
 
-  describe('.before', () => {
+  describe('@afterorequal', () => {
     const test = new Date();
 
-    it('Is generating proper string for timestamp', () => {
+    it('should generate proper string for timestamp', () => {
+      const f = new FilterBuilder();
+      f.afterorequal('test', test.getTime());
+      expect(f.toString()).toEqual('test_afterorequal_' + test.getTime());
+    });
+
+    it('should generate proper string for Date instance', () => {
+      const f = new FilterBuilder();
+      f.afterorequal('test', test);
+      expect(f.toString()).toEqual('test_afterorequal_' + test.getTime());
+    });
+  });
+
+  describe('@before', () => {
+    const test = new Date();
+
+    it('should generate proper string for timestamp', () => {
       const f = new FilterBuilder();
       f.before('test', test.getTime());
       expect(f.toString()).toEqual('test_before_' + test.getTime());
     });
 
-    it('Is generating proper string for Date instance', () => {
+    it('should generate proper string for Date instance', () => {
       const f = new FilterBuilder();
       f.before('test', test);
       expect(f.toString()).toEqual('test_before_' + test.getTime());
     });
   });
 
-  describe('.on', () => {
+  describe('@beforeorequal', () => {
     const test = new Date();
 
-    it('Is generating proper string for timestamp', () => {
+    it('should generate proper string for timestamp', () => {
+      const f = new FilterBuilder();
+      f.beforeorequal('test', test.getTime());
+      expect(f.toString()).toEqual('test_beforeorequal_' + test.getTime());
+    });
+
+    it('should generate proper string for Date instance', () => {
+      const f = new FilterBuilder();
+      f.beforeorequal('test', test);
+      expect(f.toString()).toEqual('test_beforeorequal_' + test.getTime());
+    });
+  });
+
+  describe('@on', () => {
+    const test = new Date();
+
+    it('should generate proper string for timestamp', () => {
       const f = new FilterBuilder();
       f.on('test', test.getTime());
       expect(f.toString()).toEqual('test_on_' + test.getTime());
     });
 
-    it('Is generating proper string for Date instance', () => {
+    it('should generate proper string for Date instance', () => {
       const f = new FilterBuilder();
       f.on('test', test);
       expect(f.toString()).toEqual('test_on_' + test.getTime());
     });
+
+    it('returns unchanged builder if no value provided', () => {
+      const f = new FilterBuilder();
+      f.on('test', []);
+      expect(f.toString()).toEqual('');
+    });
   });
 
-  describe('.eq', () => {
-    it('Is generating proper string for Date', () => {
+  describe('@eq', () => {
+    it('should generate proper string for Date', () => {
       const test = new Date()
       const f = new FilterBuilder();
       f.eq('test', test);
       expect(f.toString()).toEqual('test_eq_' + test.getTime());
     });
 
-    it('Is generating proper string for timestamp', () => {
+    it('should generate proper string for timestamp', () => {
       const test = Date.now();
       const f = new FilterBuilder();
       f.eq('test', test);
       expect(f.toString()).toEqual('test_eq_' + test);
     });
 
-    it('Is generating proper string for number', () => {
+    it('should generate proper string for number', () => {
       const test = 101;
       const f = new FilterBuilder();
       f.eq('test', test);
       expect(f.toString()).toEqual('test_eq_' + test);
     });
 
-    it('Is generating proper string for true', () => {
+    it('should generate proper string for true', () => {
       const test = true;
       const f = new FilterBuilder();
       f.eq('test', test);
       expect(f.toString()).toEqual('test_eq_' + test);
     });
 
-    it('Is generating proper string for false', () => {
+    it('should generate proper string for false', () => {
       const test = false;
       const f = new FilterBuilder();
       f.eq('test', test);
       expect(f.toString()).toEqual('test_eq_' + test);
     });
 
-    it('Is generating proper string for string', () => {
+    it('should generate proper string for string', () => {
       const test = 'TEST';
       const f = new FilterBuilder();
       f.eq('test', test);
@@ -125,8 +157,8 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.contains', () => {
-    it('Is generating proper string', () => {
+  describe('@contains', () => {
+    it('should generate proper string', () => {
       const test = 'TEST';
       const f = new FilterBuilder();
       f.contains('test', test);
@@ -134,67 +166,97 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.isnull', () => {
-    it('Is generating proper string', () => {
+  describe('@like', () => {
+    it('should generate proper string', () => {
+      const test = 'TEST';
+      const f = new FilterBuilder();
+      f.like('test', test);
+      expect(f.toString()).toEqual('test_like_' + test);
+    });
+  });
+
+  describe('@notlike', () => {
+    it('should generate proper string', () => {
+      const test = 'TEST';
+      const f = new FilterBuilder();
+      f.notlike('test', test);
+      expect(f.toString()).toEqual('test_notlike_' + test);
+    });
+  });
+
+  describe('@isnull', () => {
+    it('should generate proper string', () => {
       const f = new FilterBuilder();
       f.isnull('test');
       expect(f.toString()).toEqual('test_isnull');
     });
   });
 
-  describe('.in', () => {
-    it('Is generating proper string for list of booleans', () => {
+  describe('@in', () => {
+    it('should generate proper string for list of booleans', () => {
       const test = [true, false];
       const f = new FilterBuilder();
       f.in('test', test);
       expect(f.toString()).toEqual('test_in_' + test.join('|'));
     });
 
-    it('Is generating proper string for list of dates', () => {
+    it('should generate proper string for list of dates', () => {
       const test = [new Date(), new Date()];
       const f = new FilterBuilder();
       f.in('test', test);
       expect(f.toString()).toEqual('test_in_' + test.join('|'));
     });
 
-    it('Is generating proper string for list of numbers', () => {
+    it('should generate proper string for list of numbers', () => {
       const test = [1, 2, 3];
       const f = new FilterBuilder();
       f.in('test', test);
       expect(f.toString()).toEqual('test_in_' + test.join('|'));
     });
 
-    it('Is generating proper string for list of strings', () => {
+    it('should generate proper string for list of strings', () => {
       const test = ['a', 'b'];
       const f = new FilterBuilder();
       f.in('test', test);
       expect(f.toString()).toEqual('test_in_' + test.join('|'));
     });
+
+    it('should generate proper string for list containing null and another values', () => {
+      const f = new FilterBuilder();
+      f.in('test', [1, null]);
+      expect(f.toString()).toEqual('test_inornull_1');
+    });
+
+    it('should generate proper string for list containing only null', () => {
+      const f = new FilterBuilder();
+      f.in('test', [null]);
+      expect(f.toString()).toEqual('test_isnull');
+    });
   });
 
-  describe('.notin', () => {
-    it('Is generating proper string for list of booleans', () => {
+  describe('@notin', () => {
+    it('should generate proper string for list of booleans', () => {
       const test = [true, false];
       const f = new FilterBuilder();
       f.notin('test', test);
       expect(f.toString()).toEqual('test_notin_' + test.join('|'));
     });
 
-    it('Is generating proper string for list of dates', () => {
+    it('should generate proper string for list of dates', () => {
       const test = [new Date(), new Date()];
       const f = new FilterBuilder();
       f.notin('test', test);
       expect(f.toString()).toEqual('test_notin_' + test.join('|'));
     });
 
-    it('Is generating proper string for list of numbers', () => {
+    it('should generate proper string for list of numbers', () => {
       const test = [1, 2, 3];
       const f = new FilterBuilder();
       f.notin('test', test);
       expect(f.toString()).toEqual('test_notin_' + test.join('|'));
     });
 
-    it('Is generating proper string for list of strings', () => {
+    it('should generate proper string for list of strings', () => {
       const test = ['a', 'b'];
       const f = new FilterBuilder();
       f.notin('test', test);
@@ -202,22 +264,22 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.raw', () => {
-    it('Is generating proper string for single row item', () => {
+  describe('@raw', () => {
+    it('should generate proper string for single row item', () => {
       const test = 'test_eq_TEST';
       const f = new FilterBuilder();
       f.raw(test);
       expect(f.toString()).toEqual(test);
     });
 
-    it('Is generating proper string for list of row items', () => {
+    it('should generate proper string for list of row items', () => {
       const test = ['test_eq_TEST1', 'test_eq_TEST2'];
       const f = new FilterBuilder();
       f.raw(test);
       expect(f.toString()).toEqual(test.join(';'));
     });
 
-    it('Is throwing SyntaxError in case of giving invalid filter', () => {
+    it('should throw SyntaxError in case of giving invalid filter', () => {
       const test = ['test_eq_TEST1', 'x_test_eq_TEST2'];
       const f = new FilterBuilder();
       expect(
@@ -226,10 +288,10 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.isFilterPart', () => {
+  describe('@isFilterPart', () => {
     const f = new FilterBuilder();
 
-    describe('Is returning true for valid strings', () => {
+    describe('should return true for valid strings', () => {
       const testStrings = [
         'test_eq_true',
         'test_on_1537095505651',
@@ -242,14 +304,14 @@ describe('FilterBuilder', () => {
         'test_notin_a|b|c'
       ];
 
-      for(const test of testStrings) {
+      for (const test of testStrings) {
         it(test, () => {
           expect(f.isFilterPart(test)).toEqual(true);
         });
       }
     });
 
-    it('Is returning false for invalid string', () => {
+    it('should return false for invalid string', () => {
       expect(f.isFilterPart('x_test_eq_TEST')).toEqual(false);
       expect(f.isFilterPart('test_xx_TEST')).toEqual(false);
     });

@@ -1,6 +1,5 @@
-// APIEntity
-import API from "../src/API";
-import APIEntity from "../src/api/APIEntity";
+import {API} from "../API";
+import {APIEntity} from "./APIEntity";
 
 
 describe('APIEntity', () => {
@@ -38,7 +37,7 @@ describe('APIEntity', () => {
   });
 
   describe('@push', () => {
-    it(' should add url parts to stack', () => {
+    it('should add url parts to stack', () => {
       const call = service.push('test', 'me', 'properly');
       expect(service.first).toEqual('test');
       expect(service.last).toEqual('properly');

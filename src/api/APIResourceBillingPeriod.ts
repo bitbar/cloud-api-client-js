@@ -25,7 +25,7 @@ export class APIResourceBillingPeriod extends APIResource {
   }
 
   // /billing-periods/{id}/receipt
-  public receipt() {
+  receipt() {
     return new APIResource(this).push('receipt').setRequestConfig({
       responseType: 'arraybuffer'
     });

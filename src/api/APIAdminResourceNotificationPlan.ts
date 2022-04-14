@@ -26,17 +26,17 @@ export class APIAdminResourceNotificationPlan extends APIResource {
   }
 
   // /notification-plans/{id}/check
-  public check () {
+  check () {
     return new APIList(this).push('check');
   }
 
   // /notification-plans/{id}/test
-  public test () {
+  test () {
     return new APIResource(this).push('test');
   }
 
   // /notification-plans/{id}/execute
-  public execute () {
+  execute () {
     return new APIResource(this).push('execute');
   }
 
