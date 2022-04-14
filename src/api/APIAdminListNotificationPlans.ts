@@ -21,12 +21,12 @@ export class APIAdminListNotificationPlans extends APIList {
   }
 
   // /notification-plans/channels
-  public channels () {
+  channels () {
     return new APIList(this).push('channels');
   }
 
   // /notification-plans/scopes
-  public scopes () {
+  scopes () {
     return new APIList(this).push('scopes');
   }
 

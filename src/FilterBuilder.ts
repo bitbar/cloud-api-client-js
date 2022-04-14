@@ -10,6 +10,104 @@ export class FilterBuilder {
 
   private readonly filters: Array<Filter> = [];
 
+  gt(name: string, value: number): this {
+    return this.add(name, value, 'gt');
+  }
+
+
+  lt(name: string, value: number): this {
+    return this.add(name, value, 'lt');
+  }
+
+  after(name: string, value: Date | number): this {
+    return this.add(name, value, 'after', true);
+  }
+
+  afterorequal(name: string, value: Date | number): this {
+    return this.add(name, value, 'afterorequal', true);
+  }
+
+  before(name: string, value: Date | number): this {
+    return this.add(name, value, 'before', true);
+  }
+
+  beforeorequal(name: string, value: Date | number): this {
+    return this.add(name, value, 'beforeorequal', true);
+  }
+
+  on(name: string, value: any): this {
+    return this.add(name, value, 'on');
+  }
+
+  eq(name: string, value: any): this {
+    return this.add(name, value, 'eq');
+  }
+
+  contains(name: string, value: string): this {
+    return this.add(name, value, 'contains');
+  }
+
+  like(name: string, value: string): this {
+    return this.add(name, value, 'like');
+  }
+
+  notlike(name: string, value: string): this {
+    return this.add(name, value, 'notlike');
+  }
+
+  isnull(name: string): this {
+    return this.add(name, undefined, 'isnull');
+  }
+
+  in(name: string, value: Array<any>): this {
+    return this.add(name, value, 'in', true);
+  }
+
+  notin(name: string, value: Array<any>): this {
+    return this.add(name, value, 'notin', true);
+  }
+
+  raw(filter: Filter | string | Filter[] | string[]): void {
+    const filters = Array.wrap(filter);
+    for (const filter of filters) {
+      if (this.isFilterPart(filter)) {
+        this.filters.push(filter);
+      } else {
+        throw new SyntaxError(`Filter ${filter} has invalid syntax`);
+      }
+    }
+  }
+
+
+  /**
+   * Check if given string is proper filter part
+   */
+  isFilterPart(str: string): boolean {
+    return /^[a-zA-Z0-9.]{2,12}_(?:isnull$|(?:gt|lt|(?:after|before)(?:orequal)?|on|eq|contains|like|(?:not)?in)_)/.test(<string>str);
+  }
+
+  toString(): string {
+    const parts: Array<string> = [];
+
+    let part: string,
+      val: string;
+
+    for (const filter of this.filters) {
+      if (typeof filter === 'string') {
+        part = filter;
+      } else {
+        val = '';
+        if (filter.value.length > 1 || typeof filter.value[0] !== 'undefined') {
+          val = `_${filter.value.join('|')}`;
+        }
+        part = `${filter.name}_${filter.operand}${val}`;
+      }
+      parts.push(part);
+    }
+
+    return parts.join(';');
+  }
+
   /**
    * Add filter to filters list
    * @param name {string} Name
@@ -18,7 +116,7 @@ export class FilterBuilder {
    * @param [checkNull=false] {boolean} Check null?
    * @returns {FilterBuilder}
    */
-  private add<T = any>(name: string, value: T, operand: string, checkNull = false): FilterBuilder {
+  private add<T = any>(name: string, value: T, operand: string, checkNull = false): this {
 
     let _value = Array.wrap(value);
 
@@ -40,8 +138,8 @@ export class FilterBuilder {
       for (const v of _value) {
         if (v !== null) {
           continue;
-          isNull = true;
         }
+        isNull = true;
       }
 
       if (isNull) {
@@ -58,107 +156,6 @@ export class FilterBuilder {
     this.filters.push(new Filter<Array<T>>(name, _value, operand));
 
     return this;
-  }
-
-
-  public gt(name: string, value: number) {
-    return this.add(name, value, 'gt');
-  }
-
-  public lt(name: string, value: number) {
-    return this.add(name, value, 'lt');
-  }
-
-  public after(name: string, value: Date | number) {
-    return this.add(name, value, 'after', true);
-  }
-
-  public afterorequal(name: string, value: Date | number) {
-    return this.add(name, value, 'afterorequal', true);
-  }
-
-  public before(name: string, value: Date | number) {
-    return this.add(name, value, 'before', true);
-  }
-
-  public beforeorequal(name: string, value: Date | number) {
-    return this.add(name, value, 'beforeorequal', true);
-  }
-
-  public on(name: string, value: any) {
-    return this.add(name, value, 'on');
-  }
-
-  public eq(name: string, value: any) {
-    return this.add(name, value, 'eq');
-  }
-
-  public contains(name: string, value: string) {
-    return this.add(name, value, 'contains');
-  }
-
-  public like(name: string, value: string) {
-    return this.add(name, value, 'like');
-  }
-
-  public notlike(name: string, value: string) {
-    return this.add(name, value, 'notlike');
-  }
-
-  public isnull(name: string) {
-    return this.add(name, undefined, 'isnull');
-  }
-
-  public in(name: string, value: Array<any>) {
-    return this.add(name, value, 'in', true);
-  }
-
-  public notin(name: string, value: Array<any>) {
-    return this.add(name, value, 'notin', true);
-  }
-
-
-  public raw(filter: Filter | string | Filter[] | string[]) {
-    const filters = Array.wrap(filter);
-    for (const filter of filters) {
-      if (this.isFilterPart(filter)) {
-        this.filters.push(filter);
-      } else {
-        throw new SyntaxError(`Filter ${filter} has invalid syntax`);
-      }
-    }
-  }
-
-  /**
-   * Check if given string is proper filter part
-   */
-  public isFilterPart(str: string) {
-    return /^[a-zA-Z0-9.]{2,12}_(?:isnull$|(?:gt|lt|(?:after|before)(?:orequal)?|on|eq|contains|like|(?:not)?in)_)/.test(<string>str);
-  }
-
-  /**
-   * To string
-   */
-  public toString() {
-    const parts: Array<string> = [];
-
-    let part: string,
-      val: string;
-
-    for (const filter of this.filters) {
-      if (typeof filter === 'string') {
-        part = filter;
-      } else {
-        val = '';
-        if (filter.value.length > 1 || typeof filter.value[0] !== 'undefined') {
-          val = `_${filter.value.join('|')}`;
-        }
-        part = `${filter.name}_${filter.operand}${val}`;
-      }
-      parts.push(part);
-    }
-
-    return parts.join(';');
   }
 }
 

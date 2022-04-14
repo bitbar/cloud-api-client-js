@@ -21,7 +21,7 @@ export class APIResourceBroker extends APIResource {
   }
 
   // /broker/hubs
-  public hubs() {
+  hubs() {
     return new APIList(this).push('hubs');
   }
 

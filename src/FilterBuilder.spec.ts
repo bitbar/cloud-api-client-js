@@ -1,6 +1,6 @@
-import {CloudAPIClient} from '../src/CloudAPIClient';
+import {CloudAPIClient} from './CloudAPIClient';
 
-// FilterBuilder
+
 describe('FilterBuilder', () => {
   const FilterBuilder = CloudAPIClient.FilterBuilder;
 
@@ -17,7 +17,7 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.gt', () => {
+  describe('@gt', () => {
     it('Is generating proper string for number', () => {
       const f = new FilterBuilder();
       f.gt('test', 1);
@@ -25,7 +25,7 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.lt', () => {
+  describe('@lt', () => {
     it('Is generating proper string for number', () => {
       const f = new FilterBuilder();
       f.lt('test', 1);
@@ -33,7 +33,7 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.after', () => {
+  describe('@after', () => {
     const test = new Date();
 
     it('Is generating proper string for timestamp', () => {
@@ -49,7 +49,23 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.before', () => {
+  describe('@afterorequal', () => {
+    const test = new Date();
+
+    it('Is generating proper string for timestamp', () => {
+      const f = new FilterBuilder();
+      f.afterorequal('test', test.getTime());
+      expect(f.toString()).toEqual('test_afterorequal_' + test.getTime());
+    });
+
+    it('Is generating proper string for Date instance', () => {
+      const f = new FilterBuilder();
+      f.afterorequal('test', test);
+      expect(f.toString()).toEqual('test_afterorequal_' + test.getTime());
+    });
+  });
+
+  describe('@before', () => {
     const test = new Date();
 
     it('Is generating proper string for timestamp', () => {
@@ -65,7 +81,23 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.on', () => {
+  describe('@beforeorequal', () => {
+    const test = new Date();
+
+    it('Is generating proper string for timestamp', () => {
+      const f = new FilterBuilder();
+      f.beforeorequal('test', test.getTime());
+      expect(f.toString()).toEqual('test_beforeorequal_' + test.getTime());
+    });
+
+    it('Is generating proper string for Date instance', () => {
+      const f = new FilterBuilder();
+      f.beforeorequal('test', test);
+      expect(f.toString()).toEqual('test_beforeorequal_' + test.getTime());
+    });
+  });
+
+  describe('@on', () => {
     const test = new Date();
 
     it('Is generating proper string for timestamp', () => {
@@ -79,9 +111,15 @@ describe('FilterBuilder', () => {
       f.on('test', test);
       expect(f.toString()).toEqual('test_on_' + test.getTime());
     });
+
+    it('returns unchanged builder if no value provided', () => {
+      const f = new FilterBuilder();
+      f.on('test', []);
+      expect(f.toString()).toEqual('');
+    });
   });
 
-  describe('.eq', () => {
+  describe('@eq', () => {
     it('Is generating proper string for Date', () => {
       const test = new Date()
       const f = new FilterBuilder();
@@ -125,7 +163,7 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.contains', () => {
+  describe('@contains', () => {
     it('Is generating proper string', () => {
       const test = 'TEST';
       const f = new FilterBuilder();
@@ -134,7 +172,25 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.isnull', () => {
+  describe('@like', () => {
+    it('Is generating proper string', () => {
+      const test = 'TEST';
+      const f = new FilterBuilder();
+      f.like('test', test);
+      expect(f.toString()).toEqual('test_like_' + test);
+    });
+  });
+
+  describe('@notlike', () => {
+    it('Is generating proper string', () => {
+      const test = 'TEST';
+      const f = new FilterBuilder();
+      f.notlike('test', test);
+      expect(f.toString()).toEqual('test_notlike_' + test);
+    });
+  });
+
+  describe('@isnull', () => {
     it('Is generating proper string', () => {
       const f = new FilterBuilder();
       f.isnull('test');
@@ -142,7 +198,7 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.in', () => {
+  describe('@in', () => {
     it('Is generating proper string for list of booleans', () => {
       const test = [true, false];
       const f = new FilterBuilder();
@@ -170,9 +226,21 @@ describe('FilterBuilder', () => {
       f.in('test', test);
       expect(f.toString()).toEqual('test_in_' + test.join('|'));
     });
+
+    it('Is generating proper string for list containing null and another values', () => {
+      const f = new FilterBuilder();
+      f.in('test', [1, null]);
+      expect(f.toString()).toEqual('test_inornull_1');
+    });
+
+    it('Is generating proper string for list containing only null', () => {
+      const f = new FilterBuilder();
+      f.in('test', [null]);
+      expect(f.toString()).toEqual('test_isnull');
+    });
   });
 
-  describe('.notin', () => {
+  describe('@notin', () => {
     it('Is generating proper string for list of booleans', () => {
       const test = [true, false];
       const f = new FilterBuilder();
@@ -202,7 +270,7 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.raw', () => {
+  describe('@raw', () => {
     it('Is generating proper string for single row item', () => {
       const test = 'test_eq_TEST';
       const f = new FilterBuilder();
@@ -226,7 +294,7 @@ describe('FilterBuilder', () => {
     });
   });
 
-  describe('.isFilterPart', () => {
+  describe('@isFilterPart', () => {
     const f = new FilterBuilder();
 
     describe('Is returning true for valid strings', () => {

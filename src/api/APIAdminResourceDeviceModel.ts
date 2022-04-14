@@ -27,7 +27,7 @@ export class APIAdminResourceDeviceModel extends APIResource {
   }
 
   // /device-models/{id}/browsers
-  public browsers () {
+  browsers () {
     return new APIList(this).push('browsers');
   }
 

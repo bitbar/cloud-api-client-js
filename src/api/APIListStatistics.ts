@@ -17,7 +17,7 @@ export class APIListStatistics extends APIList {
   }
 
   // /statistics/device-sessions
-  public deviceSessions() {
+  deviceSessions() {
     return new APIList(this).push('device-sessions');
   }
 

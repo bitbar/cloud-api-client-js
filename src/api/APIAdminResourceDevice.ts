@@ -27,27 +27,27 @@ export class APIAdminResourceDevice extends APIResource {
   }
 
   // /admin/devices/{id}/queue
-  public queue () {
+  queue () {
     return new APIList(this).push('queue');
   }
 
   // /admin/devices/{id}/cleanup-configuration
-  public cleanupConfiguration () {
+  cleanupConfiguration () {
     return new APIResource(this).push('cleanup-configuration');
   }
 
   // /admin/devices/{id}/labels
-  public labels () {
+  labels () {
     return new APIList(this).push('labels');
   }
 
   // /admin/devices/{id}/labels/{id}
-  public label (id: number) {
+  label (id: number) {
     return new APIResource(this).push('labels', id);
   }
 
   // /admin/devices/{id}/blink
-  public blink () {
+  blink () {
     return new APIResource(this).push('blink').post();
   }
 

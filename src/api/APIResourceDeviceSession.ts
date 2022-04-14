@@ -12,12 +12,12 @@ import {DeviceSession} from './interface/DeviceSession';
 export class APIResourceDeviceSession extends APIResourceDeviceSessionCommon implements DeviceSession {
 
   // /device-sessions/{id}/abort
-  public abort() {
+  abort() {
     return new APIResource(this).push('abort').post();
   }
 
   // /device-sessions/{id}/retry
-  public retry() {
+  retry() {
     return new APIResource(this).push('retry').post();
   }
 

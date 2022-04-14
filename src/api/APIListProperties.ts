@@ -1,27 +1,20 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
+import {Property} from "./models/Property";
 
-/**
- * APIListProperties
- *
- * @class
- * @extends APIList
- */
-export class APIListProperties extends APIList {
+
+export class APIListProperties extends APIList<Property> {
 
   /**
    * /properties
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: API) {
     super(parent);
     this.push('properties');
   }
 
   // /properties/app-bans?testRunId=id
-  public appBan(id: number) {
+  appBan(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

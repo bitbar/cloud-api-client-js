@@ -3,9 +3,9 @@
  */
 
 export class Filter<T = any> {
-  public name: string;
-  public value: T;
-  public operand: string;
+  name: string;
+  value: T;
+  operand: string;
 
   constructor(name: string, value: T, operand: string) {
     this.name = name;

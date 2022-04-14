@@ -11,7 +11,7 @@ import {APIResourceProject} from './APIResourceProject'
 export class APIAdminResourceProject extends APIResourceProject {
 
   // /unarchive
-  public unarchive () {
+  unarchive () {
     return new APIResource(this).push('unarchive');
   }
 

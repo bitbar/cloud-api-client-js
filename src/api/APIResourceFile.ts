@@ -26,17 +26,17 @@ export class APIResourceFile extends APIResource {
   }
 
   // use this to download file content
-  public file() {
+  file() {
     return new APIResource(this).push('file');
   }
 
   // /files/{id}/icon
-  public icon() {
+  icon() {
     return new APIResource(this).push('icon');
   }
 
   // /files/{id}/tags
-  public tags() {
+  tags() {
     return new APIList(this).push('tags');
   }
 

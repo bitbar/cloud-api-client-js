@@ -25,7 +25,7 @@ export class APIResourceNotification extends APIResource {
   }
 
   // /notifications/{id}/test
-  public test() {
+  test() {
     return new APIResource(this).push('test');
   }
 

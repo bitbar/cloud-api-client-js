@@ -22,12 +22,12 @@ export class APIAdminResourceDeviceTime extends APIResource {
   }
 
   // /device-time/count-session-report
-  public countSessionReport() {
+  countSessionReport() {
     return new APIList(this).push('count-session-report');
   }
 
   // /device-time/step-time-report
-  public stepTimeReport() {
+  stepTimeReport() {
     return new APIList(this).push('step-time-report');
   }
 

@@ -1,33 +1,25 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
+import APIResourceUser from "./APIResourceUser";
+import {BasicDeviceTime, DeviceTime} from "./models/DeviceTime";
 
 
-/**
- * APIListDeviceTime
- *
- * @class
- * @extends APIList
- */
-export class APIListDeviceTime extends APIList {
+export class APIListDeviceTime extends APIList<DeviceTime> {
 
   /**
    * /device-time
-   *
-   * Constructor
    */
-  constructor (parent: APIEntity<any> | API) {
+  constructor(parent: APIResourceUser) {
     super(parent);
     this.push('device-time');
   }
 
   // /device-time/reserved
-  public reserved () {
+  reserved(): APIList<BasicDeviceTime> {
     return new APIList(this).push('reserved');
   }
 
   // /device-time/used
-  public used () {
+  used(): APIList<BasicDeviceTime> {
     return new APIList(this).push('used');
   }
 

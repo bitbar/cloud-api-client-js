@@ -26,7 +26,7 @@ export class APIResourceCleanupConfiguration extends APIResource {
   }
 
   // /cleanup-configurations/specific
-  public devices() {
+  devices() {
     return new APIList(this).push('devices');
   }
 

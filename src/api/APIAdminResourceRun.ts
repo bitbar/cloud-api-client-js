@@ -12,12 +12,12 @@ import {postDeviceRunIds} from './factory/postDeviceRunIds';
 export class APIAdminResourceRun extends APIResourceRunCommon {
 
   // /runs/{id}/build-logs.zip
-  public buildLogsZip (ids?: Array<number>) {
+  buildLogsZip (ids?: Array<number>) {
     return postDeviceRunIds(this, 'build-logs.zip', ids);
   }
 
   // /runs/{id}/device-sessions/{id}
-  public deviceSession (id: number) {
+  deviceSession (id: number) {
     return new APIAdminResourceDeviceSession(this, id);
   }
 

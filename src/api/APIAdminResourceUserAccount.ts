@@ -23,12 +23,12 @@ export class APIAdminResourceUserAccount extends APIResource<any> {
   }
 
   // /account/roles
-  public roles() {
+  roles() {
     return new APIList(this).push('roles');
   }
 
   // /account/roles/{id}
-  public role(id: number) {
+  role(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -37,14 +37,14 @@ export class APIAdminResourceUserAccount extends APIResource<any> {
   }
 
   // /account-services
-  public services() {
+  services() {
     const a = new APIList(this);
     a.last += '-services';
     return a;
   }
 
   // /update-account
-  public update() {
+  update() {
     const a = new APIResource(this);
     a.last = 'update-account';
     return a.post();

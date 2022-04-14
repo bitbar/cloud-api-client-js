@@ -1,7 +1,6 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
-import {APIListPurchased} from './APIListPurchased'
 
 /**
  * APIListServices
@@ -17,17 +16,12 @@ export class APIListServices extends APIList {
     this.push('services');
   }
 
-  // /services/purchased
-  public purchased() {
-    return new APIListPurchased(this);
-  }
-
   // /services/available
-  public available() {
+  available() {
     return new APIList(this).push('available');
   }
 
-  public active() {
+  active() {
     const a = new APIList(this);
     if (this.first === 'me') {
       a.push('active');

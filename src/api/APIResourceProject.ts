@@ -28,22 +28,22 @@ export class APIResourceProject extends APIResource {
   }
 
   // /projects/{id}/runs
-  public runs() {
+  runs() {
     return new APIList(this).push('runs');
   }
 
   // /projects/{id}/runs/{id}
-  public run(id: number) {
+  run(id: number) {
     return new APIResourceRun(this, id);
   }
 
   // /projects/{id}/runs-extended
-  public runsExtended() {
+  runsExtended() {
     return new APIList(this).push('runs-extended');
   }
 
   // /projects/{id}/runs-extended/{id}
-  public runExtended(id: number) {
+  runExtended(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -52,22 +52,22 @@ export class APIResourceProject extends APIResource {
   }
 
   // /projects/{id}/files
-  public files() {
+  files() {
     return new APIList(this).push('files');
   }
 
   // /projects/{id}/files.zip
-  public filesZip() {
+  filesZip() {
     return new APIResource(this).push('files.zip');
   }
 
   // /projects/{id}/sharings
-  public sharings() {
+  sharings() {
     return new APIList(this).push('sharings');
   }
 
   // /projects/{id}/sharings/{id}
-  public sharing(id: number) {
+  sharing(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

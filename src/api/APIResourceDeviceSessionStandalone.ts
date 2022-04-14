@@ -30,12 +30,12 @@ export class APIResourceDeviceSessionStandalone extends APIResource implements D
   }
 
   // /device-sessions/{id}/connections
-  public connections() {
+  connections() {
     return new APIList(this).push('connections');
   }
 
   // /device-sessions/{id}/connections/{id}
-  public connection(id: number) {
+  connection(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -44,17 +44,17 @@ export class APIResourceDeviceSessionStandalone extends APIResource implements D
   }
 
   // /device-sessions/{id}/input-file-set
-  public input() {
+  input() {
     return new InputFileset(this);
   }
 
   // /device-sessions/{id}/output-file-set
-  public output() {
+  output() {
     return new OutputFileset(this);
   }
 
   // /device-sessions/{id}/release
-  public release() {
+  release() {
     return new APIResource(this).push('release').post();
   }
 

@@ -27,7 +27,7 @@ export class APIAdminResourceCluster extends APIResource {
   }
 
   // /clusters/{id}/devices
-  public devices () {
+  devices () {
     return new APIList(this).push('devices');
   }
 

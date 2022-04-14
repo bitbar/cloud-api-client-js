@@ -26,12 +26,12 @@ export class APIAdminResourceFramework extends APIResource {
   }
 
   // /frameworks/{id}/config
-  public config () {
+  config () {
     return new APIResource(this).push('config');
   }
 
   // /frameworks/{id}/required-roles
-  public requiredRoles () {
+  requiredRoles () {
     return new APIList(this).push('required-roles');
   }
 

@@ -27,69 +27,69 @@ export class APIResourceRunCommon extends APIResource {
   }
 
   // /runs/{id}/abort
-  public abort() {
+  abort() {
     return new APIResource(this).push('abort').post();
   }
 
   // /runs/{id}/data-availability
-  public dataAvailability() {
+  dataAvailability() {
     return new APIList(this).push('data-availability');
   }
 
   // /runs/{id}/device-sessions
-  public deviceSessions() {
+  deviceSessions() {
     return new APIList(this).push('device-sessions');
   }
 
   // /runs/{id}/files.zip
-  public filesZip(ids?: Array<number>) {
+  filesZip(ids?: Array<number>) {
     return postDeviceRunIds(this, 'files.zip', ids);
   }
 
   // /runs/{id}/logs.zip
-  public logsZip(ids?: Array<number>) {
+  logsZip(ids?: Array<number>) {
     return postDeviceRunIds(this, 'logs.zip', ids);
   }
 
   // /runs/{id}/performance.zip
-  public performanceZip(ids?: Array<number>) {
+  performanceZip(ids?: Array<number>) {
     return postDeviceRunIds(this, 'performance.zip', ids);
   }
 
   // /runs/{id}/retry
-  public retry(ids?: Array<number>) {
+  retry(ids?: Array<number>) {
     return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
       timeout: 0
     });
   }
 
   // /runs/{id}/screenshot-names
-  public screenshotNames() {
+  screenshotNames() {
     return new APIList(this).push('screenshot-names');
   }
 
   // /runs/{id}/screenshots
-  public screenshots() {
+  screenshots() {
     return new APIList(this).push('screenshots');
   }
 
   // /runs/{id}/screenshots.zip
-  public screenshotsZip(ids?: Array<number>) {
+  screenshotsZip(ids?: Array<number>) {
     return postDeviceRunIds(this, 'screenshots.zip', ids);
   }
 
   // /runs/{id}/steps
-  public steps() {
+  steps() {
     return new APIList(this).push('steps');
   }
 
   // /runs/{id}/tags
-  public tags() {
+  tags() {
     return new APIList(this).push('tags');
   }
 
   // /runs/{id}/tag
-  public tag(id: number) {
+  tag(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

@@ -28,12 +28,12 @@ export class APIResourceJob extends APIResource {
   }
 
   // /jobs/{id}/builds
-  public builds() {
+  builds() {
     return new APIList(this).push('builds');
   }
 
   // /jobs/{id}/builds/{id}
-  public build(id: number) {
+  build(id: number) {
     return new APIResourceBuild(this, id);
   }
 

@@ -1,29 +1,22 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import APIAdminListDevices from "./APIAdminListDevices";
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
+import {DeviceCleanupConfiguration} from "./models/Device";
 
 
-/**
- * APIListCleanupConfigurations
- *
- * @class
- * @extends APIList
- */
-export class APIListCleanupConfigurations extends APIList {
+export class APIListCleanupConfigurations extends APIList<DeviceCleanupConfiguration> {
 
   /**
-   * /builds/{id}
-   *
-   * Constructor
+   * /cleanup-configurations
    */
-  constructor (parent: APIEntity<any> | API) {
+  constructor(parent: APIAdminListDevices) {
     super(parent);
     this.push('cleanup-configurations');
   }
 
   // /cleanup-configurations/specific
-  public specific () {
+  specific(): APIResource<DeviceCleanupConfiguration> {
     return new APIResource(this).push('specific');
   }
 

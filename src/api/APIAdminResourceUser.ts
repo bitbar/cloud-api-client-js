@@ -28,27 +28,27 @@ export class APIAdminResourceUser extends APIResource {
   }
 
   // /users/{id}/disable
-  public disable() {
+  disable() {
     return new APIResource(this).push('disable');
   }
 
   // /users/{id}/enable
-  public enable() {
+  enable() {
     return new APIResource(this).push('enable');
   }
 
   // /users/{id}/licenses
-  public licenses() {
+  licenses() {
     return new APIList(this).push('licenses');
   }
 
   // /users/{id}/resend-activation
-  public resendActivation() {
+  resendActivation() {
     return new APIResource(this).push('resend-activation').post();
   }
 
   // users/{id}/account
-  public account() {
+  account() {
     return new APIAdminResourceUserAccount(this);
   }
 

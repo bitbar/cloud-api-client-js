@@ -26,12 +26,12 @@ export class APIResourceLabelGroup extends APIResource {
   }
 
   // /label-groups/{id}/labels
-  public labels() {
+  labels() {
     return new APIList(this).push('labels');
   }
 
   // /label-groups/{id}/label
-  public label(id: number) {
+  label(id: number) {
     return new APIResource(this).push('labels', id);
   }
 

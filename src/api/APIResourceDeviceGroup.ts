@@ -26,12 +26,12 @@ export class APIResourceDeviceGroup extends APIResource {
   }
 
   // /device-groups/{id}/devices
-  public devices() {
+  devices() {
     return new APIList(this).push('devices');
   }
 
   // /device-groups/{id}/device/{id}
-  public device(id: number) {
+  device(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -40,12 +40,12 @@ export class APIResourceDeviceGroup extends APIResource {
   }
 
   // /device-groups/{id}/selectors
-  public selectors() {
+  selectors() {
     return new APIList(this).push('selectors');
   }
 
   // /device-groups/{id}/selectors/{id}
-  public selector(id: number) {
+  selector(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -54,7 +54,7 @@ export class APIResourceDeviceGroup extends APIResource {
   }
 
   // /device-groups/{id}/share
-  public share() {
+  share() {
     return new APIResource(this).push('share');
   }
 
