@@ -13,7 +13,8 @@
       "./typings",
       "node_modules/@types"
     ],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "newLine": "lf"
   },
   "exclude": [
     "node_modules"

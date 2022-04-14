@@ -12,6 +12,7 @@ import APIAdminResource from './api/APIAdminResource';
 import APIResourceAccount from './api/APIResourceAccount';
 import APIResource from "./api/APIResource";
 import APIResourceDeviceSession from "./api/APIResourceDeviceSession";
+import APIResourceBroker from "./api/APIResourceBroker";
 declare class API {
     private config;
     private axiosConfig;
@@ -34,5 +35,6 @@ declare class API {
     enums(): APIResource;
     licenses(): APIResource;
     labels(): APIList;
+    broker(): APIResourceBroker;
 }
 export default API;
