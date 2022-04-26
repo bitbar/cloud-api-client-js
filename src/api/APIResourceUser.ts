@@ -1,22 +1,22 @@
-import APIResource from './APIResource'
-import APIResourceBillingPeriod from './APIResourceBillingPeriod'
-import APIResourceJob from './APIResourceJob'
-import APIResourceDeviceGroup from './APIResourceDeviceGroup'
-import APIResourceProject from './APIResourceProject'
-import APIResourceFile from './APIResourceFile'
-import APIResourceNotification from './APIResourceNotification'
-import APIResourceAccessGroup from './APIResourceAccessGroup'
-
-import APIUserResourceAccount from './APIUserResourceAccount'
-
-import APIList from './APIList'
-import APIListDeviceTime from './APIListDeviceTime'
-import APIListFiles from './APIListFiles'
-import APIListServices from './APIListServices'
-import APIListRuns from './APIListRuns'
-import APIListNotifications from './APIListNotifications'
-import APIListSmartbearTunnels from './APIListSmartbearTunnels'
-import APIResourceDeviceSessionStandalone from './APIResourceDeviceSessionStandalone'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIListDeviceTime} from './APIListDeviceTime'
+import {APIListFiles} from './APIListFiles'
+import {APIListNotifications} from './APIListNotifications'
+import {APIListRuns} from './APIListRuns'
+import {APIListServices} from './APIListServices'
+import {APIListSmartbearTunnels} from './APIListSmartbearTunnels'
+import {APIResource} from './APIResource'
+import {APIResourceAccessGroup} from './APIResourceAccessGroup'
+import {APIResourceBillingPeriod} from './APIResourceBillingPeriod'
+import {APIResourceDeviceGroup} from './APIResourceDeviceGroup'
+import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone'
+import {APIResourceFile} from './APIResourceFile'
+import {APIResourceJob} from './APIResourceJob'
+import {APIResourceNotification} from './APIResourceNotification'
+import {APIResourceProject} from './APIResourceProject'
+import {APIUserResourceAccount} from './APIUserResourceAccount'
 
 
 /**
@@ -25,14 +25,14 @@ import APIResourceDeviceSessionStandalone from './APIResourceDeviceSessionStanda
  * @class
  * @extends APIResource
  */
-class APIResourceUser extends APIResource {
+export class APIResourceUser extends APIResource {
 
   /**
    * /users/{id} | /me
    *
    * Constructor
    */
-  constructor (parent: object, id: number | 'me') {
+  constructor(parent: APIEntity<any> | API, id: number | 'me') {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -49,27 +49,27 @@ class APIResourceUser extends APIResource {
   }
 
   // /users/{id}/account
-  public account () {
+  account() {
     return new APIUserResourceAccount(this);
   }
 
   // /users/{id}/device-time
-  public deviceTime () {
+  deviceTime() {
     return new APIListDeviceTime(this);
   }
 
   // /users/{id}/device-time-summary
-  public deviceTimeSummary () {
+  deviceTimeSummary() {
     return new APIList(this).push('device-time-summary');
   }
 
   // /users/{id}/services
-  public services () {
+  services() {
     return new APIListServices(this);
   }
 
   // /users/{id}/services/{id}
-  public service (id: number) {
+  service(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -78,77 +78,77 @@ class APIResourceUser extends APIResource {
   }
 
   // /users/{id}/billing-periods
-  public billingPeriods () {
+  billingPeriods() {
     return new APIList(this).push('billing-periods');
   }
 
   // /users/{id}/billing-periods/{id}
-  public billingPeriod (id: number) {
+  billingPeriod(id: number) {
     return new APIResourceBillingPeriod(this, id);
   }
 
   // /users/{id}/jobs
-  public jobs () {
+  jobs() {
     return new APIList(this).push('jobs');
   }
 
   // /users/{id}/jobs/{id}
-  public job (id: number) {
+  job(id: number) {
     return new APIResourceJob(this, id);
   }
 
   // /users/{id}/device-groups
-  public deviceGroups () {
+  deviceGroups() {
     return new APIList(this).push('device-groups');
   }
 
   // /users/{id}/device-groups/{id}
-  public deviceGroup (id: number) {
+  deviceGroup(id: number) {
     return new APIResourceDeviceGroup(this, id);
   }
 
   // /users/{id}/device-sessions
-  public deviceSessions () {
+  deviceSessions() {
     return new APIList(this).push('device-sessions');
   }
 
   // /users/{id}/device-sessions/{id}
-  public deviceSession (id: number) {
+  deviceSession(id: number) {
     return new APIResourceDeviceSessionStandalone(this, id);
   }
 
   // /users/{id}/projects
-  public projects () {
+  projects() {
     return new APIList(this).push('projects');
   }
 
   // /users/{id}/projects/{id}
-  public project (id: number) {
+  project(id: number) {
     return new APIResourceProject(this, id);
   }
 
   // /users/{id}/files
-  public files () {
+  files() {
     return new APIListFiles(this);
   }
 
   // /users/{id}/files/{id}
-  public file (id: number) {
+  file(id: number) {
     return new APIResourceFile(this, id);
   }
 
   // /users/{id}/runs
-  public runs () {
+  runs() {
     return new APIListRuns(this);
   }
 
   // /users/{id}/available-build-executors
-  public availableBuildExecutors () {
+  availableBuildExecutors() {
     return new APIList(this).push('available-build-executors');
   }
 
   // /users/{id}/available-frameworks
-  public availableFrameworks () {
+  availableFrameworks() {
     return new APIList(this).push('available-frameworks');
   }
 
@@ -156,77 +156,77 @@ class APIResourceUser extends APIResource {
    * /users/{id}/
    * /users/{id}/reset-api-key
    */
-  public resetApiKey () {
+  resetApiKey() {
     return new APIResource(this).push('reset-api-key');
   }
 
   // /users/{id}/restore
-  public restore () {
+  restore() {
     return new APIResource(this).push('restore');
   }
 
   // /users/{id}/feedback
-  public feedback () {
+  feedback() {
     return new APIResource(this).push('feedback');
   }
 
   // /users/{id}/notifications
-  public notifications () {
+  notifications() {
     return new APIListNotifications(this);
   }
 
   // /users/{id}/notifications/{id}
-  public notification (id: number) {
+  notification(id: number) {
     return new APIResourceNotification(this, id);
   }
 
   // /users/{id}/receipts
-  public receipts () {
+  receipts() {
     return new APIList(this).push('receipts');
   }
 
   // /users/{id}/preferences
-  public preferences () {
+  preferences() {
     return new APIResource(this).push('preferences');
   }
 
   // /users/{id}/ui-preferences
-  public uiPreferences () {
+  uiPreferences() {
     return new APIResource(this).push('ui-preferences');
   }
 
   // /users/{id}/device-usage
-  public deviceUsage () {
+  deviceUsage() {
     return new APIList(this).push('device-usage');
   }
 
   // /users/{id}/statistics
-  public statistics () {
+  statistics() {
     return new APIList(this).push('statistics');
   }
 
   // /users/{id}/statistics
-  public deviceStatistics () {
+  deviceStatistics() {
     return new APIList(this).push('device-statistics');
   }
 
   // /users/{id}/access-groups
-  public accessGroups () {
+  accessGroups() {
     return new APIList(this).push('access-groups');
   }
 
   // /users/{id}/access-groups/{id}
-  public accessGroup (id: number) {
+  accessGroup(id: number) {
     return new APIResourceAccessGroup(this, id);
   }
 
   // /users/{id}/tunnels/{id}
-  public smartbearTunnel (id: number) {
+  smartbearTunnel(id: number) {
     return new APIResource(this).push('tunnels', id);
   }
 
   // /users/{id}/tunnels
-  public smartbearTunnels () {
+  smartbearTunnels() {
     return new APIListSmartbearTunnels(this);
   }
 }

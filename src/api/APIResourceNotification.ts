@@ -1,5 +1,6 @@
-import APIResource from './APIResource'
-
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIResource} from './APIResource'
 
 /**
  * APIResourceNotification
@@ -7,14 +8,14 @@ import APIResource from './APIResource'
  * @class
  * @extends APIResource
  */
-class APIResourceNotification extends APIResource {
+export class APIResourceNotification extends APIResource {
 
   /**
    * /notifications/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -24,7 +25,7 @@ class APIResourceNotification extends APIResource {
   }
 
   // /notifications/{id}/test
-  public test () {
+  test() {
     return new APIResource(this).push('test');
   }
 

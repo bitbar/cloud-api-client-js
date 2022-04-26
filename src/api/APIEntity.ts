@@ -1,65 +1,30 @@
-import qs from 'qs';
-import { AxiosRequestConfig, Method } from 'axios';
+import {AxiosRequestConfig, AxiosResponse, Method} from 'axios';
+import {stringify} from 'qs';
+import {API} from "../API";
+import {ALLOWED_HTTP_METHODS, QueryParams} from "./HTTP.model";
 
 
 /**
- * Allowed methods
- *
- * @constant
- * @type {Array}
- * @default
+ * @typeParam RESPONSE        HTTP Response return type.
+ * @typeParam QUERY_PARAMS    Allowed Query Params
+ * @typeParam DATA Allowed    Data Object
  */
-enum ALLOWED_HTTP_METHODS {
-  GET = 'GET',
-  POST = 'POST',
-  DELETE = 'DELETE'
-};
+export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams = QueryParams, DATA = any> {
 
+  root: API;
 
-/**
- * APIEntity
- *
- * @class
- * @abstract
- */
-class APIEntity {
-
-  /**
-   * Stack
-   *
-   * @public
-   * @type {Array}
-   */
-  public stack: Array<string|number>;
-
-  /**
-   * object of request config
-   *
-   * @protected
-   * @type {AxiosRequestConfig}
-   */
-  protected requestConfig: AxiosRequestConfig;
-
-  /**
-   * Root
-   *
-   * @public
-   * @type {API}
-   */
-  public root: object;
+  protected stack: Array<string | number> = [];
+  protected requestConfig: AxiosRequestConfig = {};
 
   /**
    * Constructor
    * @param {APIEntity|object} [parent] - Specifies a parent from which should be inherited properties
    */
-  constructor (parent: APIEntity | object) {
-    this.stack = [];
-    this.requestConfig = {};
-
+  constructor(parent: APIEntity<RESPONSE> | API) {
     if (parent instanceof APIEntity) {
       this.root = parent.root;
 
-      if (Array.isArray(parent.stack)) {
+      if (Array.isArray(parent.stack)) { //???
         this.push(...parent.stack);
       }
 
@@ -71,56 +36,17 @@ class APIEntity {
     }
   }
 
-  /**
-   * Push
-   *
-   * @public
-   * @param {string|number} items... - Items that should be pushed to stack
-   * @returns this
-   */
-  public push (...items: Array<string|number>) {
-    for (const item of items) {
-      this.stack.push(item);
-    }
+  push(...items: Array<string | number>): this {
+    this.stack = this.stack.concat(items);
     return this;
   }
 
-  /**
-   * Pop
-   *
-   * @public
-   * @return this
-   */
-  public pop () {
-    this.stack.pop();
-    return this;
-  }
-
-  /**
-   * Shift
-   *
-   * @public
-   * @return this
-   */
-  public shift () {
+  shift(): this {
     this.stack.shift();
     return this;
   }
 
-  /**
-   * Unshift
-   *
-   * @public
-   * @return this
-   */
-   public unshift (...items: Array<string|number>) {
-    for (const item of items) {
-      this.stack.unshift(item);
-    }
-    return this;
-  }
-
-  public restack (...items: Array<string|number>) {
+  restack(...items: Array<string | number>): this {
     this.stack = items;
     return this;
   }
@@ -128,90 +54,53 @@ class APIEntity {
   /**
    * Get first element of the stack
    */
-  public get first () {
+  get first(): string | number {
     return this.stack[0];
-  }
-
-  /**
-   * Set first element of the stack
-   */
-  public set first (val) {
-    this.stack[0] = val;
   }
 
   /**
    * Get last element of the stack
    */
-  public get last () {
+  get last(): string | number {
     return this.stack[this.stack.length - 1];
   }
 
   /**
    * Set last element of the stack
    */
-  public set last (val) {
+  set last(val) {
     this.stack[this.stack.length - 1] = val;
   }
 
-  /**
-   * To URL
-   *
-   * @param {boolean} absolute
-   */
-  public toUrl (absolute = false) {
+  toUrl(absolute = false): string {
     let url = `/${this.stack.join('/')}`;
 
     if (absolute) {
-      // @ts-ignore
-      url = this.root.axiosConfig.baseURL + url;
+      url = this.root.baseUrl + url;
     }
 
     return url;
   }
 
-  /**
-   * Set request config
-   *
-   * @public
-   * @param {AxiosRequestConfig} requestConfig - object of request config to be set
-   * @returns this
-   */
-  public setRequestConfig (requestConfig: AxiosRequestConfig) {
+  setRequestConfig(requestConfig: AxiosRequestConfig): this {
     Object.deepAssign(this.requestConfig, requestConfig);
     return this;
   }
 
-  /**
-   * Remove request config key
-   *
-   * @public
-   * @param {string} key - Key to me removed from request config
-   * @returns this
-   */
-  public removeRequestConfig (key: string) {
-    // @ts-ignore
+  removeRequestConfig(key: keyof AxiosRequestConfig): this {
     delete this.requestConfig[key];
     return this;
   }
 
-  /**
-   * Set headers
-   *
-   * @public
-   * @param {object} headers - Headers object
-   * @returns this
-   */
-  public headers (headers: object) {
-    const _headers = {};
+  headers(headers: Record<string, string>): this {
+    const _headers: Record<string, string> = {};
 
     // Unify/Standarize headers keys
     for (const key in headers) {
       const newKey = key.replace(/(?:^|-)([a-z])/g, (letter) => letter.toUpperCase());
-      // @ts-ignore
       _headers[newKey] = headers[key];
     }
 
-    // Set
     return this.setRequestConfig({
       headers: _headers
     });
@@ -219,16 +108,12 @@ class APIEntity {
 
   /**
    * Set HTTP method
-   *
-   * @public
-   * @param {string} name - HTTP methods name
-   * @returns this
    */
-  public method (name: Method) {
-    const NAME: Method = <Method> name.toLocaleUpperCase();
+  method(name: Method): this {
+    const NAME: Uppercase<Method> = <Uppercase<Method>>name.toLocaleUpperCase();
+    const isAllowed: boolean = Object.keys(ALLOWED_HTTP_METHODS).indexOf(NAME) > -1;
 
-    // @ts-ignore
-    if (!ALLOWED_HTTP_METHODS[NAME]) {
+    if (!isAllowed) {
       throw new Error(`Method '${NAME}' is not allowed! You can use: ${Object.keys(ALLOWED_HTTP_METHODS).join(', ')}`);
     }
 
@@ -239,68 +124,41 @@ class APIEntity {
 
   /**
    * Set GET as HTTP method
-   *
-   * @public
-   * @returns this
    */
-  public get () {
+  get(): this {
     return this.method('GET');
   }
 
   /**
    * Set POST as HTTP method
-   *
-   * @public
-   * @returns this
    */
-  public post () {
+  post(): this {
     return this.method('POST');
   }
 
   /**
    * Set params
-   *
-   * @public
-   * @param {object} params - object of params to be set
-   * @returns this
    */
-  public params (params: object) {
+  params(params: QUERY_PARAMS): this {
     Object.deepAssign(this.requestConfig, {
       params
     });
     return this;
   }
 
-  /**
-   * Get params
-   *
-   * @public
-   * @returns object
-   */
-  public getParams () {
+  getParams(): QUERY_PARAMS {
     return this.requestConfig.params == null ? {} : this.requestConfig.params;
   }
 
-  /**
-   * Remove params key
-   *
-   * @public
-   * @param {string} key - Key to me removed from params
-   * @returns this
-   */
-  public removeParam (key: string) {
+  removeParam(key: keyof QUERY_PARAMS): this {
     delete this.requestConfig.params[key];
     return this;
   }
 
   /**
    * Set data
-   *
-   * @public
-   * @param {object} data - object of data to be set
-   * @returns this
    */
-  public data (data: object) {
+  data(data: DATA): this {
     Object.deepAssign(this.requestConfig, {
       data
     });
@@ -309,12 +167,8 @@ class APIEntity {
 
   /**
    * Set JSON data
-   *
-   * @public
-   * @param {object} data - JSON object to be set
-   * @returns this
    */
-  public jsonData (data: object) {
+  jsonData(data: DATA): this {
     this.headers({
       'Content-Type': 'application/json'
     }).data(data);
@@ -323,12 +177,8 @@ class APIEntity {
 
   /**
    * Set form data
-   *
-   * @public
-   * @param {object} data - JSON object to be set
-   * @returns this
    */
-  public formData (data: FormData) {
+  formData(data: DATA): this {
     this.headers({
       'Content-Type': 'multipart/form-data'
     }).data(data);
@@ -336,24 +186,10 @@ class APIEntity {
   }
 
   /**
-   * Custom params serializer
-   * @private
-   * @param {object} params
-   */
-  private paramsSerializer (params: object) {
-    return qs.stringify(params, {
-      arrayFormat: 'brackets'
-    });
-  }
-
-  /**
    * Send request
-   *
-   * @public
-   * @returns Promise
    */
-  public send () {
-    const requestConfig = <AxiosRequestConfig> Object.deepAssign({}, this.requestConfig, {
+  send<T = RESPONSE>(): Promise<AxiosResponse<T>> {
+    const requestConfig = <AxiosRequestConfig>Object.deepAssign({}, this.requestConfig, {
       url: `/${this.stack.join('/')}`
     });
 
@@ -369,11 +205,9 @@ class APIEntity {
 
     // Convert data if needed
     if (requestConfig.method === 'POST' &&
-    requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
-    requestConfig.data != null) {
-      requestConfig.data = qs.stringify(requestConfig.data, {
-        arrayFormat: 'brackets'
-      });
+      (<string>requestConfig.headers['Content-Type']).startsWith('application/x-www-form-urlencoded') &&
+      requestConfig.data != null) {
+      requestConfig.data = this.paramsSerializer(requestConfig.data);
     }
 
     if (requestConfig.params) {
@@ -381,8 +215,13 @@ class APIEntity {
     }
 
     // Send request
-    // @ts-ignore
-    return this.root.axios.request(requestConfig);
+    return this.root.axios.request<T>(requestConfig);
+  }
+
+  protected paramsSerializer(params: DATA | QUERY_PARAMS): string {
+    return stringify(params, {
+      arrayFormat: 'brackets'
+    });
   }
 }
 

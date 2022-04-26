@@ -1,50 +1,46 @@
-import APIEntity from './APIEntity'
-import FilterBuilder from '../FilterBuilder'
+import {AxiosResponse} from "axios";
+import {FilterBuilder} from '../FilterBuilder'
+import {APIEntity} from './APIEntity'
+import {QueryParams} from "./HTTP.model";
 
 
-/**
- * Default limit
- *
- * @constant
- * @type {number}
- * @default
- */
-const DEFAULT_LIMIT = 20;
+export const DEFAULT_LIMIT: number = 20;
+export const DEFAULT_OFFSET: number = 0;
 
-/**
- * Default offset
- *
- * @constant
- * @type {number}
- * @default
- */
-const DEFAULT_OFFSET = 0;
+export enum APIOrder {
+  asc = 'a',
+  desc = 'd'
+}
 
-/**
- * API Order Enum
- */
-enum APIOrder {
-  'asc' = 'a',
-  'desc' = 'd'
-};
+export interface CollectionQueryParams extends QueryParams {
+  sort: string;
+  limit: number;
+  offset: number;
+}
+
+export type CollectionResponse<T> = {
+  data: Array<T>;
+  empty: boolean;
+  id: number;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  search: string;
+  selfURI: string;
+  sort: string;
+  total: number;
+}
 
 
-/**
- * APIList
- *
- * @class
- * @extends APIEntity
- */
-class APIList extends APIEntity {
+export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA = any>
+  extends APIEntity<CollectionResponse<RESPONSE>, Partial<CollectionQueryParams>, DATA> {
 
   /**
-   * Create
    * Shortcut for sending data POST
-   *
-   * @param {object} data
    */
-  public create (data: object) {
-    return this.post().data(data).send();
+  create(data: DATA): Promise<AxiosResponse<RESPONSE>> {
+    return this.post().data(data).send<RESPONSE>();
   }
 
   /**
@@ -53,12 +49,8 @@ class APIList extends APIEntity {
    * @public
    * @param {string} name - Name of the column according to which the data will be sorted
    * @param {string} [order=a] - Sorting order. Possibilities: 'a', 'd'
-   * @returns this
    */
-  public sort (name: string, order: APIOrder = APIOrder.asc) {
-    // if order not in ['a', 'd']
-    //   throw new Error(`Order '\${order}' is invalid! Use 'a' for ascending or 'd' for descending.`);
-
+  sort(name: string, order: APIOrder = APIOrder.asc): this {
     return this.params({
       sort: `${name}_${order}`
     });
@@ -71,7 +63,7 @@ class APIList extends APIEntity {
    * @param {number} [limit=DEFAULT_LIMIT] - Limit to be set
    * @returns this
    */
-  public limit (limit = DEFAULT_LIMIT) {
+  limit(limit = DEFAULT_LIMIT): this {
     if (!Number.isNatural(limit)) {
       throw new Error(`Limit '${limit}' is invalid!`);
     }
@@ -87,9 +79,9 @@ class APIList extends APIEntity {
    * @public
    * @returns number
    */
-  public getLimit () {
+  getLimit(): number {
     const params = this.getParams();
-    return params.limit == null ? DEFAULT_LIMIT : params.limit;
+    return params.limit == null ? DEFAULT_LIMIT : <number>params.limit;
   }
 
   /**
@@ -98,7 +90,7 @@ class APIList extends APIEntity {
    * @public
    * @returns this
    */
-  public noLimit () {
+  noLimit(): this {
     return this.limit(0);
   }
 
@@ -109,7 +101,7 @@ class APIList extends APIEntity {
    * @param {number} [offset=DEFAULT_OFFSET] - Offset to be set
    * @returns this
    */
-  public offset (offset: number = DEFAULT_OFFSET) {
+  offset(offset: number = DEFAULT_OFFSET): this {
     if (!Number.isNatural(offset)) {
       throw new Error(`Offset '${offset}' is invalid!`);
     }
@@ -127,7 +119,7 @@ class APIList extends APIEntity {
    * @param {number} to - To index
    * @returns this
    */
-  public between (from: number, to: number) {
+  between(from: number, to: number): this {
     if (!Number.isNatural(from)) {
       throw new Error(`From '${from}' is invalid!`);
     }
@@ -149,7 +141,7 @@ class APIList extends APIEntity {
    * @param {number} idx - Index
    * @returns this
    */
-  public only (idx: number) {
+  only(idx: number): this {
     if (!Number.isNatural(idx)) {
       throw new Error(`Index '${idx}' is invalid!`);
     }
@@ -167,7 +159,7 @@ class APIList extends APIEntity {
    * @param {number} [page=1] - Page number (counted from 1)
    * @returns this
    */
-  public page (page = 1) {
+  page(page = 1): this {
     if (!Number.isNatural(page) || page == 0) {
       throw new Error(`Page '${page}' is invalid!`);
     }
@@ -191,7 +183,7 @@ class APIList extends APIEntity {
    * @param {string} query - Query to search for
    * @returns this
    */
-  public search (query: string) {
+  search(query: string): this {
     if (typeof query !== 'string') {
       throw new Error('Search query must be a string!');
     }
@@ -208,24 +200,17 @@ class APIList extends APIEntity {
    * @param {FilterBuilder|string} filter - Filter
    * @returns this
    */
-  public filter (filter: FilterBuilder | string) {
+  filter(filter: FilterBuilder | string): this {
     const isFilterBuilder = filter instanceof FilterBuilder;
 
     if (typeof filter !== 'string' && !isFilterBuilder) {
       throw new Error('Filter must be either string or instance of FilterBuilder');
     }
 
-    if (isFilterBuilder) {
-      filter = filter.toString();
-    }
-
     return this.params({
-      filter
+      filter: filter.toString()
     });
   }
-}
-
-interface APIList {
 
   /**
    * Alias for 'noLimit'
@@ -234,7 +219,7 @@ interface APIList {
    * @see noLimit
    * @returns this
    */
-  all: typeof APIList.prototype.noLimit;
+  all: typeof APIList.prototype.noLimit = this.noLimit;
 
   /**
    * Alias for 'between'
@@ -244,10 +229,7 @@ interface APIList {
    * @param {number} to - To idx
    * @returns this
    */
-  cut: typeof APIList.prototype.between;
+  cut: typeof APIList.prototype.between = this.between;
 }
-
-APIList.prototype.all = APIList.prototype.noLimit;
-APIList.prototype.cut = APIList.prototype.between;
 
 export default APIList;

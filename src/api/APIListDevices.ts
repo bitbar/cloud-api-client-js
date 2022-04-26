@@ -1,48 +1,26 @@
-import APIList from './APIList'
-import APIResource from './APIResource'
-import APIListCleanupConfigurations from "./APIListCleanupConfigurations";
-import APIResourceCleanupConfiguration from "./APIResourceCleanupConfiguration";
+import {API} from "../API";
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {Device} from "./models/Device";
 
 
-/**
- * APIListDevices
- *
- * @class
- * @extends APIList
- */
-class APIListDevices extends APIList {
+export class APIListDevices extends APIList<Device> {
 
   /**
    * /devices
-   *
-   * Constructor
    */
-  constructor (parent: object) {
+  constructor(parent: API) {
     super(parent);
     this.push('devices');
   }
 
   // /devices/filters
-  public filters () {
+  filters() {
     return new APIResource(this).push('filters');
   }
 
-  // /devices/cleanup-configurations
-  public cleanupConfigurations () {
-    return new APIListCleanupConfigurations(this);
-  }
-
-  /**
-   * /devices/cleanup-configurations/{id}
-   *
-   * @param {number} id - Resource ID
-   */
-  public cleanupConfiguration (id: number) {
-    return new APIResourceCleanupConfiguration(this, id);
-  }
-
   // /devices/desktop-browser-capabilities
-  public desktopBrowserCapabilities () {
+  desktopBrowserCapabilities() {
     return new APIResource(this).push('desktop-browser-capabilities');
   }
 

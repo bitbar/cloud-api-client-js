@@ -1,5 +1,5 @@
-import APIResource from './APIResource'
-import APIResourceProject from './APIResourceProject'
+import {APIResource} from './APIResource'
+import {APIResourceProject} from './APIResourceProject'
 
 
 /**
@@ -8,10 +8,10 @@ import APIResourceProject from './APIResourceProject'
  * @class
  * @extends APIResourceProject
  */
-class APIAdminResourceProject extends APIResourceProject {
+export class APIAdminResourceProject extends APIResourceProject {
 
   // /unarchive
-  public unarchive () {
+  unarchive () {
     return new APIResource(this).push('unarchive');
   }
 

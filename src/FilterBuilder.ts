@@ -1,131 +1,73 @@
+import {Filter} from './Filter';
 import './finka';
-import Filter from './Filter';
 
 /**
  * FilterBuilder
  *
  * Builds filter string according to Bitbar Cloud backend convention
  */
+export class FilterBuilder {
 
-class FilterBuilder {
+  private readonly filters: Array<Filter> = [];
 
-  private filters: Array<Filter>;
-
-  constructor () {
-    this.filters = [];
-  }
-
-  /**
-   * Add filter to filters list
-   * @param name {string} Name
-   * @param value {*} Value
-   * @param operand {string} Operand
-   * @param [checkNull=false] {boolean} Check null?
-   * @returns {FilterBuilder}
-   */
-  private add (name: string, value: any, operand: string, checkNull = false): FilterBuilder {
-
-    value = Array.wrap(value);
-
-    if (value.length === 0) {
-      return this;
-    }
-
-    // auto-convert
-    for (let i = 0; i < value.length; i++) {
-      const v = value[i];
-      if (typeof v === 'object' && v instanceof Date) {
-        value[i] = v.getTime();
-      }
-    }
-
-    let isNull = false;
-    if (checkNull) {
-      // check null existence
-      for (const v of value) {
-        if (v !== null) {
-          continue;
-          isNull = true;
-        }
-      }
-
-      if (isNull) {
-        value = value.filter((item: any) => item !== null);
-        operand += 'ornull';
-      }
-    }
-
-    // @ts-ignore
-    if (operand.endsWith('ornull') && value.length === 0) {
-      operand = 'isnull';
-    }
-
-    // add filter
-    this.filters.push(new Filter(name, value, operand));
-
-    return this;
-  }
-
-
-
-  public gt (name: string, value: number) {
+  gt(name: string, value: number): this {
     return this.add(name, value, 'gt');
   }
 
-  public lt (name: string, value: number) {
+
+  lt(name: string, value: number): this {
     return this.add(name, value, 'lt');
   }
 
-  public after (name: string, value: Date | number) {
+  after(name: string, value: Date | number): this {
     return this.add(name, value, 'after', true);
   }
 
-  public afterorequal (name: string, value: Date | number) {
+  afterorequal(name: string, value: Date | number): this {
     return this.add(name, value, 'afterorequal', true);
   }
 
-  public before (name: string, value: Date | number) {
+  before(name: string, value: Date | number): this {
     return this.add(name, value, 'before', true);
   }
 
-  public beforeorequal (name: string, value: Date | number) {
+  beforeorequal(name: string, value: Date | number): this {
     return this.add(name, value, 'beforeorequal', true);
   }
 
-  public on (name: string, value: any) {
+  on(name: string, value: any): this {
     return this.add(name, value, 'on');
   }
 
-  public eq (name: string, value: any) {
+  eq(name: string, value: any): this {
     return this.add(name, value, 'eq');
   }
 
-  public contains (name: string, value: string) {
+  contains(name: string, value: string): this {
     return this.add(name, value, 'contains');
   }
 
-  public like (name: string, value: string) {
+  like(name: string, value: string): this {
     return this.add(name, value, 'like');
   }
 
-  public notlike (name: string, value: string) {
+  notlike(name: string, value: string): this {
     return this.add(name, value, 'notlike');
   }
 
-  public isnull (name: string) {
+  isnull(name: string): this {
     return this.add(name, undefined, 'isnull');
   }
 
-  public in (name: string, value: Array<any>) {
+  in(name: string, value: Array<any>): this {
     return this.add(name, value, 'in', true);
   }
 
-  public notin (name: string, value: Array<any>) {
+  notin(name: string, value: Array<any>): this {
     return this.add(name, value, 'notin', true);
   }
 
-
-  public raw (filter: Filter) {
+  raw(filter: Filter | string | Filter[] | string[]): void {
     const filters = Array.wrap(filter);
     for (const filter of filters) {
       if (this.isFilterPart(filter)) {
@@ -136,21 +78,19 @@ class FilterBuilder {
     }
   }
 
+
   /**
    * Check if given string is proper filter part
    */
-  public isFilterPart (str: string) {
-    return /^[a-zA-Z0-9.]{2,12}_(?:isnull$|(?:gt|lt|(?:after|before)(?:orequal)?|on|eq|contains|like|(?:not)?in)_)/.test(<string> str);
+  isFilterPart(str: string): boolean {
+    return /^[a-zA-Z0-9.]{2,12}_(?:isnull$|(?:gt|lt|(?:after|before)(?:orequal)?|on|eq|contains|like|(?:not)?in)_)/.test(<string>str);
   }
 
-  /**
-   * To string
-   */
-  public toString () {
+  toString(): string {
     const parts: Array<string> = [];
 
     let part: string,
-        val: string;
+      val: string;
 
     for (const filter of this.filters) {
       if (typeof filter === 'string') {
@@ -166,6 +106,56 @@ class FilterBuilder {
     }
 
     return parts.join(';');
+  }
+
+  /**
+   * Add filter to filters list
+   * @param name {string} Name
+   * @param value {*} Value
+   * @param operand {string} Operand
+   * @param [checkNull=false] {boolean} Check null?
+   * @returns {FilterBuilder}
+   */
+  private add<T = any>(name: string, value: T, operand: string, checkNull = false): this {
+
+    let _value = Array.wrap(value);
+
+    if (_value.length === 0) {
+      return this;
+    }
+
+    // auto-convert
+    for (let i = 0; i < _value.length; i++) {
+      const v = _value[i];
+      if (typeof v === 'object' && v instanceof Date) {
+        _value[i] = v.getTime();
+      }
+    }
+
+    let isNull = false;
+    if (checkNull) {
+      // check null existence
+      for (const v of _value) {
+        if (v !== null) {
+          continue;
+        }
+        isNull = true;
+      }
+
+      if (isNull) {
+        _value = _value.filter((item: any) => item !== null);
+        operand += 'ornull';
+      }
+    }
+
+    if (operand.endsWith('ornull') && _value.length === 0) {
+      operand = 'isnull';
+    }
+
+    // add filter
+    this.filters.push(new Filter<Array<T>>(name, _value, operand));
+
+    return this;
   }
 }
 

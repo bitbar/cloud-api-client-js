@@ -1,4 +1,6 @@
-import APIResource from './APIResource'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIResource} from './APIResource'
 
 /**
  * APIAdminResourceAccountService
@@ -6,14 +8,14 @@ import APIResource from './APIResource'
  * @class
  * @extends APIResource
  */
-class APIAdminResourceAccountService extends APIResource {
+export class APIAdminResourceAccountService extends APIResource {
 
   /**
    * /account-services/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor (parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -23,12 +25,12 @@ class APIAdminResourceAccountService extends APIResource {
   }
 
   // /account-services/{id}/activate
-  public activate () {
+  activate () {
     return new APIResource(this).push('activate').post();
   }
 
   // /account-services/{id}/deactivate
-  public deactivate () {
+  deactivate () {
     return new APIResource(this).push('deactivate').post();
   }
 

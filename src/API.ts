@@ -1,28 +1,22 @@
+import axios, {AxiosInstance} from 'axios';
+// @ts-ignore
+import {version} from '../package.json';
+import {APIAdminResource} from './api/APIAdminResource';
+import {APIList} from './api/APIList';
+import {APIListDevices} from './api/APIListDevices';
+import {APIListUsers} from './api/APIListUsers';
+import {APIResource} from "./api/APIResource";
+import {APIResourceAccount} from './api/APIResourceAccount';
+import {APIResourceBroker} from "./api/APIResourceBroker";
+import {APIResourceDevice} from './api/APIResourceDevice';
+import {APIResourceDeviceGroup} from './api/APIResourceDeviceGroup';
+import {APIResourceDeviceSession} from "./api/APIResourceDeviceSession";
+import {APIResourceUser} from './api/APIResourceUser';
+import {APIResourceUserSession} from './api/APIResourceUserSession';
+import {ApiConfig} from './ApiConfig';
 import './finka';
-import ApiConfig from './ApiConfig';
 
-import axios, { AxiosInstance } from 'axios';
-
-// @ts-ignore
-import { version } from '../package.json';
-
-import APIList from './api/APIList';
-import APIListDevices from './api/APIListDevices';
-import APIListUsers from './api/APIListUsers';
-
-import APIResourceUser from './api/APIResourceUser';
-import APIResourceDevice from './api/APIResourceDevice';
-import APIResourceDeviceGroup from './api/APIResourceDeviceGroup';
-import APIResourceUserSession from './api/APIResourceUserSession';
-
-import APIAdminResource from './api/APIAdminResource';
-import APIResourceAccount from './api/APIResourceAccount';
-import APIResource from "./api/APIResource";
-import APIResourceDeviceSession from "./api/APIResourceDeviceSession";
-import APIResourceBroker from "./api/APIResourceBroker";
-
-// @ts-ignore
-if (global.isNodeJs) {
+if (globalThis.isNodeJs) {
   // Set User-Agent
   axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
 }
@@ -35,27 +29,20 @@ axios.defaults.maxContentLength = 1073741824; // 1GB
  * API
  * Root for other API resources
  */
-class API {
+export class API {
+  axios: AxiosInstance;
 
-  // Main config
-  private config: ApiConfig;
+  private axiosConfig: ApiConfig = <ApiConfig>{};
 
-  // axios config
-  private axiosConfig: ApiConfig;
-
-  // axios instance
-  public axios: AxiosInstance;
+  get baseUrl(): string {
+    return this.axiosConfig.baseURL;
+  }
 
 
-  constructor (config: ApiConfig) {
+  constructor(private config: ApiConfig) {
     if (config == null) {
       throw new Error('config cannot be empty');
-    }
-
-    this.config = config;
-    this.axiosConfig = <ApiConfig> {};
-
-    if (this.config.cloudUrl == null) {
+    } else if (this.config.cloudUrl == null) {
       throw new TypeError('cloudUrl cannot be empty');
     } else if (typeof this.config.cloudUrl !== 'string') {
       throw new TypeError('cloudUrl must be a string');
@@ -81,7 +68,7 @@ class API {
       }
 
       this.axiosConfig.auth = {
-        username: <string> this.config.apiKey,
+        username: <string>this.config.apiKey,
         password: ''
       };
     }
@@ -96,94 +83,95 @@ class API {
 
   // --- Resources starts here --- //
 
-  // /user-sessions
-  public userSession () {
-    return new APIResourceUserSession(this);
-  }
-
-  // /user/{id}
-  public user (id: number | 'me') {
-    return new APIResourceUser(this, id);
-  }
-
-  // /users
-  public users () {
-    return new APIListUsers(this);
-  }
-
   // /account/{id}
-  public account (id: number) {
+  account(id: number) {
     return new APIResourceAccount(this, id);
   }
 
-  // /me
-  public me () {
-    return this.user('me');
-  }
-
   // /admin
-  public admin () {
+  admin() {
     return new APIAdminResource(this);
   }
 
-  // /devices
-  public devices () {
-    return new APIListDevices(this);
+  broker() {
+    return new APIResourceBroker(this);
   }
 
   // /devices/{id}
-  public device (id: number) {
+  device(id: number) {
     return new APIResourceDevice(this, id);
   }
 
-  // /device-groups
-  public deviceGroups () {
-    return new APIList(this).push('device-groups');
-  }
-
   // /device-groups/{id}
-  public deviceGroup (id: number) {
+  deviceGroup(id: number) {
     return new APIResourceDeviceGroup(this, id);
   }
 
-  // /device-sessions
-  public deviceSessions () {
-    return new APIList(this).push('device-sessions');
+  // /device-groups
+  deviceGroups() {
+    return new APIList(this).push('device-groups');
+  }
+
+  // /devices
+  devices() {
+    return new APIListDevices(this);
   }
 
   // /device-sessions/{id}
-  public deviceSession (id: number) {
+  deviceSession(id: number) {
     return new APIResourceDeviceSession(this, id);
   }
 
-  // /label-groups
-  public labelGroups () {
-    return new APIList(this).push('label-groups');
+  // /device-sessions
+  deviceSessions() {
+    return new APIList(this).push('device-sessions');
   }
 
   // /device-statistics
-  public deviceStatistics () {
+  deviceStatistics() {
     return new APIList(this).push('device-statistics');
   }
 
   // /enums
-  public enums () {
+  enums() {
     return new APIResource(this).push('enums');
   }
 
-  // /licenses
-  public licenses () {
-    return new APIResource(this).push('licenses');
+  // /label-groups
+  labelGroups() {
+    return new APIList(this).push('label-groups');
   }
 
   // /labels
-  public labels () {
+  labels() {
     return new APIList(this).push('labels');
   }
 
-  public broker () {
-    return new APIResourceBroker(this);
+  // /licenses
+  licenses() {
+    return new APIResource(this).push('licenses');
   }
+
+  // /me
+  me() {
+    return this.user('me');
+  }
+
+  // /user/{id}
+  user(id: number | 'me') {
+    return new APIResourceUser(this, id);
+  }
+
+  // /users
+  users() {
+    return new APIListUsers(this);
+  }
+
+  // /user-sessions
+  userSession() {
+    return new APIResourceUserSession(this);
+  }
+
 }
 
 
