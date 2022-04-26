@@ -1,4 +1,4 @@
-import APIEntity from './APIEntity'
+import {APIEntity} from './APIEntity'
 
 
 /**
@@ -7,7 +7,7 @@ import APIEntity from './APIEntity'
  * @class
  * @extends APIEntity
  */
-class APIResource extends APIEntity {
+export class APIResource<T = any> extends APIEntity<T> {
 
   /**
    * Set DELETE as HTTP method
@@ -15,7 +15,7 @@ class APIResource extends APIEntity {
    * @public
    * @returns this
    */
-  public delete () {
+  delete(): this {
     return this.method('DELETE');
   }
 }

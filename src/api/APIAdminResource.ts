@@ -1,29 +1,28 @@
-import APIList from './APIList'
-
-import APIResource from './APIResource'
-import APIResourceFile from './APIResourceFile'
-import APIResourceProject from './APIResourceProject';
-import APIResourceAccessGroup from './APIResourceAccessGroup';
-
-import APIAdminListRuns from './APIAdminListRuns';
-
-import APIAdminResourceCluster from './APIAdminResourceCluster';
-import APIAdminResourceDeviceTime from './APIAdminResourceDeviceTime';
-import APIAdminResourceRunStandalone from './APIAdminResourceRunStandalone';
-import APIAdminResourceDevice from './APIAdminResourceDevice';
-import APIAdminResourceAccountService from './APIAdminResourceAccountService';
-import APIAdminResourceUser from './APIAdminResourceUser';
-import APIAdminResourceDeviceSessionStandalone from './APIAdminResourceDeviceSessionStandalone';
-import APIAdminListDevices from "./APIAdminListDevices";
-import APIResourceDeviceGroup from "./APIResourceDeviceGroup";
-import APIAdminResourceFramework from "./APIAdminResourceFramework";
-import APIAdminResourceLicense from "./APIAdminResourceLicense";
-import APIAdminListNotificationPlans from "./APIAdminListNotificationPlans";
-import APIAdminResourceNotificationPlan from "./APIAdminResourceNotificationPlan";
-import APIAdminResourceService from "./APIAdminResourceService";
-import APIAdminListServices from "./APIAdminListServices";
-import APIAdminListStatistics from "./APIAdminListStatistics";
-import APIAdminResourceDeviceModel from "./APIAdminResourceDeviceModel";
+import {API} from '../API';
+import {APIAdminListDevices} from "./APIAdminListDevices";
+import {APIAdminListNotificationPlans} from "./APIAdminListNotificationPlans";
+import {APIAdminListRuns} from './APIAdminListRuns';
+import {APIAdminListServices} from "./APIAdminListServices";
+import {APIAdminListStatistics} from "./APIAdminListStatistics";
+import {APIAdminResourceAccountService} from './APIAdminResourceAccountService';
+import {APIAdminResourceCluster} from './APIAdminResourceCluster';
+import {APIAdminResourceDevice} from './APIAdminResourceDevice';
+import {APIAdminResourceDeviceModel} from "./APIAdminResourceDeviceModel";
+import {APIAdminResourceDeviceSessionStandalone} from './APIAdminResourceDeviceSessionStandalone';
+import {APIAdminResourceDeviceTime} from './APIAdminResourceDeviceTime';
+import {APIAdminResourceFramework} from "./APIAdminResourceFramework";
+import {APIAdminResourceLicense} from "./APIAdminResourceLicense";
+import {APIAdminResourceNotificationPlan} from "./APIAdminResourceNotificationPlan";
+import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
+import {APIAdminResourceService} from "./APIAdminResourceService";
+import {APIAdminResourceUser} from './APIAdminResourceUser';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
+import {APIResourceAccessGroup} from './APIResourceAccessGroup';
+import {APIResourceDeviceGroup} from "./APIResourceDeviceGroup";
+import {APIResourceFile} from './APIResourceFile'
+import {APIResourceProject} from './APIResourceProject';
 
 
 /**
@@ -32,34 +31,34 @@ import APIAdminResourceDeviceModel from "./APIAdminResourceDeviceModel";
  * @class
  * @extends APIResource
  */
-class APIAdminResource extends APIResource {
+export class APIAdminResource extends APIResource {
 
   /**
    * /admin
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
   }
 
   // /access-groups
-  public accessGroups () {
+  accessGroups () {
     return new APIList(this).push('access-groups');
   }
 
   // /access-groups/{id}
-  public accessGroup (id: number) {
+  accessGroup (id: number) {
     return new APIResourceAccessGroup(this, id);
   }
 
   // /admin/accounts
-  public accounts () {
+  accounts () {
     return new APIList(this).push('admin', 'accounts');
   }
 
   // /admin/accounts/{id}
-  public account (id: number) {
+  account (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -68,27 +67,27 @@ class APIAdminResource extends APIResource {
   }
 
   // /admin/account-services
-  public accountServices () {
+  accountServices () {
     return new APIList(this).push('admin', 'account-services');
   }
 
   // /admin/account-services/{id}
-  public accountService (id: number) {
+  accountService (id: number) {
     return new APIAdminResourceAccountService(this, id);
   }
 
   // activities
-  public activities () {
+  activities () {
     return new APIList(this).push('admin', 'activities');
   }
 
   // /admin/billing-periods
-  public billingPeriods () {
+  billingPeriods () {
     return new APIList(this).push('admin', 'billing-periods');
   }
 
   // /admin/billing-periods/{id}
-  public billingPeriod (id: number) {
+  billingPeriod (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -97,12 +96,12 @@ class APIAdminResource extends APIResource {
   }
 
   // /admin/browsers
-  public browsers () {
+  browsers () {
     return new APIList(this).push('admin', 'browsers');
   }
 
   // /admin/browsers/{id}
-  public browser (id: number) {
+  browser (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -111,22 +110,22 @@ class APIAdminResource extends APIResource {
   }
 
   // /clusters
-  public clusters () {
+  clusters () {
     return new APIList(this).push('clusters');
   }
 
   // /clusters/{id}
-  public cluster (id: number) {
+  cluster (id: number) {
     return new APIAdminResourceCluster(this, id);
   }
 
   // /admin/country-vat-rates
-  public countryVatRates () {
+  countryVatRates () {
     return new APIList(this).push('admin', 'country-vat-rates');
   }
 
   // /admin/country-vat-rates/{id}
-  public countryVatRate (id: number) {
+  countryVatRate (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -135,16 +134,16 @@ class APIAdminResource extends APIResource {
   }
 
   // /admin/devices
-  public devices () {
+  devices () {
     return new APIAdminListDevices(this);
   }
 
   // /admin/devices/{id}
-  public device (id: number) {
+  device (id: number) {
     return new APIAdminResourceDevice(this, id);
   }
 
-  public devicesForModel (id: number) {
+  devicesForModel (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -157,32 +156,32 @@ class APIAdminResource extends APIResource {
   }
 
   // /admin/device/statuses
-  public deviceStatuses () {
+  deviceStatuses () {
     return new APIList(this).push('admin', 'device', 'statuses');
   }
 
   // /admin/device-models
-  public deviceModels () {
+  deviceModels () {
     return new APIList(this).push('admin', 'device-models');
   }
 
   // /admin/device-models/{id}
-  public deviceModel (id: number) {
+  deviceModel (id: number) {
     return new APIAdminResourceDeviceModel(this, id);
   }
 
   // /admin/device-problems
-  public deviceProblems () {
+  deviceProblems () {
     return new APIList(this).push('admin', 'device-problems');
   }
 
   // /admin/device-model-criteria
-  public deviceModelCriterias () {
+  deviceModelCriterias () {
     return new APIList(this).push('admin', 'device-model-criteria');
   }
 
   // /admin/device-model-criteria/{id}
-  public deviceModelCriteria (id: number) {
+  deviceModelCriteria (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -191,51 +190,51 @@ class APIAdminResource extends APIResource {
   }
 
   // /device-sessions
-  public deviceSessions () {
+  deviceSessions () {
     return new APIList(this).push('admin', 'device-sessions');
   }
 
   // /device-sessions/{id}
-  public deviceSession (id: number) {
+  deviceSession (id: number) {
     return new APIAdminResourceDeviceSessionStandalone(this, id);
   }
 
   // /device-time
-  public deviceTime () {
+  deviceTime () {
     return new APIAdminResourceDeviceTime(this);
   }
 
   // /device-time-summary
-  public deviceTimeSummary () {
+  deviceTimeSummary () {
     return new APIList(this).push('admin', 'device-time-summary');
   }
 
   // /device-types
-  public deviceTypes () {
+  deviceTypes () {
     return new APIList(this).push('admin', 'device-types');
   }
 
   // /device-types/{id}
-  public deviceType (id: number) {
+  deviceType (id: number) {
     return new APIResource(this).push('admin', 'device-types', id);
   }
 
   // /device-groups
-  public deviceGroups () {
+  deviceGroups () {
     return new APIList(this).push('device-groups');
   }
   // /device-groups/{id}
-  public deviceGroup (id: number) {
+  deviceGroup (id: number) {
     return new APIResourceDeviceGroup(this, id);
   }
 
   // /admin/emails
-  public emails () {
+  emails () {
     return new APIList(this).push('admin', 'emails');
   }
 
   // /admin/emails/{id}/resend
-  public resendEmail (id: number) {
+  resendEmail (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -243,117 +242,117 @@ class APIAdminResource extends APIResource {
   }
 
   // /admin/errors
-  public errors () {
+  errors () {
     return new APIList(this).push('admin', 'errors')
   }
 
   // /files
-  public files () {
+  files () {
     return new APIList(this).push('files');
   }
 
   // /files/{id}
-  public file (id: number) {
+  file (id: number) {
     return new APIResourceFile(this, id);
   }
 
   // /admin/frameworks
-  public frameworks () {
+  frameworks () {
     return new APIList(this).push('admin', 'frameworks')
   }
 
   // /admin/frameworks/{id}
-  public framework (id: number) {
+  framework (id: number) {
     return new APIAdminResourceFramework(this, id)
   }
 
   // /admin/frameworks/available-labels
-  public frameworkAvailableLabels () {
+  frameworkAvailableLabels () {
     const a = this.frameworks();
     a.push('available-labels');
     return a;
   }
 
   // /admin/interactive-queue
-  public interactiveQueue () {
+  interactiveQueue () {
     return new APIList(this).push('admin', 'interactive-queue');
   }
 
   // /admin/licenses
-  public licenses () {
+  licenses () {
     return new APIList(this).push('admin', 'licenses')
   }
 
   // /admin/licenses/{id}
-  public license (id: number) {
+  license (id: number) {
     return new APIAdminResourceLicense(this, id)
   }
 
   // /admin/maintenance
-  public maintenance () {
+  maintenance () {
     return new APIResource(this).push('admin', 'maintenance');
   }
 
   // /admin/market-shares
-  public marketShares () {
+  marketShares () {
     return new APIList(this).push('admin', 'market-shares')
   }
 
   // /admin/notification-plans
-  public notificationPlans () {
+  notificationPlans () {
     return new APIAdminListNotificationPlans(this)
   }
 
   // /admin/notification-plans/{id}
-  public notificationPlan (id: number) {
+  notificationPlan (id: number) {
     return new APIAdminResourceNotificationPlan(this, id)
   }
 
   // /admin/overview
-  public overview () {
+  overview () {
     return new APIResource(this).push('admin', 'overview');
   }
 
-  public pools () {
+  pools () {
     return new APIList(this).push('admin', 'pools');
   }
 
-  public pool (id: number) {
+  pool (id: number) {
     return new APIResource(this).push('admin', 'pools', id);
   }
 
   // /projects
-  public projects () {
+  projects () {
     return new APIList(this).push('projects');
   }
 
   // /projects/{id}
-  public project (id: number) {
+  project (id: number) {
     return new APIResourceProject(this, id);
   }
 
   // /admin/roles
-  public roles () {
+  roles () {
     return new APIList(this).push('admin', 'roles')
   }
 
   // /admin/runs
-  public runs () {
+  runs () {
     return new APIAdminListRuns(this);
   }
 
   // /runs/{id}
-  public run (id: number) {
+  run (id: number) {
     return new APIAdminResourceRunStandalone(this, id);
   }
 
   // /admin/samples
-  public samples () {
+  samples () {
     return new APIList(this).push('admin', 'samples')
   }
 
   // /admin/samples/{id}
-  public sample (id: number) {
+  sample (id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -361,37 +360,37 @@ class APIAdminResource extends APIResource {
   }
 
   // /admin/services
-  public services () {
+  services () {
     return new APIAdminListServices(this)
   }
 
   // /admin/services/{id}
-  public service (id: number) {
+  service (id: number) {
     return new APIAdminResourceService(this, id)
   }
 
   // /admin/settings
-  public settings () {
+  settings () {
     return new APIResource(this).push('admin', 'settings')
   }
 
   // /admin/statistics
-  public statistics () {
+  statistics () {
     return new APIAdminListStatistics(this)
   }
 
   // /users
-  public users () {
+  users () {
     return new APIList(this).push('users');
   }
 
   // /admin/users
-  public createUser () {
+  createUser () {
     return new APIList(this).push('admin', 'users').post();
   }
 
   // /users/{id}
-  public user (id: number) {
+  user (id: number) {
     return new APIAdminResourceUser(this, id);
   }
 

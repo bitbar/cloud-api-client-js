@@ -1,7 +1,8 @@
-import APIResource from './APIResource'
-import APIList from './APIList'
-
-import APIAdminResourceUserAccount from './APIAdminResourceUserAccount';
+import {API} from '../API';
+import {APIAdminResourceUserAccount} from './APIAdminResourceUserAccount';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
 
 
 /**
@@ -10,14 +11,14 @@ import APIAdminResourceUserAccount from './APIAdminResourceUserAccount';
  * @class
  * @extends APIResource
  */
-class APIAdminResourceUser extends APIResource {
+export class APIAdminResourceUser extends APIResource {
 
   /**
    * /users/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -27,27 +28,27 @@ class APIAdminResourceUser extends APIResource {
   }
 
   // /users/{id}/disable
-  public disable () {
+  disable() {
     return new APIResource(this).push('disable');
   }
 
   // /users/{id}/enable
-  public enable () {
+  enable() {
     return new APIResource(this).push('enable');
   }
 
   // /users/{id}/licenses
-  public licenses () {
+  licenses() {
     return new APIList(this).push('licenses');
   }
 
   // /users/{id}/resend-activation
-  public resendActivation () {
+  resendActivation() {
     return new APIResource(this).push('resend-activation').post();
   }
 
   // users/{id}/account
-  public account () {
+  account() {
     return new APIAdminResourceUserAccount(this);
   }
 

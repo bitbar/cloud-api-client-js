@@ -1,4 +1,6 @@
-import APIList from './APIList'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
 
 
 /**
@@ -7,24 +9,24 @@ import APIList from './APIList'
  * @class
  * @extends APIList
  */
-class APIAdminListNotificationPlans extends APIList {
+export class APIAdminListNotificationPlans extends APIList {
 
   /**
    * /notification-plans
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('admin', 'notification-plans');
   }
 
   // /notification-plans/channels
-  public channels () {
+  channels () {
     return new APIList(this).push('channels');
   }
 
   // /notification-plans/scopes
-  public scopes () {
+  scopes () {
     return new APIList(this).push('scopes');
   }
 

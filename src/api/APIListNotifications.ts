@@ -1,30 +1,27 @@
-import APIList from './APIList'
+import {APIList} from './APIList'
+import APIListUsers from "./APIListUsers";
+import APIResourceUser from "./APIResourceUser";
+import {Enum} from "./models/Enum";
+import {Notification} from "./models/Notification";
 
 
-/**
- * APIListNotifications
- *
- * @class
- * @extends APIList
- */
-class APIListNotifications extends APIList {
+export class APIListNotifications extends APIList<Notification> {
 
   /**
    * /notifications
-   * Constructor
    */
-  constructor (parent: object) {
+  constructor(parent: APIResourceUser) {
     super(parent);
     this.push('notifications');
   }
 
   // /notifications/scopes
-  public scopes () {
+  scopes(): APIList<Enum> {
     return new APIList(this).push('scopes');
   }
 
   // /notifications/channels
-  public channels () {
+  channels(): APIList<Enum> {
     return new APIList(this).push('channels');
   }
 

@@ -1,5 +1,7 @@
-import APIResource from './APIResource'
-import APIList from './APIList'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
 
 
 /**
@@ -8,14 +10,14 @@ import APIList from './APIList'
  * @class
  * @extends APIResource
  */
-class APIResourceDevice extends APIResource {
+export class APIResourceDevice extends APIResource {
 
   /**
    * /devices/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -25,7 +27,7 @@ class APIResourceDevice extends APIResource {
   }
 
   // /devices/{id}/properties
-  public properties () {
+  properties() {
     return new APIList(this).push('properties');
   }
 

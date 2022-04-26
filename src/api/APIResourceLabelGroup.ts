@@ -1,6 +1,7 @@
-import APIResource from './APIResource'
-import APIList from './APIList'
-
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
 
 /**
  * APIResourceLabelGroup
@@ -8,14 +9,14 @@ import APIList from './APIList'
  * @class
  * @extends APIResource
  */
-class APIResourceLabelGroup extends APIResource {
+export class APIResourceLabelGroup extends APIResource {
 
   /**
    * /label-groups/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -25,12 +26,12 @@ class APIResourceLabelGroup extends APIResource {
   }
 
   // /label-groups/{id}/labels
-  public labels () {
+  labels() {
     return new APIList(this).push('labels');
   }
 
   // /label-groups/{id}/label
-  public label (id: number) {
+  label(id: number) {
     return new APIResource(this).push('labels', id);
   }
 

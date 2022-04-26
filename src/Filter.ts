@@ -2,12 +2,12 @@
  * Filter
  */
 
-class Filter {
-  public name: string;
-  public value: any;
-  public operand: string;
+export class Filter<T = any> {
+  name: string;
+  value: T;
+  operand: string;
 
-  constructor (name: string, value: any, operand: string) {
+  constructor(name: string, value: T, operand: string) {
     this.name = name;
     this.value = value;
     this.operand = operand;

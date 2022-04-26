@@ -2,8 +2,8 @@
 
 import pluginCommonjs from '@rollup/plugin-commonjs';
 import pluginTypeScript from 'rollup-plugin-typescript2';
-import pluginJson from '@rollup/plugin-json'; 
-import pluginBabel from '@rollup/plugin-babel'; 
+import pluginJson from '@rollup/plugin-json';
+import pluginBabel from '@rollup/plugin-babel';
 import { terser as pluginTerser } from 'rollup-plugin-terser';
 import pluginDelete from 'rollup-plugin-delete';
 
@@ -33,7 +33,8 @@ function getOutput(min, sufix = '') {
     `| ${repo}/blob/master/LICENSE ` +
     '*/',
     globals,
-    sourcemap: true
+    sourcemap: true,
+    exports: 'named'
   };
 }
 

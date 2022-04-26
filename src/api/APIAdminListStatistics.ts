@@ -1,4 +1,6 @@
-import APIList from './APIList'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
 
 
 /**
@@ -7,24 +9,24 @@ import APIList from './APIList'
  * @class
  * @extends APIList
  */
-class APIAdminListStatistics extends APIList {
+export class APIAdminListStatistics extends APIList {
 
   /**
    * /statistics
    * Constructor
    */
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('admin', 'statistics');
   }
 
   // /statistics/device-sessions
-  public deviceSessions () {
+  deviceSessions () {
     return new APIList(this).push('device-sessions');
   }
 
   // /statistics/frameworks
-  public frameworks () {
+  frameworks () {
     return new APIList(this).push('frameworks');
   }
 

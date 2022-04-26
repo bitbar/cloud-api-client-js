@@ -1,5 +1,6 @@
-import APIList from './APIList'
-import APIListPurchased from './APIListPurchased'
+import {API} from "../API";
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
 
 
 /**
@@ -8,25 +9,20 @@ import APIListPurchased from './APIListPurchased'
  * @class
  * @extends APIList
  */
-class APIAdminListServices extends APIList {
+export class APIAdminListServices extends APIList {
 
   // Constructor
-  constructor (parent: object) {
+  constructor (parent: APIEntity<any> | API) {
     super(parent);
     this.push('admin', 'services');
   }
 
-  // /services/purchased
-  public purchased () {
-    return new APIListPurchased(this);
-  }
-
   // /services/available
-  public available () {
+  available () {
     return new APIList(this).push('available');
   }
 
-  public active () {
+  active () {
     const a = new APIList(this);
     if (this.first === 'me') {
       a.push('active');
@@ -38,7 +34,7 @@ class APIAdminListServices extends APIList {
     return a;
   }
 
-  public activated () {
+  activated () {
     const a = this.active();
     a.params({
       filter: 'activated_eq_true',
@@ -48,7 +44,7 @@ class APIAdminListServices extends APIList {
     return a;
   }
 
-  public inUse () {
+  inUse () {
     const a = new APIList(this);
     a.params({
       inUse: true,
@@ -58,7 +54,7 @@ class APIAdminListServices extends APIList {
     return a;
   }
 
-  public byPrice () {
+  byPrice () {
     const a = new APIList(this);
     a.params({
       sort: 'centPrice_a'

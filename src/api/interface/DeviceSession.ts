@@ -1,9 +1,10 @@
-import APIResource from '../APIResource';
-import DeviceSessionCommon from './DeviceSessionCommon';
+import {APIResource} from '../APIResource';
+import {DeviceSessionCommon} from './DeviceSessionCommon';
+import {DeviceSession as DeviceSessionDTO} from '../models/DeviceSession';
 
-interface DeviceSession extends DeviceSessionCommon {
-  abort (): APIResource;
-  retry (): APIResource;
+export interface DeviceSession extends DeviceSessionCommon {
+  abort(): APIResource<DeviceSessionDTO>;
+  retry(): APIResource<DeviceSessionDTO>;
 }
 
 export default DeviceSession;

@@ -1,6 +1,6 @@
-import { AxiosBasicCredentials } from 'axios';
+import {AxiosBasicCredentials} from 'axios';
 
-interface ApiConfig {
+export type ApiConfig = {
 
   /**
    * Base URL
@@ -10,7 +10,7 @@ interface ApiConfig {
   /**
    * Cloud URL
    */
-  cloudUrl?: string;
+  cloudUrl: string;
 
   /**
    * v2 Flag
@@ -33,7 +33,7 @@ interface ApiConfig {
 
   /**
    * With credentials?
-   * 
+   *
    */
   withCredentials?: boolean;
 }

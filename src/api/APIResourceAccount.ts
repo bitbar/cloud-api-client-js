@@ -1,4 +1,6 @@
-import APIResource from './APIResource'
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIResource} from './APIResource'
 
 /**
  * APIResourceAccount
@@ -6,14 +8,14 @@ import APIResource from './APIResource'
  * @class
  * @extends APIResource
  */
-class APIResourceAccount extends APIResource {
+export class APIResourceAccount extends APIResource {
 
   /**
    * /accounts/{id}
    *
    * Constructor
    */
-  constructor (parent: object, id: number) {
+  constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -23,12 +25,12 @@ class APIResourceAccount extends APIResource {
   }
 
   // /accounts/{id}/concurrency-status
-  public concurrencyStatus () {
+  concurrencyStatus() {
     return new APIResource(this).push('concurrency-status');
   }
 
   // /accounts/{id}/preferences
-  public preferences () {
+  preferences() {
     return new APIResource(this).push('preferences');
   }
 

@@ -1,11 +1,12 @@
-import APIList from '../APIList';
-import APIResource from '../APIResource';
-import DeviceSessionBase from './DeviceSessionBase';
+import {APIList} from '../APIList';
+import {APIResource} from '../APIResource';
+import {DeviceSession, DeviceSessionConnection} from "../models/DeviceSession";
+import {DeviceSessionBase} from './DeviceSessionBase';
 
-interface DeviceSessionStandalone extends DeviceSessionBase {
-  connections (): APIList;
-  connection (id: number): APIResource;
-  release (): APIResource;
+export interface DeviceSessionStandalone extends DeviceSessionBase {
+  connections(): APIList<DeviceSessionConnection>;
+  connection(id: number): APIResource<DeviceSessionConnection>;
+  release(): APIResource<DeviceSession>;
 }
 
 export default DeviceSessionStandalone;

@@ -1,5 +1,7 @@
-import APIResource from './APIResource'
-import APIList from './APIList'
+import {API} from "../API";
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
 
 
 /**
@@ -8,25 +10,25 @@ import APIList from './APIList'
  * @class
  * @extends APIResource
  */
-class APIAdminResourceUserAccount extends APIResource {
+export class APIAdminResourceUserAccount extends APIResource<any> {
 
   /**
    * /acount
    *
    * Constructor
    */
-  constructor (parent: object) {
+  constructor(parent: APIEntity<any> | API) {
     super(parent);
     this.push('account');
   }
 
   // /account/roles
-  public roles () {
+  roles() {
     return new APIList(this).push('roles');
   }
 
   // /account/roles/{id}
-  public role (id: number) {
+  role(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -35,14 +37,14 @@ class APIAdminResourceUserAccount extends APIResource {
   }
 
   // /account-services
-  public services () {
+  services() {
     const a = new APIList(this);
     a.last += '-services';
     return a;
   }
 
   // /update-account
-  public update () {
+  update() {
     const a = new APIResource(this);
     a.last = 'update-account';
     return a.post();
