@@ -134,7 +134,7 @@ describe('APIEntity', () => {
 
     it('should throw error when method is not allowed', () => {
       try {
-        const call = service.method('PATCH');
+        service.method('PATCH');
       } catch (error) {
         expect(error).toBeDefined();
       }

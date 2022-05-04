@@ -1,7 +1,7 @@
 import {AxiosResponse} from "axios";
 import {FilterBuilder} from '../FilterBuilder'
 import {APIEntity} from './APIEntity'
-import {QueryParams} from "./HTTP.model";
+import {QueryParams} from "./models/HTTP";
 
 
 export const DEFAULT_LIMIT: number = 20;
@@ -13,9 +13,10 @@ export enum APIOrder {
 }
 
 export interface CollectionQueryParams extends QueryParams {
-  sort: string;
+  filter: string;
   limit: number;
   offset: number;
+  sort: string;
 }
 
 export type CollectionResponse<T> = {

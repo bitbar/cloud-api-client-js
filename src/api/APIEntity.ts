@@ -1,7 +1,7 @@
 import {AxiosRequestConfig, AxiosResponse, Method} from 'axios';
 import {stringify} from 'qs';
 import {API} from "../API";
-import {ALLOWED_HTTP_METHODS, QueryParams} from "./HTTP.model";
+import {ALLOWED_HTTP_METHODS, QueryParams} from "./models/HTTP";
 
 
 /**
@@ -9,12 +9,13 @@ import {ALLOWED_HTTP_METHODS, QueryParams} from "./HTTP.model";
  * @typeParam QUERY_PARAMS    Allowed Query Params
  * @typeParam DATA Allowed    Data Object
  */
-export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams = QueryParams, DATA = any> {
+export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void = QueryParams, DATA = any> {
 
   root: API;
 
   protected stack: Array<string | number> = [];
   protected requestConfig: AxiosRequestConfig = {};
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ALLOWED_HTTP_METHODS;
 
   /**
    * Constructor
@@ -111,10 +112,10 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams = QueryP
    */
   method(name: Method): this {
     const NAME: Uppercase<Method> = <Uppercase<Method>>name.toLocaleUpperCase();
-    const isAllowed: boolean = Object.keys(ALLOWED_HTTP_METHODS).indexOf(NAME) > -1;
+    const isAllowed: boolean = this.ALLOWED_HTTP_METHODS.indexOf(NAME) > -1;
 
     if (!isAllowed) {
-      throw new Error(`Method '${NAME}' is not allowed! You can use: ${Object.keys(ALLOWED_HTTP_METHODS).join(', ')}`);
+      throw new Error(`Method '${NAME}' is not allowed! You can use: ${this.ALLOWED_HTTP_METHODS.join(', ')}`);
     }
 
     return this.setRequestConfig({

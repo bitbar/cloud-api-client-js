@@ -1,36 +1,59 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
-import {APIList} from './APIList'
+import {Method} from "axios";
+import {APIList, CollectionQueryParams} from './APIList'
+import APIResourceUser from "./APIResourceUser";
+import {AccountService, PaymentMethod, ServicePaymentStatus} from "./models/AccountService";
+import {Service} from "./models/Service";
 
-/**
- * APIListServices
- *
- * @class
- * @extends APIList
- */
-export class APIListServices extends APIList {
 
-  // Constructor
-  constructor(parent: APIEntity<any> | API) {
+export interface ServiceData {
+  address?: string;
+  braintreeNonce?: string;
+  cardNumber?: string;
+  city?: string;
+  count?: number;
+  country?: string;
+  cvv?: string;
+  email?: string;
+  expirationDate?: string;
+  firstName?: string;
+  lastName?: string;
+  organization?: string;
+  paymentMethod: PaymentMethod;
+  phone?: string;
+  serviceId: number;
+  state?: string;
+  stripeToken?: string;
+  vatId?: string;
+  zip?: string;
+}
+
+export class APIListServices extends APIList<ServicePaymentStatus, void, ServiceData> {
+
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
+
+  /**
+   * /services
+   */
+  constructor(parent: APIResourceUser) {
     super(parent);
     this.push('services');
   }
 
   // /services/available
   available() {
-    return new APIList(this).push('available');
+    return new APIList<Service, CollectionQueryParams, void>(this).push('available');
   }
 
   active() {
-    const a = new APIList(this);
+    const apiList = new APIList<AccountService, CollectionQueryParams, void>(this);
     if (this.first === 'me') {
-      a.push('active');
+      apiList.push('active');
     } else {
-      a.params({
+      apiList.params({
         notArchived: true
       });
     }
-    return a;
+    return apiList;
   }
 
 }

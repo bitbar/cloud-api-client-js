@@ -11,6 +11,7 @@ import APIResourceDeviceGroup from "./api/APIResourceDeviceGroup";
 import APIResourceDeviceSession from "./api/APIResourceDeviceSession";
 import APIResourceUser from "./api/APIResourceUser";
 import APIResourceUserSession from "./api/APIResourceUserSession";
+import ApiConfig from "./ApiConfig";
 
 
 describe('API', () => {
@@ -28,7 +29,103 @@ describe('API', () => {
     it('Is created properly', () => {
       expect(api).toBeDefined();
       expect(api).toBeInstanceOf(API);
+      expect((<any>api).axiosConfig.baseURL).not.toContain('/v2');
     });
+  });
+
+  it('should throw error if configuration is missing', () => {
+    const config = <ApiConfig>(<unknown>undefined);
+    try {
+      api = new API(config);
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+
+  it('should throw error if configuration is missing cloudUrl', () => {
+    const config = <ApiConfig>(<unknown>{test: 123});
+    try {
+      api = new API(config);
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+
+  it('should throw error if configuration cloudUrl isn\'t a string', () => {
+    const config = <ApiConfig>(<unknown>{cloudUrl: 123});
+    try {
+      api = new API(config);
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+
+  it('should throw error if configuration cloudUrl isn\'t a proper URL', () => {
+    const config = <ApiConfig>(<unknown>{cloudUrl: 'test.com'});
+    try {
+      api = new API(config);
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+
+  it('should add /v2 to base url if config provided', () => {
+    api = new API({
+      baseURL: '',
+      cloudUrl,
+      v2: true
+    });
+    expect((<any>api).axiosConfig.baseURL).toContain('/v2');
+  });
+
+  it('should throw error if api key isn\'t a string', () => {
+    const config = <ApiConfig>(<unknown>{
+      baseURL: '',
+      cloudUrl,
+      apiKey: 123
+    });
+    try {
+      api = new API(config);
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+
+  it('should throw error if api key isn\'t a proper key format', () => {
+    const config = <ApiConfig>(<unknown>{
+      baseURL: '',
+      cloudUrl,
+      apiKey: 'abc123'
+    });
+    try {
+      api = new API(config);
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+
+  it('should set apiKey as username auth', () => {
+    const apiKey = 'qwertyuiopASDFGHJKL1234567890zXC';
+    api = new API({
+      baseURL: '',
+      cloudUrl,
+      apiKey
+    });
+    expect((<any>api).axiosConfig.auth).toEqual({
+      username: apiKey,
+      password: ''
+    });
+  });
+
+  it('should set axios withCredentials is provided in config', () => {
+    const apiKey = 'qwertyuiopASDFGHJKL1234567890zXC';
+    api = new API({
+      baseURL: '',
+      cloudUrl,
+      apiKey,
+      withCredentials: true
+    });
+    expect((<any>api).axiosConfig.withCredentials).toEqual(true);
   });
 
   it('should have hooks for first level endpoints', () => {

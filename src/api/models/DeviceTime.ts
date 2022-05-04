@@ -1,9 +1,11 @@
+import {DeviceSessionType} from "./DeviceSession";
+
 export type DeviceTime = BasicDeviceTime & {
   billableTime: number;
   createTime: number;
   endTime: number;
   freeTime: number;
-  type: 'AUTOMATIC' | 'MANUAL' | 'MANUAL_APP' | 'MANUAL_WEB' | 'REMOTE';
+  type: DeviceSessionType;
   userId: number;
   userName: string;
 };

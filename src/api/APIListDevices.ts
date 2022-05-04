@@ -1,10 +1,22 @@
 import {API} from "../API";
-import {APIList} from './APIList';
+import {APIList, CollectionQueryParams} from './APIList';
 import {APIResource} from './APIResource';
+import {DesktopBrowserCapabilities} from "./models/DesktopBrowserCapabilities";
 import {Device} from "./models/Device";
+import {DevicePicker} from "./models/DeviceFilter";
 
 
-export class APIListDevices extends APIList<Device> {
+export interface DevicesQueryParams extends CollectionQueryParams {
+  labelIds: Array<string>;
+  liveTestingOnly: boolean;
+  withBrowsers: boolean;
+  withDedicated: boolean;
+  withDisabled: boolean;
+  withProperties: boolean;
+  withSupportedCreators: boolean;
+}
+
+export class APIListDevices extends APIList<Device, Partial<DevicesQueryParams>> {
 
   /**
    * /devices
@@ -16,12 +28,12 @@ export class APIListDevices extends APIList<Device> {
 
   // /devices/filters
   filters() {
-    return new APIResource(this).push('filters');
+    return new APIResource<DevicePicker, Partial<CollectionQueryParams>, void>(this).push('filters');
   }
 
   // /devices/desktop-browser-capabilities
   desktopBrowserCapabilities() {
-    return new APIResource(this).push('desktop-browser-capabilities');
+    return new APIResource<DesktopBrowserCapabilities, void, void>(this).push('desktop-browser-capabilities');
   }
 
 }

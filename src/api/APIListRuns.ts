@@ -1,19 +1,28 @@
-import {APIList} from './APIList'
+import {APIList, CollectionQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import APIResourceUser from "./APIResourceUser";
+import {TestRun, TestRunConfig} from "./models/TestRun";
 
-/**
- * APIListRuns
- *
- * @class
- * @extends APIList
- */
-export class APIListRuns extends APIList {
+export interface TestRunData {
+  configuration: TestRunConfig;
+}
+
+export interface TestRunConfigData extends TestRunData{
+  includeDeviceGroups: boolean;
+  includeDevices: boolean;
+  includeFrameworks: boolean;
+}
+
+export interface TestRunQueryParams extends CollectionQueryParams {
+  forWholeAccount: boolean;
+  skipCommonProject: boolean;
+  skipShared: boolean;
+}
+
+export class APIListRuns extends APIList<TestRun, TestRunQueryParams, TestRunData> {
 
   /**
    * /runs
-   *
-   * Constructor
    */
   constructor(parent: APIResourceUser) {
     super(parent);
@@ -22,7 +31,7 @@ export class APIListRuns extends APIList {
 
   // /runs/config
   config() {
-    return new APIResource(this).push('config');
+    return new APIResource<TestRunConfig, void, TestRunConfigData>(this).push('config');
   }
 
 }

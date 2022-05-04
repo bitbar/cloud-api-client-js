@@ -1,11 +1,11 @@
-import {APIList} from './APIList'
-import APIListUsers from "./APIListUsers";
+import {APIList, CollectionQueryParams} from './APIList'
 import APIResourceUser from "./APIResourceUser";
 import {Enum} from "./models/Enum";
 import {Notification} from "./models/Notification";
 
+export type NotificationData = Pick<Notification, 'channel' | 'destination' | 'projectId' | 'scope'>;
 
-export class APIListNotifications extends APIList<Notification> {
+export class APIListNotifications extends APIList<Notification, CollectionQueryParams, NotificationData> {
 
   /**
    * /notifications
@@ -16,13 +16,13 @@ export class APIListNotifications extends APIList<Notification> {
   }
 
   // /notifications/scopes
-  scopes(): APIList<Enum> {
-    return new APIList(this).push('scopes');
+  scopes() {
+    return new APIList<Enum, void, void>(this).push('scopes');
   }
 
   // /notifications/channels
-  channels(): APIList<Enum> {
-    return new APIList(this).push('channels');
+  channels() {
+    return new APIList<Enum, void, void>(this).push('channels');
   }
 
 }

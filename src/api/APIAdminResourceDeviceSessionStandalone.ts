@@ -3,6 +3,7 @@ import {APIResource} from './APIResource'
 import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
 import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
+import {postAdminDeviceSessionChangeBillable} from './factory/postAdminDeviceSessionChangeBillable';
 
 
 /**
@@ -15,12 +16,7 @@ export class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSe
 
   // /admin/device-sessions/{id}/changebillable
   changeBillable(billable: boolean) {
-    const a = new APIResource(this);
-    const deviceSessionId = a.last;
-
-    return a.restack('admin', 'device-sessions', deviceSessionId, 'changebillable').params({
-      billable
-    }).post();
+    return postAdminDeviceSessionChangeBillable(this, billable);
   }
 
   // /device-sessions/{id}/connections

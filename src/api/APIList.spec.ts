@@ -40,7 +40,7 @@ describe('APIList', () => {
         data: []
       };
       jest.spyOn(service.root.axios, 'request').mockReturnValueOnce(Promise.resolve(responseObject));
-      const call = await service.create(data);
+      await service.create(data);
 
       expect((<any>service).requestConfig.data.test).toEqual('me');
       expect((<any>service).requestConfig.data.properly).toEqual(1);
@@ -216,6 +216,15 @@ describe('APIList', () => {
       expect((<any>service).requestConfig.params.search).toEqual('test');
       expect(call).toEqual(service);
     });
+
+    it('should throw error if param isn\'t a string', () => {
+      const param = <string>(<unknown>1);
+      try {
+        service.search(param);
+      } catch (error) {
+        expect(error).toBeDefined();
+      }
+    });
   });
 
   describe('@filter', () => {
@@ -231,6 +240,15 @@ describe('APIList', () => {
       const call = service.filter(fb);
       expect((<any>service).requestConfig.params.filter).toEqual('test_like_me');
       expect(call).toEqual(service);
+    });
+
+    it('should throw error if param isn\'t a string or FilterBuilder', () => {
+      const param = <string>(<unknown>1);
+      try {
+        service.filter(param);
+      } catch (error) {
+        expect(error).toBeDefined();
+      }
     });
   });
 

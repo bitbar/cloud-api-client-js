@@ -1,14 +1,16 @@
-import {AxiosResponse} from "axios";
 import {API} from '../../API';
 import {APIEntity} from '../APIEntity';
 import {APIList} from '../APIList'
 import {APIResource} from '../APIResource'
+import {NonRequestable} from "../decorators/NonRequestable";
 import {Screenshot} from "../models/Screenshot";
 import {UserFile} from "../models/UserFile";
+import {FilesQueryParams} from "./FilesQueryParams";
 import {NON_MEDIA_FILES_FILTER} from "./NonMedia.filter";
 
 
-export class OutputFileset extends APIResource {
+@NonRequestable
+export class OutputFileset extends APIResource<UserFile, FilesQueryParams> {
 
   /**
    * /output-file-set
@@ -21,37 +23,37 @@ export class OutputFileset extends APIResource {
   }
 
   // /output-file-set/files
-  files(): APIList<UserFile> {
-    return new APIList(this).push('files');
+  files() {
+    return new APIList<UserFile, FilesQueryParams>(this).push('files');
   }
 
   // /output-file-set/files/{id}
-  file(id: number): APIResource<UserFile> {
-    return new APIResource(this).push('files', id);
+  file(id: number) {
+    return new APIResource<UserFile, FilesQueryParams>(this).push('files', id);
   }
 
   // /output-file-set/files.zip
-  filesZip(): APIResource<Blob> {
-    return new APIResource(this).push('files.zip');
+  filesZip() {
+    return new APIResource<Blob, FilesQueryParams>(this).push('files.zip');
   }
 
   // /output-file-set/screenshots
-  screenshots(): APIList<Screenshot> {
-    return new APIList(this).push('screenshots');
+  screenshots() {
+    return new APIList<Screenshot, FilesQueryParams>(this).push('screenshots');
   }
 
   // /output-file-set/screenshots/{id}
-  screenshot(id: number): APIResource<Screenshot> {
-    return new APIResource(this).push('screenshots', id);
+  screenshot(id: number) {
+    return new APIResource<Screenshot, FilesQueryParams>(this).push('screenshots', id);
   }
 
   // /output-file-set/screenshots/{id}/file/{id}
-  screenshotFile(id: number): APIResource<UserFile> {
+  screenshotFile(id: number) {
     return this.screenshot(id).push('file');
   }
 
   // Filter files out by ready videos
-  videos(): APIList<UserFile> {
+  videos() {
     return this.files().params({
       filter: 's_state_eq_READY',
       tag: ['video']
@@ -59,14 +61,8 @@ export class OutputFileset extends APIResource {
   }
 
   // Filter files out by non-media
-  nonMediaFiles(): APIList<UserFile> {
+  nonMediaFiles() {
     return this.files().filter(NON_MEDIA_FILES_FILTER);
-  }
-
-  // Not handled in API so locking possibility to send requests
-  /* istanbul ignore next */
-  send(): Promise<AxiosResponse> {
-    return Promise.reject();
   }
 
 }

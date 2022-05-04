@@ -1,11 +1,17 @@
-import {API} from '../API';
 import APIAdminListDevices from "./APIAdminListDevices";
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
 import {DeviceCleanupConfiguration} from "./models/Device";
+import {QueryParams} from "./models/HTTP";
 
 
-export class APIListCleanupConfigurations extends APIList<DeviceCleanupConfiguration> {
+export type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content' | 'discriminator' | 'enabled' | 'osType'>;
+export interface SpecificCleanupConfigurationQueryParams {
+  serialId: string;
+}
+
+
+export class APIListCleanupConfigurations extends APIList<DeviceCleanupConfiguration, QueryParams, CleanupConfigurationData> {
 
   /**
    * /cleanup-configurations
@@ -16,8 +22,9 @@ export class APIListCleanupConfigurations extends APIList<DeviceCleanupConfigura
   }
 
   // /cleanup-configurations/specific
-  specific(): APIResource<DeviceCleanupConfiguration> {
-    return new APIResource(this).push('specific');
+  specific() {
+    return new APIResource<DeviceCleanupConfiguration, Partial<SpecificCleanupConfigurationQueryParams>, void>(this)
+      .push('specific');
   }
 
 }
