@@ -1,9 +1,14 @@
-import {APIList} from './APIList'
+import {APIList, CollectionQueryParams} from './APIList'
 import APIResourceUser from "./APIResourceUser";
 import {BasicDeviceTime, DeviceTime} from "./models/DeviceTime";
 
 
-export class APIListDeviceTime extends APIList<DeviceTime> {
+export interface DeviceTimeQueryParams extends CollectionQueryParams {
+  forWholeAccount: boolean;
+}
+
+
+export class APIListDeviceTime extends APIList<DeviceTime, DeviceTimeQueryParams, void> {
 
   /**
    * /device-time
@@ -14,13 +19,13 @@ export class APIListDeviceTime extends APIList<DeviceTime> {
   }
 
   // /device-time/reserved
-  reserved(): APIList<BasicDeviceTime> {
-    return new APIList(this).push('reserved');
+  reserved() {
+    return new APIList<BasicDeviceTime, void, void>(this).push('reserved');
   }
 
   // /device-time/used
-  used(): APIList<BasicDeviceTime> {
-    return new APIList(this).push('used');
+  used() {
+    return new APIList<BasicDeviceTime, void, void>(this).push('used');
   }
 
 }

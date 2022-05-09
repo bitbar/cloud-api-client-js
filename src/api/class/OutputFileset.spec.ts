@@ -27,6 +27,10 @@ describe('OutputFileset', () => {
       expect(service.root).toBeInstanceOf(API);
       expect(service.last).toEqual('output-file-set');
     });
+
+    it('should be non requestable', async () => {
+      await expect(service.send()).rejects.toBeUndefined();
+    });
   });
 
   describe('@files', () => {

@@ -1,6 +1,7 @@
 import {API} from "../API";
 import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
+import {FilesQueryParams} from "./class/FilesQueryParams";
 import {UserFile} from "./models/UserFile";
 
 
@@ -9,9 +10,16 @@ type UploadObj = {
   filename: string;
 }
 
-export class APIListFiles extends APIList<UserFile> {
+export interface FileData {
+  file: Blob;
+  global: boolean;
+}
 
-  // Constructor
+export class APIListFiles extends APIList<UserFile, FilesQueryParams, FileData> {
+
+  /**
+   * /files
+   */
   constructor(parent: APIEntity | API) {
     super(parent);
     this.push('files');
@@ -23,6 +31,7 @@ export class APIListFiles extends APIList<UserFile> {
    */
   upload(obj: UploadObj): this {
     // For NodeJS
+    // @ts-ignore
     if (global.isNodeJs) {
       return this.nodeUpload(obj);
     } else {

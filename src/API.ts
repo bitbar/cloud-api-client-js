@@ -16,6 +16,7 @@ import {APIResourceUserSession} from './api/APIResourceUserSession';
 import {ApiConfig} from './ApiConfig';
 import './finka';
 
+// @ts-ignore
 if (globalThis.isNodeJs) {
   // Set User-Agent
   axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;

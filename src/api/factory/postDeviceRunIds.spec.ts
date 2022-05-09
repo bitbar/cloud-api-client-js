@@ -16,13 +16,13 @@ describe('postDeviceRunIds', () => {
     entity = new APIEntity(api);
   });
 
-  it('a', () => {
+  it('should return resource', () => {
     const call = postDeviceRunIds(entity, 'test');
     expect(call).toBeInstanceOf(APIResource);
     expect(call.last).toEqual('test');
   });
 
-  it('b', () => {
+  it('should return resource with preset query param', () => {
     const ids = [1, 2, 3];
     const call = postDeviceRunIds(entity, 'test', ids);
     expect(call).toBeInstanceOf(APIResource);

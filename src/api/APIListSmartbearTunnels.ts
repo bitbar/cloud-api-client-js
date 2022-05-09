@@ -1,33 +1,29 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {Method} from "axios";
 import {APIList} from './APIList'
+import APIResourceUser from "./APIResourceUser";
+import {SmartbearTunnel} from "./models/SmartbearTunnel";
 
-/**
- * APIListSmartbearTunnels
- *
- * @class
- * @extends APIList
- */
-export class APIListSmartbearTunnels extends APIList {
+
+export interface TunnelQueryParams {
+  active: boolean;
+}
+
+export class APIListSmartbearTunnels extends APIList<SmartbearTunnel, TunnelQueryParams, void> {
+
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ["GET"];
 
   /**
    * /tunnels
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: APIResourceUser) {
     super(parent);
     this.push('tunnels');
   }
 
   /**
    * Sets tunnel activity parameter
-   *
-   * @public
-   * @param {number} active - fetching active or inactive tunnels
-   * @returns this
    */
-  active(active: boolean) {
+  active(active: boolean): this {
     return this.params({active: active});
   }
 }

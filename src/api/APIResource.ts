@@ -1,4 +1,5 @@
 import {APIEntity} from './APIEntity'
+import {QueryParams} from "./models/HTTP";
 
 
 /**
@@ -7,7 +8,8 @@ import {APIEntity} from './APIEntity'
  * @class
  * @extends APIEntity
  */
-export class APIResource<T = any> extends APIEntity<T> {
+export class APIResource<RESPONSE = any, QUERY_PARAMS extends QueryParams | void = QueryParams, DATA = any>
+  extends APIEntity<RESPONSE, QUERY_PARAMS, DATA> {
 
   /**
    * Set DELETE as HTTP method

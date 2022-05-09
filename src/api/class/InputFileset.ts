@@ -1,11 +1,13 @@
-import {AxiosResponse} from "axios";
 import {API} from '../../API';
 import {APIEntity} from '../APIEntity';
 import {APIList} from '../APIList'
 import {APIResource} from '../APIResource'
+import {NonRequestable} from "../decorators/NonRequestable";
 import {UserFile} from "../models/UserFile";
+import {FilesQueryParams} from "./FilesQueryParams";
 
 
+@NonRequestable
 export class InputFileset extends APIResource<void> {
 
   constructor(parent: APIEntity | API) {
@@ -13,20 +15,18 @@ export class InputFileset extends APIResource<void> {
     this.push('input-file-set');
   }
 
-  // /input-file-set/files
-  files(): APIList<UserFile> {
-    return new APIList(this).push('files');
+  /**
+   * @endpoint /input-file-set/files
+   */
+  files() {
+    return new APIList<UserFile, FilesQueryParams, void>(this).push('files');
   }
 
-  // /input-file-set/files.zip
-  filesZip(): APIResource<Blob> {
-    return new APIResource(this).push('files.zip');
-  }
-
-  // Not handled in API so locking possibility to send requests
-  /* istanbul ignore next */
-  send(): Promise<AxiosResponse> {
-    return Promise.reject();
+  /**
+   * @endpoint /input-file-set/files.zip
+   */
+  filesZip() {
+    return new APIResource<Blob, FilesQueryParams>(this).push('files.zip');
   }
 }
 
