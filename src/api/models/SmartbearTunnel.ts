@@ -8,7 +8,6 @@ export type SmartbearTunnel = {
   id: number;
   proxyIp: string;
   proxyPort: string;
-  selfURI: string;
   state: string;
   staticServerDirectory: string;
   tunnelSource: string;

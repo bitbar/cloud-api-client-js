@@ -2,6 +2,27 @@ import {CollectionResponse} from "../APIList";
 import {Browser} from "./Browser";
 import {OsType} from "./Enum";
 
+export enum DeviceGroupOrigin {
+  STATIC = 'STATIC',
+  DYNAMIC = 'DYNAMIC',
+  HYBRID = 'HYBRID'
+}
+
+export enum Platform {
+  IOS = 'IOS',
+  ANDROID = 'ANDROID',
+  WINDOWS = 'WINDOWS',
+  MAC = 'MAC',
+  LINUX = 'LINUX',
+  UNDEFINED = 'UNDEFINED'
+}
+
+export enum SupportedCreators {
+  MANUAL = 'MANUAL',
+  ROBOT = 'ROBOT',
+  AUTOMATIC = 'AUTOMATIC'
+}
+
 export type DeviceProperty = {
   displayName: string;
   id: number;
@@ -9,14 +30,12 @@ export type DeviceProperty = {
   name: string;
   propertyGroupId: number;
   propertyGroupName: string;
-  selfURI: string;
 }
 
 export type SoftwareVersion = {
   apiLevel: number;
   id: number;
   releaseVersion: string;
-  selfURI: string;
 }
 
 export type Device = {
@@ -24,7 +43,7 @@ export type Device = {
   available: boolean;
   browsers: CollectionResponse<Browser>;
   creditsPrice: number;
-  deviceGroupOrigin: 'STATIC' | 'DYNAMIC' | 'HYBRID';
+  deviceGroupOrigin: DeviceGroupOrigin;
   displayName: string;
   enabled: boolean;
   frame100Url: string;
@@ -44,11 +63,10 @@ export type Device = {
   manufacturer: string;
   online: boolean;
   osType: OsType;
-  platform: 'IOS'| 'ANDROID' | 'WINDOWS' | 'MAC' | 'LINUX' | 'UNDEFINED';
+  platform: Platform;
   properties: CollectionResponse<DeviceProperty>;
-  selfURI: string;
   softwareVersion: SoftwareVersion;
-  supportedCreators: 'MANUAL' | 'ROBOT' | 'AUTOMATIC';
+  supportedCreators: SupportedCreators;
 }
 
 export type DeviceCleanupConfiguration = {
@@ -63,5 +81,4 @@ export type DeviceCleanupConfiguration = {
   id: number;
   lastModificationTime: number;
   osType: OsType;
-  selfURI: string;
 }

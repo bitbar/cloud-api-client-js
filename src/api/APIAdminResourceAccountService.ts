@@ -1,21 +1,13 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import APIAdminResource from "./APIAdminResource";
 import {APIResource} from './APIResource'
+import {AccountService} from "./models/AccountService";
 
-/**
- * APIAdminResourceAccountService
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceAccountService extends APIResource {
+export class APIAdminResourceAccountService extends APIResource<AccountService> {
 
   /**
    * /account-services/{id}
-   *
-   * Constructor
    */
-  constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -25,13 +17,13 @@ export class APIAdminResourceAccountService extends APIResource {
   }
 
   // /account-services/{id}/activate
-  activate () {
-    return new APIResource(this).push('activate').post();
+  activate() {
+    return new APIResource<AccountService>(this).push('activate').post();
   }
 
   // /account-services/{id}/deactivate
-  deactivate () {
-    return new APIResource(this).push('deactivate').post();
+  deactivate() {
+    return new APIResource<AccountService>(this).push('deactivate').post();
   }
 
 }

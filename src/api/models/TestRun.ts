@@ -3,6 +3,25 @@ import {TunnelSettings} from "./DeviceSession";
 import {OsType} from "./Enum";
 import {Tag} from "./Tag";
 
+export enum LimitationType {
+  PACKAGE = 'PACKAGE',
+  CLASS = 'CLASS'
+}
+
+export enum TestScheduler {
+  PARALLEL = 'PARALLEL',
+  SERIAL = 'SERIAL',
+  SINGLE = 'SINGLE',
+  ALL_INSTANCES = 'ALL_INSTANCES'
+}
+
+export enum TestState {
+  WAITING = 'WAITING',
+  RUNNING = 'RUNNING',
+  FINISHED = 'FINISHED'
+}
+
+
 export type TestRun = {
   abortedDeviceCount: number;
   billable: boolean
@@ -27,11 +46,10 @@ export type TestRun = {
   rowIndex: number;
   runningDeviceCount: number;
   screenshotsFileId: number;
-  selfURI: string;
   startTime: number;
   startedByDisplayName: string;
   startedById: number;
-  state: 'WAITING' | 'RUNNING' | 'FINISHED';
+  state: TestState;
   succeededDeviceCount: number;
   successRatio: number;
   successfulTestCaseCount: number;
@@ -67,7 +85,7 @@ export type TestRunConfig = {
   hookURL: string;
   id: number;
   instrumentationRunner: string;
-  limitationType: 'PACKAGE' | 'CLASS';
+  limitationType: LimitationType;
   limitationValue: string;
   loadedPrevious: boolean;
   example: true
@@ -78,9 +96,8 @@ export type TestRunConfig = {
   projectName: string;
   resignFiles: boolean;
   runAvailable: boolean;
-  scheduler: 'PARALLEL' | 'SERIAL' | 'SINGLE' | 'ALL_INSTANCES';
+  scheduler: TestScheduler;
   screenshotDir: string;
-  selfURI: string;
   status: string;
   statusCode: number;
   testRunId: number;

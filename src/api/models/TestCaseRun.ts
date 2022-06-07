@@ -1,5 +1,25 @@
 import {CollectionResponse} from "../APIList";
 
+export enum TestResult {
+  PASSED = 'PASSED',
+  FAILED = 'FAILED',
+  SKIPPED = 'SKIPPED',
+  NOT_AVAILABLE = 'NOT_AVAILABLE'
+}
+
+export enum TestStepType {
+  ASSERTION = 'ASSERTION',
+  CLICK = 'CLICK',
+  CONFIG = 'CONFIG',
+  DRAG = 'DRAG',
+  INPUT = 'INPUT',
+  NAVIGATION = 'NAVIGATION',
+  OTHER = 'OTHER',
+  SCROLL = 'SCROLL',
+  UTIL = 'UTIL',
+  WAIT = 'WAIT'
+}
+
 export type TestCaseRun = {
   className: string;
   createTime: number;
@@ -7,8 +27,7 @@ export type TestCaseRun = {
   errorMessage: string;
   id: number;
   methodName: string;
-  result: 'PASSED' | 'FAILED' | 'SKIPPED' | 'NOT_AVAILABLE';
-  selfURI: string;
+  result: TestResult;
   stacktrace: string;
   steps: CollectionResponse<TestCaseRunStep>;
   suiteName: string;
@@ -21,5 +40,5 @@ export type TestCaseRunStep = {
   fromActivity: string;
   id: number;
   screenshots: any;
-  type: 'ASSERTION' | 'CLICK' | 'CONFIG' | 'DRAG' | 'INPUT' | 'NAVIGATION' | 'OTHER' | 'SCROLL' | 'UTIL' | 'WAIT';
+  type: TestStepType;
 }

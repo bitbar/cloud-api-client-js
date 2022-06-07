@@ -1,3 +1,4 @@
+import {ChargeType} from "./AccountService";
 import {Role} from "./Role";
 
 export type Service = {
@@ -6,7 +7,7 @@ export type Service = {
   archiveTime: number;
   autoRenew: boolean;
   centPrice: number;
-  chargeType: 'USAGE_MOBILE'| 'CONCURRENCY_MOBILE'| 'CONCURRENCY_DESKTOP';
+  chargeType: ChargeType;
   commonId: string;
   customPlan: boolean;
   defaultConcurrences: Array<number>;
@@ -19,8 +20,14 @@ export type Service = {
   pricePerHour: number;
   priceString: string;
   roles: Array<Role>;
-  selfURI: string;
   unit: ServiceUnit;
 }
 
-export type ServiceUnit = 'MONTH' | 'DAY' | 'YEAR' | 'HOUR' | 'RUN' | 'PROJECT';
+export enum ServiceUnit {
+  DAY = 'DAY',
+  HOUR = 'HOUR',
+  MONTH = 'MONTH',
+  PROJECT = 'PROJECT',
+  RUN = 'RUN',
+  YEAR = 'YEAR'
+}

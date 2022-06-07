@@ -1,5 +1,5 @@
 import {Method} from "axios";
-import {APIList, CollectionQueryParams} from './APIList'
+import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import APIResourceUser from "./APIResourceUser";
 import {AccountService, PaymentMethod, ServicePaymentStatus} from "./models/AccountService";
 import {Service} from "./models/Service";
@@ -27,7 +27,7 @@ export interface ServiceData {
   zip?: string;
 }
 
-export class APIListServices extends APIList<ServicePaymentStatus, void, ServiceData> {
+export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams, ServiceData> {
 
   protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
 

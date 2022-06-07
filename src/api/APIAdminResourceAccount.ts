@@ -1,22 +1,14 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import APIAdminResource from "./APIAdminResource";
 import {APIResource} from './APIResource'
+import {Account} from "./models/Account";
 
 
-/**
- * APIAdminResourceAccount
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceAccount extends APIResource {
+export class APIAdminResourceAccount extends APIResource<Account> {
 
   /**
    * /admin/accounts/{id}
-   *
-   * Constructor
    */
-  constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

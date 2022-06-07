@@ -1,25 +1,18 @@
-import {API} from "../API";
-import {APIEntity} from './APIEntity';
+import APIAdminResource from "./APIAdminResource";
 import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
+import {AdminTestRun} from "./models/AdminTestRun";
+import {DeviceSession} from "./models/DeviceSession";
 
 
-/**
- * APIAdminResourceRun
- *
- * @class
- * @extends APIResourceRun
- */
-export class APIAdminResourceRunStandalone extends APIResource<any> {
+export class APIAdminResourceRunStandalone extends APIResource<AdminTestRun> {
 
   /**
    * /runs/{id}
-   *
-   * Constructor
    */
-   constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -29,38 +22,38 @@ export class APIAdminResourceRunStandalone extends APIResource<any> {
   }
 
   // /runs/{id}/abort
-  abort () {
-    return new APIResource(this).push('abort').post();
+  abort() {
+    return new APIResource<AdminTestRun>(this).push('abort').post();
   }
 
   // /runs/{id}/changebillable
-  changeBillable (billable: boolean) {
-    return new APIResource(this).push('changebillable').post().params({
+  changeBillable(billable: boolean) {
+    return new APIResource<AdminTestRun>(this).push('changebillable').post().params({
       billable
     });
   }
 
   // /runs/{id}/changepriority
-  changePriority (priority: boolean) {
-    return new APIResource(this).push('changepriority').post().params({
+  changePriority(priority: boolean) {
+    return new APIResource<AdminTestRun>(this).push('changepriority').post().params({
       priority
     });
   }
 
   // /runs/{id}/retry
-  retry (ids?: Array<number>) {
-    return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
+  retry(ids?: Array<number>) {
+    return postDeviceRunIds<AdminTestRun>(this, 'retry', ids).setRequestConfig({
       timeout: 0
     });
   }
 
   // /runs/{id}/device-sessions
-  deviceSessions () {
-    return new APIList(this).shift().push('device-sessions');
+  deviceSessions() {
+    return new APIList<DeviceSession>(this).shift().push('device-sessions');
   }
 
   // /runs/{id}/device-sessions/{id}
-  deviceSession (id: number) {
+  deviceSession(id: number) {
     return new APIResourceDeviceSessionCommon(this, id).shift();
   }
 

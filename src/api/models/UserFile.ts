@@ -1,11 +1,22 @@
-export type FileDirection = 'INPUT' | 'OUTPUT';
-export type FileInputType = 'APPLICATION' | 'TEST' | 'DATA';
-export type FileState = 'PREPARING' | 'READY';
+export enum FileDirection {
+  INPUT = 'INPUT',
+  OUTPUT = 'OUTPUT'
+}
+
+export enum FileInputType {
+  APPLICATION = 'APPLICATION',
+  TEST = 'TEST',
+  DATA = 'DATA'
+}
+
+export enum FileState {
+  PREPARING = 'PREPARING',
+  READY = 'READY'
+}
 
 export type FileProperty = {
   id: number;
   key: string;
-  selfURI: string;
   value: string;
 };
 
@@ -20,7 +31,6 @@ export type UserFile = {
   inputType: FileInputType;
   mimetype: string;
   name: string;
-  selfURI: string;
   shared: boolean;
   size: number;
   state: FileState;

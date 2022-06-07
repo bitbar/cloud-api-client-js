@@ -1,16 +1,18 @@
 import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
+import {postAdminDeviceSessionChangeBillable} from './factory/postAdminDeviceSessionChangeBillable';
 import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
-import {postAdminDeviceSessionChangeBillable} from './factory/postAdminDeviceSessionChangeBillable';
+import {Connection} from "./models/Connection";
+import {DeviceSession} from "./models/DeviceSession";
 
 
 /**
  * APIAdminResourceDevice
  *
- * @class
- * @extends APIResource
+ *
+ * It will require more work to decouple from regular session
  */
 export class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCommon implements DeviceSessionCommon, DeviceSessionStandalone {
 
@@ -19,23 +21,23 @@ export class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSe
     return postAdminDeviceSessionChangeBillable(this, billable);
   }
 
-  // /device-sessions/{id}/connections
+  // /runs/{id}/device-sessions/{id}/connections
   connections() {
-    return new APIList(this).push('connections');
+    return new APIList<Connection>(this).push('connections');
   }
 
-  // /device-sessions/{id}/connections/{id}
+  // /runs/{id}/device-sessions/{id}/connections/{id}
   connection(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('connections', id);
+    return new APIResource<Connection>(this).push('connections', id);
   }
 
-  // /device-sessions/{id}/release
+  // /runs/{id}/device-sessions/{id}/release
   release() {
-    return new APIResource(this).push('release').post();
+    return new APIResource<DeviceSession>(this).push('release').post();
   }
 
 }

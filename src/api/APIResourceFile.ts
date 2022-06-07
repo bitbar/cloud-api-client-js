@@ -2,6 +2,7 @@ import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {UserFile} from "./models/UserFile";
 
 /**
  * APIResourceFile
@@ -9,7 +10,7 @@ import {APIResource} from './APIResource'
  * @class
  * @extends APIResource
  */
-export class APIResourceFile extends APIResource {
+export class APIResourceFile extends APIResource<UserFile> {
 
   /**
    * /files/{id}

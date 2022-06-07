@@ -1,6 +1,7 @@
+import APIEntity from "./APIEntity";
 import {APIList, CollectionQueryParams} from './APIList'
 import APIResourceUser from "./APIResourceUser";
-import {BasicDeviceTime, DeviceTime} from "./models/DeviceTime";
+import {BasicDeviceTime, UserDeviceTime} from "./models/UserDeviceTime";
 
 
 export interface DeviceTimeQueryParams extends CollectionQueryParams {
@@ -8,7 +9,7 @@ export interface DeviceTimeQueryParams extends CollectionQueryParams {
 }
 
 
-export class APIListDeviceTime extends APIList<DeviceTime, DeviceTimeQueryParams, void> {
+export class APIListDeviceTime extends APIList<UserDeviceTime, DeviceTimeQueryParams, void> {
 
   /**
    * /device-time
@@ -20,12 +21,12 @@ export class APIListDeviceTime extends APIList<DeviceTime, DeviceTimeQueryParams
 
   // /device-time/reserved
   reserved() {
-    return new APIList<BasicDeviceTime, void, void>(this).push('reserved');
+    return new APIEntity<BasicDeviceTime>(this).push('reserved');
   }
 
   // /device-time/used
   used() {
-    return new APIList<BasicDeviceTime, void, void>(this).push('used');
+    return new APIEntity<BasicDeviceTime>(this).push('used');
   }
 
 }

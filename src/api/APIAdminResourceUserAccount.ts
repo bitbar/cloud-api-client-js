@@ -1,30 +1,25 @@
-import {API} from "../API";
-import {APIEntity} from './APIEntity';
+import APIAdminResourceUser from "./APIAdminResourceUser";
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {NonRequestable} from "./decorators/NonRequestable";
+import {AccountService} from "./models/AccountService";
+import {Role} from "./models/Role";
+import {User} from "./models/User";
 
-
-/**
- * APIAdminResourceUserAccount
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceUserAccount extends APIResource<any> {
+@NonRequestable
+export class APIAdminResourceUserAccount extends APIResource {
 
   /**
-   * /acount
-   *
-   * Constructor
+   * /account
    */
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: APIAdminResourceUser) {
     super(parent);
     this.push('account');
   }
 
   // /account/roles
   roles() {
-    return new APIList(this).push('roles');
+    return new APIList<Role>(this).push('roles');
   }
 
   // /account/roles/{id}
@@ -33,19 +28,19 @@ export class APIAdminResourceUserAccount extends APIResource<any> {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('roles', id);
+    return new APIResource<Role>(this).push('roles', id);
   }
 
   // /account-services
   services() {
-    const a = new APIList(this);
+    const a = new APIList<AccountService>(this);
     a.last += '-services';
     return a;
   }
 
   // /update-account
   update() {
-    const a = new APIResource(this);
+    const a = new APIResource<User>(this);
     a.last = 'update-account';
     return a.post();
   }

@@ -1,22 +1,15 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import APIAdminResource from "./APIAdminResource";
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {Notification} from "./models/Notification";
+import {NotificationPlan} from "./models/NotificationPlan";
 
-/**
- * APIAdminResourceNotificationPlan
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceNotificationPlan extends APIResource {
+export class APIAdminResourceNotificationPlan extends APIResource<NotificationPlan> {
 
   /**
-   * /notification-plans/{id}
-   *
-   * Constructor
+   * /admin/notification-plans/{id}
    */
-  constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -25,19 +18,19 @@ export class APIAdminResourceNotificationPlan extends APIResource {
     this.push('admin', 'notification-plans', id);
   }
 
-  // /notification-plans/{id}/check
-  check () {
-    return new APIList(this).push('check');
+  // /admin/notification-plans/{id}/check
+  check() {
+    return new APIList<Notification>(this).push('check');
   }
 
-  // /notification-plans/{id}/test
-  test () {
-    return new APIResource(this).push('test');
+  // /admin/notification-plans/{id}/test
+  test() {
+    return new APIResource<NotificationPlan>(this).push('test');
   }
 
-  // /notification-plans/{id}/execute
-  execute () {
-    return new APIResource(this).push('execute');
+  // /admin/notification-plans/{id}/execute
+  execute() {
+    return new APIResource<NotificationPlan>(this).push('execute');
   }
 
 }

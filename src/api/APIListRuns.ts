@@ -1,4 +1,4 @@
-import {APIList, CollectionQueryParams} from './APIList'
+import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import APIResourceUser from "./APIResourceUser";
 import {TestRun, TestRunConfig} from "./models/TestRun";
@@ -31,7 +31,7 @@ export class APIListRuns extends APIList<TestRun, TestRunQueryParams, TestRunDat
 
   // /runs/config
   config() {
-    return new APIResource<TestRunConfig, void, TestRunConfigData>(this).push('config');
+    return new APIResource<TestRunConfig, NoQueryParams, TestRunConfigData>(this).push('config');
   }
 
 }

@@ -140,14 +140,14 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
   /**
    * Set params
    */
-  params(params: QUERY_PARAMS): this {
+  params<T extends keyof QUERY_PARAMS = keyof QUERY_PARAMS>(params: Pick<QUERY_PARAMS, T>): this {
     Object.deepAssign(this.requestConfig, {
       params
     });
     return this;
   }
 
-  getParams(): QUERY_PARAMS {
+  getParams(): Partial<QUERY_PARAMS> {
     return this.requestConfig.params == null ? {} : this.requestConfig.params;
   }
 

@@ -1,20 +1,19 @@
 import API from "../../API";
-import APIEntity from "../APIEntity";
 import APIResource from "../APIResource";
+import APIResourceDeviceSessionCommon from "../APIResourceDeviceSessionCommon";
 import postAdminDeviceSessionChangeBillable from "./postAdminDeviceSessionChangeBillable";
 
 describe('postAdminDeviceSessionChangeBillable', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let api: API;
-  let entity: APIEntity;
+  let entity: APIResourceDeviceSessionCommon;
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    entity = new APIEntity(api);
-    entity.push('1');
+    entity = new APIResourceDeviceSessionCommon(api, 1);
   });
 
   it('should return resource', () => {

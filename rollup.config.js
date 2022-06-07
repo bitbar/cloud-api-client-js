@@ -33,8 +33,7 @@ function getOutput(min, sufix = '') {
     `| ${repo}/blob/master/LICENSE ` +
     '*/',
     globals,
-    sourcemap: true,
-    exports: 'named'
+    sourcemap: true
   };
 }
 

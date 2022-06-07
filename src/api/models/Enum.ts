@@ -1,7 +1,11 @@
-export type Enum = {
-  id :number;
-  selfURI: string;
-  value: string;
+export enum OsType {
+  IOS = 'IOS',
+  ANDROID = 'ANDROID',
+  DESKTOP = 'DESKTOP',
+  UNDEFINED = 'UNDEFINED'
 }
 
-export type OsType = 'IOS' | 'ANDROID' | 'DESKTOP' | 'UNDEFINED';
+export type Enum = {
+  id: number;
+  value: string;
+}

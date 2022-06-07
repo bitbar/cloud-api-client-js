@@ -1,23 +1,16 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import APIAdminResource from "./APIAdminResource";
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {Browser} from "./models/Browser";
+import {DeviceModel} from "./models/DeviceModel";
 
 
-/**
- * APIAdminResourceDeviceModel
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceDeviceModel extends APIResource {
+export class APIAdminResourceDeviceModel extends APIResource<DeviceModel> {
 
   /**
    * /device-models/{id}
-   *
-   * Constructor
    */
-  constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -27,10 +20,10 @@ export class APIAdminResourceDeviceModel extends APIResource {
   }
 
   // /device-models/{id}/browsers
-  browsers () {
-    return new APIList(this).push('browsers');
+  browsers() {
+    return new APIList<Browser>(this).push('browsers');
   }
 
 }
 
-export default APIAdminResourceDeviceModel
+export default APIAdminResourceDeviceModel;

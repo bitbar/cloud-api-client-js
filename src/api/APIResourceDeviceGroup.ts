@@ -2,6 +2,7 @@ import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {DeviceGroup} from "./models/DeviceGroup";
 
 /**
  * APIResourceBillingPeriod
@@ -9,7 +10,7 @@ import {APIResource} from './APIResource'
  * @class
  * @extends APIResource
  */
-export class APIResourceDeviceGroup extends APIResource {
+export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   /**
    * /device-groups/{id}

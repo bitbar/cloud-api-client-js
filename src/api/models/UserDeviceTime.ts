@@ -1,6 +1,6 @@
 import {DeviceSessionType} from "./DeviceSession";
 
-export type DeviceTime = BasicDeviceTime & {
+export type UserDeviceTime = BasicDeviceTime & {
   billableTime: number;
   createTime: number;
   endTime: number;
@@ -13,5 +13,4 @@ export type DeviceTime = BasicDeviceTime & {
 export type BasicDeviceTime = {
   deviceTime: number;
   id: number;
-  selfURI: string;
 }

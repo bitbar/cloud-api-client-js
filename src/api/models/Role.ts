@@ -3,7 +3,6 @@ export type Role = {
   expireTime: number;
   id: number;
   name: string;
-  selfURI: string;
   value: number;
   valueCalculated: boolean;
 }

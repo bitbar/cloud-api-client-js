@@ -1,6 +1,5 @@
 import API from "../API";
 import APIListProperties from "./APIListProperties";
-import APIResource from "./APIResource";
 
 describe('APIListProperties', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
