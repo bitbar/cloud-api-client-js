@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {APIAdminResource} from "./APIAdminResource";
 import {NoData} from "./APIEntity";
 import {APIList, NoQueryParams} from './APIList'
@@ -14,6 +15,17 @@ import {QueryParams} from "./models/HTTP";
 
 
 export class APIAdminResourceDevice extends APIResource<AdminDevice, NoQueryParams, AdminDeviceData> {
+=======
+import APIAdminResource from "./APIAdminResource";
+import {APIList} from './APIList'
+import {APIResource} from './APIResource'
+import {AdminDevice} from "./models/AdminDevice";
+import {AdminDeviceSession} from "./models/AdminDeviceSession";
+import {DeviceCleanupConfiguration, DeviceProperty} from "./models/Device";
+
+
+export class APIAdminResourceDevice extends APIResource<AdminDevice> {
+>>>>>>> 25a80c0 (SDCB-5364 Improve TypeScript definitions - admin classes)
 
   /**
    * /admin/devices/{id}

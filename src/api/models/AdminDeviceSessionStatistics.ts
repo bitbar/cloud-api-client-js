@@ -18,7 +18,6 @@ export type AdminDeviceSessionStatistics = {
   waitingDeviceCount: number;
   warningDeviceCount: number;
 }
-
 export interface AdminStatisticsParams extends CollectionQueryParams {
   days: number;
 }

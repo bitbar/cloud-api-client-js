@@ -5,7 +5,6 @@ import {APIResource} from './APIResource';
 import {AdminTestRun, RunsConfigParams} from "./models/AdminTestRun";
 import {TestRunConfig} from "./models/TestRun";
 
-
 export class APIAdminListRuns extends APIList<AdminTestRun> {
 
   protected ALLOWED_HTTP_METHODS: Array<Method> = ["GET"];

@@ -4,7 +4,7 @@ export type Maintenance = {
 }
 
 export enum MaintenanceType {
-  BARE_METAL ='BARE_METAL',
+  BARE_METAL = 'BARE_METAL',
   EC2 = 'EC2',
   VM = 'VM'
 }

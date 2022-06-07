@@ -35,15 +35,9 @@ import {AdminError} from "./models/AdminError";
 import {AdminOverview} from "./models/AdminOverview";
 import {BillingPeriod} from "./models/BillingPeriod";
 import {Browser, BrowserData} from "./models/Browser";
-import {Cluster} from "./models/Cluster";
 import {CountryVatRate, CountryVatRateData} from "./models/CountryVatRate";
-import {DeviceProperty} from "./models/Device";
-import {DeviceGroup} from "./models/DeviceGroup";
-import {DeviceModel} from "./models/DeviceModel";
 import {DeviceModelCriterion, DeviceModelCriterionData} from "./models/DeviceModelCriterion";
 import {DeviceModelPool, DeviceModelPoolData} from "./models/DeviceModelPool";
-import {DeviceProblem} from "./models/DeviceProblem";
-import {DeviceStatus} from "./models/DeviceStatus";
 import {Framework, FrameworkData} from "./models/Framework";
 import {License, LicenseData} from "./models/License";
 import {Maintenance, MaintenanceData} from "./models/Maintenance";
@@ -53,7 +47,12 @@ import {Settings, SettingsParams} from "./models/Settings";
 import {User, UserData, UserParams} from "./models/User";
 import {DeviceTimeSummaryParams, UserDeviceTimeSummary} from "./models/UserDeviceTimeSummary";
 import {UserFile, UserFileData, UserFileParams} from "./models/UserFile";
-
+import {Cluster} from "./models/Cluster";
+import {DeviceProperty} from "./models/Device";
+import {DeviceGroup} from "./models/DeviceGroup";
+import {DeviceModel} from "./models/DeviceModel";
+import {DeviceProblem} from "./models/DeviceProblem";
+import {DeviceStatus} from "./models/DeviceStatus";
 
 @NonRequestable
 export class APIAdminResource extends APIResource {

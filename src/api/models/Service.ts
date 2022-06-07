@@ -34,9 +34,9 @@ export enum ServiceUnit {
 }
 
 export interface AdminServicesParams extends CollectionQueryParams {
-    activeOnly: boolean;
-    inUse: boolean;
-    notArchive: boolean;
+  activeOnly: boolean;
+  inUse: boolean;
+  notArchive: boolean;
 }
 
 export type ServiceActivateData = {
