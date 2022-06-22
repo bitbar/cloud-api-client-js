@@ -58,7 +58,6 @@ export type Device = {
   imageTop: number;
   imageWidth: number;
   locked: boolean;
-  example: true
   mainUserEmail: string;
   manufacturer: string;
   online: boolean;

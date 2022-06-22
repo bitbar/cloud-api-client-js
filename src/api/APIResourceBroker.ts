@@ -1,18 +1,13 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
-import {APIList} from './APIList'
+import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
+import {Broker} from './models/Broker';
 
-/**
- * APIResourceBroker
- *
- * @class
- * @extends APIResource
- */
 export class APIResourceBroker extends APIResource {
 
   /**
-   * Endpoint: /broker
+   * /broker
    */
   constructor(parent: APIEntity<any> | API) {
 
@@ -22,7 +17,7 @@ export class APIResourceBroker extends APIResource {
 
   // /broker/hubs
   hubs() {
-    return new APIList(this).push('hubs');
+    return new APIList<Broker, NoQueryParams, void>(this).push('hubs');
   }
 
 }

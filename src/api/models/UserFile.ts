@@ -22,6 +22,11 @@ export type FileProperty = {
   value: string;
 };
 
+export type UserFileTag = {
+  id: number;
+  name: string
+}
+
 export type UserFile = {
   createTime: number;
   directUrl: string;

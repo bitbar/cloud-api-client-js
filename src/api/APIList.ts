@@ -12,6 +12,13 @@ export enum APIOrder {
   desc = 'd'
 }
 
+export interface CollectionBasicQueryParams extends QueryParams {
+  filter: string;
+  limit: number;
+  offset: number;
+  sort: string;
+}
+
 export interface CollectionQueryParams extends QueryParams {
   filter: string;
   limit: number;
@@ -37,9 +44,14 @@ export type CollectionResponse<T> = {
   total: number;
 }
 
+export type SimpleListCollectionResponse<T> = {
+  data: Array<T>;
+  id: number;
+}
 
-export class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any>
-  extends APIEntity<CollectionResponse<RESPONSE>, QUERY_PARAMS, DATA> {
+
+export class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any>
+  extends APIEntity<CollectionResponse<RESPONSE> | APIEntity<SimpleListCollectionResponse<RESPONSE>>, QUERY_PARAMS, DATA> {
 
   /**
    * Shortcut for sending data POST

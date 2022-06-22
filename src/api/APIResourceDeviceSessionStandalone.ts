@@ -1,24 +1,18 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
-import {APIList} from './APIList';
+import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList';
 import {APIResource} from './APIResource';
 import {InputFileset} from './class/InputFileset';
 import {OutputFileset} from './class/OutputFileset';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
+import {Connection} from './models/Connection';
+import {DeviceSession} from './models/DeviceSession';
 
-
-/**
- * APIResourceDeviceSession
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceDeviceSessionStandalone extends APIResource implements DeviceSessionStandalone {
+export type ConnectionData = Pick<Connection, Required<'host' | 'port' | 'type'> | 'password'>
+export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSession> implements DeviceSessionStandalone {
 
   /**
    * /device-sessions/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -31,7 +25,7 @@ export class APIResourceDeviceSessionStandalone extends APIResource implements D
 
   // /device-sessions/{id}/connections
   connections() {
-    return new APIList(this).push('connections');
+    return new APIList<Connection, CollectionBasicQueryParams, ConnectionData>(this).push('connections');
   }
 
   // /device-sessions/{id}/connections/{id}
@@ -40,7 +34,7 @@ export class APIResourceDeviceSessionStandalone extends APIResource implements D
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('connections', id);
+    return new APIResource<Connection, NoQueryParams, void>(this).push('connections', id);
   }
 
   // /device-sessions/{id}/input-file-set
@@ -55,7 +49,7 @@ export class APIResourceDeviceSessionStandalone extends APIResource implements D
 
   // /device-sessions/{id}/release
   release() {
-    return new APIResource(this).push('release').post();
+    return new APIResource<DeviceSession, NoQueryParams, void>(this).push('release').post();
   }
 
 }

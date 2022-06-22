@@ -3,6 +3,7 @@ import {API} from '../API';
 import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {QueryParams} from "./models/HTTP";
+import {Message} from "./models/Massage";
 import {User} from "./models/User";
 import {VatRate} from "./models/VatRate";
 
@@ -46,7 +47,7 @@ export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
   // /users/recoveries
   recoveries() {
-    return new APIResource<User, UserRecoveryQueryParams, UserData>(this).push('recoveries');
+    return new APIResource<User | Message, UserRecoveryQueryParams, UserData>(this).push('recoveries');
   }
 
   // /users/passwordRecovery

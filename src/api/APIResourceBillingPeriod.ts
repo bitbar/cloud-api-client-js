@@ -1,19 +1,13 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
+import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
+import {BillingPeriod} from './models/BillingPeriod';
 
-/**
- * APIResourceBillingPeriod
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceBillingPeriod extends APIResource {
+export class APIResourceBillingPeriod extends APIResource<BillingPeriod, NoQueryParams, void> {
 
   /**
    * /billing-periods/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -26,7 +20,7 @@ export class APIResourceBillingPeriod extends APIResource {
 
   // /billing-periods/{id}/receipt
   receipt() {
-    return new APIResource(this).push('receipt').setRequestConfig({
+    return new APIResource<void, NoQueryParams, void>(this).push('receipt').setRequestConfig({
       responseType: 'arraybuffer'
     });
   }

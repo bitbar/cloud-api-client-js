@@ -1,19 +1,17 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIResource} from './APIResource'
+import {AccountService} from './models/AccountService';
+import {AccountServicePayment} from './models/AccountServicePayment';
+import {QueryParams} from './models/HTTP';
 
-/**
- * APIResourceAccountService
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceAccountService extends APIResource {
+export interface BillingperiodQueryParam extends QueryParams {
+  onDate: number;
+}
+export class APIResourceAccountService extends APIResource<AccountService> {
 
   /**
    * /account-services/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -26,7 +24,7 @@ export class APIResourceAccountService extends APIResource {
 
   // /account-services/{id}/billing-period
   billingPeriod() {
-    return new APIResource(this).push('billing-period');
+    return new APIResource<AccountServicePayment, BillingperiodQueryParam, void>(this).push('billing-period');
   }
 
 }

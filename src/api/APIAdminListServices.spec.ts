@@ -23,14 +23,6 @@ describe('APIAdminListServices', () => {
     expect(service.toUrl()).toEqual('/admin/services');
   });
 
-  describe('@available', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.available();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/services/available');
-    });
-  });
-
   describe('@active', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.active();

@@ -1,20 +1,16 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
-import {APIList} from './APIList'
+import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
+import {DeviceProperty} from './models/Device';
+import {LabelGroup} from './models/LabelGroup';
 
-/**
- * APIResourceLabelGroup
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceLabelGroup extends APIResource {
+export type LabelData = Pick<DeviceProperty, 'displayName' | 'name'>;
+
+export class APIResourceLabelGroup extends APIResource<LabelGroup> {
 
   /**
    * /label-groups/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -27,12 +23,12 @@ export class APIResourceLabelGroup extends APIResource {
 
   // /label-groups/{id}/labels
   labels() {
-    return new APIList(this).push('labels');
+    return new APIList<DeviceProperty, CollectionBasicQueryParams, LabelData>(this).push('labels');
   }
 
-  // /label-groups/{id}/label
+  // /label-groups/{id}/labels/{id}
   label(id: number) {
-    return new APIResource(this).push('labels', id);
+    return new APIResource<DeviceProperty, NoQueryParams, LabelData>(this).push('labels', id);
   }
 
 }

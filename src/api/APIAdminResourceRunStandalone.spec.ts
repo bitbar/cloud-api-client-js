@@ -71,21 +71,4 @@ describe('APIAdminResourceRunStandalone', () => {
     });
   });
 
-  describe('@deviceSessions', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.deviceSessions();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions');
-    });
-  });
-
-  describe('@deviceSession', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.deviceSession(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions/1');
-    });
-  });
-
-
 });

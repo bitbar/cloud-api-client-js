@@ -41,38 +41,4 @@ describe('APIAdminResourceDeviceSessionStandalone', () => {
     });
   });
 
-  describe('@connections', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.connections();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions/1/connections');
-    });
-  });
-
-  describe('@connection', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.connection(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions/1/connections/1');
-    });
-
-    it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.connection();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
-    });
-  });
-
-  describe('@release', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.release();
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions/1/release');
-      expect((<any>call).requestConfig.method).toEqual('POST');
-    });
-  });
-
 });

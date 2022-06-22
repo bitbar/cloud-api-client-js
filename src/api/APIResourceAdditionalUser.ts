@@ -1,19 +1,12 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIResource} from './APIResource'
+import {User} from './models/User';
 
-/**
- * APIResourceAdditionalUser
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceAdditionalUser extends APIResource {
+export class APIResourceAdditionalUser extends APIResource<User> {
 
   /**
    * /additional-users/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -24,9 +17,9 @@ export class APIResourceAdditionalUser extends APIResource {
     this.push('additional-users', id);
   }
 
-  // /account/resend-activation
+  // /account/additional-users/{id}/resend-activation
   resendActivation() {
-    return new APIResource(this).push('resend-activation');
+    return new APIResource<User, void, void>(this).push('resend-activation');
   }
 
 }

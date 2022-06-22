@@ -2,15 +2,8 @@ import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIResource} from './APIResource'
 
-/**
- * APIResourceUserSession
- *
- * @class
- * @extends APIResource
- */
 export class APIResourceUserSession extends APIResource {
 
-  // Constructor
   // /user-sessions
   constructor(parent: APIEntity<any> | API) {
     super(parent);
@@ -19,6 +12,11 @@ export class APIResourceUserSession extends APIResource {
 
   // /user-sessions/login
   login(data: object) {
+    // example of data used in cloud-fe
+    // data = {
+    //   username: login
+    //   password: password
+    // }
     return new APIResource(this).push('login').post().data(data);
   }
 

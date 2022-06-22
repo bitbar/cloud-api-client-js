@@ -1,3 +1,5 @@
+import {Device} from "./Device";
+
 export type TunnelSettings = {
   domain: string;
   email: string;
@@ -56,7 +58,7 @@ export type DeviceSession = {
   billable: boolean;
   config: DeviceSessionConfig;
   createTime: number;
-  device: any;
+  device: Device;
   deviceInstanceId: number;
   deviceLogFirstTimestamp: number;
   deviceRunId: number;

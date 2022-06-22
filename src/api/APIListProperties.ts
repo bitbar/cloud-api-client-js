@@ -4,7 +4,7 @@ import {Property} from "./models/Property";
 
 export type PropertyData = Pick<Property, 'description' | 'fromTime' | 'name' | 'toTime' | 'value'>;
 
-export interface AppBansQueryParams extends CollectionQueryParams{
+export interface AppBansQueryParams extends CollectionQueryParams {
   testRunId: number;
 }
 

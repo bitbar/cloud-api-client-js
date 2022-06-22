@@ -1,21 +1,16 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
-import {APIList} from './APIList'
+import {APIList, CollectionBasicQueryParams} from './APIList'
 import {APIResource} from './APIResource'
+import {DeviceGroupData, DeviceGroupParams, DeviceGroupSelectorData, DeviceGroupSelectorIdData, DeviceGroupShareData} from './interface/DeviceGroupInterfaces';
+import {Device, DeviceProperty} from './models/Device';
 import {DeviceGroup} from "./models/DeviceGroup";
+import {SharedResource} from './models/SharedResource';
 
-/**
- * APIResourceBillingPeriod
- *
- * @class
- * @extends APIResource
- */
 export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   /**
    * /device-groups/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -28,21 +23,21 @@ export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   // /device-groups/{id}/devices
   devices() {
-    return new APIList(this).push('devices');
+    return new APIList<Device | DeviceGroup, DeviceGroupParams, DeviceGroupData>(this).push('devices');
   }
 
-  // /device-groups/{id}/device/{id}
+  // /device-groups/{id}/devices/{id}
   device(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('devices', id);
+    return new APIResource<void, void, void>(this).push('devices', id);
   }
 
   // /device-groups/{id}/selectors
   selectors() {
-    return new APIList(this).push('selectors');
+    return new APIList<DeviceProperty | DeviceGroup, CollectionBasicQueryParams, DeviceGroupSelectorData | DeviceGroupSelectorIdData>(this).push('selectors');
   }
 
   // /device-groups/{id}/selectors/{id}
@@ -56,7 +51,7 @@ export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   // /device-groups/{id}/share
   share() {
-    return new APIResource(this).push('share');
+    return new APIResource<SharedResource, void, DeviceGroupShareData>(this).push('share');
   }
 
 }

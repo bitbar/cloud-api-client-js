@@ -2,19 +2,24 @@ import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {DeviceCleanupConfiguration} from './models/Device';
+import {QueryParams} from './models/HTTP';
 
-/**
- * APIResourceCleanupConfiguration
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceCleanupConfiguration extends APIResource {
+export interface CleanupConfigurationData extends QueryParams {
+  content: string;
+  discriminator: string;
+  enabled: boolean;
+}
+
+export interface CleanupConfigurationSpecificData extends QueryParams {
+  serialId: string;
+}
+
+export class APIResourceCleanupConfiguration extends APIResource<DeviceCleanupConfiguration> {
+  //shuldn't it be APIAdminResourceCleanupConfiguration
 
   /**
-   * /cleanup-configurations/{id}
-   *
-   * Constructor
+   * admin/devices/cleanup-configurations/{id}
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -25,9 +30,9 @@ export class APIResourceCleanupConfiguration extends APIResource {
     this.push('cleanup-configurations', id);
   }
 
-  // /cleanup-configurations/specific
+  // admin/devices/cleanup-configurations/specific
   devices() {
-    return new APIList(this).push('devices');
+    return new APIResource<DeviceCleanupConfiguration, CleanupConfigurationSpecificData, void>(this).push('devices');
   }
 
 }
