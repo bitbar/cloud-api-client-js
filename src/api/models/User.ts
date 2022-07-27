@@ -1,3 +1,4 @@
+import {CollectionQueryParams} from "../APIList";
 import {Role} from "./Role";
 
 export enum MfaStatus {
@@ -47,3 +48,18 @@ export type User = {
   timeZone: string;
   vatId: string;
 }
+
+export type UserData = { email: string; };
+
+export interface UserParams extends CollectionQueryParams {
+  WITH_ADDRESS: boolean;
+  WITH_USER_INFO: boolean;
+  onlyMainUsers: boolean;
+  onlyWithDisabledServices: boolean;
+  withRole: string;
+  withRoles: boolean;
+}
+
+export type UserUpdateAccount = Pick<User, 'accountId'>;
+
+

@@ -17,3 +17,5 @@ export type DeviceModelCriterion = {
   labelGroupId: number;
   labelGroupName: string;
 }
+
+export type DeviceModelCriterionData = Pick<DeviceModelCriterion, 'field' | 'labelGroupId'>;

@@ -1,5 +1,6 @@
 import {CollectionResponse} from "../APIList";
 import {AdminDevice} from "./AdminDevice";
+import {QueryParams} from "./HTTP";
 
 export type Cluster = {
   devices: CollectionResponse<AdminDevice>;
@@ -23,4 +24,14 @@ export enum ClusterState {
   RESTARTING = 'RESTARTING',
   QUIET_DOWN = 'QUIET_DOWN',
   MAINTENANCE = 'MAINTENANCE'
+}
+
+export interface ClusterParams extends QueryParams {
+  withDevices: boolean;
+}
+
+export type ClusterData = Pick<Cluster, 'enabled' | 'url'> & {
+  quietDown: boolean;
+  restart: boolean;
+  turnMaintenance: boolean;
 }

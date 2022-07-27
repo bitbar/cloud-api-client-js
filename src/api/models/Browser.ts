@@ -10,3 +10,8 @@ export type Browser = {
   osType: OsType;
   version: string;
 }
+
+export type BrowserData = Omit<Browser, 'id' | 'install'>;
+export type DeviceBrowserData = {
+  browserIds: Array<number>;
+}

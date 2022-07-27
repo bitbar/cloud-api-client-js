@@ -1,14 +1,14 @@
-import {Method} from "axios";
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from "./APIAdminResource";
 import {APIAdminResourceUserAccount} from './APIAdminResourceUserAccount';
-import {APIList} from './APIList'
+import {NoData} from "./APIEntity";
+import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
+import {NonRequestable} from "./decorators/NonRequestable";
 import {License} from "./models/License";
 import {User} from "./models/User";
 
-
+@NonRequestable
 export class APIAdminResourceUser extends APIResource<User> {
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
 
   /**
    * /admin/users/{id}
@@ -24,22 +24,22 @@ export class APIAdminResourceUser extends APIResource<User> {
 
   // /users/{id}/disable
   disable() {
-    return new APIResource<User>(this).push('disable');
+    return new APIResource<User, NoQueryParams, NoData>(this).push('disable');
   }
 
   // /users/{id}/enable
   enable() {
-    return new APIResource<User>(this).push('enable');
+    return new APIResource<User, NoQueryParams, NoData>(this).push('enable');
   }
 
   // /users/{id}/licenses
   licenses() {
-    return new APIList<License>(this).push('licenses');
+    return new APIList<License, CollectionQueryParams, NoData>(this).push('licenses');
   }
 
   // /users/{id}/resend-activation
   resendActivation() {
-    return new APIResource<User>(this).push('resend-activation').post();
+    return new APIResource<User, NoQueryParams, NoData>(this).push('resend-activation').post();
   }
 
   // users/{id}/account

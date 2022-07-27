@@ -1,10 +1,11 @@
-import APIAdminResourceUser from "./APIAdminResourceUser";
-import {APIList} from './APIList'
+import {APIAdminResourceUser} from "./APIAdminResourceUser";
+import {NoData} from "./APIEntity";
+import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {NonRequestable} from "./decorators/NonRequestable";
-import {AccountService} from "./models/AccountService";
-import {Role} from "./models/Role";
-import {User} from "./models/User";
+import {AccountService, AccountServiceData} from "./models/AccountService";
+import {Role, RoleData} from "./models/Role";
+import {User, UserUpdateAccount} from "./models/User";
 
 @NonRequestable
 export class APIAdminResourceUserAccount extends APIResource {
@@ -19,7 +20,7 @@ export class APIAdminResourceUserAccount extends APIResource {
 
   // /account/roles
   roles() {
-    return new APIList<Role>(this).push('roles');
+    return new APIList<Role, NoQueryParams, RoleData>(this).push('roles');
   }
 
   // /account/roles/{id}
@@ -28,19 +29,19 @@ export class APIAdminResourceUserAccount extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<Role>(this).push('roles', id);
+    return new APIResource<Role, NoQueryParams, NoData>(this).push('roles', id);
   }
 
   // /account-services
   services() {
-    const a = new APIList<AccountService>(this);
+    const a = new APIList<AccountService, CollectionQueryParams, AccountServiceData>(this);
     a.last += '-services';
     return a;
   }
 
   // /update-account
   update() {
-    const a = new APIResource<User>(this);
+    const a = new APIResource<User, UserUpdateAccount>(this);
     a.last = 'update-account';
     return a.post();
   }

@@ -16,41 +16,43 @@ import {APIAdminResourceNotificationPlan} from "./APIAdminResourceNotificationPl
 import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
 import {APIAdminResourceService} from "./APIAdminResourceService";
 import {APIAdminResourceUser} from './APIAdminResourceUser';
-import {APIList} from './APIList'
+import {NoData} from "./APIEntity";
+import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceAccessGroup} from './APIResourceAccessGroup';
 import {APIResourceDeviceGroup} from "./APIResourceDeviceGroup";
 import {APIResourceFile} from './APIResourceFile'
 import {APIResourceProject} from './APIResourceProject';
 import {NonRequestable} from "./decorators/NonRequestable";
-import {AccessGroup} from "./models/AccessGroup";
+import {AccessGroup, AccessGroupData} from "./models/AccessGroup";
 import {Account} from "./models/Account";
 import {AccountService} from "./models/AccountService";
 import {Activity} from "./models/Activity";
 import {AdminDeviceSession, AdminInteractiveDeviceSession} from "./models/AdminDeviceSession";
-import {AdminDeviceType} from "./models/AdminDeviceType";
+import {AdminDeviceType, DeviceTypeData} from "./models/AdminDeviceType";
 import {AdminEmail} from "./models/AdminEmail";
 import {AdminError} from "./models/AdminError";
 import {AdminOverview} from "./models/AdminOverview";
 import {BillingPeriod} from "./models/BillingPeriod";
-import {Browser} from "./models/Browser";
+import {Browser, BrowserData} from "./models/Browser";
 import {Cluster} from "./models/Cluster";
-import {CountryVatRate} from "./models/CountryVatRate";
+import {CountryVatRate, CountryVatRateData} from "./models/CountryVatRate";
 import {DeviceProperty} from "./models/Device";
 import {DeviceGroup} from "./models/DeviceGroup";
 import {DeviceModel} from "./models/DeviceModel";
-import {DeviceModelCriterion} from "./models/DeviceModelCriterion";
-import {DeviceModelPool} from "./models/DeviceModelPool";
+import {DeviceModelCriterion, DeviceModelCriterionData} from "./models/DeviceModelCriterion";
+import {DeviceModelPool, DeviceModelPoolData} from "./models/DeviceModelPool";
 import {DeviceProblem} from "./models/DeviceProblem";
 import {DeviceStatus} from "./models/DeviceStatus";
-import {Framework} from "./models/Framework";
-import {License} from "./models/License";
-import {Maintenance} from "./models/Maintenance";
-import {Role} from "./models/Role";
-import {Settings} from "./models/Settings";
-import {User} from "./models/User";
-import {UserDeviceTimeSummary} from "./models/UserDeviceTimeSummary";
-import {UserFile} from "./models/UserFile";
+import {Framework, FrameworkData} from "./models/Framework";
+import {License, LicenseData} from "./models/License";
+import {Maintenance, MaintenanceData} from "./models/Maintenance";
+import {Project} from "./models/Project";
+import {Role, RoleParams} from "./models/Role";
+import {Settings, SettingsParams} from "./models/Settings";
+import {User, UserData, UserParams} from "./models/User";
+import {DeviceTimeSummaryParams, UserDeviceTimeSummary} from "./models/UserDeviceTimeSummary";
+import {UserFile, UserFileData, UserFileParams} from "./models/UserFile";
 
 
 @NonRequestable
@@ -65,7 +67,7 @@ export class APIAdminResource extends APIResource {
 
   // /access-groups
   accessGroups() {
-    return new APIList<AccessGroup>(this).push('access-groups');
+    return new APIList<AccessGroup, CollectionQueryParams, AccessGroupData>(this).push('access-groups');
   }
 
   // /access-groups/{id}
@@ -118,7 +120,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/browsers
   browsers() {
-    return new APIList<Browser>(this).push('admin', 'browsers');
+    return new APIList<Browser, CollectionQueryParams, BrowserData>(this).push('admin', 'browsers');
   }
 
   // /admin/browsers/{id}
@@ -127,7 +129,7 @@ export class APIAdminResource extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<Browser>(this).push('admin', 'browsers', id);
+    return new APIResource<Browser, NoQueryParams, BrowserData>(this).push('admin', 'browsers', id);
   }
 
   // /clusters
@@ -142,7 +144,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/country-vat-rates
   countryVatRates() {
-    return new APIList<CountryVatRate>(this).push('admin', 'country-vat-rates');
+    return new APIList<CountryVatRate, CollectionQueryParams, CountryVatRateData>(this).push('admin', 'country-vat-rates');
   }
 
   // /admin/country-vat-rates/{id}
@@ -151,7 +153,7 @@ export class APIAdminResource extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<CountryVatRate>(this).push('admin', 'country-vat-rates', id);
+    return new APIResource<CountryVatRate, NoQueryParams, Omit<CountryVatRate, 'country'>>(this).push('admin', 'country-vat-rates', id);
   }
 
   // /admin/devices
@@ -169,11 +171,11 @@ export class APIAdminResource extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
 
-    const a = this.devices();
-    a.params({
+    const apiList = this.devices();
+    apiList.params({
       filter: 'deviceModelId_eq_' + id
     });
-    return a;
+    return apiList;
   }
 
   // /admin/device/statuses
@@ -198,7 +200,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/device-model-criteria
   deviceModelCriterias() {
-    return new APIList<DeviceModelCriterion>(this).push('admin', 'device-model-criteria');
+    return new APIList<DeviceModelCriterion, CollectionQueryParams, DeviceModelCriterionData>(this).push('admin', 'device-model-criteria');
   }
 
   // /admin/device-model-criteria/{id}
@@ -227,7 +229,7 @@ export class APIAdminResource extends APIResource {
 
   // /device-time-summary
   deviceTimeSummary() {
-    return new APIList<UserDeviceTimeSummary>(this).push('admin', 'device-time-summary');
+    return new APIList<UserDeviceTimeSummary, DeviceTimeSummaryParams>(this).push('admin', 'device-time-summary');
   }
 
   // /device-types
@@ -237,7 +239,7 @@ export class APIAdminResource extends APIResource {
 
   // /device-types/{id}
   deviceType(id: number) {
-    return new APIResource<AdminDeviceType>(this).push('admin', 'device-types', id);
+    return new APIResource<AdminDeviceType, NoQueryParams, DeviceTypeData>(this).push('admin', 'device-types', id);
   }
 
   // /device-groups
@@ -270,7 +272,7 @@ export class APIAdminResource extends APIResource {
 
   // /files
   files() {
-    return new APIList<UserFile>(this).push('files');
+    return new APIList<UserFile, UserFileParams, UserFileData>(this).push('files');
   }
 
   // /files/{id}
@@ -279,8 +281,8 @@ export class APIAdminResource extends APIResource {
   }
 
   // /admin/frameworks
-  frameworks<T = Framework>() {
-    return new APIList<T>(this).push('admin', 'frameworks');
+  frameworks<T = Framework, U extends CollectionQueryParams = CollectionQueryParams, W = FrameworkData>() {
+    return new APIList<T, U, W>(this).push('admin', 'frameworks');
   }
 
   // /admin/frameworks/{id}
@@ -290,9 +292,9 @@ export class APIAdminResource extends APIResource {
 
   // /admin/frameworks/available-labels
   frameworkAvailableLabels() {
-    const a = this.frameworks<DeviceProperty>();
-    a.push('available-labels');
-    return a;
+    const apiList = this.frameworks<DeviceProperty, CollectionQueryParams, NoData>();
+    apiList.push('available-labels');
+    return apiList;
   }
 
   // /admin/interactive-queue
@@ -302,7 +304,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/licenses
   licenses() {
-    return new APIList<License>(this).push('admin', 'licenses');
+    return new APIList<License, CollectionQueryParams, LicenseData>(this).push('admin', 'licenses');
   }
 
   // /admin/licenses/{id}
@@ -312,7 +314,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/maintenance
   maintenance() {
-    return new APIResource<Maintenance>(this).push('admin', 'maintenance');
+    return new APIResource<Maintenance, NoQueryParams, MaintenanceData>(this).push('admin', 'maintenance');
   }
 
   // /admin/notification-plans
@@ -335,12 +337,12 @@ export class APIAdminResource extends APIResource {
   }
 
   pool(id: number) {
-    return new APIResource<DeviceModelPool>(this).push('admin', 'pools', id);
+    return new APIResource<DeviceModelPool, NoQueryParams, DeviceModelPoolData>(this).push('admin', 'pools', id);
   }
 
   // /projects
   projects() {
-    return new APIList(this).push('projects');
+    return new APIList<Project>(this).push('projects');
   }
 
   // /projects/{id}
@@ -350,7 +352,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/roles
   roles() {
-    return new APIList<Role>(this).push('admin', 'roles');
+    return new APIList<Role, RoleParams, NoData>(this).push('admin', 'roles');
   }
 
   // /admin/runs
@@ -365,7 +367,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/samples
   samples() {
-    return new APIList<UserFile>(this).push('admin', 'samples');
+    return new APIList<UserFile, CollectionQueryParams, Pick<UserFileData, 'file'>>(this).push('admin', 'samples');
   }
 
   // /admin/samples/{id}
@@ -388,7 +390,7 @@ export class APIAdminResource extends APIResource {
 
   // /admin/settings
   settings() {
-    return new APIResource<Settings>(this).push('admin', 'settings');
+    return new APIResource<Settings, SettingsParams>(this).push('admin', 'settings');
   }
 
   // /admin/statistics
@@ -398,12 +400,12 @@ export class APIAdminResource extends APIResource {
 
   // /users
   users() {
-    return new APIList<User>(this).push('users');
+    return new APIList<User, UserParams, UserData>(this).push('users');
   }
 
   // /admin/users
   createUser() {
-    return new APIList<User>(this).push('admin', 'users').post();
+    return new APIList<User, NoQueryParams, UserData>(this).push('admin', 'users').post();
   }
 
   // /users/{id}
@@ -413,4 +415,4 @@ export class APIAdminResource extends APIResource {
 
 }
 
-export default APIAdminResource
+export default APIAdminResource;

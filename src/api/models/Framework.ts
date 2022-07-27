@@ -26,3 +26,17 @@ export type Framework = {
   skipQueue: boolean;
   type: string;
 }
+
+export type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'mainUserEmail' | 'sampleApp' |
+  'sampleTest'> & {
+  addLabelToDevices: boolean;
+  roleIds: Array<number>;
+  sampleAppId: number;
+  sampleTestId: number;
+}
+
+export type FrameworkEditData = Omit<FrameworkData, 'accountId' | 'id' | 'secured'>;
+
+export type FrameworkConfigData = {
+  content: string;
+}

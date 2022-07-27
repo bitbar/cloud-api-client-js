@@ -1,9 +1,9 @@
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from "./APIAdminResource";
 import {APIList} from './APIList'
-import {Service} from "./models/Service";
+import {AdminServicesParams, Service} from "./models/Service";
 
 
-export class APIAdminListServices extends APIList<Service> {
+export class APIAdminListServices extends APIList<Service, AdminServicesParams, Service> {
 
   /**
    * /admin/services
@@ -13,45 +13,40 @@ export class APIAdminListServices extends APIList<Service> {
     this.push('admin', 'services');
   }
 
-  // /services/available
-  available() {
-    return new APIList<Service>(this).push('available');
-  }
-
   active() {
-    const a = new APIList<Service>(this);
-    a.params<'notArchived'>({
+    const apiList = new APIList<Service, AdminServicesParams, Service>(this);
+    apiList.params<'notArchived'>({
       notArchived: true
     });
-    return a;
+    return apiList;
   }
 
   activated() {
-    const a = this.active();
-    a.params<'filter' | 'limit' | 'sort'>({
+    const apiList = this.active();
+    apiList.params<'filter' | 'limit' | 'sort'>({
       filter: 'activated_eq_true',
       limit: 0,
       sort: 'name_a'
     })
-    return a;
+    return apiList;
   }
 
   inUse() {
-    const a = new APIList<Service>(this);
-    a.params<'inUse' | 'limit' | 'sort'>({
+    const apiList = new APIList<Service, AdminServicesParams, Service>(this);
+    apiList.params<'inUse' | 'limit' | 'sort'>({
       inUse: true,
       limit: 0,
       sort: 'name_a'
     })
-    return a;
+    return apiList;
   }
 
   byPrice() {
-    const a = new APIList<Service>(this);
-    a.params<'sort'>({
+    const apiList = new APIList<Service, AdminServicesParams, Service>(this);
+    apiList.params<'sort'>({
       sort: 'centPrice_a'
     })
-    return a;
+    return apiList;
   }
 
 }

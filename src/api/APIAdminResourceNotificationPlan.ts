@@ -1,10 +1,11 @@
-import APIAdminResource from "./APIAdminResource";
-import {APIList} from './APIList'
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {Notification} from "./models/Notification";
-import {NotificationPlan} from "./models/NotificationPlan";
+import {NotificationPlan, NotificationPlanEditData} from "./models/NotificationPlan";
 
-export class APIAdminResourceNotificationPlan extends APIResource<NotificationPlan> {
+export class APIAdminResourceNotificationPlan extends APIResource<NotificationPlan, NoQueryParams, NotificationPlanEditData> {
 
   /**
    * /admin/notification-plans/{id}
@@ -25,12 +26,12 @@ export class APIAdminResourceNotificationPlan extends APIResource<NotificationPl
 
   // /admin/notification-plans/{id}/test
   test() {
-    return new APIResource<NotificationPlan>(this).push('test');
+    return new APIResource<NotificationPlan, NoQueryParams, NoData>(this).push('test');
   }
 
   // /admin/notification-plans/{id}/execute
   execute() {
-    return new APIResource<NotificationPlan>(this).push('execute');
+    return new APIResource<NotificationPlan, NoQueryParams, NoData>(this).push('execute');
   }
 
 }

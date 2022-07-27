@@ -7,3 +7,5 @@ export type AdminDeviceType = {
   imageTop: number;
   imageWidth: number;
 }
+
+export type DeviceTypeData = Omit<AdminDeviceType, 'id'> & { deviceTypeId: number; };

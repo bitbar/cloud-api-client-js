@@ -1,8 +1,10 @@
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {NoQueryParams} from "./APIList";
 import {APIResource} from './APIResource'
 import {License} from "./models/License";
 
-export class APIAdminResourceLicense extends APIResource<License> {
+export class APIAdminResourceLicense extends APIResource<License, NoQueryParams, NoData> {
 
   /**
    * /licenses/{id}
@@ -18,22 +20,22 @@ export class APIAdminResourceLicense extends APIResource<License> {
 
   // /licenses/{id}/activate
   activate() {
-    return new APIResource<License>(this).push('activate');
+    return new APIResource<License, NoQueryParams, NoData>(this).push('activate');
   }
 
   // /licenses/{id}/deactivate
   deactivate() {
-    return new APIResource<License>(this).push('deactivate');
+    return new APIResource<License, NoQueryParams, NoData>(this).push('deactivate');
   }
 
   // /licenses/{id}/resend
   resend() {
-    return new APIResource<License>(this).push('resend');
+    return new APIResource<License, NoQueryParams, NoData>(this).push('resend');
   }
 
   // /licenses/{id}/download
   download() {
-    return new APIResource<Blob>(this).push('download');
+    return new APIResource<Blob, NoQueryParams, NoData>(this).push('download');
   }
 
 }

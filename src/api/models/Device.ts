@@ -82,3 +82,11 @@ export type DeviceCleanupConfiguration = {
   lastModificationTime: number;
   osType: OsType;
 }
+
+export type DeviceCleanupConfigurationData = {
+  deviceCleanupConfigurationId: number;
+}
+
+export type DeviceLabelData = {
+  labelId: number;
+}

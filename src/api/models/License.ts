@@ -66,3 +66,23 @@ export type License = {
   userEmail: string;
   userId: number;
 }
+
+export type LicenseData = Pick<License, 'privateInstance' | 'userId'> & {
+  androidDeviceLimit: number;
+  androidEnabled: boolean;
+  androidProjectLimit: number;
+  buildEnabled: boolean;
+  buildLimit: number;
+  desktopDeviceLimit: number;
+  desktopEnabled: boolean;
+  desktopProjectLimit: number;
+  globalDeviceLimit: number;
+  globalProjectLimit: number;
+  inspectorEnabled: boolean;
+  iosDeviceLimit: number;
+  iosEnabled: boolean;
+  iosProjectLimit: number;
+  privateInstance: boolean;
+  unit: string;
+  unitCount: number;
+}

@@ -17,3 +17,5 @@ export type DeviceModelPool = {
   retentionStrategy: RetentionStrategy;
   running: number;
 }
+
+export type DeviceModelPoolData = Pick<DeviceModelPool, 'maxTotal' | 'minAvailable'>;

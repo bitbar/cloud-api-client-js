@@ -1,3 +1,5 @@
+import {CollectionQueryParams} from "../APIList";
+
 export enum FileDirection {
   INPUT = 'INPUT',
   OUTPUT = 'OUTPUT'
@@ -37,3 +39,20 @@ export type UserFile = {
   userEmail: string;
   userId: number;
 };
+
+export interface UserFileParams extends CollectionQueryParams {
+  tag: Array<string>;
+}
+
+export type UserFileData = {
+  file: FormData;
+  global: boolean;
+}
+
+export type BuildLogsData = {
+  deviceRunIds: Array<number>;
+  projectId: number;
+  userId: number;
+}
+
+export type BuildLogsParams = BuildLogsData;

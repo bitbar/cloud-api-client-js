@@ -1,8 +1,10 @@
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
 import {APIList} from './APIList'
 import {NonRequestable} from "./decorators/NonRequestable";
-import {AdminDeviceSessionStatistics} from "./models/AdminDeviceSessionStatistics";
+import {AdminDeviceSessionStatistics, AdminStatisticsParams} from "./models/AdminDeviceSessionStatistics";
 import {AdminFrameworkStatistics} from "./models/AdminFrameworkStatistics";
+
 
 @NonRequestable
 export class APIAdminListStatistics extends APIList {
@@ -17,12 +19,12 @@ export class APIAdminListStatistics extends APIList {
 
   // /admin/statistics/device-sessions
   deviceSessions() {
-    return new APIList<AdminDeviceSessionStatistics>(this).push('device-sessions');
+    return new APIList<AdminDeviceSessionStatistics, AdminStatisticsParams, NoData>(this).push('device-sessions');
   }
 
   // /admin/statistics/frameworks
   frameworks() {
-    return new APIList<AdminFrameworkStatistics>(this).push('frameworks');
+    return new APIList<AdminFrameworkStatistics, AdminStatisticsParams, NoData>(this).push('frameworks');
   }
 
 

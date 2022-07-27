@@ -1,10 +1,11 @@
-import APIAdminResource from "./APIAdminResource";
-import {APIList} from './APIList'
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import {Enum} from "./models/Enum";
-import {NotificationPlan} from "./models/NotificationPlan";
+import {NotificationPlan, NotificationPlanData} from "./models/NotificationPlan";
 
 
-export class APIAdminListNotificationPlans extends APIList<NotificationPlan> {
+export class APIAdminListNotificationPlans extends APIList<NotificationPlan, CollectionQueryParams, NotificationPlanData> {
 
   /**
    * /admin/notification-plans
@@ -16,12 +17,12 @@ export class APIAdminListNotificationPlans extends APIList<NotificationPlan> {
 
   // /notification-plans/channels
   channels() {
-    return new APIList<Enum>(this).push('channels');
+    return new APIList<Enum, NoQueryParams, NoData>(this).push('channels');
   }
 
   // /notification-plans/scopes
   scopes() {
-    return new APIList<Enum>(this).push('scopes');
+    return new APIList<Enum, NoQueryParams, NoData>(this).push('scopes');
   }
 
 }

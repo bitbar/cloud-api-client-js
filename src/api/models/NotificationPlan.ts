@@ -13,3 +13,11 @@ export type NotificationPlan = {
   subjectTemplate: string;
   updateTime: number;
 }
+
+export type NotificationPlanData = Pick<NotificationPlan, 'channel' | 'name'> & {
+  notificationContent: string;
+  notificationSubject: string;
+  scope: NotificationScope;
+}
+
+export type NotificationPlanEditData = Omit<NotificationPlanData, 'channel'>;

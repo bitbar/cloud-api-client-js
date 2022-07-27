@@ -1,11 +1,13 @@
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {NoQueryParams} from "./APIList";
 import {APIResource} from './APIResource'
 import {AccountService} from "./models/AccountService";
 
-export class APIAdminResourceAccountService extends APIResource<AccountService> {
+export class APIAdminResourceAccountService extends APIResource<AccountService, NoQueryParams, NoData> {
 
   /**
-   * /account-services/{id}
+   * /admin/account-services/{id}
    */
   constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
@@ -18,12 +20,12 @@ export class APIAdminResourceAccountService extends APIResource<AccountService> 
 
   // /account-services/{id}/activate
   activate() {
-    return new APIResource<AccountService>(this).push('activate').post();
+    return new APIResource<AccountService, NoQueryParams, NoData>(this).push('activate').post();
   }
 
   // /account-services/{id}/deactivate
   deactivate() {
-    return new APIResource<AccountService>(this).push('deactivate').post();
+    return new APIResource<AccountService, NoQueryParams, NoData>(this).push('deactivate').post();
   }
 
 }

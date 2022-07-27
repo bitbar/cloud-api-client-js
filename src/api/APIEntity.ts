@@ -3,6 +3,7 @@ import {stringify} from 'qs';
 import {API} from "../API";
 import {ALLOWED_HTTP_METHODS, QueryParams} from "./models/HTTP";
 
+export type NoData = void;
 
 /**
  * @typeParam RESPONSE        HTTP Response return type.

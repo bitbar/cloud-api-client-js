@@ -1,12 +1,12 @@
-import API from "../API";
-import APIAdminResource from "./APIAdminResource";
+import {API} from "../API";
+import {APIAdminResource} from "./APIAdminResource";
 import {APIList} from './APIList'
 import {APIListCleanupConfigurations} from "./APIListCleanupConfigurations";
 import {APIResourceCleanupConfiguration} from "./APIResourceCleanupConfiguration";
-import {AdminDevice} from "./models/AdminDevice";
+import {AdminDevice, AdminDeviceData, AdminDevicesQueryParams} from "./models/AdminDevice";
 
 
-export class APIAdminListDevices extends APIList<AdminDevice> {
+export class APIAdminListDevices extends APIList<AdminDevice, AdminDevicesQueryParams, AdminDeviceData> {
 
   /**
    * /admin/devices

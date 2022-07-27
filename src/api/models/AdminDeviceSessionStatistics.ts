@@ -1,3 +1,5 @@
+import {CollectionQueryParams} from "../APIList";
+
 export type AdminDeviceSessionStatistics = {
   abortedDeviceCount: number;
   avgDeviceSessionDeviceTime: number;
@@ -15,4 +17,8 @@ export type AdminDeviceSessionStatistics = {
   totalDeviceCount: number;
   waitingDeviceCount: number;
   warningDeviceCount: number;
+}
+
+export interface AdminStatisticsParams extends CollectionQueryParams {
+  days: number;
 }

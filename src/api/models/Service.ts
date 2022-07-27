@@ -1,3 +1,4 @@
+import {CollectionQueryParams} from "../APIList";
 import {ChargeType} from "./AccountService";
 import {Role} from "./Role";
 
@@ -30,4 +31,14 @@ export enum ServiceUnit {
   PROJECT = 'PROJECT',
   RUN = 'RUN',
   YEAR = 'YEAR'
+}
+
+export interface AdminServicesParams extends CollectionQueryParams {
+    activeOnly: boolean;
+    inUse: boolean;
+    notArchive: boolean;
+}
+
+export type ServiceActivateData = {
+  activateTime: number;
 }

@@ -16,3 +16,10 @@ export type DeviceModel = {
   running: number;
   total: number;
 }
+
+export type DeviceModelData = Pick<DeviceModel, 'enabled'|'name'|'releaseVersion'> & {
+  apiLevel: number;
+  creditsPrice: number;
+  manufacturer: string;
+  typeId: number;
+}

@@ -1,11 +1,11 @@
-import APIAdminResource from "./APIAdminResource";
-import {APIList} from './APIList'
+import {APIAdminResource} from "./APIAdminResource";
+import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
-import {Framework} from "./models/Framework";
+import {Framework, FrameworkConfigData, FrameworkEditData} from "./models/Framework";
 import {ProjectJobConfig} from "./models/ProjectJobConfig";
 import {Role} from "./models/Role";
 
-export class APIAdminResourceFramework extends APIResource<Framework> {
+export class APIAdminResourceFramework extends APIResource<Framework, NoQueryParams, FrameworkEditData> {
 
   /**
    * /admin/frameworks/{id}
@@ -21,7 +21,7 @@ export class APIAdminResourceFramework extends APIResource<Framework> {
 
   // /admin/frameworks/{id}/config
   config() {
-    return new APIResource<ProjectJobConfig>(this).push('config');
+    return new APIResource<ProjectJobConfig, NoQueryParams, FrameworkConfigData>(this).push('config');
   }
 
   // /admin/frameworks/{id}/required-roles

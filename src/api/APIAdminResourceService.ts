@@ -1,9 +1,11 @@
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {NoQueryParams} from "./APIList";
 import {APIResource} from './APIResource'
-import {Service} from "./models/Service";
+import {Service, ServiceActivateData} from "./models/Service";
 
 
-export class APIAdminResourceService extends APIResource<Service> {
+export class APIAdminResourceService extends APIResource<Service, NoQueryParams, NoData> {
 
   /**
    * /services/{id}
@@ -19,7 +21,7 @@ export class APIAdminResourceService extends APIResource<Service> {
 
   // /services/{id}/activate
   activate() {
-    return new APIResource<Service>(this).push('activate').post();
+    return new APIResource<Service, ServiceActivateData>(this).push('activate').post();
   }
 
 }

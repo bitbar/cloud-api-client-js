@@ -1,9 +1,11 @@
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {NoQueryParams} from "./APIList";
 import {APIResource} from './APIResource'
 import {Account} from "./models/Account";
 
 
-export class APIAdminResourceAccount extends APIResource<Account> {
+export class APIAdminResourceAccount extends APIResource<Account, NoQueryParams, NoData> {
 
   /**
    * /admin/accounts/{id}

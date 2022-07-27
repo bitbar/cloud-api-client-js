@@ -4,3 +4,5 @@ export type CountryVatRate = {
   id: number;
   vatRate: number;
 }
+
+export type CountryVatRateData = Pick<CountryVatRate, 'countryCode' | 'vatRate'>;

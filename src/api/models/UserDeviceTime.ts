@@ -1,3 +1,4 @@
+import {CollectionQueryParams} from "../APIList";
 import {DeviceSessionType} from "./DeviceSession";
 
 export type UserDeviceTime = BasicDeviceTime & {
@@ -13,4 +14,8 @@ export type UserDeviceTime = BasicDeviceTime & {
 export type BasicDeviceTime = {
   deviceTime: number;
   id: number;
+}
+
+export interface DeviceTimeParams extends CollectionQueryParams {
+  forWholeAccount: boolean;
 }

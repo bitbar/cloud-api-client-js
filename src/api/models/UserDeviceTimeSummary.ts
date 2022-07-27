@@ -1,3 +1,5 @@
+import {CollectionQueryParams} from "../APIList";
+
 export type UserDeviceTimeSummary = {
   automaticDeviceTime: number;
   freeDeviceTime: number;
@@ -7,4 +9,8 @@ export type UserDeviceTimeSummary = {
   periodStart: number;
   remoteDeviceTime: number;
   totalDeviceTime: number;
+}
+
+export interface DeviceTimeSummaryParams extends CollectionQueryParams {
+  forWholeAccount: boolean;
 }

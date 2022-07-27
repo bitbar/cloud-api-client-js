@@ -67,3 +67,5 @@ export type AccountService = {
   userId: number;
   vatRate: number;
 }
+
+export type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId'> & { count: number; };

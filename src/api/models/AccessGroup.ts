@@ -11,3 +11,5 @@ export type AccessGroup = {
   userEmail: string;
   userId: number;
 }
+
+export type AccessGroupData = Pick<AccessGroup, 'name' | 'scope' | 'userId'>;
