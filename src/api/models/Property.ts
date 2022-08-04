@@ -3,7 +3,6 @@ export type Property = {
   fromTime: number;
   id: number;
   name: string;
-  selfURI: string;
   toTime: number;
   updateTime: number;
   updatedByDisplayName: string;

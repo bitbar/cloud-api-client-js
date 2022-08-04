@@ -1,10 +1,10 @@
 import {Method} from "axios";
-import {APIList} from './APIList'
+import {APIList, CollectionQueryParams} from './APIList'
 import APIResourceUser from "./APIResourceUser";
 import {SmartbearTunnel} from "./models/SmartbearTunnel";
 
 
-export interface TunnelQueryParams {
+export interface TunnelQueryParams extends CollectionQueryParams{
   active: boolean;
 }
 

@@ -1,7 +1,8 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import APIAdminResource from "./APIAdminResource";
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import APIResourceUser from "./APIResourceUser";
+import {AccessGroup} from "./models/AccessGroup";
 
 /**
  * APIResourceAccessGroup
@@ -9,14 +10,14 @@ import {APIResource} from './APIResource'
  * @class
  * @extends APIResource
  */
-export class APIResourceAccessGroup extends APIResource {
+export class APIResourceAccessGroup extends APIResource<AccessGroup> {
 
   /**
    * /device-groups/{id}
    *
    * Constructor
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource|APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

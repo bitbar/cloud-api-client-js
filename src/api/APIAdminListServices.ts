@@ -1,67 +1,54 @@
-import {API} from "../API";
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from "./APIAdminResource";
 import {APIList} from './APIList'
+import {AdminServicesParams, Service} from "./models/Service";
 
 
-/**
- * APIAdminListServices
- *
- * @class
- * @extends APIList
- */
-export class APIAdminListServices extends APIList {
+export class APIAdminListServices extends APIList<Service, AdminServicesParams, Service> {
 
-  // Constructor
-  constructor (parent: APIEntity<any> | API) {
+  /**
+   * /admin/services
+   */
+  constructor(parent: APIAdminResource) {
     super(parent);
     this.push('admin', 'services');
   }
 
-  // /services/available
-  available () {
-    return new APIList(this).push('available');
+  active() {
+    const apiList = new APIList<Service, AdminServicesParams, Service>(this);
+    apiList.params<'notArchived'>({
+      notArchived: true
+    });
+    return apiList;
   }
 
-  active () {
-    const a = new APIList(this);
-    if (this.first === 'me') {
-      a.push('active');
-    } else {
-      a.params({
-        notArchived: true
-      });
-    }
-    return a;
-  }
-
-  activated () {
-    const a = this.active();
-    a.params({
+  activated() {
+    const apiList = this.active();
+    apiList.params<'filter' | 'limit' | 'sort'>({
       filter: 'activated_eq_true',
       limit: 0,
       sort: 'name_a'
     })
-    return a;
+    return apiList;
   }
 
-  inUse () {
-    const a = new APIList(this);
-    a.params({
+  inUse() {
+    const apiList = new APIList<Service, AdminServicesParams, Service>(this);
+    apiList.params<'inUse' | 'limit' | 'sort'>({
       inUse: true,
       limit: 0,
       sort: 'name_a'
     })
-    return a;
+    return apiList;
   }
 
-  byPrice () {
-    const a = new APIList(this);
-    a.params({
+  byPrice() {
+    const apiList = new APIList<Service, AdminServicesParams, Service>(this);
+    apiList.params<'sort'>({
       sort: 'centPrice_a'
     })
-    return a;
+    return apiList;
   }
 
 }
 
-export default APIAdminListServices
+export default APIAdminListServices;

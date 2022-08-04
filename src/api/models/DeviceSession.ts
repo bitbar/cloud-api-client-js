@@ -3,9 +3,40 @@ export type TunnelSettings = {
   email: string;
 }
 
-export type DeviceSessionType = 'AUTOMATIC' | 'MANUAL' | 'MANUAL_APP' | 'MANUAL_WEB' | 'REMOTE';
-export type RetryState = 'NONE' | 'MANUAL' | 'AUTO';
-export type DeviceSessionState = 'ABORTED' | 'EXCLUDED' | 'FAILED' | 'RUNNING' | 'SUCCEEDED' | 'TIMEOUT' | 'WAITING' | 'WARNING';
+export enum DeviceSessionType {
+  AUTOMATIC = 'AUTOMATIC',
+  MANUAL = 'MANUAL',
+  MANUAL_APP = 'MANUAL_APP',
+  MANUAL_WEB = 'MANUAL_WEB',
+  REMOTE = 'REMOTE'
+}
+
+export enum RetryState {
+  NONE = 'NONE',
+  MANUAL = 'MANUAL',
+  AUTO = 'AUTO'
+}
+
+export enum DeviceSessionState {
+  ABORTED = 'ABORTED',
+  EXCLUDED = 'EXCLUDED',
+  FAILED = 'FAILED',
+  RUNNING = 'RUNNING',
+  SUCCEEDED = 'SUCCEEDED',
+  TIMEOUT = 'TIMEOUT',
+  WAITING = 'WAITING',
+  WARNING = 'WARNING'
+}
+
+export enum DeviceSessionStepType {
+  WAITING = 'WAITING',
+  PREPARING = 'PREPARING',
+  UNINSTALL = 'UNINSTALL',
+  INSTALL = 'INSTALL',
+  RUNNING = 'RUNNING',
+  SENDING_RESULTS = 'SENDING_RESULTS',
+  PROCESSING_RESULTS = 'PROCESSING_RESULTS'
+}
 
 export type DeviceSessionConfig = {
   adbVersion: string;
@@ -14,10 +45,9 @@ export type DeviceSessionConfig = {
   deviceModelId: number;
   id: number;
   screenResolution: string;
-  selfURI: string;
   tunnelSettings: TunnelSettings;
   type: DeviceSessionConfig;
-  url :string;
+  url: string;
 }
 
 export type DeviceSession = {
@@ -35,14 +65,13 @@ export type DeviceSession = {
   endTime: number;
   excludeReason: string;
   externalId: string;
-  id:	number;
+  id: number;
   installTime: number;
   name: string;
   projectId: number;
   projectName: string;
-  retryState:	RetryState;
+  retryState: RetryState;
   rowIndex: number;
-  selfURI: string;
   startTime: number;
   state: DeviceSessionState;
   successRatio: number;
@@ -66,7 +95,6 @@ export type DeviceSessionCommand = {
   requestBody: string;
   responseBody: string;
   responseCode: number;
-  selfURI: string;
   timestamp: number;
   uri: string;
 }
@@ -77,9 +105,8 @@ export type DeviceSessionStep = {
   failReason: string;
   finishTimeMS: number;
   id: number;
-  selfURI: string;
   startTimeMS: number;
-  type: 'WAITING' | 'PREPARING' | 'UNINSTALL' | 'INSTALL' | 'RUNNING' | 'SENDING_RESULTS' | 'PROCESSING_RESULTS';
+  type: DeviceSessionStepType;
 }
 
 export type DeviceSessionConnection = {
@@ -92,7 +119,6 @@ export type DeviceSessionConnection = {
   password: string;
   path: string;
   port: number;
-  selfURI: string;
   type: string;
   url: string;
   urlSchema: string;

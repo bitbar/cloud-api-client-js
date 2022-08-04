@@ -1,34 +1,28 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
 import {APIList} from './APIList'
-import {APIResource} from './APIResource'
+import {DeviceTimeCountSessionReportEntry} from "./models/DeviceTimeCountSessionReportEntry";
+import {DeviceTimeStepTimeReportEntry} from "./models/DeviceTimeStepTimeReportEntry";
+import {DeviceTimeParams, UserDeviceTime} from "./models/UserDeviceTime";
 
-/**
- * APIAdminResourceDeviceTime
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceDeviceTime extends APIResource {
+export class APIAdminResourceDeviceTime extends APIList<UserDeviceTime, DeviceTimeParams, NoData> {
 
   /**
-   * /device-time
-   *
-   * Constructor
+   * /admin/device-time
    */
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: APIAdminResource) {
     super(parent);
     this.push('admin', 'device-time');
   }
 
   // /device-time/count-session-report
   countSessionReport() {
-    return new APIList(this).push('count-session-report');
+    return new APIList<DeviceTimeCountSessionReportEntry>(this).push('count-session-report');
   }
 
   // /device-time/step-time-report
   stepTimeReport() {
-    return new APIList(this).push('step-time-report');
+    return new APIList<DeviceTimeStepTimeReportEntry>(this).push('step-time-report');
   }
 
 }

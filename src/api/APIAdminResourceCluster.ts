@@ -1,23 +1,16 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from "./APIAdminResource";
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {AdminDevice} from "./models/AdminDevice";
+import {Cluster, ClusterData, ClusterParams} from "./models/Cluster";
 
 
-/**
- * APIAdminResourceCluster
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceCluster extends APIResource {
+export class APIAdminResourceCluster extends APIResource<Cluster, ClusterParams, ClusterData> {
 
   /**
    * /clusters/{id}
-   *
-   * Constructor
    */
-  constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -27,8 +20,8 @@ export class APIAdminResourceCluster extends APIResource {
   }
 
   // /clusters/{id}/devices
-  devices () {
-    return new APIList(this).push('devices');
+  devices() {
+    return new APIList<AdminDevice>(this).push('devices');
   }
 
 }

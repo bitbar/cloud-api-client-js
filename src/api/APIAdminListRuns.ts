@@ -1,31 +1,28 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {Method} from "axios";
+import {APIAdminResource} from "./APIAdminResource";
 import {APIList} from './APIList'
 import {APIResource} from './APIResource';
+import {AdminTestRun, RunsConfigParams} from "./models/AdminTestRun";
+import {TestRunConfig} from "./models/TestRun";
 
 
-/**
- * APIAdminListRuns
- *
- * @class
- * @extends APIList
- */
-export class APIAdminListRuns extends APIList {
+export class APIAdminListRuns extends APIList<AdminTestRun> {
+
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ["GET"];
 
   /**
    * /admin/runs
-   * Constructor
    */
-  constructor (parent: APIEntity<any> | API) {
+  constructor(parent: APIAdminResource) {
     super(parent);
     this.push('admin', 'runs');
   }
 
   // /runs/config
-  config () {
-    const a = new APIResource(this);
-    a.restack('runs', 'config');
-    return a;
+  config() {
+    const apiResource = new APIResource<TestRunConfig, RunsConfigParams, {configuration: TestRunConfig}>(this);
+    apiResource.restack('runs', 'config');
+    return apiResource;
   }
 
 }

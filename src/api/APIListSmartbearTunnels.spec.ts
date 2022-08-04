@@ -1,6 +1,5 @@
 import API from "../API";
 import APIList from "./APIList";
-import APIListServices from "./APIListServices";
 import APIListSmartbearTunnels from "./APIListSmartbearTunnels";
 import APIResourceUser from "./APIResourceUser";
 

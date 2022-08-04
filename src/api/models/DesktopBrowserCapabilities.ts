@@ -1,7 +1,6 @@
 export type DesktopBrowserCapabilities = {
   id: number;
   platforms: Array<any>;
-  selfURI: string;
 }
 
 export type DesktopPlatform = {
@@ -9,7 +8,6 @@ export type DesktopPlatform = {
   id: number;
   name: string;
   resolutions: Array<string>;
-  selfURI: string;
   value: string;
   version: string;
 }
@@ -18,7 +16,6 @@ export type DesktopBrowser = {
   displayName: string;
   id: number;
   name: string;
-  selfURI: string;
   value: string;
   version: Array<string>;
 }

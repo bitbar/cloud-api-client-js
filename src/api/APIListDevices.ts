@@ -1,5 +1,5 @@
 import {API} from "../API";
-import {APIList, CollectionQueryParams} from './APIList';
+import {APIList, CollectionQueryParams, NoQueryParams} from './APIList';
 import {APIResource} from './APIResource';
 import {DesktopBrowserCapabilities} from "./models/DesktopBrowserCapabilities";
 import {Device} from "./models/Device";
@@ -16,7 +16,7 @@ export interface DevicesQueryParams extends CollectionQueryParams {
   withSupportedCreators: boolean;
 }
 
-export class APIListDevices extends APIList<Device, Partial<DevicesQueryParams>> {
+export class APIListDevices extends APIList<Device, DevicesQueryParams> {
 
   /**
    * /devices
@@ -28,12 +28,12 @@ export class APIListDevices extends APIList<Device, Partial<DevicesQueryParams>>
 
   // /devices/filters
   filters() {
-    return new APIResource<DevicePicker, Partial<CollectionQueryParams>, void>(this).push('filters');
+    return new APIResource<DevicePicker, CollectionQueryParams, void>(this).push('filters');
   }
 
   // /devices/desktop-browser-capabilities
   desktopBrowserCapabilities() {
-    return new APIResource<DesktopBrowserCapabilities, void, void>(this).push('desktop-browser-capabilities');
+    return new APIResource<DesktopBrowserCapabilities, NoQueryParams, void>(this).push('desktop-browser-capabilities');
   }
 
 }

@@ -1,51 +1,29 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {API} from "../API";
+import {APIAdminResource} from "./APIAdminResource";
 import {APIList} from './APIList'
 import {APIListCleanupConfigurations} from "./APIListCleanupConfigurations";
-import {APIResource} from './APIResource'
 import {APIResourceCleanupConfiguration} from "./APIResourceCleanupConfiguration";
+import {AdminDevice, AdminDeviceData, AdminDevicesQueryParams} from "./models/AdminDevice";
 
 
-/**
- * APIAdminListDevices
- *
- * @class
- * @extends APIList
- */
-export class APIAdminListDevices extends APIList {
+export class APIAdminListDevices extends APIList<AdminDevice, AdminDevicesQueryParams, AdminDeviceData> {
 
   /**
-   * /devices
-   *
-   * Constructor
+   * /admin/devices
    */
-  constructor (parent: APIEntity | API) {
+  constructor(parent: APIAdminResource | API) {
     super(parent);
     this.push('admin', 'devices');
   }
 
-  // /devices/filters
-  filters () {
-    return new APIResource(this).push('filters');
-  }
-
-  // /devices/cleanup-configurations
-  cleanupConfigurations () {
+  // /admin/devices/cleanup-configurations
+  cleanupConfigurations() {
     return new APIListCleanupConfigurations(this);
   }
 
-  /**
-   * /devices/cleanup-configurations/{id}
-   *
-   * @param {number} id - Resource ID
-   */
-  cleanupConfiguration (id: number) {
+  // /admin/devices/cleanup-configurations/{id}
+  cleanupConfiguration(id: number) {
     return new APIResourceCleanupConfiguration(this, id);
-  }
-
-  // /devices/desktop-browser-capabilities
-  desktopBrowserCapabilities () {
-    return new APIResource(this).push('desktop-browser-capabilities');
   }
 
 }

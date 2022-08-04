@@ -1,25 +1,17 @@
-import {API} from "../API";
-import {APIEntity} from './APIEntity';
-import {APIList} from './APIList';
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
-import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
+import {AdminTestRun, RunChangeBillableParams, RunChangePriorityParams} from "./models/AdminTestRun";
 
 
-/**
- * APIAdminResourceRun
- *
- * @class
- * @extends APIResourceRun
- */
-export class APIAdminResourceRunStandalone extends APIResource<any> {
+export class APIAdminResourceRunStandalone extends APIResource<AdminTestRun, NoQueryParams, NoData> {
 
   /**
    * /runs/{id}
-   *
-   * Constructor
    */
-   constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -29,41 +21,31 @@ export class APIAdminResourceRunStandalone extends APIResource<any> {
   }
 
   // /runs/{id}/abort
-  abort () {
-    return new APIResource(this).push('abort').post();
+  abort() {
+    return new APIResource<AdminTestRun, NoQueryParams, NoData>(this).push('abort').post();
   }
 
   // /runs/{id}/changebillable
-  changeBillable (billable: boolean) {
-    return new APIResource(this).push('changebillable').post().params({
+  changeBillable(billable: boolean) {
+    return new APIResource<AdminTestRun, RunChangeBillableParams>(this).push('changebillable').post().params({
       billable
     });
   }
 
   // /runs/{id}/changepriority
-  changePriority (priority: boolean) {
-    return new APIResource(this).push('changepriority').post().params({
+  changePriority(priority: boolean) {
+    return new APIResource<AdminTestRun, RunChangePriorityParams>(this).push('changepriority').post().params({
       priority
     });
   }
 
-  // /runs/{id}/retry
-  retry (ids?: Array<number>) {
-    return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
+  // /admin/runs/{id}/retry
+  retry(ids?: Array<number>) {
+    return postDeviceRunIds<AdminTestRun>(this, 'retry', ids).setRequestConfig({
       timeout: 0
     });
   }
 
-  // /runs/{id}/device-sessions
-  deviceSessions () {
-    return new APIList(this).shift().push('device-sessions');
-  }
-
-  // /runs/{id}/device-sessions/{id}
-  deviceSession (id: number) {
-    return new APIResourceDeviceSessionCommon(this, id).shift();
-  }
-
 }
 
-export default APIAdminResourceRunStandalone
+export default APIAdminResourceRunStandalone;

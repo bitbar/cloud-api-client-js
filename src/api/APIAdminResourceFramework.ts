@@ -1,22 +1,16 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
-import {APIList} from './APIList'
+import {APIAdminResource} from "./APIAdminResource";
+import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
+import {Framework, FrameworkConfigData, FrameworkEditData} from "./models/Framework";
+import {ProjectJobConfig} from "./models/ProjectJobConfig";
+import {Role} from "./models/Role";
 
-/**
- * APIAdminResourceFramework
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceFramework extends APIResource {
+export class APIAdminResourceFramework extends APIResource<Framework, NoQueryParams, FrameworkEditData> {
 
   /**
-   * /frameworks/{id}
-   *
-   * Constructor
+   * /admin/frameworks/{id}
    */
-  constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -25,14 +19,14 @@ export class APIAdminResourceFramework extends APIResource {
     this.push('admin', 'frameworks', id);
   }
 
-  // /frameworks/{id}/config
-  config () {
-    return new APIResource(this).push('config');
+  // /admin/frameworks/{id}/config
+  config() {
+    return new APIResource<ProjectJobConfig, NoQueryParams, FrameworkConfigData>(this).push('config');
   }
 
-  // /frameworks/{id}/required-roles
-  requiredRoles () {
-    return new APIList(this).push('required-roles');
+  // /admin/frameworks/{id}/required-roles
+  requiredRoles() {
+    return new APIList<Role>(this).push('required-roles');
   }
 
 }

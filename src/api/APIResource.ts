@@ -8,7 +8,7 @@ import {QueryParams} from "./models/HTTP";
  * @class
  * @extends APIEntity
  */
-export class APIResource<RESPONSE = any, QUERY_PARAMS extends QueryParams | void = QueryParams, DATA = any>
+export class APIResource<RESPONSE = any, QUERY_PARAMS extends QueryParams | void = QueryParams, DATA = QUERY_PARAMS>
   extends APIEntity<RESPONSE, QUERY_PARAMS, DATA> {
 
   /**
@@ -23,4 +23,4 @@ export class APIResource<RESPONSE = any, QUERY_PARAMS extends QueryParams | void
 }
 
 
-export default APIResource
+export default APIResource;

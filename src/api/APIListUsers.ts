@@ -1,6 +1,6 @@
 import {Method} from "axios";
 import {API} from '../API';
-import {APIList} from './APIList'
+import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {QueryParams} from "./models/HTTP";
 import {User} from "./models/User";
@@ -27,7 +27,7 @@ export interface ValidateVatQueryParams extends QueryParams {
   vatId: string;
 }
 
-export class APIListUsers extends APIList<User, void, UserData> {
+export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
   protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
 
@@ -41,7 +41,7 @@ export class APIListUsers extends APIList<User, void, UserData> {
 
   // /users/activate
   activate() {
-    return new APIResource<User, void, UserActivateData>(this).push('activate').post();
+    return new APIResource<User, NoQueryParams, UserActivateData>(this).push('activate').post();
   }
 
   // /users/recoveries
@@ -51,7 +51,7 @@ export class APIListUsers extends APIList<User, void, UserData> {
 
   // /users/passwordRecovery
   passwordRecovery() {
-    return new APIResource<User, void, UserPasswordData>(this).push('password-recovery');
+    return new APIResource<User, NoQueryParams, UserPasswordData>(this).push('password-recovery');
   }
 
   // /users/resetApiKey

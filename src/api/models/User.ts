@@ -1,4 +1,17 @@
+import {CollectionQueryParams} from "../APIList";
 import {Role} from "./Role";
+
+export enum MfaStatus {
+  VERIFICATION_NEED = 'VERIFICATION_NEED',
+  DISABLED = 'DISABLED',
+  ENABLED = 'ENABLED'
+}
+
+export enum UserStatus {
+  INACTIVE = 'INACTIVE',
+  DISABLED = 'DISABLED',
+  ENABLED = 'ENABLED'
+}
 
 export type User = {
   accountId: number;
@@ -24,15 +37,29 @@ export type User = {
   mainUserEmail: string;
   mainUserId: number;
   mfaQRCodeUrl: string;
-  mfaStatus: 'VERIFICATION_NEED' | 'DISABLED' | 'ENABLED';
+  mfaStatus: MfaStatus;
   organization: string;
   phone: string;
   registrationIP: string;
   roles: Array<Role>;
-  selfURI: string;
   serviceIds: Array<number>;
   state: string;
-  status: 'INACTIVE' | 'DISABLED' | 'ENABLED';
+  status: UserStatus;
   timeZone: string;
   vatId: string;
 }
+
+export type UserData = { email: string; };
+
+export interface UserParams extends CollectionQueryParams {
+  WITH_ADDRESS: boolean;
+  WITH_USER_INFO: boolean;
+  onlyMainUsers: boolean;
+  onlyWithDisabledServices: boolean;
+  withRole: string;
+  withRoles: boolean;
+}
+
+export type UserUpdateAccount = Pick<User, 'accountId'>;
+
+

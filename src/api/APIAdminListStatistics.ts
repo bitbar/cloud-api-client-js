@@ -1,33 +1,30 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
 import {APIList} from './APIList'
+import {NonRequestable} from "./decorators/NonRequestable";
+import {AdminDeviceSessionStatistics, AdminStatisticsParams} from "./models/AdminDeviceSessionStatistics";
+import {AdminFrameworkStatistics} from "./models/AdminFrameworkStatistics";
 
 
-/**
- * APIAdminListStatistics
- *
- * @class
- * @extends APIList
- */
+@NonRequestable
 export class APIAdminListStatistics extends APIList {
 
   /**
-   * /statistics
-   * Constructor
+   * /admin/statistics
    */
-  constructor (parent: APIEntity<any> | API) {
+  constructor(parent: APIAdminResource) {
     super(parent);
     this.push('admin', 'statistics');
   }
 
-  // /statistics/device-sessions
-  deviceSessions () {
-    return new APIList(this).push('device-sessions');
+  // /admin/statistics/device-sessions
+  deviceSessions() {
+    return new APIList<AdminDeviceSessionStatistics, AdminStatisticsParams, NoData>(this).push('device-sessions');
   }
 
-  // /statistics/frameworks
-  frameworks () {
-    return new APIList(this).push('frameworks');
+  // /admin/statistics/frameworks
+  frameworks() {
+    return new APIList<AdminFrameworkStatistics, AdminStatisticsParams, NoData>(this).push('frameworks');
   }
 
 

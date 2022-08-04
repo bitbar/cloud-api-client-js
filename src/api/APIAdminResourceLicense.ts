@@ -1,21 +1,15 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {NoQueryParams} from "./APIList";
 import {APIResource} from './APIResource'
+import {License} from "./models/License";
 
-/**
- * APIAdminResourceLicense
- *
- * @class
- * @extends APIResource
- */
-export class APIAdminResourceLicense extends APIResource {
+export class APIAdminResourceLicense extends APIResource<License, NoQueryParams, NoData> {
 
   /**
    * /licenses/{id}
-   *
-   * Constructor
    */
-  constructor (parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -25,23 +19,23 @@ export class APIAdminResourceLicense extends APIResource {
   }
 
   // /licenses/{id}/activate
-  activate () {
-    return new APIResource(this).push('activate');
+  activate() {
+    return new APIResource<License, NoQueryParams, NoData>(this).push('activate');
   }
 
   // /licenses/{id}/deactivate
-  deactivate () {
-    return new APIResource(this).push('deactivate');
+  deactivate() {
+    return new APIResource<License, NoQueryParams, NoData>(this).push('deactivate');
   }
 
   // /licenses/{id}/resend
-  resend () {
-    return new APIResource(this).push('resend');
+  resend() {
+    return new APIResource<License, NoQueryParams, NoData>(this).push('resend');
   }
 
   // /licenses/{id}/download
-  download () {
-    return new APIResource(this).push('download');
+  download() {
+    return new APIResource<Blob, NoQueryParams, NoData>(this).push('download');
   }
 
 }

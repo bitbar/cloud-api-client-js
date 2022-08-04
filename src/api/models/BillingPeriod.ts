@@ -1,0 +1,39 @@
+import {PaymentMethod} from "./AccountService";
+import {DeviceSessionType} from "./DeviceSession";
+import {OsType} from "./Enum";
+
+export enum BillingType {
+  BUY = 'BUY',
+  CHARGE = 'CHARGE',
+  CANCEL = 'CANCEL'
+}
+
+export type BillingPeriod = {
+  accountServiceId: number;
+  additionalHours: number;
+  additionalHoursPrice: number;
+  apiBillingPeriodType: BillingType;
+  createTime: number;
+  endBillingPeriod: number;
+  id: number;
+  lastPaymentDate: number;
+  mail: string;
+  paid: boolean;
+  paymentMethod: PaymentMethod;
+  plan: string;
+  servicePrice: number;
+  startBillingPeriod: number;
+  subscriptionEnd: number;
+  subscriptionStart: number;
+  totalPrice: number;
+  usages: Array<BillingPeriodUsage>;
+  userId: number;
+}
+
+export type BillingPeriodUsage = {
+  billableSeconds: number;
+  id: number;
+  nonBillableSeconds: number;
+  osType: OsType;
+  type: DeviceSessionType;
+}

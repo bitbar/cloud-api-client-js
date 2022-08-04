@@ -17,6 +17,11 @@ export interface CollectionQueryParams extends QueryParams {
   limit: number;
   offset: number;
   sort: string;
+  search: string;
+}
+
+export type NoQueryParams = {
+  [key in any]: never;
 }
 
 export type CollectionResponse<T> = {
@@ -28,14 +33,13 @@ export type CollectionResponse<T> = {
   offset: number;
   previous: string;
   search: string;
-  selfURI: string;
   sort: string;
   total: number;
 }
 
 
-export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA = any>
-  extends APIEntity<CollectionResponse<RESPONSE>, Partial<CollectionQueryParams>, DATA> {
+export class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any>
+  extends APIEntity<CollectionResponse<RESPONSE>, QUERY_PARAMS, DATA> {
 
   /**
    * Shortcut for sending data POST
@@ -52,7 +56,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
    * @param {string} [order=a] - Sorting order. Possibilities: 'a', 'd'
    */
   sort(name: string, order: APIOrder = APIOrder.asc): this {
-    return this.params({
+    return this.params<'sort'>({
       sort: `${name}_${order}`
     });
   }
@@ -69,7 +73,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
       throw new Error(`Limit '${limit}' is invalid!`);
     }
 
-    return this.params({
+    return this.params<'limit'>({
       limit
     });
   }
@@ -107,7 +111,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
       throw new Error(`Offset '${offset}' is invalid!`);
     }
 
-    return this.params({
+    return this.params<'offset'>({
       offset
     });
   }
@@ -129,7 +133,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
       throw new Error(`To '${to}' is invalid!`);
     }
 
-    return this.params({
+    return this.params<'offset' | 'limit'>({
       offset: from,
       limit: 1 + (to - from)
     });
@@ -147,7 +151,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
       throw new Error(`Index '${idx}' is invalid!`);
     }
 
-    return this.params({
+    return this.params<'offset' | 'limit'>({
       offset: idx,
       limit: 1
     });
@@ -168,7 +172,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
     const limit = this.getLimit();
     const offset = (page - 1) * limit;
 
-    return this.params({
+    return this.params<'offset' | 'limit'>({
       offset,
       limit
     });
@@ -189,7 +193,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
       throw new Error('Search query must be a string!');
     }
 
-    return this.params({
+    return this.params<'search'>({
       search: query
     });
   }
@@ -208,7 +212,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS = CollectionQueryParams, DATA 
       throw new Error('Filter must be either string or instance of FilterBuilder');
     }
 
-    return this.params({
+    return this.params<'filter'>({
       filter: filter.toString()
     });
   }

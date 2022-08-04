@@ -1,10 +1,12 @@
-export type ScreenshotType = 'LANDSCAPE' | 'PORTRAIT';
+export enum ScreenshotType {
+  LANDSCAPE = 'LANDSCAPE',
+  PORTRAIT = 'PORTRAIT'
+}
 
 export type Screenshot = {
   fail: boolean;
   id: number;
   originalName: string;
-  selfURI: string;
   takeTimestamp: number;
   type: ScreenshotType;
 }
