@@ -1,36 +1,17 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+
+import {NoData} from './APIEntity';
 import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
-import {QueryParams} from './models/HTTP';
-import {Message} from './models/Massage';
-import {Notification} from './models/Notification';
-
-enum NotificationScope {
-  ALL = 'ALL',
-  TEST_RUN = 'TEST_RUN',
-  TEST_RUN_FAILURE = 'TEST_RUN_FAILURE',
-  TEST_RUN_SUCCEEDED = 'TEST_RUN_SUCCEEDED',
-  MAINTENANCE = 'MAINTENANCE',
-  MAINTENANCE_RELEASE = 'MAINTENANCE_RELEASE',
-  CUSTOM = 'CUSTOM',
-  NEWS = 'NEWS',
-  SYSTEM = 'SYSTEM',
-  CHECK = 'CHECK',
-  PLAN_LIMIT_REACHED = 'PLAN_LIMIT_REACHED',
-  PLAN_INVOICE = 'PLAN_INVOICE'
-}
-
-export interface NotificationData extends QueryParams {
-  scope: NotificationScope;
-}
+import APIResourceUser from './APIResourceUser';
+import {Message} from './models/Message';
+import {Notification, NotificationData} from './models/Notification';
 
 export class APIResourceNotification extends APIResource<Notification, NoQueryParams, NotificationData> {
 
   /**
    * /notifications/{id}
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -41,7 +22,7 @@ export class APIResourceNotification extends APIResource<Notification, NoQueryPa
 
   // /notifications/{id}/test
   test() {
-    return new APIResource<Message, NoQueryParams, void>(this).push('test');
+    return new APIResource<Message, NoQueryParams, NoData>(this).push('test');
   }
 
 }

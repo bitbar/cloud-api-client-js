@@ -1,24 +1,19 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {NoData} from './APIEntity';
 import {APIList, CollectionBasicQueryParams} from './APIList'
-import {UserData} from './APIListUsers';
 import {APIResource} from './APIResource'
 import {APIResourceAdditionalUser} from './APIResourceAdditionalUser';
+import {APIResourceUser} from './APIResourceUser';
 import {Account} from './models/Account';
 import {AccountServicePayment} from './models/AccountServicePayment';
-import {QueryParams} from './models/HTTP';
-import {User} from './models/User';
-
-export interface BillingPeriodQueryParams extends QueryParams {
-  onDate: number;
-}
+import {BillingPeriodQueryParams} from './models/BillingPeriod';
+import {User, UserData} from './models/User';
 
 export class APIUserResourceAccount extends APIResource<Account> {
 
   /**
    * /account
    */
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: APIResourceUser) {
     super(parent);
     this.push('account');
   }
@@ -39,7 +34,7 @@ export class APIUserResourceAccount extends APIResource<Account> {
       throw new Error('Resource ID cannot be null!');
     }
 
-    const a = new APIResource<AccountServicePayment, BillingPeriodQueryParams, void>(this);
+    const a = new APIResource<AccountServicePayment, BillingPeriodQueryParams, NoData>(this);
     a.last += '-services';
     a.push(id, 'billing-period');
     return a;

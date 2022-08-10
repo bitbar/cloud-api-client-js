@@ -1,4 +1,5 @@
 import {Method} from "axios";
+import {NoData} from "./APIEntity";
 import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import APIResourceUser from "./APIResourceUser";
 import {AccountService, PaymentMethod, ServicePaymentStatus} from "./models/AccountService";
@@ -41,11 +42,11 @@ export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams
 
   // /services/available
   available() {
-    return new APIList<Service, CollectionQueryParams, void>(this).push('available');
+    return new APIList<Service, CollectionQueryParams, NoData>(this).push('available');
   }
 
   active() {
-    const apiList = new APIList<AccountService, CollectionQueryParams, void>(this);
+    const apiList = new APIList<AccountService, CollectionQueryParams, NoData>(this);
     if (this.first === 'me') {
       apiList.push('active');
     } else {

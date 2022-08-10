@@ -1,7 +1,7 @@
-import API from "../API";
-import APIList from "./APIList";
-import APIListServices from "./APIListServices";
-import APIResourceUser from "./APIResourceUser";
+import {API} from "../API";
+import {APIList} from "./APIList";
+import {APIListServices} from "./APIListServices";
+import {APIResourceUser} from "./APIResourceUser";
 
 describe('APIListServices', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

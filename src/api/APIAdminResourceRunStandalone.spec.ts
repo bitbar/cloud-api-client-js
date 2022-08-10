@@ -1,7 +1,6 @@
 import {API} from "../API";
 import {APIAdminResource} from "./APIAdminResource";
 import {APIAdminResourceRunStandalone} from "./APIAdminResourceRunStandalone";
-import {APIList} from "./APIList";
 import {APIResource} from "./APIResource";
 
 

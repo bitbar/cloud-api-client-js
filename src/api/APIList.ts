@@ -12,13 +12,6 @@ export enum APIOrder {
   desc = 'd'
 }
 
-export interface CollectionBasicQueryParams extends QueryParams {
-  filter: string;
-  limit: number;
-  offset: number;
-  sort: string;
-}
-
 export interface CollectionQueryParams extends QueryParams {
   filter: string;
   limit: number;
@@ -26,6 +19,8 @@ export interface CollectionQueryParams extends QueryParams {
   sort: string;
   search: string;
 }
+
+export type CollectionBasicQueryParams = Omit<CollectionQueryParams, 'search'>
 
 export type NoQueryParams = {
   [key in any]: never;

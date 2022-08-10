@@ -1,11 +1,13 @@
 import {API} from "../API";
 import {APIResourceBillingPeriod} from "./APIResourceBillingPeriod";
-import APIResource from "./APIResource";
+import {APIResource} from "./APIResource";
+import {APIResourceUser} from "./APIResourceUser";
 
 
 describe('APIResourceBillingPeriod', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIResourceBillingPeriod;
+  let resourceUser: APIResourceUser;
   let api: API;
 
   beforeEach(() => {
@@ -13,15 +15,16 @@ describe('APIResourceBillingPeriod', () => {
       baseURL: '',
       cloudUrl
     });
-    service = new APIResourceBillingPeriod(api, 1);
+    resourceUser = new APIResourceUser(api, 1);
+    service = new APIResourceBillingPeriod(resourceUser, 1);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/billing-periods/1');
+    expect(service.toUrl()).toEqual('/users/1/billing-periods/1');
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceBillingPeriod(api, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    expect(() => new APIResourceBillingPeriod(resourceUser, null as any)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@receipt', () => {
@@ -29,7 +32,7 @@ describe('APIResourceBillingPeriod', () => {
       const call = service.receipt();
       const requestConfigObject = {"responseType": "arraybuffer"}
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/billing-periods/1/receipt');
+      expect(call.toUrl()).toEqual('/users/1/billing-periods/1/receipt');
       expect(call['requestConfig']).toEqual(requestConfigObject);
     });
   });

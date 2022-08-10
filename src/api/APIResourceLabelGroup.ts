@@ -12,7 +12,7 @@ export class APIResourceLabelGroup extends APIResource<LabelGroup> {
   /**
    * /label-groups/{id}
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

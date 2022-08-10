@@ -1,8 +1,9 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
 import {APIList, CollectionBasicQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceRun} from './APIResourceRun'
+import {APIResourceUser} from './APIResourceUser';
 import {Project} from './models/Project';
 import {TestRun} from './models/TestRun';
 export class APIResourceProject extends APIResource<Project> {
@@ -10,7 +11,7 @@ export class APIResourceProject extends APIResource<Project> {
   /**
    * /projects/{id}
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource | APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -21,7 +22,7 @@ export class APIResourceProject extends APIResource<Project> {
 
   // /projects/{id}/runs
   runs() {
-    return new APIList<TestRun, CollectionBasicQueryParams, void>(this).push('runs');
+    return new APIList<TestRun, CollectionBasicQueryParams, NoData>(this).push('runs');
   }
 
   // /projects/{id}/runs/{id}

@@ -1,6 +1,6 @@
 import {API} from "../API";
 import {APIResourceUserSession} from "./APIResourceUserSession";
-import APIResource from "./APIResource";
+import {APIResource} from "./APIResource";
 
 
 describe('APIResourceUserSession', () => {

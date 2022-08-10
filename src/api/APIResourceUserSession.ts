@@ -1,23 +1,24 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
+import {LoginData, User} from './models/User';
 
 export class APIResourceUserSession extends APIResource {
 
   // /user-sessions
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: API) {
     super(parent);
     this.push('user-sessions');
   }
 
   // /user-sessions/login
-  login(data: object) {
+  login(data: LoginData) {
     // example of data used in cloud-fe
     // data = {
     //   username: login
     //   password: password
     // }
-    return new APIResource(this).push('login').post().data(data);
+    return new APIResource<User, NoQueryParams, LoginData>(this).push('login').post().data(data);
   }
 
   // /user-sessions/logout

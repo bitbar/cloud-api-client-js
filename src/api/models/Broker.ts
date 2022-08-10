@@ -1,11 +1,11 @@
-export enum BrokerEnum {
-  MOBILE = 'MOBILE';
+export enum BrokerType {
+  MOBILE = 'MOBILE',
   DESKTOP = 'DESKTOP'
 }
 
 export type Broker = {
   id: number;
   location: string;
-  type: BrokerEnum;
+  type: BrokerType;
   url: string
 }

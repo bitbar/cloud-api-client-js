@@ -1,15 +1,11 @@
-import APIAdminResource from "./APIAdminResource";
-import {APIList, CollectionBasicQueryParams} from './APIList'
+import {APIAdminResource} from "./APIAdminResource";
+import {NoData} from "./APIEntity";
+import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
-import APIResourceUser from "./APIResourceUser";
+import {APIResourceUser} from "./APIResourceUser";
 import {AccessGroup} from "./models/AccessGroup";
-import {QueryParams} from "./models/HTTP";
 import {SharedResource} from "./models/SharedResource";
-import {User} from "./models/User";
-
-export interface UserData extends QueryParams {
-  email: string;
-}
+import {User, UserData} from "./models/User";
 
 export class APIResourceAccessGroup extends APIResource<AccessGroup> {
 
@@ -37,12 +33,12 @@ export class APIResourceAccessGroup extends APIResource<AccessGroup> {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<User, void, void>(this).push('users', id);
+    return new APIResource<User, NoQueryParams, NoData>(this).push('users', id);
   }
 
   // /access-groups/{id}/resources
   resources() {
-    return new APIList<SharedResource, CollectionBasicQueryParams, void>(this).push('resources');
+    return new APIList<SharedResource, CollectionBasicQueryParams, NoData>(this).push('resources');
   }
 
   // /access-groups/{id}/resources/{id}
@@ -51,7 +47,7 @@ export class APIResourceAccessGroup extends APIResource<AccessGroup> {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<SharedResource, void, void>(this).push('resources', id);
+    return new APIResource<SharedResource, NoQueryParams, NoData>(this).push('resources', id);
   }
 
 }

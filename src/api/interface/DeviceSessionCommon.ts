@@ -1,3 +1,4 @@
+import {NoData} from '../APIEntity';
 import {APIList, CollectionBasicQueryParams, NoQueryParams} from '../APIList';
 import {APIResource} from '../APIResource';
 import {DeviceSessionCommand, DeviceSessionStep} from "../models/DeviceSession";
@@ -10,9 +11,9 @@ export interface DeviceSessionCommon extends DeviceSessionBase {
   screenshots(): APIList<Screenshot>;
   screenshot(id: number): APIResource<Screenshot>;
   steps(): APIList<DeviceSessionStep>;
-  step(id: number | 'current'): APIResource<DeviceSessionStep, NoQueryParams, void>;
-  currentStep(): APIResource<DeviceSessionStep, NoQueryParams, void>;
-  testCaseRuns(): APIList<TestCaseRun, SessionQueryParams | NoQueryParams, void>;
+  step(id: number | 'current'): APIResource<DeviceSessionStep, NoQueryParams, NoData>;
+  currentStep(): APIResource<DeviceSessionStep, NoQueryParams, NoData>;
+  testCaseRuns(): APIList<TestCaseRun, SessionQueryParams | NoQueryParams, NoData>;
 }
 
 export default DeviceSessionCommon;
@@ -27,5 +28,9 @@ export interface SessionRunStepQueryParams extends CollectionBasicQueryParams {
 }
 
 export interface SessionStepQueryParams extends SessionRunStepQueryParams {
+  projectId: number;
+}
+
+export interface TRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
   projectId: number;
 }

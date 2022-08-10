@@ -1,4 +1,5 @@
-import APIAdminListDevices from "./APIAdminListDevices";
+import {APIAdminListDevices} from "./APIAdminListDevices";
+import {NoData} from "./APIEntity";
 import {APIList, CollectionQueryParams} from './APIList';
 import {APIResource} from './APIResource';
 import {DeviceCleanupConfiguration} from "./models/Device";
@@ -23,7 +24,7 @@ export class APIListCleanupConfigurations extends APIList<DeviceCleanupConfigura
 
   // /cleanup-configurations/specific
   specific() {
-    return new APIResource<DeviceCleanupConfiguration, Partial<SpecificCleanupConfigurationQueryParams>, void>(this)
+    return new APIResource<DeviceCleanupConfiguration, Partial<SpecificCleanupConfigurationQueryParams>, NoData>(this)
       .push('specific');
   }
 

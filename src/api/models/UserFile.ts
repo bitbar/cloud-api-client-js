@@ -1,4 +1,5 @@
 import {CollectionQueryParams} from "../APIList";
+import {QueryParams} from "./HTTP";
 
 export enum FileDirection {
   INPUT = 'INPUT',
@@ -61,3 +62,8 @@ export type BuildLogsData = {
 }
 
 export type BuildLogsParams = BuildLogsData;
+
+export interface FileSizeData extends QueryParams {
+  height: number;
+  width: number;
+}

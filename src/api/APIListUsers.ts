@@ -1,13 +1,12 @@
 import {Method} from "axios";
 import {API} from '../API';
+import {NoData} from "./APIEntity";
 import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {QueryParams} from "./models/HTTP";
-import {Message} from "./models/Massage";
-import {User} from "./models/User";
+import {Message} from "./models/Message";
+import {User, UserData} from "./models/User";
 import {VatRate} from "./models/VatRate";
-
-export type UserData = Pick<User, 'email'>;
 
 export type UserPasswordData = {
   key: string
@@ -57,7 +56,7 @@ export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
   // /users/resetApiKey
   validateVatId() {
-    return new APIResource<VatRate, ValidateVatQueryParams, void>(this).push('validateVatId');
+    return new APIResource<VatRate, ValidateVatQueryParams, NoData>(this).push('validateVatId');
   }
 
 }

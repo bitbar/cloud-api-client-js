@@ -1,27 +1,16 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
-import {APIList, NoQueryParams} from './APIList'
+import {APIEntity, NoData} from './APIEntity';
+import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
+import {TRunDeviceSessionQueryParams} from './interface/DeviceSessionCommon';
+import {AdminTestRun} from './models/AdminTestRun';
 import {DeviceSession, DeviceSessionStep} from './models/DeviceSession';
-import {QueryParams} from './models/HTTP';
-import {Screenshot, ScreenshotExtended} from './models/Screenshot';
-import {Tag} from './models/Tag';
-import {TestRun} from './models/TestRun';
-import {TestRunDataAvailability} from './models/TestRunDataAvailability';
+import {Screenshot, ScreenshotExtended, ScreenshotQueryParams} from './models/Screenshot';
+import {Tag, TagsData, TagsQueryParams, TaqQueryParams, TestRunTagsData} from './models/Tag';
+import {RunData, RunQueryParam, TestRun, TestRunData} from './models/TestRun';
+import {TestRunDataAvailability, TestRunDataAvailabilityQueryParams} from './models/TestRunDataAvailability';
 import {UserFile} from './models/UserFile';
-
-export interface TestRunData extends QueryParams {
-  displayName: string;
-}
-
-export interface RunData extends TestRunData {
-  prjectId: number;
-}
-
-export interface RunQueryParam extends QueryParams {
-  projectId: number;
-}
 
 export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, TestRunData | RunData> {
 
@@ -39,17 +28,17 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
 
   // /runs/{id}/abort
   abort() {
-    return new APIResource(this).push('abort').post();
+    return new APIResource<AdminTestRun | TestRun, NoQueryParams, RunData>(this).push('abort').post();
   }
 
   // /runs/{id}/data-availability
   dataAvailability() {
-    return new APIResource<TestRunDataAvailability>(this).push('data-availability');
+    return new APIResource<TestRunDataAvailability, TestRunDataAvailabilityQueryParams, NoData>(this).push('data-availability');
   }
 
   // /runs/{id}/device-sessions
   deviceSessions() {
-    return new APIList<DeviceSession>(this).push('device-sessions');
+    return new APIList<DeviceSession, CollectionBasicQueryParams | TRunDeviceSessionQueryParams, NoData>(this).push('device-sessions');
   }
 
   // /runs/{id}/files.zip
@@ -76,12 +65,12 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
 
   // /runs/{id}/screenshot-names
   screenshotNames() {
-    return new APIList<Screenshot>(this).push('screenshot-names');
+    return new APIList<Screenshot, NoQueryParams, NoData>(this).push('screenshot-names');
   }
 
   // /runs/{id}/screenshots
   screenshots() {
-    return new APIList<ScreenshotExtended>(this).push('screenshots');
+    return new APIList<ScreenshotExtended, ScreenshotQueryParams, NoData>(this).push('screenshots');
   }
 
   // /runs/{id}/screenshots.zip
@@ -91,12 +80,12 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
 
   // /runs/{id}/steps
   steps() {
-    return new APIList<DeviceSessionStep>(this).push('steps');
+    return new APIList<DeviceSessionStep, CollectionBasicQueryParams, NoData>(this).push('steps');
   }
 
   // /runs/{id}/tags
   tags() {
-    return new APIList<Tag>(this).push('tags');
+    return new APIList<Tag, CollectionBasicQueryParams | TagsQueryParams, TagsData | TestRunTagsData>(this).push('tags');
   }
 
   // /runs/{id}/tag
@@ -105,7 +94,7 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<Tag>(this).push('tags', id);
+    return new APIResource<Tag, TaqQueryParams, NoData>(this).push('tags', id);
   }
 
 }

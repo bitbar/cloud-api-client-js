@@ -1,3 +1,4 @@
+import {CollectionBasicQueryParams} from "../APIList";
 import {Device} from "./Device";
 
 export enum ScreenshotType {
@@ -13,14 +14,13 @@ export type Screenshot = {
   type: ScreenshotType;
 }
 
-export type ScreenshotExtended = {
+export type ScreenshotExtended = Screenshot & {
   device: Device;
   deviceRunId: number;
-  fail: boolean;
-  id: number;
-  originalName: string;
   projectId: number;
-  takeTimestamp: number;
   testRunId: number;
-  type: ScreenshotType;
 }
+
+export interface ScreenshotQueryParams extends CollectionBasicQueryParams {
+  name: string
+};

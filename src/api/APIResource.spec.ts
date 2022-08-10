@@ -1,5 +1,5 @@
 import {API} from "../API";
-import APIEntity from "./APIEntity";
+import {APIEntity} from "./APIEntity";
 import {APIResource} from "./APIResource";
 
 

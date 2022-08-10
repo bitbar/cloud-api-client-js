@@ -1,20 +1,19 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {NoData} from './APIEntity';
 import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList';
 import {APIResource} from './APIResource';
+import {APIResourceUser} from './APIResourceUser';
 import {InputFileset} from './class/InputFileset';
 import {OutputFileset} from './class/OutputFileset';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
-import {Connection} from './models/Connection';
+import {Connection, ConnectionData} from './models/Connection';
 import {DeviceSession} from './models/DeviceSession';
 
-export type ConnectionData = Pick<Connection, Required<'host' | 'port' | 'type'> | 'password'>
 export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSession> implements DeviceSessionStandalone {
 
   /**
    * /device-sessions/{id}
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -34,7 +33,7 @@ export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSessio
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<Connection, NoQueryParams, void>(this).push('connections', id);
+    return new APIResource<Connection, NoQueryParams, NoData>(this).push('connections', id);
   }
 
   // /device-sessions/{id}/input-file-set
@@ -49,7 +48,7 @@ export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSessio
 
   // /device-sessions/{id}/release
   release() {
-    return new APIResource<DeviceSession, NoQueryParams, void>(this).push('release').post();
+    return new APIResource<DeviceSession, NoQueryParams, NoData>(this).push('release').post();
   }
 
 }

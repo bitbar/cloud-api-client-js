@@ -1,3 +1,5 @@
+import {QueryParams} from "./HTTP";
+
 export enum NotificationChannel {
   SLACK = 'SLACK',
   EMAIL = 'EMAIL',
@@ -28,4 +30,8 @@ export type Notification = {
   scope: NotificationScope;
   userEmail: string;
   userId: number;
+}
+
+export interface NotificationData extends QueryParams {
+  scope: NotificationScope;
 }

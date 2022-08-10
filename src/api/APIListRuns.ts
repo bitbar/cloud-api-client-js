@@ -13,12 +13,7 @@ export interface TestRunConfigData extends TestRunData {
   includeFrameworks: boolean;
 }
 
-// export interface TestRunQueryParams extends CollectionQueryParams {
-//   forWholeAccount: boolean;
-//   skipCommonProject: boolean;
-//   skipShared: boolean;
-// }
-
+// for users/{userid}/runs
 export interface TestRunQueryParams extends CollectionBasicQueryParams {
   forWholeAccount: boolean;
   skipCommonProject: boolean;

@@ -49,7 +49,7 @@ export type User = {
   vatId: string;
 }
 
-export type UserData = { email: string; };
+export type UserData = Pick<User, 'email'>;
 
 export interface UserParams extends CollectionQueryParams {
   WITH_ADDRESS: boolean;
@@ -61,5 +61,10 @@ export interface UserParams extends CollectionQueryParams {
 }
 
 export type UserUpdateAccount = Pick<User, 'accountId'>;
+
+export interface LoginData {
+  username: string,
+  password: string
+}
 
 

@@ -1,3 +1,4 @@
+import {CollectionBasicQueryParams} from "../APIList";
 import {Device} from "./Device";
 
 export type TunnelSettings = {
@@ -125,3 +126,10 @@ export type DeviceSessionConnection = {
   url: string;
   urlSchema: string;
 }
+
+export type DeviceSessionData = Omit<DeviceSessionConfig, 'adbVersion' | 'id' | 'tunnelSettings' | 'type'> & {configuration: DeviceSessionConfig};
+
+export interface DeviceSessionQueryParams extends CollectionBasicQueryParams {
+  withProperties: boolean;
+}
+

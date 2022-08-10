@@ -1,5 +1,5 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {NoData} from './APIEntity';
 import {APIList, NoQueryParams} from './APIList'
 import {APIResource} from './APIResource'
 import {Broker} from './models/Broker';
@@ -9,7 +9,7 @@ export class APIResourceBroker extends APIResource {
   /**
    * /broker
    */
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: API) {
 
     super(parent);
     this.push('broker');
@@ -17,7 +17,7 @@ export class APIResourceBroker extends APIResource {
 
   // /broker/hubs
   hubs() {
-    return new APIList<Broker, NoQueryParams, void>(this).push('hubs');
+    return new APIList<Broker, NoQueryParams, NoData>(this).push('hubs');
   }
 
 }

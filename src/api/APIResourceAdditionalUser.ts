@@ -1,6 +1,7 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {NoData} from './APIEntity';
+import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
+import {APIUserResourceAccount} from './APIUserResourceAccount';
 import {User} from './models/User';
 
 export class APIResourceAdditionalUser extends APIResource<User> {
@@ -8,7 +9,7 @@ export class APIResourceAdditionalUser extends APIResource<User> {
   /**
    * /additional-users/{id}
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIUserResourceAccount, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -19,7 +20,7 @@ export class APIResourceAdditionalUser extends APIResource<User> {
 
   // /account/additional-users/{id}/resend-activation
   resendActivation() {
-    return new APIResource<User, void, void>(this).push('resend-activation');
+    return new APIResource<User, NoQueryParams, NoData>(this).push('resend-activation');
   }
 
 }

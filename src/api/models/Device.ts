@@ -1,6 +1,7 @@
 import {CollectionResponse} from "../APIList";
 import {Browser} from "./Browser";
 import {OsType} from "./Enum";
+import {QueryParams} from "./HTTP";
 
 export enum DeviceGroupOrigin {
   STATIC = 'STATIC',
@@ -88,4 +89,14 @@ export type DeviceCleanupConfigurationData = {
 
 export type DeviceLabelData = {
   labelId: number;
+}
+
+export interface DeviceProperiesData extends QueryParams {
+  labelId: number
+}
+
+export type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content' | 'discriminator' | 'enabled'>
+
+export interface CleanupConfigurationSpecificData extends QueryParams {
+  serialId: string;
 }

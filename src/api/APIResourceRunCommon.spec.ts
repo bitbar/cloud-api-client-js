@@ -1,7 +1,7 @@
 import {API} from "../API";
 import {APIResourceRunCommon} from "./APIResourceRunCommon";
 import {APIList} from "./APIList";
-import APIResource from "./APIResource";
+import {APIResource} from "./APIResource";
 
 
 describe('APIResourceRunCommon', () => {

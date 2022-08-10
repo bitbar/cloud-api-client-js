@@ -1,3 +1,4 @@
+import {NoData} from './APIEntity';
 import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
 import APIResourceUser from "./APIResourceUser";
 import {Enum} from "./models/Enum";
@@ -17,12 +18,12 @@ export class APIListNotifications extends APIList<Notification, CollectionQueryP
 
   // /notifications/scopes
   scopes() {
-    return new APIList<Enum, NoQueryParams, void>(this).push('scopes');
+    return new APIList<Enum, NoQueryParams, NoData>(this).push('scopes');
   }
 
   // /notifications/channels
   channels() {
-    return new APIList<Enum, NoQueryParams, void>(this).push('channels');
+    return new APIList<Enum, NoQueryParams, NoData>(this).push('channels');
   }
 
 }

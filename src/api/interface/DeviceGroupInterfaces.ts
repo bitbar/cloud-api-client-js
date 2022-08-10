@@ -23,8 +23,4 @@ export interface DeviceGroupWithPublicParams extends CollectionBasicQueryParams 
   withPublic: boolean;
 }
 
-export interface DeviceGroupSelectorIdData extends CollectionBasicQueryParams {
-  selectorsIds: Array<number>;
-}
-
 export type DeviceGroupData = Pick<DeviceGroup, 'displayName' | 'name' | 'osType'>;

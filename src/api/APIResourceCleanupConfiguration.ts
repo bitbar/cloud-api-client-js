@@ -1,19 +1,8 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
-import {APIList} from './APIList'
+import {APIEntity, NoData} from './APIEntity';
 import {APIResource} from './APIResource'
-import {DeviceCleanupConfiguration} from './models/Device';
-import {QueryParams} from './models/HTTP';
+import {CleanupConfigurationSpecificData, DeviceCleanupConfiguration} from './models/Device';
 
-export interface CleanupConfigurationData extends QueryParams {
-  content: string;
-  discriminator: string;
-  enabled: boolean;
-}
-
-export interface CleanupConfigurationSpecificData extends QueryParams {
-  serialId: string;
-}
 
 export class APIResourceCleanupConfiguration extends APIResource<DeviceCleanupConfiguration> {
   //shuldn't it be APIAdminResourceCleanupConfiguration
@@ -32,7 +21,7 @@ export class APIResourceCleanupConfiguration extends APIResource<DeviceCleanupCo
 
   // admin/devices/cleanup-configurations/specific
   devices() {
-    return new APIResource<DeviceCleanupConfiguration, CleanupConfigurationSpecificData, void>(this).push('devices');
+    return new APIResource<DeviceCleanupConfiguration, CleanupConfigurationSpecificData, NoData>(this).push('devices');
   }
 
 }

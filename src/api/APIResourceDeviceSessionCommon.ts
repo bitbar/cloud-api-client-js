@@ -1,5 +1,5 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIEntity, NoData} from './APIEntity';
 import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
 import {InputFileset} from './class/InputFileset'
@@ -40,7 +40,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
 
   // /device-sessions/{id}/screenshots
   screenshots() {
-    return new APIList<Screenshot, SessionQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, void>(this).push('screenshots');
+    return new APIList<Screenshot, SessionQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, NoData>(this).push('screenshots');
   }
 
   // /device-sessions/{id}/screenshots/{id}
@@ -54,7 +54,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
 
   // /device-sessions/{id}/steps
   steps() {
-    return new APIList<DeviceSessionStep, CollectionBasicQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, void>(this).push('steps');
+    return new APIList<DeviceSessionStep, CollectionBasicQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, NoData>(this).push('steps');
   }
 
   // /device-sessions/{id}/steps/{id}
@@ -63,7 +63,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<DeviceSessionStep, NoQueryParams, void>(this).push('steps', id);
+    return new APIResource<DeviceSessionStep, NoQueryParams, NoData>(this).push('steps', id);
   }
 
   // /device-sessions/{id}/steps/current
@@ -73,7 +73,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
 
   // /device-sessions/{id}/test-case-runs
   testCaseRuns() {
-    return new APIList<TestCaseRun, SessionQueryParams | NoQueryParams, void>(this).push('test-case-runs');
+    return new APIList<TestCaseRun, SessionQueryParams | NoQueryParams, NoData>(this).push('test-case-runs');
   }
 
 }

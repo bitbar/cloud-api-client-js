@@ -1,6 +1,6 @@
-import APIEntity from "./APIEntity";
+import {APIEntity, NoData} from "./APIEntity";
 import {APIList, CollectionQueryParams} from './APIList'
-import APIResourceUser from "./APIResourceUser";
+import {APIResourceUser} from "./APIResourceUser";
 import {BasicDeviceTime, UserDeviceTime} from "./models/UserDeviceTime";
 
 
@@ -9,7 +9,7 @@ export interface DeviceTimeQueryParams extends CollectionQueryParams {
 }
 
 
-export class APIListDeviceTime extends APIList<UserDeviceTime, DeviceTimeQueryParams, void> {
+export class APIListDeviceTime extends APIList<UserDeviceTime, DeviceTimeQueryParams, NoData> {
 
   /**
    * /device-time
