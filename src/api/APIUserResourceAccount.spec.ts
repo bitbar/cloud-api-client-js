@@ -10,6 +10,8 @@ describe('APIUserResourceAccount', () => {
   let service: APIUserResourceAccount;
   let api: API;
   let resourceUser: APIResourceUser;
+  const baseId = 1;
+  const baseUrl = `/users/${baseId}/account`
 
   beforeEach(() => {
     api = new API({
@@ -17,19 +19,19 @@ describe('APIUserResourceAccount', () => {
       cloudUrl
     });
 
-    resourceUser = new APIResourceUser(api, 1)
+    resourceUser = new APIResourceUser(api, baseId)
     service = new APIUserResourceAccount(resourceUser);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/users/1/account');
+    expect(service.toUrl()).toEqual(baseUrl);
   });
 
   describe('@additionalUsers', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.additionalUsers();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/users/1/account/additional-users');
+      expect(call.toUrl()).toEqual(`${baseUrl}/additional-users`);
     });
   });
 
@@ -37,7 +39,7 @@ describe('APIUserResourceAccount', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.additionalUser(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/account/additional-users/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/additional-users/1`);
     });
   });
 
@@ -45,11 +47,12 @@ describe('APIUserResourceAccount', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.serviceBillingPeriod(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/account-services/1/billing-period');
+      expect(call.toUrl()).toEqual(`${baseUrl}-services/1/billing-period`);
     });
 
     it('should throw error if resource ID is nulll', () => {
-      expect(() => service.serviceBillingPeriod(null as any)).toThrow(new Error('Resource ID cannot be null!'));
+      const id: any = undefined;
+      expect(() => service.serviceBillingPeriod(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 });

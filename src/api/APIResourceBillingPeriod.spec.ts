@@ -9,22 +9,25 @@ describe('APIResourceBillingPeriod', () => {
   let service: APIResourceBillingPeriod;
   let resourceUser: APIResourceUser;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/users/${baseId}/billing-periods/${baseId}`;
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    resourceUser = new APIResourceUser(api, 1);
-    service = new APIResourceBillingPeriod(resourceUser, 1);
+    resourceUser = new APIResourceUser(api, baseId);
+    service = new APIResourceBillingPeriod(resourceUser, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/users/1/billing-periods/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceBillingPeriod(resourceUser, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceBillingPeriod(resourceUser, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@receipt', () => {
@@ -32,7 +35,7 @@ describe('APIResourceBillingPeriod', () => {
       const call = service.receipt();
       const requestConfigObject = {"responseType": "arraybuffer"}
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/billing-periods/1/receipt');
+      expect(call.toUrl()).toEqual(`${baseUrl}/receipt`);
       expect(call['requestConfig']).toEqual(requestConfigObject);
     });
   });

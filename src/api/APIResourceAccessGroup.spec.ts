@@ -10,6 +10,8 @@ describe('APIResourceAccessGroup', () => {
   let service: APIResourceAccessGroup;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseId = 1;
+  const baseUrl = `/access-groups/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -17,22 +19,23 @@ describe('APIResourceAccessGroup', () => {
       cloudUrl
     });
     adminResource = new APIAdminResource(api);
-    service = new APIResourceAccessGroup(adminResource, 1);
+    service = new APIResourceAccessGroup(adminResource, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/access-groups/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceAccessGroup(adminResource, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceAccessGroup(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@users', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.users();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/access-groups/1/users');
+      expect(call.toUrl()).toEqual(`${baseUrl}/users`);
     });
   });
 
@@ -40,11 +43,12 @@ describe('APIResourceAccessGroup', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.user(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/access-groups/1/users/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/users/1`);
     });
 
     it('should throw error if resource ID is nulll', () => {
-      expect(() => service.user(null as any)).toThrow(new Error('Resource ID cannot be null!'));
+      const id: any = undefined;
+      expect(() => service.user(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -52,7 +56,7 @@ describe('APIResourceAccessGroup', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.resources();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/access-groups/1/resources');
+      expect(call.toUrl()).toEqual(`${baseUrl}/resources`);
     });
   });
 
@@ -60,11 +64,12 @@ describe('APIResourceAccessGroup', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.resource(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/access-groups/1/resources/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/resources/1`);
     });
 
     it('should throw error if resource ID is nulll', () => {
-      expect(() => service.resource(null as any)).toThrow(new Error('Resource ID cannot be null!'));
+      const id: any = undefined;
+      expect(() => service.resource(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 

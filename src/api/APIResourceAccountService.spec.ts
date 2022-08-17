@@ -6,28 +6,31 @@ describe('APIResourceAccountService', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIResourceAccountService;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/account-services/${baseId}`;
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    service = new APIResourceAccountService(api, 1);
+    service = new APIResourceAccountService(api, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/account-services/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceAccountService(api, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceAccountService(api, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@billingPeriod', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.billingPeriod();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/account-services/1/billing-period');
+      expect(call.toUrl()).toEqual(`${baseUrl}/billing-period`);
     });
   });
 

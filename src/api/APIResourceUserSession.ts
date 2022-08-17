@@ -13,11 +13,6 @@ export class APIResourceUserSession extends APIResource {
 
   // /user-sessions/login
   login(data: LoginData) {
-    // example of data used in cloud-fe
-    // data = {
-    //   username: login
-    //   password: password
-    // }
     return new APIResource<User, NoQueryParams, LoginData>(this).push('login').post().data(data);
   }
 

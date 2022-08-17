@@ -7,6 +7,8 @@ describe('APIResourceDevice', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIResourceDevice;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/devices/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -17,18 +19,19 @@ describe('APIResourceDevice', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/devices/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceDevice(api, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceDevice(api, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@properties', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.properties();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/devices/1/properties');
+      expect(call.toUrl()).toEqual(`${baseUrl}/properties`);
     });
   });
 

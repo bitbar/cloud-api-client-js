@@ -7,6 +7,7 @@ describe('APIResourceBroker', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIResourceBroker;
   let api: API;
+  const baseUrl = `/broker`;
 
   beforeEach(() => {
     api = new API({
@@ -17,14 +18,14 @@ describe('APIResourceBroker', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/broker');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@hubs', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.hubs();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/broker/hubs');
+      expect(call.toUrl()).toEqual(`${baseUrl}/hubs`);
     });
   });
 

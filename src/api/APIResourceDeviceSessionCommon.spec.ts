@@ -10,28 +10,31 @@ describe('APIResourceDeviceSessionCommon', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIResourceDeviceSessionCommon;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/device-sessions/${baseId}`
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    service = new APIResourceDeviceSessionCommon(api, 1);
+    service = new APIResourceDeviceSessionCommon(api, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/device-sessions/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceDeviceSessionCommon(api, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceDeviceSessionCommon(api, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@commands', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.commands();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/device-sessions/1/commands');
+      expect(call.toUrl()).toEqual(`${baseUrl}/commands`);
     });
   });
 
@@ -39,7 +42,7 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.input();
       expect(call).toBeInstanceOf(InputFileset);
-      expect(call.toUrl()).toEqual('/device-sessions/1/input-file-set');
+      expect(call.toUrl()).toEqual(`${baseUrl}/input-file-set`);
     });
   });
 
@@ -47,7 +50,7 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.output();
       expect(call).toBeInstanceOf(OutputFileset);
-      expect(call.toUrl()).toEqual('/device-sessions/1/output-file-set');
+      expect(call.toUrl()).toEqual(`${baseUrl}/output-file-set`);
     });
   });
 
@@ -55,7 +58,7 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.screenshots();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/device-sessions/1/screenshots');
+      expect(call.toUrl()).toEqual(`${baseUrl}/screenshots`);
     });
   });
 
@@ -63,11 +66,12 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.screenshot(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/device-sessions/1/screenshots/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/screenshots/1`);
     });
 
     it('should throw error if resource ID is nulll', () => {
-      expect(() => service.screenshot(null as any)).toThrow(new Error('Resource ID cannot be null!'));
+      const id: any = undefined;
+      expect(() => service.screenshot(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -75,7 +79,7 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.steps();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/device-sessions/1/steps');
+      expect(call.toUrl()).toEqual(`${baseUrl}/steps`);
     });
   });
 
@@ -83,11 +87,12 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.step(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/device-sessions/1/steps/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/steps/1`);
     });
 
     it('should throw error if resource ID is nulll', () => {
-      expect(() => service.step(null as any)).toThrow(new Error('Resource ID cannot be null!'));
+      const id: any = undefined;
+      expect(() => service.step(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -95,7 +100,7 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.currentStep();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/device-sessions/1/steps/current');
+      expect(call.toUrl()).toEqual(`${baseUrl}/steps/current`);
     });
   });
 
@@ -103,7 +108,7 @@ describe('APIResourceDeviceSessionCommon', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.testCaseRuns();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/device-sessions/1/test-case-runs');
+      expect(call.toUrl()).toEqual(`${baseUrl}/test-case-runs`);
     });
   });
 

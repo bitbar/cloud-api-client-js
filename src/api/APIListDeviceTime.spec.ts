@@ -12,7 +12,7 @@ describe('APIListDeviceTime', () => {
       baseURL: '',
       cloudUrl
     });
-    const parent = new APIResourceUser(api, 'me');
+    const parent = new APIResourceUser(api, "me");
 
     service = new APIListDeviceTime(parent);
   });

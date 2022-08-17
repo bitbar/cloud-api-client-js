@@ -10,29 +10,32 @@ describe('APIResourceFile', () => {
   let service: APIResourceFile;
   let userResource: APIResourceUser;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/users/${baseId}/files/${baseId}`
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    userResource = new APIResourceUser(api, 1);
-    service = new APIResourceFile(userResource, 1);
+    userResource = new APIResourceUser(api, baseId);
+    service = new APIResourceFile(userResource, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/users/1/files/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceFile(userResource, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceFile(userResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@file', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.file();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/files/1/file');
+      expect(call.toUrl()).toEqual(`${baseUrl}/file`);
     });
   });
 
@@ -40,7 +43,7 @@ describe('APIResourceFile', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.icon();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/files/1/icon');
+      expect(call.toUrl()).toEqual(`${baseUrl}/icon`);
     });
   });
 
@@ -48,7 +51,7 @@ describe('APIResourceFile', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.tags();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/users/1/files/1/tags');
+      expect(call.toUrl()).toEqual(`${baseUrl}/tags`);
     });
   });
 

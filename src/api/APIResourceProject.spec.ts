@@ -9,29 +9,32 @@ describe('APIResourceProject', () => {
   let service: APIResourceProject;
   let resourceUser: APIResourceUser;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/users/${baseId}/projects/${baseId}`
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    resourceUser = new APIResourceUser(api, 1);
-    service = new APIResourceProject(resourceUser, 1);
+    resourceUser = new APIResourceUser(api, baseId);
+    service = new APIResourceProject(resourceUser, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/users/1/projects/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceProject(resourceUser, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceProject(resourceUser, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@runs', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.runs();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/users/1/projects/1/runs');
+      expect(call.toUrl()).toEqual(`${baseUrl}/runs`);
     });
   });
 
@@ -39,7 +42,7 @@ describe('APIResourceProject', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.run(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/projects/1/runs/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/runs/1`);
     });
   });
 
@@ -47,7 +50,7 @@ describe('APIResourceProject', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.files();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/users/1/projects/1/files');
+      expect(call.toUrl()).toEqual(`${baseUrl}/files`);
     });
   });
 
@@ -55,7 +58,7 @@ describe('APIResourceProject', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.filesZip();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/projects/1/files.zip');
+      expect(call.toUrl()).toEqual(`${baseUrl}/files.zip`);
     });
   });
 });

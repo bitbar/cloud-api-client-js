@@ -7,6 +7,7 @@ describe('APIResourceUserSession', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIResourceUserSession;
   let api: API;
+  const baseUrl = '/user-sessions';
 
   beforeEach(() => {
     api = new API({
@@ -17,7 +18,7 @@ describe('APIResourceUserSession', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/user-sessions');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@login', () => {
@@ -38,7 +39,7 @@ describe('APIResourceUserSession', () => {
       const call = service.logout();
 
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/user-sessions/logout');
+      expect(call.toUrl()).toEqual(`${baseUrl}/logout`);
     });
   });
 
@@ -57,7 +58,7 @@ describe('APIResourceUserSession', () => {
       const call = service.portalLogin();
 
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/user-sessions/portal-login');
+      expect(call.toUrl()).toEqual(`${baseUrl}/portal-login`);
     });
   });
 });

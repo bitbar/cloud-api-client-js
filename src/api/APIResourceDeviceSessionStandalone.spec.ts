@@ -12,29 +12,32 @@ describe('APIResourceDeviceSessionStandalone', () => {
   let service: APIResourceDeviceSessionStandalone;
   let userResource: APIResourceUser;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/users/${baseId}/device-sessions/${baseId}`
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    userResource = new APIResourceUser(api, 1);
-    service = new APIResourceDeviceSessionStandalone(userResource, 1);
+    userResource = new APIResourceUser(api, baseId);
+    service = new APIResourceDeviceSessionStandalone(userResource, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/users/1/device-sessions/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    expect(() => new APIResourceDeviceSessionStandalone(userResource, null as any)).toThrow(new Error('Resource ID cannot be null!'));
+    const id: any = undefined;
+    expect(() => new APIResourceDeviceSessionStandalone(userResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@connections', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.connections();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/users/1/device-sessions/1/connections');
+      expect(call.toUrl()).toEqual(`${baseUrl}/connections`);
     });
   });
 
@@ -42,11 +45,12 @@ describe('APIResourceDeviceSessionStandalone', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.connection(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/device-sessions/1/connections/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/connections/1`);
     });
 
     it('should throw error if resource ID is nulll', () => {
-      expect(() => service.connection(null as any)).toThrow(new Error('Resource ID cannot be null!'));
+      const id: any = undefined;
+      expect(() => service.connection(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -54,7 +58,7 @@ describe('APIResourceDeviceSessionStandalone', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.release();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/users/1/device-sessions/1/release');
+      expect(call.toUrl()).toEqual(`${baseUrl}/release`);
     });
   });
 
@@ -62,7 +66,7 @@ describe('APIResourceDeviceSessionStandalone', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.input();
       expect(call).toBeInstanceOf(InputFileset);
-      expect(call.toUrl()).toEqual('/users/1/device-sessions/1/input-file-set');
+      expect(call.toUrl()).toEqual(`${baseUrl}/input-file-set`);
     });
   });
 
@@ -70,7 +74,7 @@ describe('APIResourceDeviceSessionStandalone', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.output();
       expect(call).toBeInstanceOf(OutputFileset);
-      expect(call.toUrl()).toEqual('/users/1/device-sessions/1/output-file-set');
+      expect(call.toUrl()).toEqual(`${baseUrl}/output-file-set`);
     });
   });
 
