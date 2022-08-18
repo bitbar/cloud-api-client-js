@@ -1,9 +1,9 @@
-import API from "../../API";
-import APIEntity from "../APIEntity";
-import APIList from "../APIList";
-import APIResource from "../APIResource";
-import {NON_MEDIA_FILES_FILTER} from "./NonMedia.filter";
-import OutputFileset from "./OutputFileset";
+import API from '../../API';
+import APIEntity from '../APIEntity';
+import APIList from '../APIList';
+import APIResource from '../APIResource';
+import {NON_MEDIA_FILES_FILTER} from './NonMedia.filter';
+import OutputFileset from './OutputFileset';
 
 describe('OutputFileset', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

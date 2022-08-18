@@ -1,9 +1,10 @@
-import {APIAdminResource} from "./APIAdminResource";
-import {NoData} from "./APIEntity";
-import {APIList, NoQueryParams} from './APIList'
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {Notification} from "./models/Notification";
-import {NotificationPlan, NotificationPlanEditData} from "./models/NotificationPlan";
+import {NoQueryParams} from './models/HTTP';
+import {Notification} from './models/Notification';
+import {NotificationPlan, NotificationPlanEditData} from './models/NotificationPlan';
 
 export class APIAdminResourceNotificationPlan extends APIResource<NotificationPlan, NoQueryParams, NotificationPlanEditData> {
 

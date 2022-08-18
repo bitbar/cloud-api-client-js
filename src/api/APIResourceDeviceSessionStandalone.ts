@@ -1,5 +1,5 @@
 import {NoData} from './APIEntity';
-import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList';
+import {APIList} from './APIList';
 import {APIResource} from './APIResource';
 import {APIResourceUser} from './APIResourceUser';
 import {InputFileset} from './class/InputFileset';
@@ -7,6 +7,7 @@ import {OutputFileset} from './class/OutputFileset';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 import {Connection, ConnectionData} from './models/Connection';
 import {DeviceSession} from './models/DeviceSession';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
 
 export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSession> implements DeviceSessionStandalone {
 

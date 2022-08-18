@@ -1,8 +1,8 @@
 
 import {NoData} from './APIEntity';
-import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
 import APIResourceUser from './APIResourceUser';
+import {NoQueryParams} from './models/HTTP';
 import {Message} from './models/Message';
 import {Notification, NotificationData} from './models/Notification';
 

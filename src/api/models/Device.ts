@@ -1,7 +1,8 @@
-import {CollectionResponse} from "../APIList";
-import {Browser} from "./Browser";
-import {OsType} from "./Enum";
-import {QueryParams} from "./HTTP";
+
+import {TestRunQueryParams} from '../APIListRuns';
+import {Browser} from './Browser';
+import {OsType} from './Enum';
+import {CollectionBasicQueryParams, CollectionResponse, QueryParams} from './HTTP';
 
 export enum DeviceGroupOrigin {
   STATIC = 'STATIC',
@@ -99,4 +100,15 @@ export type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content
 
 export interface CleanupConfigurationSpecificData extends QueryParams {
   serialId: string;
+}
+
+export interface DeviceTimeSummaryQueryParams extends CollectionBasicQueryParams {
+  forWholeAccount: boolean;
+}
+export interface DeviceUsageQueryParams extends TestRunQueryParams {
+  startTime: number;
+}
+
+export interface DeviceStatisticQueryParam extends TestRunQueryParams {
+  mode: string
 }

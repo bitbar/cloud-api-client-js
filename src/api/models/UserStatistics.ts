@@ -1,4 +1,4 @@
-import {QueryParams} from "./HTTP";
+import {QueryParams} from './HTTP';
 
 export type UserStatistics = {
   devicesUsed: number;

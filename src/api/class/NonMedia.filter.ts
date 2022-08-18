@@ -1,5 +1,5 @@
 // Create non-media files filter
-import FilterBuilder from "../../FilterBuilder";
+import FilterBuilder from '../../FilterBuilder';
 
 export const NON_MEDIA_FILES_FILTER = new FilterBuilder();
 NON_MEDIA_FILES_FILTER.eq('state', 'READY');

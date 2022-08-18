@@ -1,9 +1,10 @@
-import {APIAdminResource} from "./APIAdminResource";
-import {APIList, NoQueryParams} from './APIList'
+import {APIAdminResource} from './APIAdminResource';
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {Framework, FrameworkConfigData, FrameworkEditData} from "./models/Framework";
-import {ProjectJobConfig} from "./models/ProjectJobConfig";
-import {Role} from "./models/Role";
+import {Framework, FrameworkConfigData, FrameworkEditData} from './models/Framework';
+import {NoQueryParams} from './models/HTTP';
+import {ProjectJobConfig} from './models/ProjectJobConfig';
+import {Role} from './models/Role';
 
 export class APIAdminResourceFramework extends APIResource<Framework, NoQueryParams, FrameworkEditData> {
 

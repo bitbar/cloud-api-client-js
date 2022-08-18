@@ -1,7 +1,7 @@
 import {APIAdminResourceDeviceSession} from './APIAdminResourceDeviceSession';
 import {APIResourceRunCommon} from './APIResourceRunCommon'
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
-import {UserFile} from "./models/UserFile";
+import {UserFile} from './models/UserFile';
 
 
 export class APIAdminResourceRun extends APIResourceRunCommon {

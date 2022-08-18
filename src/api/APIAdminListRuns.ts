@@ -1,13 +1,13 @@
-import {Method} from "axios";
-import {APIAdminResource} from "./APIAdminResource";
+import {Method} from 'axios';
+import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource';
-import {AdminTestRun, RunsConfigParams} from "./models/AdminTestRun";
-import {TestRunConfig} from "./models/TestRun";
+import {AdminTestRun, RunsConfigParams} from './models/AdminTestRun';
+import {TestRunConfig} from './models/TestRun';
 
 export class APIAdminListRuns extends APIList<AdminTestRun> {
 
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ["GET"];
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ['GET'];
 
   /**
    * /admin/runs

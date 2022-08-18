@@ -1,5 +1,5 @@
 import {APIEntity} from './APIEntity'
-import {QueryParams} from "./models/HTTP";
+import {QueryParams} from './models/HTTP';
 
 
 /**

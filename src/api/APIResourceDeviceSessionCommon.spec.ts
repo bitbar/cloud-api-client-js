@@ -1,9 +1,9 @@
-import {API} from "../API";
-import {APIResourceDeviceSessionCommon} from "./APIResourceDeviceSessionCommon";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
-import {OutputFileset} from "./class/OutputFileset";
-import {InputFileset} from "./class/InputFileset";
+import {API} from '../API';
+import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {OutputFileset} from './class/OutputFileset';
+import {InputFileset} from './class/InputFileset';
 
 
 describe('APIResourceDeviceSessionCommon', () => {

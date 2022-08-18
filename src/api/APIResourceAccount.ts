@@ -1,10 +1,10 @@
 import {API} from '../API';
 import {NoData} from './APIEntity';
-import {NoQueryParams, SimpleListCollectionResponse} from './APIList';
 import {APIResource} from './APIResource'
 import {Account} from './models/Account';
 import {AccountConcurrencyStatusMap} from './models/AccountConcurrencyStatusMap';
 import {AccountPreferences} from './models/AccountPreference';
+import {NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
 
 export class APIResourceAccount extends APIResource<Account> {
 
@@ -27,7 +27,7 @@ export class APIResourceAccount extends APIResource<Account> {
 
   // /accounts/{id}/preferences
   preferences() {
-    return new APIResource<AccountPreferences, NoQueryParams, SimpleListCollectionResponse<AccountPreferences>>(this).push('preferences');
+    return new APIResource<AccountPreferences, NoQueryParams, SimpleCollectionResponse<AccountPreferences>>(this).push('preferences');
   }
 
 }

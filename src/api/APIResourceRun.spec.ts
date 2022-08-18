@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIResourceRun} from "./APIResourceRun";
-import {APIResourceDeviceSession} from "./APIResourceDeviceSession";
+import {API} from '../API';
+import {APIResourceRun} from './APIResourceRun';
+import {APIResourceDeviceSession} from './APIResourceDeviceSession';
 
 describe('APIResourceRun', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

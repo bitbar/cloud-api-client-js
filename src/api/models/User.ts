@@ -1,5 +1,5 @@
-import {CollectionQueryParams} from "../APIList";
-import {Role} from "./Role";
+import {CollectionQueryParams} from './HTTP';
+import {Role} from './Role';
 
 export enum MfaStatus {
   VERIFICATION_NEED = 'VERIFICATION_NEED',

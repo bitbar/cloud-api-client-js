@@ -1,5 +1,5 @@
-import {CollectionBasicQueryParams} from "../APIList";
-import {Device} from "./Device";
+import {Device} from './Device';
+import {CollectionBasicQueryParams} from './HTTP';
 
 export enum ScreenshotType {
   LANDSCAPE = 'LANDSCAPE',
@@ -22,5 +22,5 @@ export type ScreenshotExtended = Screenshot & {
 }
 
 export interface ScreenshotQueryParams extends CollectionBasicQueryParams {
-  name: string
-};
+  name: string;
+}

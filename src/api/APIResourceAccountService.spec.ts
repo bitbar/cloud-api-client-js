@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIResourceAccountService} from "./APIResourceAccountService";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIResourceAccountService} from './APIResourceAccountService';
+import {APIResource} from './APIResource';
 
 describe('APIResourceAccountService', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

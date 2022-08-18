@@ -1,9 +1,10 @@
-import {Method} from "axios";
-import {NoData} from "./APIEntity";
-import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
-import APIResourceUser from "./APIResourceUser";
-import {AccountService, PaymentMethod, ServicePaymentStatus} from "./models/AccountService";
-import {Service} from "./models/Service";
+import {Method} from 'axios';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResourceUser} from './APIResourceUser';
+import {AccountService, PaymentMethod, ServicePaymentStatus} from './models/AccountService';
+import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
+import {Service} from './models/Service';
 
 
 export interface ServiceData {
@@ -30,7 +31,7 @@ export interface ServiceData {
 
 export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams, ServiceData> {
 
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ['POST'];
 
   /**
    * /services

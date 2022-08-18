@@ -1,18 +1,16 @@
-import {API} from "./API";
-import APIAdminResource from "./api/APIAdminResource";
-import APIList from "./api/APIList";
-import APIListDevices from "./api/APIListDevices";
-import APIListUsers from "./api/APIListUsers";
-import {APIResource} from "./api/APIResource";
-import APIResourceAccount from "./api/APIResourceAccount";
-import APIResourceBroker from "./api/APIResourceBroker";
-import APIResourceDevice from "./api/APIResourceDevice";
-import APIResourceDeviceGroup from "./api/APIResourceDeviceGroup";
-import APIResourceDeviceSession from "./api/APIResourceDeviceSession";
-import APIResourceUser from "./api/APIResourceUser";
-import APIResourceUserSession from "./api/APIResourceUserSession";
-import ApiConfig from "./ApiConfig";
-
+import {API} from './API';
+import {APIAdminResource} from './api/APIAdminResource';
+import {APIList} from './api/APIList';
+import {APIListDevices} from './api/APIListDevices';
+import {APIListUsers} from './api/APIListUsers';
+import {APIResource} from './api/APIResource';
+import {APIResourceAccount} from './api/APIResourceAccount';
+import {APIResourceBroker} from './api/APIResourceBroker';
+import {APIResourceDevice} from './api/APIResourceDevice';
+import {APIResourceDeviceGroup} from './api/APIResourceDeviceGroup';
+import {APIResourceDeviceSession} from './api/APIResourceDeviceSession';
+import {APIResourceUser} from './api/APIResourceUser';
+import {APIResourceUserSession} from './api/APIResourceUserSession';
 
 describe('API', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
@@ -34,39 +32,23 @@ describe('API', () => {
   });
 
   it('should throw error if configuration is missing', () => {
-    const config = <ApiConfig>(<unknown>undefined);
-    try {
-      api = new API(config);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const config: any = undefined;
+    expect(() => new API(config)).toThrow(new Error('config cannot be empty'));
   });
 
   it('should throw error if configuration is missing cloudUrl', () => {
-    const config = <ApiConfig>(<unknown>{test: 123});
-    try {
-      api = new API(config);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const config: any = {test: 123};
+    expect(() => new API(config)).toThrow(new Error('cloudUrl cannot be empty'));
   });
 
   it('should throw error if configuration cloudUrl isn\'t a string', () => {
-    const config = <ApiConfig>(<unknown>{cloudUrl: 123});
-    try {
-      api = new API(config);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const config: any = {cloudUrl: 123};
+    expect(() => new API(config)).toThrow(new Error('cloudUrl must be a string'));
   });
 
   it('should throw error if configuration cloudUrl isn\'t a proper URL', () => {
-    const config = <ApiConfig>(<unknown>{cloudUrl: 'test.com'});
-    try {
-      api = new API(config);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const config: any = {cloudUrl: 'test.com'};
+    expect(() => new API(config)).toThrow(new Error(`cloudUrl doesn't look like a URL`));
   });
 
   it('should add /v2 to base url if config provided', () => {
@@ -79,29 +61,21 @@ describe('API', () => {
   });
 
   it('should throw error if api key isn\'t a string', () => {
-    const config = <ApiConfig>(<unknown>{
+    const config: any = {
       baseURL: '',
       cloudUrl,
       apiKey: 123
-    });
-    try {
-      api = new API(config);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    };
+    expect(() => new API(config)).toThrow(new Error('apiKey must be a string'));
   });
 
   it('should throw error if api key isn\'t a proper key format', () => {
-    const config = <ApiConfig>(<unknown>{
+    const config: any = {
       baseURL: '',
       cloudUrl,
       apiKey: 'abc123'
-    });
-    try {
-      api = new API(config);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    };
+    expect(() => new API(config)).toThrow(new Error('apiKey is in the wrong format'));
   });
 
   it('should set apiKey as username auth', () => {

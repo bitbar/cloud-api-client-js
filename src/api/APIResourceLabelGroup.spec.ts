@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIResourceLabelGroup} from "./APIResourceLabelGroup";
-import {APIResource} from "./APIResource";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIResourceLabelGroup} from './APIResourceLabelGroup';
+import {APIResource} from './APIResource';
+import {APIList} from './APIList';
 
 describe('APIResourceLabelGroup', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

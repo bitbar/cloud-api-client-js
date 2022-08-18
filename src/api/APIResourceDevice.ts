@@ -1,7 +1,8 @@
 import {API} from '../API';
-import {APIList, CollectionBasicQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {Device, DeviceProperiesData, DeviceProperty} from './models/Device';
+import {CollectionBasicQueryParams} from './models/HTTP';
 
 
 export class APIResourceDevice extends APIResource<Device> {

@@ -2,9 +2,9 @@ import {API} from '../../API';
 import {APIEntity, NoData} from '../APIEntity';
 import {APIList} from '../APIList'
 import {APIResource} from '../APIResource'
-import {NonRequestable} from "../decorators/NonRequestable";
-import {UserFile} from "../models/UserFile";
-import {FilesQueryParams} from "./FilesQueryParams";
+import {NonRequestable} from '../decorators/NonRequestable';
+import {UserFile} from '../models/UserFile';
+import {FilesQueryParams} from './FilesQueryParams';
 
 
 @NonRequestable

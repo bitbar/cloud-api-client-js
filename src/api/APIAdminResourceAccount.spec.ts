@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceAccount} from "./APIAdminResourceAccount";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceAccount} from './APIAdminResourceAccount';
 
 
 describe('APIAdminResourceAccount', () => {
@@ -23,12 +23,8 @@ describe('APIAdminResourceAccount', () => {
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceAccount(adminResource);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceAccount(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
 });

@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIResourceAccount} from "./APIResourceAccount";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIResourceAccount} from './APIResourceAccount';
+import {APIResource} from './APIResource';
 
 
 describe('APIResourceAccount', () => {

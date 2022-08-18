@@ -1,5 +1,5 @@
-import {DeviceSessionDataAvailability} from "./DeviceSessionDataAvailability";
-import {QueryParams} from "./HTTP";
+import {DeviceSessionDataAvailability} from './DeviceSessionDataAvailability';
+import {QueryParams} from './HTTP';
 
 export type TestRunDataAvailability = {
   deviceRunDataAvailabilities: DeviceSessionDataAvailability;

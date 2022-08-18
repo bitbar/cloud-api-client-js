@@ -1,6 +1,6 @@
 import {API} from '../API';
 import {NoData} from './APIEntity';
-import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIListDeviceTime} from './APIListDeviceTime'
 import {APIListFiles} from './APIListFiles'
 import {APIListNotifications} from './APIListNotifications'
@@ -16,23 +16,22 @@ import {APIResourceFile} from './APIResourceFile'
 import {APIResourceNotification} from './APIResourceNotification'
 import {APIResourceProject} from './APIResourceProject'
 import {APIUserResourceAccount} from './APIUserResourceAccount'
-import {DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams} from './interface/Device';
-import {DeviceGroupIdsData, DeviceGroupWithPublicParams} from './interface/DeviceGroupInterfaces';
 import {DeviceSession} from './interface/DeviceSession';
-import {UserProjectData, UserProjectQueryParams} from './interface/UserProject';
 import {AccessGroup, AccessGroupsData} from './models/AccessGroup';
 import {BillingPeriod} from './models/BillingPeriod';
-import {DeviceGroup} from './models/DeviceGroup';
+import {DeviceGroup, DeviceGroupIdsData, DeviceGroupWithPublicParams} from './models/DeviceGroup';
 import {DeviceStatistics} from './models/DeviceStatistics';
 import {DeviceUsage} from './models/DeviceUsage';
 import {Framework} from './models/Framework';
-import {Project} from './models/Project';
+import {Project, UserProjectData, UserProjectQueryParams} from './models/Project';
 import {Service} from './models/Service';
 import {User} from './models/User';
 import {UserDeviceTimeSummary} from './models/UserDeviceTimeSummary';
 import {UiPreferencesData, UserPreference} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
 import {DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams} from './models/Device';
 
 export class APIResourceUser extends APIResource {
 

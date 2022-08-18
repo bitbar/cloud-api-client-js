@@ -1,12 +1,12 @@
-import {Method} from "axios";
+import {Method} from 'axios';
 import {API} from '../API';
-import {NoData} from "./APIEntity";
-import {APIList, NoQueryParams} from './APIList'
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {QueryParams} from "./models/HTTP";
-import {Message} from "./models/Message";
-import {User, UserData} from "./models/User";
-import {VatRate} from "./models/VatRate";
+import {NoQueryParams, QueryParams} from './models/HTTP';
+import {Message} from './models/Message';
+import {User, UserData} from './models/User';
+import {VatRate} from './models/VatRate';
 
 export type UserPasswordData = {
   key: string
@@ -29,7 +29,7 @@ export interface ValidateVatQueryParams extends QueryParams {
 
 export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ['POST'];
 
   /**
    * /users

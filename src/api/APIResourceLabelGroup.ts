@@ -1,11 +1,9 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
-import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {DeviceProperty} from './models/Device';
-import {LabelGroup} from './models/LabelGroup';
-
-export type LabelData = Pick<DeviceProperty, 'displayName' | 'name'>;
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {LabelData, LabelGroup} from './models/LabelGroup';
 
 export class APIResourceLabelGroup extends APIResource<LabelGroup> {
 

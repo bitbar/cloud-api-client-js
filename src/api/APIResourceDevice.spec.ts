@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIResourceDevice} from "./APIResourceDevice";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIResourceDevice} from './APIResourceDevice';
+import {APIList} from './APIList';
 
 
 describe('APIResourceDevice', () => {

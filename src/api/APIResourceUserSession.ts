@@ -1,6 +1,6 @@
 import {API} from '../API';
-import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
+import {NoQueryParams} from './models/HTTP';
 import {LoginData, User} from './models/User';
 
 export class APIResourceUserSession extends APIResource {

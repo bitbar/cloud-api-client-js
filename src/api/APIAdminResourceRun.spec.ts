@@ -1,13 +1,15 @@
-import {API} from "../API";
-import {APIAdminResourceDeviceSession} from "./APIAdminResourceDeviceSession";
-import {APIAdminResourceRun} from "./APIAdminResourceRun";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResourceDeviceSession} from './APIAdminResourceDeviceSession';
+import {APIAdminResourceRun} from './APIAdminResourceRun';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceRun', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIAdminResourceRun;
   let api: API;
+  const baseId = 1;
+  const baseUrl = `/runs/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -18,23 +20,19 @@ describe('APIAdminResourceRun', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/runs/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceRun(api);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceRun(api, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@buildLogsZip', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.buildLogsZip();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/runs/1/build-logs.zip');
+      expect(call.toUrl()).toEqual(`${baseUrl}/build-logs.zip`);
     });
   });
 
@@ -42,7 +40,7 @@ describe('APIAdminResourceRun', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceSession(1);
       expect(call).toBeInstanceOf(APIAdminResourceDeviceSession);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-sessions/1`);
     });
   });
 

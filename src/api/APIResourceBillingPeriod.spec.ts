@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIResourceBillingPeriod} from "./APIResourceBillingPeriod";
-import {APIResource} from "./APIResource";
-import {APIResourceUser} from "./APIResourceUser";
+import {API} from '../API';
+import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
+import {APIResource} from './APIResource';
+import {APIResourceUser} from './APIResourceUser';
 
 
 describe('APIResourceBillingPeriod', () => {
@@ -33,7 +33,7 @@ describe('APIResourceBillingPeriod', () => {
   describe('@receipt', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.receipt();
-      const requestConfigObject = {"responseType": "arraybuffer"}
+      const requestConfigObject = {'responseType': 'arraybuffer'}
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/receipt`);
       expect(call['requestConfig']).toEqual(requestConfigObject);

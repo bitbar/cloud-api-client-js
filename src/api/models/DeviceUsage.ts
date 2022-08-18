@@ -1,4 +1,4 @@
-import {Device} from "./Device"
+import {Device} from './Device'
 
 export type DeviceUsage = {
   device: Device;

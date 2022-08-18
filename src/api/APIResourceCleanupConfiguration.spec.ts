@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIResourceCleanupConfiguration} from "./APIResourceCleanupConfiguration";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIResourceCleanupConfiguration} from './APIResourceCleanupConfiguration';
+import {APIResource} from './APIResource';
 
 
 describe('APIResourceCleanupConfiguration', () => {

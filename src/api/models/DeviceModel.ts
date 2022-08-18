@@ -1,5 +1,5 @@
-import {Platform} from "./Device";
-import {OsType} from "./Enum";
+import {Platform} from './Device';
+import {OsType} from './Enum';
 
 export type DeviceModel = {
   avgWaitingTime: number;

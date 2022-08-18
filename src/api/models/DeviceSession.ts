@@ -1,5 +1,5 @@
-import {CollectionBasicQueryParams} from "../APIList";
-import {Device} from "./Device";
+import {Device} from './Device';
+import {CollectionBasicQueryParams} from './HTTP';
 
 export type TunnelSettings = {
   domain: string;
@@ -133,3 +133,19 @@ export interface DeviceSessionQueryParams extends CollectionBasicQueryParams {
   withProperties: boolean;
 }
 
+export interface SessionQueryParams extends CollectionBasicQueryParams {
+  projectId: number;
+  testRunId: number;
+}
+
+export interface SessionRunStepQueryParams extends CollectionBasicQueryParams {
+  runId: number;
+}
+
+export interface SessionStepQueryParams extends SessionRunStepQueryParams {
+  projectId: number;
+}
+
+export interface TRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
+  projectId: number;
+}

@@ -1,8 +1,8 @@
 import {NoData} from './APIEntity';
-import {NoQueryParams} from './APIList';
 import {APIResource} from './APIResource'
 import {APIResourceUser} from './APIResourceUser';
 import {BillingPeriod} from './models/BillingPeriod';
+import {NoQueryParams} from './models/HTTP';
 
 export class APIResourceBillingPeriod extends APIResource<BillingPeriod, NoQueryParams, NoData> {
 

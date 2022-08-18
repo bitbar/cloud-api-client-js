@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIResourceNotification} from "./APIResourceNotification";
-import {APIResource} from "./APIResource";
-import APIResourceUser from "./APIResourceUser";
+import {API} from '../API';
+import {APIResourceNotification} from './APIResourceNotification';
+import {APIResource} from './APIResource';
+import {APIResourceUser} from './APIResourceUser';
 
 describe('APIResourceNotification', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

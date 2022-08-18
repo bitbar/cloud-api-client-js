@@ -1,6 +1,6 @@
-import {CollectionQueryParams} from "../APIList";
-import {ChargeType} from "./AccountService";
-import {Role} from "./Role";
+import {ChargeType} from './AccountService';
+import {CollectionQueryParams} from './HTTP';
+import {Role} from './Role';
 
 export type Service = {
   activateTime: number;

@@ -3,6 +3,10 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   extends: ['plugin:@typescript-eslint/recommended'],
   rules: {
+    'quotes': [2, 'single', {
+      'allowTemplateLiterals': true,
+      'avoidEscape': true
+    }],
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/consistent-type-assertions': ['error', {

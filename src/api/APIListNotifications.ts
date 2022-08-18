@@ -1,8 +1,9 @@
 import {NoData} from './APIEntity';
-import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
-import APIResourceUser from "./APIResourceUser";
-import {Enum} from "./models/Enum";
-import {Notification} from "./models/Notification";
+import {APIList} from './APIList'
+import {APIResourceUser} from './APIResourceUser';
+import {Enum} from './models/Enum';
+import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
+import {Notification} from './models/Notification';
 
 export type NotificationData = Pick<Notification, 'channel' | 'destination' | 'projectId' | 'scope'>;
 

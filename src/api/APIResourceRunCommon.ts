@@ -1,11 +1,11 @@
 import {API} from '../API';
 import {APIEntity, NoData} from './APIEntity';
-import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
-import {TRunDeviceSessionQueryParams} from './interface/DeviceSessionCommon';
 import {AdminTestRun} from './models/AdminTestRun';
-import {DeviceSession, DeviceSessionStep} from './models/DeviceSession';
+import {DeviceSession, DeviceSessionStep, TRunDeviceSessionQueryParams} from './models/DeviceSession';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
 import {Screenshot, ScreenshotExtended, ScreenshotQueryParams} from './models/Screenshot';
 import {Tag, TagsData, TagsQueryParams, TaqQueryParams, TestRunTagsData} from './models/Tag';
 import {RunData, RunQueryParam, TestRun, TestRunData} from './models/TestRun';

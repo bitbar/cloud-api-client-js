@@ -1,7 +1,7 @@
-import API from "../../API";
-import APIEntity from "../APIEntity";
-import APIResource from "../APIResource";
-import postDeviceRunIds from "./postDeviceRunIds";
+import API from '../../API';
+import APIEntity from '../APIEntity';
+import APIResource from '../APIResource';
+import postDeviceRunIds from './postDeviceRunIds';
 
 describe('postDeviceRunIds', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

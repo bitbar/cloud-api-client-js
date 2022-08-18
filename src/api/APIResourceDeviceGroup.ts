@@ -1,12 +1,12 @@
 import {API} from '../API';
 import {APIAdminResource} from './APIAdminResource';
 import {NoData} from './APIEntity';
-import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import APIResourceUser from './APIResourceUser';
-import {DeviceGroupData, DeviceGroupParams, DeviceGroupSelectorData, DeviceGroupShareData} from './interface/DeviceGroupInterfaces';
 import {Device, DeviceProperty} from './models/Device';
-import {DeviceGroup} from "./models/DeviceGroup";
+import {DeviceGroup, DeviceGroupData, DeviceGroupParams, DeviceGroupSelectorData, DeviceGroupShareData} from './models/DeviceGroup';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
 import {SharedResource} from './models/SharedResource';
 
 export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {

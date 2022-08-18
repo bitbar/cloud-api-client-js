@@ -1,5 +1,5 @@
-import {DeviceSessionState} from "./DeviceSession";
-import {OsType} from "./Enum";
+import {DeviceSessionState} from './DeviceSession';
+import {OsType} from './Enum';
 
 export enum FrameworkType {
   AUTOMATIC = 'AUTOMATIC',

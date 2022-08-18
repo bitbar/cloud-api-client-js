@@ -1,11 +1,12 @@
 import {API} from '../API';
 import {APIEntity, NoData} from './APIEntity';
-import {APIList, CollectionBasicQueryParams, NoQueryParams} from './APIList';
+import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {InputFileset} from './class/InputFileset'
 import {OutputFileset} from './class/OutputFileset'
-import {DeviceSessionCommon, SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams} from './interface/DeviceSessionCommon';
-import {DeviceSession, DeviceSessionCommand, DeviceSessionStep} from './models/DeviceSession';
+import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
+import {DeviceSession, DeviceSessionCommand, DeviceSessionStep, SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams} from './models/DeviceSession';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
 import {Screenshot} from './models/Screenshot';
 import {TestCaseRun} from './models/TestCaseRun';
 

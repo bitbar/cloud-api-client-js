@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceAccountService} from "./APIAdminResourceAccountService";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceAccountService} from './APIAdminResourceAccountService';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceAccountService', () => {
@@ -9,6 +9,7 @@ describe('APIAdminResourceAccountService', () => {
   let service: APIAdminResourceAccountService;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseUrl = '/admin/account-services';
 
   beforeEach(() => {
     api = new API({
@@ -20,23 +21,19 @@ describe('APIAdminResourceAccountService', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/account-services/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}/1`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceAccountService(adminResource);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceAccountService(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@activate', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.activate();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/account-services/1/activate');
+      expect(call.toUrl()).toEqual(`${baseUrl}/1/activate`);
       expect((<any>call).requestConfig.method).toEqual('POST');
     });
   });
@@ -45,7 +42,7 @@ describe('APIAdminResourceAccountService', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deactivate();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/account-services/1/deactivate');
+      expect(call.toUrl()).toEqual(`${baseUrl}/1/deactivate`);
       expect((<any>call).requestConfig.method).toEqual('POST');
     });
   });

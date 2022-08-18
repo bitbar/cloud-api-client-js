@@ -1,5 +1,4 @@
-import {CollectionQueryParams} from "../APIList";
-import {QueryParams} from "./HTTP";
+import {CollectionQueryParams, QueryParams} from './HTTP';
 
 export enum FileDirection {
   INPUT = 'INPUT',

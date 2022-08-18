@@ -1,7 +1,7 @@
-import {PaymentMethod} from "./AccountService";
-import {DeviceSessionType} from "./DeviceSession";
-import {OsType} from "./Enum";
-import {QueryParams} from "./HTTP";
+import {PaymentMethod} from './AccountService';
+import {DeviceSessionType} from './DeviceSession';
+import {OsType} from './Enum';
+import {QueryParams} from './HTTP';
 
 export enum BillingType {
   BUY = 'BUY',

@@ -1,8 +1,8 @@
-import {APIAdminResource} from "./APIAdminResource";
+import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {AdminDevice} from "./models/AdminDevice";
-import {Cluster, ClusterData, ClusterParams} from "./models/Cluster";
+import {AdminDevice} from './models/AdminDevice';
+import {Cluster, ClusterData, ClusterParams} from './models/Cluster';
 
 
 export class APIAdminResourceCluster extends APIResource<Cluster, ClusterParams, ClusterData> {

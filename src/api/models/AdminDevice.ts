@@ -1,7 +1,7 @@
-import {CollectionQueryParams} from "../APIList";
-import {DevicesQueryParams} from "../APIListDevices";
-import {Platform, SoftwareVersion} from "./Device";
-import {OsType} from "./Enum";
+import {DevicesQueryParams} from '../APIListDevices';
+import {Platform, SoftwareVersion} from './Device';
+import {OsType} from './Enum';
+import {CollectionQueryParams} from './HTTP';
 
 export enum InitStep {
   SKIP = 'SKIP',

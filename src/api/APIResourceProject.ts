@@ -1,11 +1,13 @@
 import {APIAdminResource} from './APIAdminResource';
 import {NoData} from './APIEntity';
-import {APIList, CollectionBasicQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceRun} from './APIResourceRun'
 import {APIResourceUser} from './APIResourceUser';
+import {CollectionBasicQueryParams} from './models/HTTP';
 import {Project} from './models/Project';
 import {TestRun} from './models/TestRun';
+
 export class APIResourceProject extends APIResource<Project> {
 
   /**
@@ -28,17 +30,6 @@ export class APIResourceProject extends APIResource<Project> {
   // /projects/{id}/runs/{id}
   run(id: number) {
     return new APIResourceRun(this, id);
-  }
-
-  // /projects/{id}/files
-  files() {
-    return new APIList(this).push('files');
-  }
-
-  // /projects/{id}/files.zip
-  // is it /projects/{projectid}/runs/{runid}/files?
-  filesZip() {
-    return new APIResource(this).push('files.zip');
   }
 
 }

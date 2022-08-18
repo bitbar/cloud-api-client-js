@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminResourceDeviceSessionStandalone} from "./APIAdminResourceDeviceSessionStandalone";
-import {APIAdminResourceRun} from "./APIAdminResourceRun";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResourceDeviceSessionStandalone} from './APIAdminResourceDeviceSessionStandalone';
+import {APIAdminResourceRun} from './APIAdminResourceRun';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceDeviceSessionStandalone', () => {
@@ -24,12 +24,8 @@ describe('APIAdminResourceDeviceSessionStandalone', () => {
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceDeviceSessionStandalone(adminResource);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceDeviceSessionStandalone(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@changeBillable', () => {

@@ -1,9 +1,10 @@
 import {APIAdminResource} from './APIAdminResource';
 import {NoData} from './APIEntity';
-import {APIList, CollectionBasicQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceUser} from './APIResourceUser';
-import {FileSizeData, UserFile, UserFileTag} from "./models/UserFile";
+import {CollectionBasicQueryParams} from './models/HTTP';
+import {FileSizeData, UserFile, UserFileTag} from './models/UserFile';
 
 
 export class APIResourceFile extends APIResource<UserFile> {

@@ -1,8 +1,8 @@
-import {API} from "../API";
-import {APIAdminListDevices} from "./APIAdminListDevices";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIListCleanupConfigurations} from "./APIListCleanupConfigurations";
-import {APIResourceCleanupConfiguration} from "./APIResourceCleanupConfiguration";
+import {API} from '../API';
+import {APIAdminListDevices} from './APIAdminListDevices';
+import {APIAdminResource} from './APIAdminResource';
+import {APIListCleanupConfigurations} from './APIListCleanupConfigurations';
+import {APIResourceCleanupConfiguration} from './APIResourceCleanupConfiguration';
 
 
 describe('APIAdminListDevices', () => {

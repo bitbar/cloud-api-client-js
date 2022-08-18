@@ -1,8 +1,8 @@
-import {API} from "../API";
-import {APIResourceAccessGroup} from "./APIResourceAccessGroup";
-import {APIResource} from "./APIResource";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIResourceAccessGroup} from './APIResourceAccessGroup';
+import {APIResource} from './APIResource';
+import {APIAdminResource} from './APIAdminResource';
+import {APIList} from './APIList';
 
 
 describe('APIResourceAccessGroup', () => {

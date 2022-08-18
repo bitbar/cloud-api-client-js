@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceLicense} from "./APIAdminResourceLicense";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceLicense} from './APIAdminResourceLicense';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceLicense', () => {
@@ -9,6 +9,8 @@ describe('APIAdminResourceLicense', () => {
   let service: APIAdminResourceLicense;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseId = 1;
+  const baseUrl = `/admin/licenses/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -20,23 +22,19 @@ describe('APIAdminResourceLicense', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/licenses/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceLicense(adminResource);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceLicense(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@activate', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.activate();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/licenses/1/activate');
+      expect(call.toUrl()).toEqual(`${baseUrl}/activate`);
     });
   });
 
@@ -44,7 +42,7 @@ describe('APIAdminResourceLicense', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deactivate();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/licenses/1/deactivate');
+      expect(call.toUrl()).toEqual(`${baseUrl}/deactivate`);
     });
   });
 
@@ -52,7 +50,7 @@ describe('APIAdminResourceLicense', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.resend();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/licenses/1/resend');
+      expect(call.toUrl()).toEqual(`${baseUrl}/resend`);
     });
   });
 
@@ -60,7 +58,7 @@ describe('APIAdminResourceLicense', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.download();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/licenses/1/download');
+      expect(call.toUrl()).toEqual(`${baseUrl}/download`);
     });
   });
 

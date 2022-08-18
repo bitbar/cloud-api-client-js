@@ -1,5 +1,4 @@
-import {CollectionBasicQueryParams} from "../APIList";
-import {QueryParams} from "./HTTP";
+import {CollectionBasicQueryParams, QueryParams} from './HTTP';
 
 export type Tag = {
   id: number;

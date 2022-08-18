@@ -1,21 +1,21 @@
-import {API} from "../API";
-import {APIResourceUser} from "./APIResourceUser";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
-import {APIResourceBillingPeriod} from "./APIResourceBillingPeriod";
-import {APIResourceDeviceGroup} from "./APIResourceDeviceGroup";
-import {APIResourceDeviceSessionStandalone} from "./APIResourceDeviceSessionStandalone";
-import {APIResourceProject} from "./APIResourceProject";
-import {APIResourceFile} from "./APIResourceFile";
-import {APIListRuns} from "./APIListRuns";
-import {APIListFiles} from "./APIListFiles";
-import {APIListNotifications} from "./APIListNotifications";
-import {APIResourceNotification} from "./APIResourceNotification";
-import {APIResourceAccessGroup} from "./APIResourceAccessGroup";
-import {APIListSmartbearTunnels} from "./APIListSmartbearTunnels";
-import {APIListServices} from "./APIListServices";
-import {APIListDeviceTime} from "./APIListDeviceTime";
-import {APIUserResourceAccount} from "./APIUserResourceAccount";
+import {API} from '../API';
+import {APIResourceUser} from './APIResourceUser';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
+import {APIResourceDeviceGroup} from './APIResourceDeviceGroup';
+import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone';
+import {APIResourceProject} from './APIResourceProject';
+import {APIResourceFile} from './APIResourceFile';
+import {APIListRuns} from './APIListRuns';
+import {APIListFiles} from './APIListFiles';
+import {APIListNotifications} from './APIListNotifications';
+import {APIResourceNotification} from './APIResourceNotification';
+import {APIResourceAccessGroup} from './APIResourceAccessGroup';
+import {APIListSmartbearTunnels} from './APIListSmartbearTunnels';
+import {APIListServices} from './APIListServices';
+import {APIListDeviceTime} from './APIListDeviceTime';
+import {APIUserResourceAccount} from './APIUserResourceAccount';
 
 
 describe('APIResourceUser', () => {
@@ -49,7 +49,7 @@ describe('APIResourceUser', () => {
   });
 
   it('should throw error if resource ID is not a number', () => {
-    const id: any = "not a number";
+    const id: any = 'not a number';
     expect(() => new APIResourceUser(api, id)).toThrow(new Error('id is not a number'));
   });
 

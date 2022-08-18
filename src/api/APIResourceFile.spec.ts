@@ -1,8 +1,8 @@
-import {API} from "../API";
-import {APIResourceFile} from "./APIResourceFile";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
-import {APIResourceUser} from "./APIResourceUser";
+import {API} from '../API';
+import {APIResourceFile} from './APIResourceFile';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {APIResourceUser} from './APIResourceUser';
 
 
 describe('APIResourceFile', () => {

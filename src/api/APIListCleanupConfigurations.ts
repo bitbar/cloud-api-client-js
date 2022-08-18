@@ -1,8 +1,9 @@
-import {APIAdminListDevices} from "./APIAdminListDevices";
-import {NoData} from "./APIEntity";
-import {APIList, CollectionQueryParams} from './APIList';
+import {APIAdminListDevices} from './APIAdminListDevices';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList';
 import {APIResource} from './APIResource';
-import {DeviceCleanupConfiguration} from "./models/Device";
+import {DeviceCleanupConfiguration} from './models/Device';
+import {CollectionQueryParams} from './models/HTTP';
 
 
 export type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content' | 'discriminator' | 'enabled' | 'osType'>;

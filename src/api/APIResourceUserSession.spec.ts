@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIResourceUserSession} from "./APIResourceUserSession";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIResourceUserSession} from './APIResourceUserSession';
+import {APIResource} from './APIResource';
 
 
 describe('APIResourceUserSession', () => {
@@ -24,8 +24,8 @@ describe('APIResourceUserSession', () => {
   describe('@login', () => {
     it('should initialize proper endpoint path', () => {
       const data = {
-        username: "login",
-        password: "password"
+        username: 'login',
+        password: 'password'
       };
       const call = service.login(data);
 

@@ -1,8 +1,9 @@
-import {Method} from "axios";
-import {NoData} from "./APIEntity";
-import {APIList, CollectionQueryParams} from './APIList'
-import APIResourceUser from "./APIResourceUser";
-import {SmartbearTunnel} from "./models/SmartbearTunnel";
+import {Method} from 'axios';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResourceUser} from './APIResourceUser';
+import {CollectionQueryParams} from './models/HTTP';
+import {SmartbearTunnel} from './models/SmartbearTunnel';
 
 
 export interface TunnelQueryParams extends CollectionQueryParams {
@@ -11,7 +12,7 @@ export interface TunnelQueryParams extends CollectionQueryParams {
 
 export class APIListSmartbearTunnels extends APIList<SmartbearTunnel, TunnelQueryParams, NoData> {
 
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ["GET"];
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ['GET'];
 
   /**
    * /tunnels

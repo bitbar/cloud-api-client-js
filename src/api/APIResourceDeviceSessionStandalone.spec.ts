@@ -1,10 +1,10 @@
-import {API} from "../API";
-import {APIResourceDeviceSessionStandalone} from "./APIResourceDeviceSessionStandalone";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
-import {OutputFileset} from "./class/OutputFileset";
-import {InputFileset} from "./class/InputFileset";
-import {APIResourceUser} from "./APIResourceUser";
+import {API} from '../API';
+import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {OutputFileset} from './class/OutputFileset';
+import {InputFileset} from './class/InputFileset';
+import {APIResourceUser} from './APIResourceUser';
 
 
 describe('APIResourceDeviceSessionStandalone', () => {

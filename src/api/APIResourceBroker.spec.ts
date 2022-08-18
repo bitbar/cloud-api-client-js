@@ -1,6 +1,6 @@
-import {API} from "../API";
-import {APIResourceBroker} from "./APIResourceBroker";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIResourceBroker} from './APIResourceBroker';
+import {APIList} from './APIList';
 
 
 describe('APIResourceBroker', () => {

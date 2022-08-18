@@ -1,5 +1,5 @@
-import {OsType} from "./Enum";
-import {UserFile} from "./UserFile";
+import {OsType} from './Enum';
+import {UserFile} from './UserFile';
 
 export type Framework = {
   accountId: number;

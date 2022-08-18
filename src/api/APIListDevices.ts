@@ -1,10 +1,11 @@
-import {API} from "../API";
-import {NoData} from "./APIEntity";
-import {APIList, CollectionQueryParams, NoQueryParams} from './APIList';
+import {API} from '../API';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList';
 import {APIResource} from './APIResource';
-import {DesktopBrowserCapabilities} from "./models/DesktopBrowserCapabilities";
-import {Device} from "./models/Device";
-import {DevicePicker} from "./models/DeviceFilter";
+import {DesktopBrowserCapabilities} from './models/DesktopBrowserCapabilities';
+import {Device} from './models/Device';
+import {DevicePicker} from './models/DeviceFilter';
+import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
 
 
 export interface DevicesQueryParams extends CollectionQueryParams {

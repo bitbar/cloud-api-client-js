@@ -1,9 +1,9 @@
-import {APIAdminResource} from "./APIAdminResource";
-import {NoData} from "./APIEntity";
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
 import {APIList} from './APIList'
-import {DeviceTimeCountSessionReportEntry} from "./models/DeviceTimeCountSessionReportEntry";
-import {DeviceTimeStepTimeReportEntry} from "./models/DeviceTimeStepTimeReportEntry";
-import {DeviceTimeParams, UserDeviceTime} from "./models/UserDeviceTime";
+import {DeviceTimeCountSessionReportEntry} from './models/DeviceTimeCountSessionReportEntry';
+import {DeviceTimeStepTimeReportEntry} from './models/DeviceTimeStepTimeReportEntry';
+import {DeviceTimeParams, UserDeviceTime} from './models/UserDeviceTime';
 
 export class APIAdminResourceDeviceTime extends APIList<UserDeviceTime, DeviceTimeParams, NoData> {
 

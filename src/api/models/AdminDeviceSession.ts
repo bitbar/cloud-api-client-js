@@ -1,4 +1,4 @@
-import {DeviceSessionState, DeviceSessionStepType} from "./DeviceSession";
+import {DeviceSessionState, DeviceSessionStepType} from './DeviceSession';
 
 export type AdminDeviceSession = {
   billable: boolean;

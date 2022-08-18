@@ -1,6 +1,6 @@
-import {APIAdminResource} from "./APIAdminResource";
+import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
-import {AdminServicesParams, Service} from "./models/Service";
+import {AdminServicesParams, Service} from './models/Service';
 
 
 export class APIAdminListServices extends APIList<Service, AdminServicesParams, Service> {

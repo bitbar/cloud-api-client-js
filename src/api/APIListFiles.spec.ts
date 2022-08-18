@@ -1,7 +1,7 @@
-import FormData from "form-data";
-import fs from "fs";
-import API from "../API";
-import APIListFiles from "./APIListFiles";
+import FormData from 'form-data';
+import fs from 'fs';
+import API from '../API';
+import APIListFiles from './APIListFiles';
 
 describe('APIListFiles', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
@@ -42,7 +42,7 @@ describe('APIListFiles', () => {
         data: []
       };
       jest.spyOn(service.root.axios, 'request').mockReturnValueOnce(Promise.resolve(responseObject));
-      jest.spyOn(fs, "createReadStream");
+      jest.spyOn(fs, 'createReadStream');
       const result = service.upload(upload);
       expect(result).toBeInstanceOf(APIListFiles);
       expect(result.toUrl()).toEqual('/files');

@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIResourceRunCommon} from "./APIResourceRunCommon";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIResourceRunCommon} from './APIResourceRunCommon';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
 
 
 describe('APIResourceRunCommon', () => {
@@ -64,7 +64,7 @@ describe('APIResourceRunCommon', () => {
       const call = service.filesZip([1]);
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/files.zip`);
-      expect(call['requestConfig'].params).toStrictEqual({"deviceRunIds": [1]});
+      expect(call['requestConfig'].params).toStrictEqual({'deviceRunIds': [1]});
     });
   });
 
@@ -80,7 +80,7 @@ describe('APIResourceRunCommon', () => {
       const call = service.logsZip([1]);
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/logs.zip`);
-      expect(call['requestConfig'].params).toStrictEqual({"deviceRunIds": [1]});
+      expect(call['requestConfig'].params).toStrictEqual({'deviceRunIds': [1]});
     });
   });
 
@@ -96,7 +96,7 @@ describe('APIResourceRunCommon', () => {
       const call = service.performanceZip([1]);
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/performance.zip`);
-      expect(call['requestConfig'].params).toStrictEqual({"deviceRunIds": [1]});
+      expect(call['requestConfig'].params).toStrictEqual({'deviceRunIds': [1]});
     });
   });
 
@@ -111,11 +111,11 @@ describe('APIResourceRunCommon', () => {
     it('should initialize proper endpoint path', () => {
 
       const call = service.retry([1]);
-      const requestConfigObject = {"timeout": 0}
+      const requestConfigObject = {'timeout': 0}
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/retry`);
       expect(call['requestConfig'].timeout).toEqual(requestConfigObject.timeout);
-      expect(call['requestConfig'].params).toStrictEqual({"deviceRunIds": [1]});
+      expect(call['requestConfig'].params).toStrictEqual({'deviceRunIds': [1]});
     });
   });
 
@@ -147,7 +147,7 @@ describe('APIResourceRunCommon', () => {
       const call = service.screenshotsZip([1]);
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/screenshots.zip`);
-      expect(call['requestConfig'].params).toStrictEqual({"deviceRunIds": [1]});
+      expect(call['requestConfig'].params).toStrictEqual({'deviceRunIds': [1]});
     });
   });
 

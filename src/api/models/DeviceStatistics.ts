@@ -1,4 +1,4 @@
-import {OsType} from "./Enum"
+import {OsType} from './Enum'
 
 export type DeviceStatistics = {
   deviceName: string;

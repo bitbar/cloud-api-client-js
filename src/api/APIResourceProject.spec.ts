@@ -1,8 +1,8 @@
-import {API} from "../API";
-import {APIResourceProject} from "./APIResourceProject";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
-import {APIResourceUser} from "./APIResourceUser";
+import {API} from '../API';
+import {APIResourceProject} from './APIResourceProject';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {APIResourceUser} from './APIResourceUser';
 
 describe('APIResourceProject', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
@@ -43,22 +43,6 @@ describe('APIResourceProject', () => {
       const call = service.run(1);
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/runs/1`);
-    });
-  });
-
-  describe('@files', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.files();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/files`);
-    });
-  });
-
-  describe('@filesZip', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.filesZip();
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/files.zip`);
     });
   });
 });

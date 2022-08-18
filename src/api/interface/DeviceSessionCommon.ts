@@ -1,9 +1,10 @@
 import {NoData} from '../APIEntity';
-import {APIList, CollectionBasicQueryParams, NoQueryParams} from '../APIList';
+import {APIList} from '../APIList';
 import {APIResource} from '../APIResource';
-import {DeviceSessionCommand, DeviceSessionStep} from "../models/DeviceSession";
-import {Screenshot} from "../models/Screenshot";
-import {TestCaseRun} from "../models/TestCaseRun";
+import {DeviceSessionCommand, DeviceSessionStep, SessionQueryParams} from '../models/DeviceSession';
+import {NoQueryParams} from '../models/HTTP';
+import {Screenshot} from '../models/Screenshot';
+import {TestCaseRun} from '../models/TestCaseRun';
 import {DeviceSessionBase} from './DeviceSessionBase';
 
 export interface DeviceSessionCommon extends DeviceSessionBase {
@@ -17,20 +18,3 @@ export interface DeviceSessionCommon extends DeviceSessionBase {
 }
 
 export default DeviceSessionCommon;
-
-export interface SessionQueryParams extends CollectionBasicQueryParams {
-  projectId: number;
-  testRunId: number;
-}
-
-export interface SessionRunStepQueryParams extends CollectionBasicQueryParams {
-  runId: number;
-}
-
-export interface SessionStepQueryParams extends SessionRunStepQueryParams {
-  projectId: number;
-}
-
-export interface TRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
-  projectId: number;
-}
