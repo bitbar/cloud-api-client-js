@@ -1,5 +1,6 @@
-import {API} from "../API";
-import {APIEntity} from "./APIEntity";
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {ALLOWED_HTTP_METHODS} from './models/HTTP';
 
 
 describe('APIEntity', () => {
@@ -133,11 +134,8 @@ describe('APIEntity', () => {
     });
 
     it('should throw error when method is not allowed', () => {
-      try {
-        service.method('PATCH');
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const httpMethod = 'PATCH';
+      expect(() => service.method(httpMethod)).toThrow(new Error(`Method '${httpMethod}' is not allowed! You can use: ${ALLOWED_HTTP_METHODS.join(', ')}`));
     });
   });
 

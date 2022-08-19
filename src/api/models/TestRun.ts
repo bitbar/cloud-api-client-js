@@ -1,7 +1,8 @@
-import {Device} from "./Device";
-import {TunnelSettings} from "./DeviceSession";
-import {OsType} from "./Enum";
-import {Tag} from "./Tag";
+import {Device} from './Device';
+import {TunnelSettings} from './DeviceSession';
+import {OsType} from './Enum';
+import {QueryParams} from './HTTP';
+import {Tag} from './Tag';
 
 export enum LimitationType {
   PACKAGE = 'PACKAGE',
@@ -40,7 +41,7 @@ export type TestRun = {
   id: number;
   logsFileId: number;
   message: string;
-  "number": number;
+  'number': number;
   projectId: number;
   projectName: string;
   rowIndex: number;
@@ -112,4 +113,16 @@ export type TestRunConfig = {
   videoRecordingEnabled: boolean;
   withAnnotation: string;
   withoutAnnotation: string;
+}
+
+export interface TestRunData extends QueryParams {
+  displayName: string;
+}
+
+export interface RunData extends TestRunData {
+  projectId: number;
+}
+
+export interface RunQueryParam extends QueryParams {
+  projectId: number;
 }

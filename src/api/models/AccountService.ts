@@ -1,4 +1,4 @@
-import {ServiceUnit} from "./Service";
+import {ServiceUnit} from './Service';
 
 export enum PaymentStatus {
   SUCCEEDED = 'SUCCEEDED',
@@ -68,4 +68,4 @@ export type AccountService = {
   vatRate: number;
 }
 
-export type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId'> & { count: number; };
+export type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId'> & {count: number;};

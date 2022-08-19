@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceDeviceTime} from "./APIAdminResourceDeviceTime";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceDeviceTime} from './APIAdminResourceDeviceTime';
+import {APIList} from './APIList';
 
 
 describe('APIAdminResourceDeviceTime', () => {
@@ -9,6 +9,7 @@ describe('APIAdminResourceDeviceTime', () => {
   let service: APIAdminResourceDeviceTime;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseUrl = '/admin/device-time';
 
   beforeEach(() => {
     api = new API({
@@ -20,14 +21,14 @@ describe('APIAdminResourceDeviceTime', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/device-time');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@countSessionReport', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.countSessionReport();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-time/count-session-report');
+      expect(call.toUrl()).toEqual(`${baseUrl}/count-session-report`);
     });
   });
 
@@ -35,7 +36,7 @@ describe('APIAdminResourceDeviceTime', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.stepTimeReport();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-time/step-time-report');
+      expect(call.toUrl()).toEqual(`${baseUrl}/step-time-report`);
     });
   });
 

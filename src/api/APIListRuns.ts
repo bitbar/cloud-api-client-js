@@ -1,23 +1,26 @@
-import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import APIResourceUser from "./APIResourceUser";
-import {TestRun, TestRunConfig} from "./models/TestRun";
+import {APIResourceUser} from './APIResourceUser';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {TestRun, TestRunConfig} from './models/TestRun';
 
 export interface TestRunData {
   configuration: TestRunConfig;
 }
 
-export interface TestRunConfigData extends TestRunData{
+export interface TestRunConfigData extends TestRunData {
   includeDeviceGroups: boolean;
   includeDevices: boolean;
   includeFrameworks: boolean;
 }
 
-export interface TestRunQueryParams extends CollectionQueryParams {
+// for users/{userid}/runs
+export interface TestRunQueryParams extends CollectionBasicQueryParams {
   forWholeAccount: boolean;
   skipCommonProject: boolean;
   skipShared: boolean;
 }
+
 
 export class APIListRuns extends APIList<TestRun, TestRunQueryParams, TestRunData> {
 

@@ -1,6 +1,7 @@
-import {PaymentMethod} from "./AccountService";
-import {DeviceSessionType} from "./DeviceSession";
-import {OsType} from "./Enum";
+import {PaymentMethod} from './AccountService';
+import {DeviceSessionType} from './DeviceSession';
+import {OsType} from './Enum';
+import {QueryParams} from './HTTP';
 
 export enum BillingType {
   BUY = 'BUY',
@@ -36,4 +37,8 @@ export type BillingPeriodUsage = {
   nonBillableSeconds: number;
   osType: OsType;
   type: DeviceSessionType;
+}
+
+export interface BillingPeriodQueryParams extends QueryParams {
+  onDate: number;
 }

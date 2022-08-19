@@ -1,11 +1,12 @@
-import {APIAdminResourceUser} from "./APIAdminResourceUser";
-import {NoData} from "./APIEntity";
-import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
+import {APIAdminResourceUser} from './APIAdminResourceUser';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {NonRequestable} from "./decorators/NonRequestable";
-import {AccountService, AccountServiceData} from "./models/AccountService";
-import {Role, RoleData} from "./models/Role";
-import {User, UserUpdateAccount} from "./models/User";
+import {NonRequestable} from './decorators/NonRequestable';
+import {AccountService, AccountServiceData} from './models/AccountService';
+import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
+import {Role, RoleData} from './models/Role';
+import {User, UserUpdateAccount} from './models/User';
 
 @NonRequestable
 export class APIAdminResourceUserAccount extends APIResource {

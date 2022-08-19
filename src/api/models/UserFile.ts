@@ -1,4 +1,4 @@
-import {CollectionQueryParams} from "../APIList";
+import {CollectionQueryParams, QueryParams} from './HTTP';
 
 export enum FileDirection {
   INPUT = 'INPUT',
@@ -21,6 +21,11 @@ export type FileProperty = {
   key: string;
   value: string;
 };
+
+export type UserFileTag = {
+  id: number;
+  name: string
+}
 
 export type UserFile = {
   createTime: number;
@@ -56,3 +61,8 @@ export type BuildLogsData = {
 }
 
 export type BuildLogsParams = BuildLogsData;
+
+export interface FileSizeData extends QueryParams {
+  height: number;
+  width: number;
+}

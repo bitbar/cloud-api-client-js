@@ -12,3 +12,5 @@ export type Connection = {
   url: string;
   urlSchema: string;
 }
+
+export type ConnectionData = Pick<Connection, 'host' | 'port' | 'type' | 'password'>

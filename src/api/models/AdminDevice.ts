@@ -1,7 +1,7 @@
-import {CollectionQueryParams} from "../APIList";
-import {DevicesQueryParams} from "../APIListDevices";
-import {Platform, SoftwareVersion} from "./Device";
-import {OsType} from "./Enum";
+import {DevicesQueryParams} from '../APIListDevices';
+import {Platform, SoftwareVersion} from './Device';
+import {OsType} from './Enum';
+import {CollectionQueryParams} from './HTTP';
 
 export enum InitStep {
   SKIP = 'SKIP',
@@ -51,4 +51,4 @@ export type AdminDevice = {
 export type AdminDevicesQueryParams = Pick<DevicesQueryParams, 'withDisabled'> & CollectionQueryParams;
 
 export type AdminDeviceData = Pick<AdminDevice, 'accountId' | 'enabled' | 'initStep' | 'ipAddress' | 'name' |
-  'serialId' | 'testTimeLimit' | 'unlockGesture'> & { apiLevel: number; releaseVersion: string; };
+  'serialId' | 'testTimeLimit' | 'unlockGesture'> & {apiLevel: number; releaseVersion: string;};

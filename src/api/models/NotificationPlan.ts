@@ -1,4 +1,4 @@
-import {NotificationChannel, NotificationScope} from "./Notification";
+import {NotificationChannel, NotificationScope} from './Notification';
 
 export type NotificationPlan = {
   channel: NotificationChannel;

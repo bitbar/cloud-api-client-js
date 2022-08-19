@@ -5,12 +5,12 @@ import {APIAdminResource} from './api/APIAdminResource';
 import {APIList} from './api/APIList';
 import {APIListDevices} from './api/APIListDevices';
 import {APIListUsers} from './api/APIListUsers';
-import {APIResource} from "./api/APIResource";
+import {APIResource} from './api/APIResource';
 import {APIResourceAccount} from './api/APIResourceAccount';
-import {APIResourceBroker} from "./api/APIResourceBroker";
+import {APIResourceBroker} from './api/APIResourceBroker';
 import {APIResourceDevice} from './api/APIResourceDevice';
 import {APIResourceDeviceGroup} from './api/APIResourceDeviceGroup';
-import {APIResourceDeviceSession} from "./api/APIResourceDeviceSession";
+import {APIResourceDeviceSession} from './api/APIResourceDeviceSession';
 import {APIResourceUser} from './api/APIResourceUser';
 import {APIResourceUserSession} from './api/APIResourceUserSession';
 import {ApiConfig} from './ApiConfig';
@@ -48,7 +48,7 @@ export class API {
     } else if (typeof this.config.cloudUrl !== 'string') {
       throw new TypeError('cloudUrl must be a string');
     } else if (!/^https?:\/\/.{2,}/.test(this.config.cloudUrl)) {
-      throw new Error("cloudUrl doesn't look like a URL");
+      throw new Error(`cloudUrl doesn't look like a URL`);
     }
 
     // Validate and correct cloudUrl if needed
@@ -65,7 +65,7 @@ export class API {
       if (typeof this.config.apiKey !== 'string') {
         throw new TypeError('apiKey must be a string');
       } else if (!/^[A-Za-z0-9]{32}$/.test(this.config.apiKey)) {
-        throw new Error("apiKey is in the wrong format");
+        throw new Error('apiKey is in the wrong format');
       }
 
       this.axiosConfig.auth = {

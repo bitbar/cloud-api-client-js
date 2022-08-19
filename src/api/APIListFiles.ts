@@ -1,8 +1,8 @@
-import {API} from "../API";
+import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
-import {FilesQueryParams} from "./class/FilesQueryParams";
-import {UserFile} from "./models/UserFile";
+import {FilesQueryParams} from './class/FilesQueryParams';
+import {UserFile} from './models/UserFile';
 
 
 type UploadObj = {

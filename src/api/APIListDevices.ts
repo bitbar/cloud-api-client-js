@@ -1,9 +1,11 @@
-import {API} from "../API";
-import {APIList, CollectionQueryParams, NoQueryParams} from './APIList';
+import {API} from '../API';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList';
 import {APIResource} from './APIResource';
-import {DesktopBrowserCapabilities} from "./models/DesktopBrowserCapabilities";
-import {Device} from "./models/Device";
-import {DevicePicker} from "./models/DeviceFilter";
+import {DesktopBrowserCapabilities} from './models/DesktopBrowserCapabilities';
+import {Device} from './models/Device';
+import {DevicePicker} from './models/DeviceFilter';
+import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
 
 
 export interface DevicesQueryParams extends CollectionQueryParams {
@@ -28,12 +30,12 @@ export class APIListDevices extends APIList<Device, DevicesQueryParams> {
 
   // /devices/filters
   filters() {
-    return new APIResource<DevicePicker, CollectionQueryParams, void>(this).push('filters');
+    return new APIResource<DevicePicker, CollectionQueryParams, NoData>(this).push('filters');
   }
 
   // /devices/desktop-browser-capabilities
   desktopBrowserCapabilities() {
-    return new APIResource<DesktopBrowserCapabilities, NoQueryParams, void>(this).push('desktop-browser-capabilities');
+    return new APIResource<DesktopBrowserCapabilities, NoQueryParams, NoData>(this).push('desktop-browser-capabilities');
   }
 
 }

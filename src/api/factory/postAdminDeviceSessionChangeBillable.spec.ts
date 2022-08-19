@@ -1,7 +1,7 @@
-import API from "../../API";
-import APIResource from "../APIResource";
-import APIResourceDeviceSessionCommon from "../APIResourceDeviceSessionCommon";
-import postAdminDeviceSessionChangeBillable from "./postAdminDeviceSessionChangeBillable";
+import API from '../../API';
+import APIResource from '../APIResource';
+import APIResourceDeviceSessionCommon from '../APIResourceDeviceSessionCommon';
+import postAdminDeviceSessionChangeBillable from './postAdminDeviceSessionChangeBillable';
 
 describe('postAdminDeviceSessionChangeBillable', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminListStatistics} from "./APIAdminListStatistics";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIAdminListStatistics} from './APIAdminListStatistics';
+import {APIAdminResource} from './APIAdminResource';
+import {APIList} from './APIList';
 
 
 describe('APIAdminListStatistics', () => {
@@ -9,6 +9,7 @@ describe('APIAdminListStatistics', () => {
   let service: APIAdminListStatistics;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseUrl = '/admin/statistics';
 
   beforeEach(() => {
     api = new API({
@@ -20,14 +21,14 @@ describe('APIAdminListStatistics', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/statistics');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@deviceSessions', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceSessions();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/statistics/device-sessions');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-sessions`);
     });
   });
 
@@ -35,7 +36,7 @@ describe('APIAdminListStatistics', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.frameworks();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/statistics/frameworks');
+      expect(call.toUrl()).toEqual(`${baseUrl}/frameworks`);
     });
   });
 

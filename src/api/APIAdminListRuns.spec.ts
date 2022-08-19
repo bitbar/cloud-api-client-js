@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminListRuns} from "./APIAdminListRuns";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminListRuns} from './APIAdminListRuns';
+import {APIAdminResource} from './APIAdminResource';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminListRuns', () => {

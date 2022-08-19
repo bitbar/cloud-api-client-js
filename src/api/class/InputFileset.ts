@@ -1,14 +1,14 @@
 import {API} from '../../API';
-import {APIEntity} from '../APIEntity';
+import {APIEntity, NoData} from '../APIEntity';
 import {APIList} from '../APIList'
 import {APIResource} from '../APIResource'
-import {NonRequestable} from "../decorators/NonRequestable";
-import {UserFile} from "../models/UserFile";
-import {FilesQueryParams} from "./FilesQueryParams";
+import {NonRequestable} from '../decorators/NonRequestable';
+import {UserFile} from '../models/UserFile';
+import {FilesQueryParams} from './FilesQueryParams';
 
 
 @NonRequestable
-export class InputFileset extends APIResource<void> {
+export class InputFileset extends APIResource<NoData> {
 
   constructor(parent: APIEntity | API) {
     super(parent);
@@ -19,7 +19,7 @@ export class InputFileset extends APIResource<void> {
    * @endpoint /input-file-set/files
    */
   files() {
-    return new APIList<UserFile, FilesQueryParams, void>(this).push('files');
+    return new APIList<UserFile, FilesQueryParams, NoData>(this).push('files');
   }
 
   /**

@@ -1,5 +1,5 @@
-import {CollectionQueryParams} from "../APIList";
-import {DeviceSessionType} from "./DeviceSession";
+import {DeviceSessionType} from './DeviceSession';
+import {CollectionQueryParams} from './HTTP';
 
 export type UserDeviceTime = BasicDeviceTime & {
   billableTime: number;

@@ -1,23 +1,20 @@
-import APIAdminResource from "./APIAdminResource";
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import APIResourceUser from "./APIResourceUser";
-import {AccessGroup} from "./models/AccessGroup";
+import {APIResourceUser} from './APIResourceUser';
+import {AccessGroup} from './models/AccessGroup';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {SharedResource} from './models/SharedResource';
+import {User, UserData} from './models/User';
 
-/**
- * APIResourceAccessGroup
- *
- * @class
- * @extends APIResource
- */
 export class APIResourceAccessGroup extends APIResource<AccessGroup> {
 
   /**
-   * /device-groups/{id}
+   * /access-groups/{id}
    *
-   * Constructor
    */
-  constructor(parent: APIAdminResource|APIResourceUser, id: number) {
+  constructor(parent: APIAdminResource | APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -28,7 +25,7 @@ export class APIResourceAccessGroup extends APIResource<AccessGroup> {
 
   // /access-groups/{id}/users
   users() {
-    return new APIList(this).push('users');
+    return new APIList<User, CollectionBasicQueryParams, UserData>(this).push('users');
   }
 
   // /access-groups/{id}/users/{id}
@@ -37,12 +34,12 @@ export class APIResourceAccessGroup extends APIResource<AccessGroup> {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('users', id);
+    return new APIResource<User, NoQueryParams, NoData>(this).push('users', id);
   }
 
   // /access-groups/{id}/resources
   resources() {
-    return new APIList(this).push('resources');
+    return new APIList<SharedResource, CollectionBasicQueryParams, NoData>(this).push('resources');
   }
 
   // /access-groups/{id}/resources/{id}
@@ -51,7 +48,7 @@ export class APIResourceAccessGroup extends APIResource<AccessGroup> {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('resources', id);
+    return new APIResource<SharedResource, NoQueryParams, NoData>(this).push('resources', id);
   }
 
 }

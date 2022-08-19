@@ -1,24 +1,19 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIEntity, NoData} from './APIEntity';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {InputFileset} from './class/InputFileset'
 import {OutputFileset} from './class/OutputFileset'
 import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
+import {DeviceSession, DeviceSessionCommand, DeviceSessionStep, SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams} from './models/DeviceSession';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {Screenshot} from './models/Screenshot';
+import {TestCaseRun} from './models/TestCaseRun';
 
-
-/**
- * APIResourceDeviceSession
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceDeviceSessionCommon extends APIResource implements DeviceSessionCommon {
+export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> implements DeviceSessionCommon {
 
   /**
    * /device-sessions/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -31,7 +26,7 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
 
   // /device-sessions/{id}/commands
   commands() {
-    return new APIList(this).push('commands');
+    return new APIList<DeviceSessionCommand>(this).push('commands');
   }
 
   // /device-sessions/{id}/input-file-set
@@ -46,7 +41,7 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
 
   // /device-sessions/{id}/screenshots
   screenshots() {
-    return new APIList(this).push('screenshots');
+    return new APIList<Screenshot, SessionQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, NoData>(this).push('screenshots');
   }
 
   // /device-sessions/{id}/screenshots/{id}
@@ -60,7 +55,7 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
 
   // /device-sessions/{id}/steps
   steps() {
-    return new APIList(this).push('steps');
+    return new APIList<DeviceSessionStep, CollectionBasicQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, NoData>(this).push('steps');
   }
 
   // /device-sessions/{id}/steps/{id}
@@ -69,7 +64,7 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('steps', id);
+    return new APIResource<DeviceSessionStep, NoQueryParams, NoData>(this).push('steps', id);
   }
 
   // /device-sessions/{id}/steps/current
@@ -79,7 +74,7 @@ export class APIResourceDeviceSessionCommon extends APIResource implements Devic
 
   // /device-sessions/{id}/test-case-runs
   testCaseRuns() {
-    return new APIList(this).push('test-case-runs');
+    return new APIList<TestCaseRun, SessionQueryParams | NoQueryParams, NoData>(this).push('test-case-runs');
   }
 
 }

@@ -1,9 +1,9 @@
-import {APIAdminResource} from "./APIAdminResource";
-import {NoData} from "./APIEntity";
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
 import {APIList} from './APIList'
-import {NonRequestable} from "./decorators/NonRequestable";
-import {AdminDeviceSessionStatistics, AdminStatisticsParams} from "./models/AdminDeviceSessionStatistics";
-import {AdminFrameworkStatistics} from "./models/AdminFrameworkStatistics";
+import {NonRequestable} from './decorators/NonRequestable';
+import {AdminDeviceSessionStatistics, AdminStatisticsParams} from './models/AdminDeviceSessionStatistics';
+import {AdminFrameworkStatistics} from './models/AdminFrameworkStatistics';
 
 
 @NonRequestable

@@ -1,10 +1,11 @@
-import API from "../API";
-import APIListRuns from "./APIListRuns";
-import APIResource from "./APIResource";
-import APIResourceUser from "./APIResourceUser";
+import {API} from '../API';
+import {APIListRuns} from './APIListRuns';
+import {APIResource} from './APIResource';
+import {APIResourceUser} from './APIResourceUser';
 
 describe('APIListRuns', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
+  const baseUrl = '/me/runs';
   let service: APIListRuns;
 
   beforeEach(() => {
@@ -18,13 +19,13 @@ describe('APIListRuns', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/me/runs');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@config', () => {
     it('should initialize proper endpoint path', () => {
       const result = service.config();
-      expect(result.toUrl()).toEqual('/me/runs/config');
+      expect(result.toUrl()).toEqual(`${baseUrl}/config`);
       expect(result).toBeInstanceOf(APIResource);
     });
   });

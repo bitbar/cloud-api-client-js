@@ -1,5 +1,5 @@
-import {Platform} from "./Device";
-import {OsType} from "./Enum";
+import {Platform} from './Device';
+import {OsType} from './Enum';
 
 export type DeviceModel = {
   avgWaitingTime: number;
@@ -17,7 +17,7 @@ export type DeviceModel = {
   total: number;
 }
 
-export type DeviceModelData = Pick<DeviceModel, 'enabled'|'name'|'releaseVersion'> & {
+export type DeviceModelData = Pick<DeviceModel, 'enabled' | 'name' | 'releaseVersion'> & {
   apiLevel: number;
   creditsPrice: number;
   manufacturer: string;

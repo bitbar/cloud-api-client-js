@@ -1,7 +1,8 @@
-import API from "../API";
-import APIEntity from "./APIEntity";
-import APIList, {APIOrder, DEFAULT_LIMIT, DEFAULT_OFFSET} from "./APIList";
-import FilterBuilder from "../FilterBuilder";
+import {API} from '../API';
+import {APIEntity} from './APIEntity';
+import {APIList, DEFAULT_LIMIT, DEFAULT_OFFSET} from './APIList';
+import {FilterBuilder} from '../FilterBuilder';
+import {APIOrder} from './models/HTTP';
 
 
 describe('APIList', () => {
@@ -85,11 +86,8 @@ describe('APIList', () => {
     });
 
     it('should throw error if param is not a natural number', () => {
-      try {
-        service.limit(-1);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const param = -1;
+      expect(() => service.limit(param)).toThrow(new Error(`Limit '${param}' is invalid!`));
     });
   });
 
@@ -128,11 +126,8 @@ describe('APIList', () => {
     });
 
     it('should throw error if param is not a natural number', () => {
-      try {
-        service.offset(-1);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const param = -1;
+      expect(() => service.offset(param)).toThrow(new Error(`Offset '${param}' is invalid!`));
     });
   });
 
@@ -145,19 +140,15 @@ describe('APIList', () => {
     });
 
     it('should throw error if param is not a natural number', () => {
-      try {
-        service.between(-1, 1);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const from = -1;
+      const to = 1;
+      expect(() => service.between(from, to)).toThrow(new Error(`From '${from}' is invalid!`));
     });
 
     it('should throw error if param is not a natural number', () => {
-      try {
-        service.between(1, -1);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const from = 1;
+      const to = -1;
+      expect(() => service.between(from, to)).toThrow(new Error(`To '${to}' is invalid!`));
     });
   });
 
@@ -170,11 +161,8 @@ describe('APIList', () => {
     });
 
     it('should throw error if param is not a natural number', () => {
-      try {
-        service.only(-1);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const param = -1;
+      expect(() => service.only(param)).toThrow(new Error(`Index '${param}' is invalid!`));
     });
   });
 
@@ -194,19 +182,13 @@ describe('APIList', () => {
     });
 
     it('should throw error if param is not a natural number', () => {
-      try {
-        service.page(-1);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const param = -1;
+      expect(() => service.page(param)).toThrow(new Error(`Page '${param}' is invalid!`));
     });
 
     it('should throw error if param is not a natural number', () => {
-      try {
-        service.page(0);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const param = 0;
+      expect(() => service.page(param)).toThrow(new Error(`Page '${param}' is invalid!`));
     });
   });
 
@@ -218,12 +200,8 @@ describe('APIList', () => {
     });
 
     it('should throw error if param isn\'t a string', () => {
-      const param = <string>(<unknown>1);
-      try {
-        service.search(param);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const param: any = 1;
+      expect(() => service.search(param)).toThrow(new Error('Search query must be a string!'));
     });
   });
 
@@ -243,12 +221,8 @@ describe('APIList', () => {
     });
 
     it('should throw error if param isn\'t a string or FilterBuilder', () => {
-      const param = <string>(<unknown>1);
-      try {
-        service.filter(param);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const param: any = 1;
+      expect(() => service.filter(param)).toThrow(new Error('Filter must be either string or instance of FilterBuilder'));
     });
   });
 

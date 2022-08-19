@@ -1,45 +1,14 @@
-import {AxiosResponse} from "axios";
+import {AxiosResponse} from 'axios';
 import {FilterBuilder} from '../FilterBuilder'
 import {APIEntity} from './APIEntity'
-import {QueryParams} from "./models/HTTP";
+import {APIOrder, CollectionBasicQueryParams, CollectionQueryParams, CollectionResponse, NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
 
 
 export const DEFAULT_LIMIT: number = 20;
 export const DEFAULT_OFFSET: number = 0;
 
-export enum APIOrder {
-  asc = 'a',
-  desc = 'd'
-}
-
-export interface CollectionQueryParams extends QueryParams {
-  filter: string;
-  limit: number;
-  offset: number;
-  sort: string;
-  search: string;
-}
-
-export type NoQueryParams = {
-  [key in any]: never;
-}
-
-export type CollectionResponse<T> = {
-  data: Array<T>;
-  empty: boolean;
-  id: number;
-  limit: number;
-  next: string;
-  offset: number;
-  previous: string;
-  search: string;
-  sort: string;
-  total: number;
-}
-
-
-export class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any>
-  extends APIEntity<CollectionResponse<RESPONSE>, QUERY_PARAMS, DATA> {
+export class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any>
+  extends APIEntity<CollectionResponse<RESPONSE> | APIEntity<SimpleCollectionResponse<RESPONSE>>, QUERY_PARAMS, DATA> {
 
   /**
    * Shortcut for sending data POST

@@ -1,23 +1,16 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {Device, DeviceProperiesData, DeviceProperty} from './models/Device';
+import {CollectionBasicQueryParams} from './models/HTTP';
 
 
-/**
- * APIResourceDevice
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceDevice extends APIResource {
+export class APIResourceDevice extends APIResource<Device> {
 
   /**
    * /devices/{id}
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -28,7 +21,7 @@ export class APIResourceDevice extends APIResource {
 
   // /devices/{id}/properties
   properties() {
-    return new APIList(this).push('properties');
+    return new APIList<DeviceProperty, CollectionBasicQueryParams, DeviceProperiesData>(this).push('properties');
   }
 
 }

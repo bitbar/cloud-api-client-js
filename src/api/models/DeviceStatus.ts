@@ -1,4 +1,4 @@
-import {DeviceState} from "./AdminDevice";
+import {DeviceState} from './AdminDevice';
 
 export type DeviceStatus = {
   alarmOn: boolean;

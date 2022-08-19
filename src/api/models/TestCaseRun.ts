@@ -1,4 +1,4 @@
-import {CollectionResponse} from "../APIList";
+import {CollectionResponse} from './HTTP';
 
 export enum TestResult {
   PASSED = 'PASSED',

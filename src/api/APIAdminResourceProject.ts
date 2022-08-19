@@ -1,13 +1,13 @@
-import {NoData} from "./APIEntity";
-import {NoQueryParams} from "./APIList";
+import {NoData} from './APIEntity';
 import {APIResource} from './APIResource'
 import {APIResourceProject} from './APIResourceProject'
+import {NoQueryParams} from './models/HTTP';
 
 
 export class APIAdminResourceProject extends APIResourceProject {
 
   // /unarchive
-  unarchive () {
+  unarchive() {
     return new APIResource<void, NoQueryParams, NoData>(this).push('unarchive');
   }
 

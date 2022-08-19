@@ -1,5 +1,5 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIListDeviceTime} from './APIListDeviceTime'
 import {APIListFiles} from './APIListFiles'
@@ -13,26 +13,32 @@ import {APIResourceBillingPeriod} from './APIResourceBillingPeriod'
 import {APIResourceDeviceGroup} from './APIResourceDeviceGroup'
 import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone'
 import {APIResourceFile} from './APIResourceFile'
-import {APIResourceJob} from './APIResourceJob'
 import {APIResourceNotification} from './APIResourceNotification'
 import {APIResourceProject} from './APIResourceProject'
 import {APIUserResourceAccount} from './APIUserResourceAccount'
+import {DeviceSession} from './interface/DeviceSession';
+import {AccessGroup, AccessGroupsData} from './models/AccessGroup';
+import {BillingPeriod} from './models/BillingPeriod';
+import {DeviceGroup, DeviceGroupIdsData, DeviceGroupWithPublicParams} from './models/DeviceGroup';
+import {DeviceStatistics} from './models/DeviceStatistics';
+import {DeviceUsage} from './models/DeviceUsage';
+import {Framework} from './models/Framework';
+import {Project, UserProjectData, UserProjectQueryParams} from './models/Project';
+import {Service} from './models/Service';
+import {User} from './models/User';
+import {UserDeviceTimeSummary} from './models/UserDeviceTimeSummary';
+import {UiPreferencesData, UserPreference} from './models/UserPreference';
+import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
+import {DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams} from './models/Device';
 
-
-/**
- * APIResourceUser
- *
- * @class
- * @extends APIResource
- */
 export class APIResourceUser extends APIResource {
 
   /**
    * /users/{id} | /me
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API, id: number | 'me') {
+  constructor(parent: API, id: number | 'me') {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -60,7 +66,7 @@ export class APIResourceUser extends APIResource {
 
   // /users/{id}/device-time-summary
   deviceTimeSummary() {
-    return new APIList(this).push('device-time-summary');
+    return new APIList<UserDeviceTimeSummary, DeviceTimeSummaryQueryParams, NoData>(this).push('device-time-summary');
   }
 
   // /users/{id}/services
@@ -74,12 +80,12 @@ export class APIResourceUser extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('services', id);
+    return new APIResource<Service, NoQueryParams, NoData>(this).push('services', id);
   }
 
   // /users/{id}/billing-periods
   billingPeriods() {
-    return new APIList(this).push('billing-periods');
+    return new APIList<BillingPeriod, CollectionBasicQueryParams, NoData>(this).push('billing-periods');
   }
 
   // /users/{id}/billing-periods/{id}
@@ -87,19 +93,9 @@ export class APIResourceUser extends APIResource {
     return new APIResourceBillingPeriod(this, id);
   }
 
-  // /users/{id}/jobs
-  jobs() {
-    return new APIList(this).push('jobs');
-  }
-
-  // /users/{id}/jobs/{id}
-  job(id: number) {
-    return new APIResourceJob(this, id);
-  }
-
   // /users/{id}/device-groups
   deviceGroups() {
-    return new APIList(this).push('device-groups');
+    return new APIList<DeviceGroup, DeviceGroupWithPublicParams, DeviceGroupIdsData>(this).push('device-groups');
   }
 
   // /users/{id}/device-groups/{id}
@@ -109,7 +105,7 @@ export class APIResourceUser extends APIResource {
 
   // /users/{id}/device-sessions
   deviceSessions() {
-    return new APIList(this).push('device-sessions');
+    return new APIList<DeviceSession, DeviceSessionQueryParams, DeviceSessionData>(this).push('device-sessions');
   }
 
   // /users/{id}/device-sessions/{id}
@@ -119,7 +115,7 @@ export class APIResourceUser extends APIResource {
 
   // /users/{id}/projects
   projects() {
-    return new APIList(this).push('projects');
+    return new APIList<Project, UserProjectQueryParams, UserProjectData>(this).push('projects');
   }
 
   // /users/{id}/projects/{id}
@@ -142,27 +138,21 @@ export class APIResourceUser extends APIResource {
     return new APIListRuns(this);
   }
 
-  // /users/{id}/available-build-executors
-  availableBuildExecutors() {
-    return new APIList(this).push('available-build-executors');
-  }
-
   // /users/{id}/available-frameworks
   availableFrameworks() {
-    return new APIList(this).push('available-frameworks');
+    return new APIList<Framework, CollectionBasicQueryParams, NoData>(this).push('available-frameworks');
   }
 
   /**
-   * /users/{id}/
    * /users/{id}/reset-api-key
    */
   resetApiKey() {
-    return new APIResource(this).push('reset-api-key');
+    return new APIResource<User, NoQueryParams, NoData>(this).push('reset-api-key');
   }
 
   // /users/{id}/restore
   restore() {
-    return new APIResource(this).push('restore');
+    return new APIResource<User, NoQueryParams, NoData>(this).push('restore');
   }
 
   // /users/{id}/feedback
@@ -180,39 +170,34 @@ export class APIResourceUser extends APIResource {
     return new APIResourceNotification(this, id);
   }
 
-  // /users/{id}/receipts
-  receipts() {
-    return new APIList(this).push('receipts');
-  }
-
   // /users/{id}/preferences
   preferences() {
-    return new APIResource(this).push('preferences');
+    return new APIResource<UserPreference, NoQueryParams, UserPreference>(this).push('preferences');
   }
 
   // /users/{id}/ui-preferences
   uiPreferences() {
-    return new APIResource(this).push('ui-preferences');
+    return new APIResource<string, NoQueryParams, UiPreferencesData>(this).push('ui-preferences');
   }
 
   // /users/{id}/device-usage
   deviceUsage() {
-    return new APIList(this).push('device-usage');
+    return new APIList<DeviceUsage, DeviceUsageQueryParams, NoData>(this).push('device-usage');
   }
 
   // /users/{id}/statistics
   statistics() {
-    return new APIList(this).push('statistics');
+    return new APIResource<UserStatistics, StatisticQueryParams, NoData>(this).push('statistics');
   }
 
-  // /users/{id}/statistics
+  // /users/{id}/device-statistics
   deviceStatistics() {
-    return new APIList(this).push('device-statistics');
+    return new APIList<DeviceStatistics, DeviceStatisticQueryParam, NoData>(this).push('device-statistics');
   }
 
   // /users/{id}/access-groups
   accessGroups() {
-    return new APIList(this).push('access-groups');
+    return new APIList<AccessGroup, CollectionBasicQueryParams, AccessGroupsData>(this).push('access-groups');
   }
 
   // /users/{id}/access-groups/{id}

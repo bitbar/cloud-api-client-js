@@ -1,34 +1,35 @@
-import {API} from "../API";
-import {APIAdminListDevices} from "./APIAdminListDevices";
-import {APIAdminListNotificationPlans} from "./APIAdminListNotificationPlans";
-import {APIAdminListRuns} from "./APIAdminListRuns";
-import {APIAdminListServices} from "./APIAdminListServices";
-import {APIAdminListStatistics} from "./APIAdminListStatistics";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceAccountService} from "./APIAdminResourceAccountService";
-import {APIAdminResourceCluster} from "./APIAdminResourceCluster";
-import {APIAdminResourceDevice} from "./APIAdminResourceDevice";
-import {APIAdminResourceDeviceModel} from "./APIAdminResourceDeviceModel";
-import {APIAdminResourceDeviceSessionStandalone} from "./APIAdminResourceDeviceSessionStandalone";
-import {APIAdminResourceDeviceTime} from "./APIAdminResourceDeviceTime";
-import {APIAdminResourceFramework} from "./APIAdminResourceFramework";
-import {APIAdminResourceLicense} from "./APIAdminResourceLicense";
-import {APIAdminResourceNotificationPlan} from "./APIAdminResourceNotificationPlan";
-import {APIAdminResourceRunStandalone} from "./APIAdminResourceRunStandalone";
-import {APIAdminResourceService} from "./APIAdminResourceService";
-import {APIAdminResourceUser} from "./APIAdminResourceUser";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
-import {APIResourceAccessGroup} from "./APIResourceAccessGroup";
-import {APIResourceDeviceGroup} from "./APIResourceDeviceGroup";
-import {APIResourceFile} from "./APIResourceFile";
-import {APIResourceProject} from "./APIResourceProject";
+import {API} from '../API';
+import {APIAdminListDevices} from './APIAdminListDevices';
+import {APIAdminListNotificationPlans} from './APIAdminListNotificationPlans';
+import {APIAdminListRuns} from './APIAdminListRuns';
+import {APIAdminListServices} from './APIAdminListServices';
+import {APIAdminListStatistics} from './APIAdminListStatistics';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceAccountService} from './APIAdminResourceAccountService';
+import {APIAdminResourceCluster} from './APIAdminResourceCluster';
+import {APIAdminResourceDevice} from './APIAdminResourceDevice';
+import {APIAdminResourceDeviceModel} from './APIAdminResourceDeviceModel';
+import {APIAdminResourceDeviceSessionStandalone} from './APIAdminResourceDeviceSessionStandalone';
+import {APIAdminResourceDeviceTime} from './APIAdminResourceDeviceTime';
+import {APIAdminResourceFramework} from './APIAdminResourceFramework';
+import {APIAdminResourceLicense} from './APIAdminResourceLicense';
+import {APIAdminResourceNotificationPlan} from './APIAdminResourceNotificationPlan';
+import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
+import {APIAdminResourceService} from './APIAdminResourceService';
+import {APIAdminResourceUser} from './APIAdminResourceUser';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {APIResourceAccessGroup} from './APIResourceAccessGroup';
+import {APIResourceDeviceGroup} from './APIResourceDeviceGroup';
+import {APIResourceFile} from './APIResourceFile';
+import {APIResourceProject} from './APIResourceProject';
 
 
 describe('APIAdminResource', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIAdminResource;
   let api: API;
+  const baseUrl = '/admin';
 
   beforeEach(() => {
     api = new API({
@@ -57,7 +58,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.accounts();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/accounts');
+      expect(call.toUrl()).toEqual(`${baseUrl}/accounts`);
     });
   });
 
@@ -65,16 +66,12 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.account(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/accounts/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/accounts/1`);
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.account();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.account(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -82,7 +79,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.accountServices();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/account-services');
+      expect(call.toUrl()).toEqual(`${baseUrl}/account-services`);
     });
   });
 
@@ -97,7 +94,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.activities();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/activities');
+      expect(call.toUrl()).toEqual(`${baseUrl}/activities`);
     });
   });
 
@@ -105,7 +102,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.billingPeriods();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/billing-periods');
+      expect(call.toUrl()).toEqual(`${baseUrl}/billing-periods`);
     });
   });
 
@@ -113,16 +110,12 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.billingPeriod(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/billing-periods/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/billing-periods/1`);
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.billingPeriod();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.billingPeriod(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -130,7 +123,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.browsers();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/browsers');
+      expect(call.toUrl()).toEqual(`${baseUrl}/browsers`);
     });
   });
 
@@ -138,16 +131,12 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.browser(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/browsers/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/browsers/1`);
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.browser();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.browser(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -170,7 +159,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.countryVatRates();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/country-vat-rates');
+      expect(call.toUrl()).toEqual(`${baseUrl}/country-vat-rates`);
     });
   });
 
@@ -178,16 +167,12 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.countryVatRate(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/country-vat-rates/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/country-vat-rates/1`);
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.countryVatRate();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.countryVatRate(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -213,12 +198,8 @@ describe('APIAdminResource', () => {
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.devicesForModel();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.devicesForModel(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -226,7 +207,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceStatuses();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device/statuses');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device/statuses`);
     });
   });
 
@@ -234,7 +215,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceModels();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-models');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-models`);
     });
   });
 
@@ -249,7 +230,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceProblems();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-problems');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-problems`);
     });
   });
 
@@ -257,7 +238,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceModelCriterias();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-model-criteria');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-model-criteria`);
     });
   });
 
@@ -265,16 +246,12 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceModelCriteria(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/device-model-criteria/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-model-criteria/1`);
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.deviceModelCriteria();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.deviceModelCriteria(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -282,7 +259,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceSessions();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-sessions');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-sessions`);
     });
   });
 
@@ -304,7 +281,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceTimeSummary();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-time-summary');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-time-summary`);
     });
   });
 
@@ -312,7 +289,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceTypes();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/device-types');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-types`);
     });
   });
 
@@ -320,7 +297,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.deviceType(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/device-types/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-types/1`);
     });
   });
 
@@ -343,7 +320,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.emails();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/emails');
+      expect(call.toUrl()).toEqual(`${baseUrl}/emails`);
     });
   });
 
@@ -351,17 +328,13 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.resendEmail(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/emails/1/resend');
+      expect(call.toUrl()).toEqual(`${baseUrl}/emails/1/resend`);
       expect((<any>call).requestConfig.method).toEqual('POST');
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.resendEmail();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.resendEmail(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -369,7 +342,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.errors();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/errors');
+      expect(call.toUrl()).toEqual(`${baseUrl}/errors`);
     });
   });
 
@@ -392,7 +365,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.frameworks();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/frameworks');
+      expect(call.toUrl()).toEqual(`${baseUrl}/frameworks`);
     });
   });
 
@@ -407,7 +380,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.frameworkAvailableLabels();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/frameworks/available-labels');
+      expect(call.toUrl()).toEqual(`${baseUrl}/frameworks/available-labels`);
     });
   });
 
@@ -415,7 +388,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.interactiveQueue();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/interactive-queue');
+      expect(call.toUrl()).toEqual(`${baseUrl}/interactive-queue`);
     });
   });
 
@@ -423,7 +396,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.licenses();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/licenses');
+      expect(call.toUrl()).toEqual(`${baseUrl}/licenses`);
     });
   });
 
@@ -438,7 +411,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.maintenance();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/maintenance');
+      expect(call.toUrl()).toEqual(`${baseUrl}/maintenance`);
     });
   });
 
@@ -460,7 +433,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.overview();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/overview');
+      expect(call.toUrl()).toEqual(`${baseUrl}/overview`);
     });
   });
 
@@ -468,7 +441,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.pools();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/pools');
+      expect(call.toUrl()).toEqual(`${baseUrl}/pools`);
     });
   });
 
@@ -476,7 +449,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.pool(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/pools/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/pools/1`);
     });
   });
 
@@ -499,7 +472,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.roles();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/roles');
+      expect(call.toUrl()).toEqual(`${baseUrl}/roles`);
     });
   });
 
@@ -521,7 +494,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.samples();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/samples');
+      expect(call.toUrl()).toEqual(`${baseUrl}/samples`);
     });
   });
 
@@ -529,16 +502,12 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.sample(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/samples/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/samples/1`);
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.sample();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.sample(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -560,7 +529,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.settings();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/settings');
+      expect(call.toUrl()).toEqual(`${baseUrl}/settings`);
     });
   });
 
@@ -583,7 +552,7 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.createUser();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/users');
+      expect(call.toUrl()).toEqual(`${baseUrl}/users`);
       expect((<any>call).requestConfig.method).toEqual('POST');
     });
   });

@@ -1,3 +1,6 @@
+import {Device} from './Device';
+import {CollectionBasicQueryParams} from './HTTP';
+
 export type TunnelSettings = {
   domain: string;
   email: string;
@@ -56,7 +59,7 @@ export type DeviceSession = {
   billable: boolean;
   config: DeviceSessionConfig;
   createTime: number;
-  device: any;
+  device: Device;
   deviceInstanceId: number;
   deviceLogFirstTimestamp: number;
   deviceRunId: number;
@@ -122,4 +125,27 @@ export type DeviceSessionConnection = {
   type: string;
   url: string;
   urlSchema: string;
+}
+
+export type DeviceSessionData = Omit<DeviceSessionConfig, 'adbVersion' | 'id' | 'tunnelSettings' | 'type'> & {configuration: DeviceSessionConfig};
+
+export interface DeviceSessionQueryParams extends CollectionBasicQueryParams {
+  withProperties: boolean;
+}
+
+export interface SessionQueryParams extends CollectionBasicQueryParams {
+  projectId: number;
+  testRunId: number;
+}
+
+export interface SessionRunStepQueryParams extends CollectionBasicQueryParams {
+  runId: number;
+}
+
+export interface SessionStepQueryParams extends SessionRunStepQueryParams {
+  projectId: number;
+}
+
+export interface TRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
+  projectId: number;
 }

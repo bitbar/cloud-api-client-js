@@ -1,16 +1,16 @@
-import {APIAdminResource} from "./APIAdminResource";
-import {NoData} from "./APIEntity";
-import {APIList, NoQueryParams} from './APIList'
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {AdminDevice, AdminDeviceData} from "./models/AdminDevice";
-import {AdminDeviceSession} from "./models/AdminDeviceSession";
+import {AdminDevice, AdminDeviceData} from './models/AdminDevice';
+import {AdminDeviceSession} from './models/AdminDeviceSession';
 import {
   DeviceCleanupConfiguration,
   DeviceCleanupConfigurationData,
   DeviceLabelData,
   DeviceProperty
-} from "./models/Device";
-import {QueryParams} from "./models/HTTP";
+} from './models/Device';
+import {NoQueryParams, QueryParams} from './models/HTTP';
 
 
 export class APIAdminResourceDevice extends APIResource<AdminDevice, NoQueryParams, AdminDeviceData> {

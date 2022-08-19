@@ -1,8 +1,8 @@
-import API from "../../API";
-import APIEntity from "../APIEntity";
-import APIList from "../APIList";
-import APIResource from "../APIResource";
-import InputFileset from "./InputFileset";
+import API from '../../API';
+import APIEntity from '../APIEntity';
+import APIList from '../APIList';
+import APIResource from '../APIResource';
+import InputFileset from './InputFileset';
 
 describe('InputFileset', () => {
   const cloudUrl = 'https://cloud.bitbar.com';

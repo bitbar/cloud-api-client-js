@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminListServices} from "./APIAdminListServices";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIAdminListServices} from './APIAdminListServices';
+import {APIAdminResource} from './APIAdminResource';
+import {APIList} from './APIList';
 
 
 describe('APIAdminListServices', () => {
@@ -9,6 +9,7 @@ describe('APIAdminListServices', () => {
   let service: APIAdminListServices;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseUrl = '/admin/services';
 
   beforeEach(() => {
     api = new API({
@@ -20,22 +21,14 @@ describe('APIAdminListServices', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/services');
-  });
-
-  describe('@available', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.available();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/services/available');
-    });
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@active', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.active();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/services');
+      expect(call.toUrl()).toEqual(`${baseUrl}`);
       expect((<any>call).requestConfig.params.notArchived).toEqual(true);
     });
   });
@@ -44,7 +37,7 @@ describe('APIAdminListServices', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.activated();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/services');
+      expect(call.toUrl()).toEqual(`${baseUrl}`);
       expect((<any>call).requestConfig.params.filter).toEqual('activated_eq_true');
       expect((<any>call).requestConfig.params.limit).toEqual(0);
       expect((<any>call).requestConfig.params.sort).toEqual('name_a');
@@ -55,7 +48,7 @@ describe('APIAdminListServices', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.inUse();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/services');
+      expect(call.toUrl()).toEqual(`${baseUrl}`);
       expect((<any>call).requestConfig.params.inUse).toEqual(true);
       expect((<any>call).requestConfig.params.limit).toEqual(0);
       expect((<any>call).requestConfig.params.sort).toEqual('name_a');
@@ -66,7 +59,7 @@ describe('APIAdminListServices', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.byPrice();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/services');
+      expect(call.toUrl()).toEqual(`${baseUrl}`);
       expect((<any>call).requestConfig.params.sort).toEqual('centPrice_a');
     });
   });

@@ -1,21 +1,21 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIEntity, NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
+import {AdminTestRun} from './models/AdminTestRun';
+import {DeviceSession, DeviceSessionStep, TRunDeviceSessionQueryParams} from './models/DeviceSession';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {Screenshot, ScreenshotExtended, ScreenshotQueryParams} from './models/Screenshot';
+import {Tag, TagsData, TagsQueryParams, TaqQueryParams, TestRunTagsData} from './models/Tag';
+import {RunData, RunQueryParam, TestRun, TestRunData} from './models/TestRun';
+import {TestRunDataAvailability, TestRunDataAvailabilityQueryParams} from './models/TestRunDataAvailability';
+import {UserFile} from './models/UserFile';
 
-/**
- * APIResourceRun
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceRunCommon extends APIResource {
+export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, TestRunData | RunData> {
 
   /**
    * /runs/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -28,64 +28,64 @@ export class APIResourceRunCommon extends APIResource {
 
   // /runs/{id}/abort
   abort() {
-    return new APIResource(this).push('abort').post();
+    return new APIResource<AdminTestRun | TestRun, NoQueryParams, RunData>(this).push('abort').post();
   }
 
   // /runs/{id}/data-availability
   dataAvailability() {
-    return new APIList(this).push('data-availability');
+    return new APIResource<TestRunDataAvailability, TestRunDataAvailabilityQueryParams, NoData>(this).push('data-availability');
   }
 
   // /runs/{id}/device-sessions
   deviceSessions() {
-    return new APIList(this).push('device-sessions');
+    return new APIList<DeviceSession, CollectionBasicQueryParams | TRunDeviceSessionQueryParams, NoData>(this).push('device-sessions');
   }
 
   // /runs/{id}/files.zip
   filesZip(ids?: Array<number>) {
-    return postDeviceRunIds(this, 'files.zip', ids);
+    return postDeviceRunIds<UserFile>(this, 'files.zip', ids);
   }
 
   // /runs/{id}/logs.zip
   logsZip(ids?: Array<number>) {
-    return postDeviceRunIds(this, 'logs.zip', ids);
+    return postDeviceRunIds<UserFile>(this, 'logs.zip', ids);
   }
 
   // /runs/{id}/performance.zip
   performanceZip(ids?: Array<number>) {
-    return postDeviceRunIds(this, 'performance.zip', ids);
+    return postDeviceRunIds<UserFile>(this, 'performance.zip', ids);
   }
 
   // /runs/{id}/retry
   retry(ids?: Array<number>) {
-    return postDeviceRunIds(this, 'retry', ids).setRequestConfig({
+    return postDeviceRunIds<TestRun>(this, 'retry', ids).setRequestConfig({
       timeout: 0
     });
   }
 
   // /runs/{id}/screenshot-names
   screenshotNames() {
-    return new APIList(this).push('screenshot-names');
+    return new APIList<Screenshot, NoQueryParams, NoData>(this).push('screenshot-names');
   }
 
   // /runs/{id}/screenshots
   screenshots() {
-    return new APIList(this).push('screenshots');
+    return new APIList<ScreenshotExtended, ScreenshotQueryParams, NoData>(this).push('screenshots');
   }
 
   // /runs/{id}/screenshots.zip
   screenshotsZip(ids?: Array<number>) {
-    return postDeviceRunIds(this, 'screenshots.zip', ids);
+    return postDeviceRunIds<UserFile>(this, 'screenshots.zip', ids);
   }
 
   // /runs/{id}/steps
   steps() {
-    return new APIList(this).push('steps');
+    return new APIList<DeviceSessionStep, CollectionBasicQueryParams, NoData>(this).push('steps');
   }
 
   // /runs/{id}/tags
   tags() {
-    return new APIList(this).push('tags');
+    return new APIList<Tag, CollectionBasicQueryParams | TagsQueryParams, TagsData | TestRunTagsData>(this).push('tags');
   }
 
   // /runs/{id}/tag
@@ -94,7 +94,7 @@ export class APIResourceRunCommon extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('tags', id);
+    return new APIResource<Tag, TaqQueryParams, NoData>(this).push('tags', id);
   }
 
 }

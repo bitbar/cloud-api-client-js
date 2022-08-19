@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceService} from "./APIAdminResourceService";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceService} from './APIAdminResourceService';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceService', () => {
@@ -9,6 +9,8 @@ describe('APIAdminResourceService', () => {
   let service: APIAdminResourceService;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseId = 1;
+  const baseUrl = `/admin/services/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -20,23 +22,19 @@ describe('APIAdminResourceService', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/services/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceService(adminResource);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceService(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@activate', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.activate();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/services/1/activate');
+      expect(call.toUrl()).toEqual(`${baseUrl}/activate`);
       expect((<any>call).requestConfig.method).toEqual('POST');
     });
   });

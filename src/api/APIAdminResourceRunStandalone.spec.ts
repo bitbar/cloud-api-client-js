@@ -1,8 +1,7 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceRunStandalone} from "./APIAdminResourceRunStandalone";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceRunStandalone', () => {
@@ -10,6 +9,8 @@ describe('APIAdminResourceRunStandalone', () => {
   let service: APIAdminResourceRunStandalone;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseId = 1;
+  const baseUrl = `/admin/runs/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -21,23 +22,19 @@ describe('APIAdminResourceRunStandalone', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/runs/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceRunStandalone(adminResource);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceRunStandalone(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@abort', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.abort();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/runs/1/abort');
+      expect(call.toUrl()).toEqual(`${baseUrl}/abort`);
       expect((<any>call).requestConfig.method).toEqual('POST');
     });
   });
@@ -46,7 +43,7 @@ describe('APIAdminResourceRunStandalone', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.changeBillable(false);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/runs/1/changebillable');
+      expect(call.toUrl()).toEqual(`${baseUrl}/changebillable`);
       expect((<any>call).requestConfig.method).toEqual('POST');
       expect((<any>call).requestConfig.params.billable).toEqual(false);
     });
@@ -56,7 +53,7 @@ describe('APIAdminResourceRunStandalone', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.changePriority(false);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/runs/1/changepriority');
+      expect(call.toUrl()).toEqual(`${baseUrl}/changepriority`);
       expect((<any>call).requestConfig.method).toEqual('POST');
       expect((<any>call).requestConfig.params.priority).toEqual(false);
     });
@@ -66,26 +63,9 @@ describe('APIAdminResourceRunStandalone', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.retry();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/runs/1/retry');
+      expect(call.toUrl()).toEqual(`${baseUrl}/retry`);
       expect((<any>call).requestConfig.timeout).toEqual(0);
     });
   });
-
-  describe('@deviceSessions', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.deviceSessions();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions');
-    });
-  });
-
-  describe('@deviceSession', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.deviceSession(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/runs/1/device-sessions/1');
-    });
-  });
-
 
 });

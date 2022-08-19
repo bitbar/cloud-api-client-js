@@ -1,23 +1,18 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {UserFile} from "./models/UserFile";
+import {APIResourceUser} from './APIResourceUser';
+import {CollectionBasicQueryParams} from './models/HTTP';
+import {FileSizeData, UserFile, UserFileTag} from './models/UserFile';
 
-/**
- * APIResourceFile
- *
- * @class
- * @extends APIResource
- */
+
 export class APIResourceFile extends APIResource<UserFile> {
 
   /**
    * /files/{id}
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource | APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -27,8 +22,9 @@ export class APIResourceFile extends APIResource<UserFile> {
   }
 
   // use this to download file content
+  // /files/{id}/file
   file() {
-    return new APIResource(this).push('file');
+    return new APIResource<UserFile, FileSizeData, NoData>(this).push('file');
   }
 
   // /files/{id}/icon
@@ -38,7 +34,7 @@ export class APIResourceFile extends APIResource<UserFile> {
 
   // /files/{id}/tags
   tags() {
-    return new APIList(this).push('tags');
+    return new APIList<UserFileTag, CollectionBasicQueryParams, NoData>(this).push('tags');
   }
 
 }

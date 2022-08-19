@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceProject} from "./APIAdminResourceProject";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceProject} from './APIAdminResourceProject';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceProject', () => {
@@ -9,6 +9,8 @@ describe('APIAdminResourceProject', () => {
   let service: APIAdminResourceProject;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseId = 1;
+  const baseUrl = `/projects/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -20,23 +22,19 @@ describe('APIAdminResourceProject', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/projects/1');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   it('should throw error if resource ID is missing', () => {
-    try {
-      // @ts-ignore
-      service = new APIAdminResourceProject(adminResource);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
+    const id: any = undefined;
+    expect(() => new APIAdminResourceProject(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@unarchive', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.unarchive();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/projects/1/unarchive');
+      expect(call.toUrl()).toEqual(`${baseUrl}/unarchive`);
     });
   });
 

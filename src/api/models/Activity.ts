@@ -1,4 +1,4 @@
-import {Method} from "axios";
+import {Method} from 'axios';
 
 export type Activity = {
   body: string;

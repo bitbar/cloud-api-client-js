@@ -1,5 +1,5 @@
-import {OsType} from "./Enum";
-import {UserFile} from "./UserFile";
+import {OsType} from './Enum';
+import {UserFile} from './UserFile';
 
 export type Framework = {
   accountId: number;
@@ -29,11 +29,11 @@ export type Framework = {
 
 export type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'mainUserEmail' | 'sampleApp' |
   'sampleTest'> & {
-  addLabelToDevices: boolean;
-  roleIds: Array<number>;
-  sampleAppId: number;
-  sampleTestId: number;
-}
+    addLabelToDevices: boolean;
+    roleIds: Array<number>;
+    sampleAppId: number;
+    sampleTestId: number;
+  }
 
 export type FrameworkEditData = Omit<FrameworkData, 'accountId' | 'id' | 'secured'>;
 

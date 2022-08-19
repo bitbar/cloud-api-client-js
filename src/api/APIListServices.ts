@@ -1,8 +1,10 @@
-import {Method} from "axios";
-import {APIList, CollectionQueryParams, NoQueryParams} from './APIList'
-import APIResourceUser from "./APIResourceUser";
-import {AccountService, PaymentMethod, ServicePaymentStatus} from "./models/AccountService";
-import {Service} from "./models/Service";
+import {Method} from 'axios';
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
+import {APIResourceUser} from './APIResourceUser';
+import {AccountService, PaymentMethod, ServicePaymentStatus} from './models/AccountService';
+import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
+import {Service} from './models/Service';
 
 
 export interface ServiceData {
@@ -29,7 +31,7 @@ export interface ServiceData {
 
 export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams, ServiceData> {
 
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ['POST'];
 
   /**
    * /services
@@ -41,11 +43,11 @@ export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams
 
   // /services/available
   available() {
-    return new APIList<Service, CollectionQueryParams, void>(this).push('available');
+    return new APIList<Service, CollectionQueryParams, NoData>(this).push('available');
   }
 
   active() {
-    const apiList = new APIList<AccountService, CollectionQueryParams, void>(this);
+    const apiList = new APIList<AccountService, CollectionQueryParams, NoData>(this);
     if (this.first === 'me') {
       apiList.push('active');
     } else {

@@ -1,5 +1,5 @@
-import {QueryParams} from "./HTTP";
-import {TestScheduler, TestState} from "./TestRun";
+import {QueryParams} from './HTTP';
+import {TestScheduler, TestState} from './TestRun';
 
 export type AdminTestRun = {
   appCrawlerRun: boolean;

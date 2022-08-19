@@ -1,12 +1,12 @@
-import {Method} from "axios";
+import {Method} from 'axios';
 import {API} from '../API';
-import {APIList, NoQueryParams} from './APIList'
+import {NoData} from './APIEntity';
+import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {QueryParams} from "./models/HTTP";
-import {User} from "./models/User";
-import {VatRate} from "./models/VatRate";
-
-export type UserData = Pick<User, 'email'>;
+import {NoQueryParams, QueryParams} from './models/HTTP';
+import {Message} from './models/Message';
+import {User, UserData} from './models/User';
+import {VatRate} from './models/VatRate';
 
 export type UserPasswordData = {
   key: string
@@ -29,7 +29,7 @@ export interface ValidateVatQueryParams extends QueryParams {
 
 export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ["POST"];
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ['POST'];
 
   /**
    * /users
@@ -46,7 +46,7 @@ export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
   // /users/recoveries
   recoveries() {
-    return new APIResource<User, UserRecoveryQueryParams, UserData>(this).push('recoveries');
+    return new APIResource<User | Message, UserRecoveryQueryParams, UserData>(this).push('recoveries');
   }
 
   // /users/passwordRecovery
@@ -56,7 +56,7 @@ export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
   // /users/resetApiKey
   validateVatId() {
-    return new APIResource<VatRate, ValidateVatQueryParams, void>(this).push('validateVatId');
+    return new APIResource<VatRate, ValidateVatQueryParams, NoData>(this).push('validateVatId');
   }
 
 }

@@ -1,21 +1,17 @@
-import {API} from '../API';
-import {APIEntity} from './APIEntity';
-import {APIResource} from './APIResource'
 
-/**
- * APIResourceNotification
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceNotification extends APIResource {
+import {NoData} from './APIEntity';
+import {APIResource} from './APIResource'
+import APIResourceUser from './APIResourceUser';
+import {NoQueryParams} from './models/HTTP';
+import {Message} from './models/Message';
+import {Notification, NotificationData} from './models/Notification';
+
+export class APIResourceNotification extends APIResource<Notification, NoQueryParams, NotificationData> {
 
   /**
    * /notifications/{id}
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -26,7 +22,7 @@ export class APIResourceNotification extends APIResource {
 
   // /notifications/{id}/test
   test() {
-    return new APIResource(this).push('test');
+    return new APIResource<Message, NoQueryParams, NoData>(this).push('test');
   }
 
 }

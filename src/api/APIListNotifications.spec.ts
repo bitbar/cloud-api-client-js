@@ -1,10 +1,11 @@
-import API from "../API";
-import APIList from "./APIList";
-import APIListNotifications from "./APIListNotifications";
-import APIResourceUser from "./APIResourceUser";
+import {API} from '../API';
+import {APIList} from './APIList';
+import {APIListNotifications} from './APIListNotifications';
+import {APIResourceUser} from './APIResourceUser';
 
 describe('APIListNotifications', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
+  const baseUrl = '/me/notifications';
   let service: APIListNotifications;
 
   beforeEach(() => {
@@ -18,13 +19,13 @@ describe('APIListNotifications', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/me/notifications');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@scopes', () => {
     it('should initialize proper endpoint path', () => {
       const result = service.scopes();
-      expect(result.toUrl()).toEqual('/me/notifications/scopes');
+      expect(result.toUrl()).toEqual(`${baseUrl}/scopes`);
       expect(result).toBeInstanceOf(APIList);
     });
   });
@@ -32,7 +33,7 @@ describe('APIListNotifications', () => {
   describe('@used', () => {
     it('should initialize proper endpoint path', () => {
       const result = service.channels();
-      expect(result.toUrl()).toEqual('/me/notifications/channels');
+      expect(result.toUrl()).toEqual(`${baseUrl}/channels`);
       expect(result).toBeInstanceOf(APIList);
     });
   });

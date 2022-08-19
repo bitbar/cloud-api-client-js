@@ -1,25 +1,19 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
 import {APIResource} from './APIResource'
+import {NoQueryParams} from './models/HTTP';
+import {LoginData, User} from './models/User';
 
-/**
- * APIResourceUserSession
- *
- * @class
- * @extends APIResource
- */
 export class APIResourceUserSession extends APIResource {
 
-  // Constructor
   // /user-sessions
-  constructor(parent: APIEntity<any> | API) {
+  constructor(parent: API) {
     super(parent);
     this.push('user-sessions');
   }
 
   // /user-sessions/login
-  login(data: object) {
-    return new APIResource(this).push('login').post().data(data);
+  login(data: LoginData) {
+    return new APIResource<User, NoQueryParams, LoginData>(this).push('login').post().data(data);
   }
 
   // /user-sessions/logout

@@ -13,3 +13,5 @@ export type AccessGroup = {
 }
 
 export type AccessGroupData = Pick<AccessGroup, 'name' | 'scope' | 'userId'>;
+
+export type AccessGroupsData = Omit<AccessGroupData, 'userId'>;

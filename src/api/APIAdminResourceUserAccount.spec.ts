@@ -1,9 +1,9 @@
-import {API} from "../API";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIAdminResourceUser} from "./APIAdminResourceUser";
-import {APIAdminResourceUserAccount} from "./APIAdminResourceUserAccount";
-import {APIList} from "./APIList";
-import {APIResource} from "./APIResource";
+import {API} from '../API';
+import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceUser} from './APIAdminResourceUser';
+import {APIAdminResourceUserAccount} from './APIAdminResourceUserAccount';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceUser', () => {
@@ -12,6 +12,8 @@ describe('APIAdminResourceUser', () => {
   let api: API;
   let adminResource: APIAdminResource;
   let adminResourceUser: APIAdminResourceUser;
+  const baseId = 1;
+  const baseUrl = `/admin/users/${baseId}`;
 
   beforeEach(() => {
     api = new API({
@@ -24,14 +26,14 @@ describe('APIAdminResourceUser', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/users/1/account');
+    expect(service.toUrl()).toEqual(`${baseUrl}/account`);
   });
 
   describe('@roles', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.roles();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/users/1/account/roles');
+      expect(call.toUrl()).toEqual(`${baseUrl}/account/roles`);
     });
   });
 
@@ -39,16 +41,12 @@ describe('APIAdminResourceUser', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.role(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/users/1/account/roles/1');
+      expect(call.toUrl()).toEqual(`${baseUrl}/account/roles/1`);
     });
 
     it('should throw error if resource ID is missing', () => {
-      try {
-        // @ts-ignore
-        service.role();
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
+      const id: any = undefined;
+      expect(() => service.role(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -56,7 +54,7 @@ describe('APIAdminResourceUser', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.services();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/users/1/account-services');
+      expect(call.toUrl()).toEqual(`${baseUrl}/account-services`);
     });
   });
 
@@ -64,7 +62,7 @@ describe('APIAdminResourceUser', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.update();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual('/admin/users/1/update-account');
+      expect(call.toUrl()).toEqual(`${baseUrl}/update-account`);
     });
   });
 

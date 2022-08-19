@@ -1,6 +1,6 @@
-import {CollectionQueryParams} from "../APIList";
-import {ChargeType} from "./AccountService";
-import {Role} from "./Role";
+import {ChargeType} from './AccountService';
+import {CollectionQueryParams} from './HTTP';
+import {Role} from './Role';
 
 export type Service = {
   activateTime: number;
@@ -34,9 +34,9 @@ export enum ServiceUnit {
 }
 
 export interface AdminServicesParams extends CollectionQueryParams {
-    activeOnly: boolean;
-    inUse: boolean;
-    notArchive: boolean;
+  activeOnly: boolean;
+  inUse: boolean;
+  notArchive: boolean;
 }
 
 export type ServiceActivateData = {

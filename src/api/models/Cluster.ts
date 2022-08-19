@@ -1,6 +1,6 @@
-import {CollectionResponse} from "../APIList";
-import {AdminDevice} from "./AdminDevice";
-import {QueryParams} from "./HTTP";
+
+import {AdminDevice} from './AdminDevice';
+import {CollectionResponse, QueryParams} from './HTTP';
 
 export type Cluster = {
   devices: CollectionResponse<AdminDevice>;

@@ -1,4 +1,4 @@
-import {CollectionQueryParams} from "../APIList";
+import {CollectionQueryParams} from './HTTP';
 
 export type AdminDeviceSessionStatistics = {
   abortedDeviceCount: number;
@@ -18,7 +18,6 @@ export type AdminDeviceSessionStatistics = {
   waitingDeviceCount: number;
   warningDeviceCount: number;
 }
-
 export interface AdminStatisticsParams extends CollectionQueryParams {
   days: number;
 }

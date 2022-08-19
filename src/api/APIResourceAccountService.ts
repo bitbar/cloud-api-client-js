@@ -1,19 +1,14 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIEntity, NoData} from './APIEntity';
 import {APIResource} from './APIResource'
+import {AccountService} from './models/AccountService';
+import {AccountServicePayment} from './models/AccountServicePayment';
+import {BillingPeriodQueryParams} from './models/BillingPeriod';
 
-/**
- * APIResourceAccountService
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceAccountService extends APIResource {
+export class APIResourceAccountService extends APIResource<AccountService> {
 
   /**
    * /account-services/{id}
-   *
-   * Constructor
    */
   constructor(parent: APIEntity<any> | API, id: number) {
     if (id == null) {
@@ -26,7 +21,7 @@ export class APIResourceAccountService extends APIResource {
 
   // /account-services/{id}/billing-period
   billingPeriod() {
-    return new APIResource(this).push('billing-period');
+    return new APIResource<AccountServicePayment, BillingPeriodQueryParams, NoData>(this).push('billing-period');
   }
 
 }

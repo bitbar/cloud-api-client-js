@@ -1,7 +1,7 @@
-import {API} from "../API";
-import {APIAdminListNotificationPlans} from "./APIAdminListNotificationPlans";
-import {APIAdminResource} from "./APIAdminResource";
-import {APIList} from "./APIList";
+import {API} from '../API';
+import {APIAdminListNotificationPlans} from './APIAdminListNotificationPlans';
+import {APIAdminResource} from './APIAdminResource';
+import {APIList} from './APIList';
 
 
 describe('APIAdminListNotificationPlans', () => {
@@ -9,6 +9,7 @@ describe('APIAdminListNotificationPlans', () => {
   let service: APIAdminListNotificationPlans;
   let api: API;
   let adminResource: APIAdminResource;
+  const baseUrl = '/admin/notification-plans'
 
   beforeEach(() => {
     api = new API({
@@ -20,14 +21,14 @@ describe('APIAdminListNotificationPlans', () => {
   });
 
   it('should initialize proper endpoint path', () => {
-    expect(service.toUrl()).toEqual('/admin/notification-plans');
+    expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
   describe('@channels', () => {
     it('should return APIListCleanupConfigurations', () => {
       const call = service.channels();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/notification-plans/channels');
+      expect(call.toUrl()).toEqual(`${baseUrl}/channels`);
     });
   });
 
@@ -35,7 +36,7 @@ describe('APIAdminListNotificationPlans', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.scopes();
       expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/admin/notification-plans/scopes');
+      expect(call.toUrl()).toEqual(`${baseUrl}/scopes`);
     });
   });
 

@@ -1,23 +1,20 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {APIAdminResource} from './APIAdminResource';
+import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
-import {DeviceGroup} from "./models/DeviceGroup";
+import APIResourceUser from './APIResourceUser';
+import {Device, DeviceProperty} from './models/Device';
+import {DeviceGroup, DeviceGroupData, DeviceGroupParams, DeviceGroupSelectorData, DeviceGroupShareData} from './models/DeviceGroup';
+import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {SharedResource} from './models/SharedResource';
 
-/**
- * APIResourceBillingPeriod
- *
- * @class
- * @extends APIResource
- */
 export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   /**
    * /device-groups/{id}
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: APIAdminResource | APIResourceUser | API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -28,21 +25,21 @@ export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   // /device-groups/{id}/devices
   devices() {
-    return new APIList(this).push('devices');
+    return new APIList<Device | DeviceGroup, DeviceGroupParams, DeviceGroupData>(this).push('devices');
   }
 
-  // /device-groups/{id}/device/{id}
+  // /device-groups/{id}/devices/{id}
   device(id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource(this).push('devices', id);
+    return new APIResource<void, NoQueryParams, NoData>(this).push('devices', id);
   }
 
   // /device-groups/{id}/selectors
   selectors() {
-    return new APIList(this).push('selectors');
+    return new APIList<DeviceProperty | DeviceGroup, CollectionBasicQueryParams, DeviceGroupSelectorData>(this).push('selectors');
   }
 
   // /device-groups/{id}/selectors/{id}
@@ -56,7 +53,7 @@ export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   // /device-groups/{id}/share
   share() {
-    return new APIResource(this).push('share');
+    return new APIResource<SharedResource, NoQueryParams, DeviceGroupShareData>(this).push('share');
   }
 
 }

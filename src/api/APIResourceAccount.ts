@@ -1,21 +1,17 @@
 import {API} from '../API';
-import {APIEntity} from './APIEntity';
+import {NoData} from './APIEntity';
 import {APIResource} from './APIResource'
+import {Account} from './models/Account';
+import {AccountConcurrencyStatusMap} from './models/AccountConcurrencyStatusMap';
+import {AccountPreferences} from './models/AccountPreference';
+import {NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
 
-/**
- * APIResourceAccount
- *
- * @class
- * @extends APIResource
- */
-export class APIResourceAccount extends APIResource {
+export class APIResourceAccount extends APIResource<Account> {
 
   /**
    * /accounts/{id}
-   *
-   * Constructor
    */
-  constructor(parent: APIEntity<any> | API, id: number) {
+  constructor(parent: API, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -26,12 +22,12 @@ export class APIResourceAccount extends APIResource {
 
   // /accounts/{id}/concurrency-status
   concurrencyStatus() {
-    return new APIResource(this).push('concurrency-status');
+    return new APIResource<AccountConcurrencyStatusMap, NoQueryParams, NoData>(this).push('concurrency-status');
   }
 
   // /accounts/{id}/preferences
   preferences() {
-    return new APIResource(this).push('preferences');
+    return new APIResource<AccountPreferences, NoQueryParams, SimpleCollectionResponse<AccountPreferences>>(this).push('preferences');
   }
 
 }

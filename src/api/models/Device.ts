@@ -1,6 +1,8 @@
-import {CollectionResponse} from "../APIList";
-import {Browser} from "./Browser";
-import {OsType} from "./Enum";
+
+import {TestRunQueryParams} from '../APIListRuns';
+import {Browser} from './Browser';
+import {OsType} from './Enum';
+import {CollectionBasicQueryParams, CollectionResponse, QueryParams} from './HTTP';
 
 export enum DeviceGroupOrigin {
   STATIC = 'STATIC',
@@ -58,7 +60,6 @@ export type Device = {
   imageTop: number;
   imageWidth: number;
   locked: boolean;
-  example: true
   mainUserEmail: string;
   manufacturer: string;
   online: boolean;
@@ -89,4 +90,25 @@ export type DeviceCleanupConfigurationData = {
 
 export type DeviceLabelData = {
   labelId: number;
+}
+
+export interface DeviceProperiesData extends QueryParams {
+  labelId: number
+}
+
+export type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content' | 'discriminator' | 'enabled'>
+
+export interface CleanupConfigurationSpecificData extends QueryParams {
+  serialId: string;
+}
+
+export interface DeviceTimeSummaryQueryParams extends CollectionBasicQueryParams {
+  forWholeAccount: boolean;
+}
+export interface DeviceUsageQueryParams extends TestRunQueryParams {
+  startTime: number;
+}
+
+export interface DeviceStatisticQueryParam extends TestRunQueryParams {
+  mode: string
 }

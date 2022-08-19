@@ -1,4 +1,4 @@
-import {CollectionQueryParams} from "../APIList";
+import {CollectionQueryParams} from './HTTP';
 
 export type UserDeviceTimeSummary = {
   automaticDeviceTime: number;
