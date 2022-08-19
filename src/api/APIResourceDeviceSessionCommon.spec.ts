@@ -112,4 +112,21 @@ describe('APIResourceDeviceSessionCommon', () => {
     });
   });
 
+  describe('@connections', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.connections();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/connections`);
+    });
+  });
+
+  describe('@logs', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.logs();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/logs`);
+      expect((<any>call).requestConfig.responseType).toEqual('text');
+    });
+  });
+
 });

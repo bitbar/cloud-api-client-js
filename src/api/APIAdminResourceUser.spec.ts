@@ -4,6 +4,7 @@ import {APIAdminResourceUser} from './APIAdminResourceUser';
 import {APIAdminResourceUserAccount} from './APIAdminResourceUserAccount';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
+import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone';
 
 
 describe('APIAdminResourceUser', () => {
@@ -89,6 +90,13 @@ describe('APIAdminResourceUser', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.account();
       expect(call).toBeInstanceOf(APIAdminResourceUserAccount);
+    });
+  });
+
+  describe('@deviceSession', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.deviceSession(1);
+      expect(call).toBeInstanceOf(APIResourceDeviceSessionStandalone);
     });
   });
 

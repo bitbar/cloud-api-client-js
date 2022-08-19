@@ -2,8 +2,8 @@ import {AxiosRequestConfig, AxiosResponse, Method} from 'axios';
 import {stringify} from 'qs';
 import {API} from '../API';
 import {ALLOWED_HTTP_METHODS, QueryParams} from './models/HTTP';
+import {AbortController} from 'node-abort-controller';
 
-export type NoData = void;
 
 /**
  * @typeParam RESPONSE        HTTP Response return type.
@@ -17,6 +17,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
   protected stack: Array<string | number> = [];
   protected requestConfig: AxiosRequestConfig = {};
   protected ALLOWED_HTTP_METHODS: Array<Method> = ALLOWED_HTTP_METHODS;
+  protected abortController: AbortController;
 
   /**
    * Constructor
@@ -36,6 +37,11 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
     } else {
       this.root = parent;
     }
+    this.abortController = new AbortController();
+  }
+
+  abortRequest() {
+    this.abortController.abort();
   }
 
   push(...items: Array<string | number>): this {
@@ -142,9 +148,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
    * Set params
    */
   params<T extends keyof QUERY_PARAMS = keyof QUERY_PARAMS>(params: Pick<QUERY_PARAMS, T>): this {
-    Object.deepAssign(this.requestConfig, {
-      params
-    });
+    this.setRequestConfig({params});
     return this;
   }
 
@@ -161,9 +165,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
    * Set data
    */
   data(data: DATA): this {
-    Object.deepAssign(this.requestConfig, {
-      data
-    });
+    this.setRequestConfig({data});
     return this;
   }
 
@@ -192,7 +194,8 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
    */
   send<T = RESPONSE>(): Promise<AxiosResponse<T>> {
     const requestConfig = <AxiosRequestConfig>Object.deepAssign({}, this.requestConfig, {
-      url: `/${this.stack.join('/')}`
+      url: `/${this.stack.join('/')}`,
+      signal: this.abortController.signal
     });
 
     // Set default headers

@@ -1,8 +1,8 @@
-import {NoData} from './APIEntity';
 import {APIResource} from './APIResource'
 import {APIUserResourceAccount} from './APIUserResourceAccount';
-import {NoQueryParams} from './models/HTTP';
+import {NoData, NoQueryParams} from './models/HTTP';
 import {User} from './models/User';
+
 
 export class APIResourceAdditionalUser extends APIResource<User> {
 

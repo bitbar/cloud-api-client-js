@@ -1,7 +1,6 @@
 import {APIAdminResource} from './APIAdminResource';
-import {NoData} from './APIEntity';
 import {APIResource} from './APIResource'
-import {NoQueryParams} from './models/HTTP';
+import {NoData, NoQueryParams} from './models/HTTP';
 import {License} from './models/License';
 
 export class APIAdminResourceLicense extends APIResource<License, NoQueryParams, NoData> {

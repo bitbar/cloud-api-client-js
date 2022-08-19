@@ -1,5 +1,6 @@
-import {CollectionQueryParams} from './HTTP';
+import {CollectionQueryParams, QueryParams} from './HTTP';
 import {Role} from './Role';
+
 
 export enum MfaStatus {
   VERIFICATION_NEED = 'VERIFICATION_NEED',
@@ -68,3 +69,20 @@ export interface LoginData {
 }
 
 
+export type UserPasswordData = {
+  key: string
+  password: string;
+};
+export type UserActivateData = {
+  zip: string;
+} & UserPasswordData
+  & Pick<User, 'address' | 'city' | 'country' | 'email' | 'firstName' | 'lastName' | 'organization' | 'phone' | 'state' | 'vatId'>;
+
+export interface UserRecoveryQueryParams extends QueryParams {
+  recoveryKey: string;
+}
+
+export interface ValidateVatQueryParams extends QueryParams {
+  countryCode: string;
+  vatId: string;
+}

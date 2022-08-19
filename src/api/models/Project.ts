@@ -1,5 +1,5 @@
-import {TestRunQueryParams} from '../APIListRuns';
 import {OsType} from './Enum';
+import {TestRunsQueryParams} from './TestRun';
 
 export enum ArchivingStrategy {
   NEVER = 'NEVER',
@@ -30,7 +30,6 @@ export type Project = {
 
 export type UserProjectData = Pick<Project, 'name'>;
 
-export interface UserProjectQueryParams extends TestRunQueryParams {
+export interface UserProjectQueryParams extends TestRunsQueryParams {
   showStatistics: boolean;
 }
-

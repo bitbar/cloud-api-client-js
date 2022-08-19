@@ -1,9 +1,8 @@
 import {API} from '../API';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {Broker} from './models/Broker';
-import {NoQueryParams} from './models/HTTP';
+import {NoData, NoQueryParams} from './models/HTTP';
 
 export class APIResourceBroker extends APIResource {
 

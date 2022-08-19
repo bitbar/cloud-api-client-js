@@ -1,33 +1,11 @@
 import {Method} from 'axios';
-import {NoData} from './APIEntity';
-import {APIList} from './APIList'
+import {API} from '../API';
+import {APIList} from './APIList';
 import {APIResourceUser} from './APIResourceUser';
-import {AccountService, PaymentMethod, ServicePaymentStatus} from './models/AccountService';
-import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
-import {Service} from './models/Service';
+import {AccountService, ServicePaymentStatus} from './models/AccountService';
+import {CollectionQueryParams, NoData, NoQueryParams} from './models/HTTP';
+import {Service, ServiceData} from './models/Service';
 
-
-export interface ServiceData {
-  address?: string;
-  braintreeNonce?: string;
-  cardNumber?: string;
-  city?: string;
-  count?: number;
-  country?: string;
-  cvv?: string;
-  email?: string;
-  expirationDate?: string;
-  firstName?: string;
-  lastName?: string;
-  organization?: string;
-  paymentMethod: PaymentMethod;
-  phone?: string;
-  serviceId: number;
-  state?: string;
-  stripeToken?: string;
-  vatId?: string;
-  zip?: string;
-}
 
 export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams, ServiceData> {
 
@@ -36,7 +14,7 @@ export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams
   /**
    * /services
    */
-  constructor(parent: APIResourceUser) {
+  constructor(parent: API | APIResourceUser) {
     super(parent);
     this.push('services');
   }
@@ -56,6 +34,14 @@ export class APIListServices extends APIList<ServicePaymentStatus, NoQueryParams
       });
     }
     return apiList;
+  }
+
+  byPrice() {
+    return new APIList<AccountService, CollectionQueryParams, void>(this).sort('centPrice');
+  }
+
+  availableByPrice() {
+    return new APIList<AccountService, CollectionQueryParams, void>(this).push('available').sort('centPrice');
   }
 
 }

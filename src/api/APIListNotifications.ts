@@ -1,13 +1,12 @@
-import {NoData} from './APIEntity';
-import {APIList} from './APIList'
+import {APIList} from './APIList';
+import {APIResourceChannel} from './APIResourceChannel';
 import {APIResourceUser} from './APIResourceUser';
 import {Enum} from './models/Enum';
-import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
-import {Notification} from './models/Notification';
+import {CollectionQueryParams, NoData, NoQueryParams} from './models/HTTP';
+import {Notification, NotificationsData} from './models/Notification';
 
-export type NotificationData = Pick<Notification, 'channel' | 'destination' | 'projectId' | 'scope'>;
 
-export class APIListNotifications extends APIList<Notification, CollectionQueryParams, NotificationData> {
+export class APIListNotifications extends APIList<Notification, CollectionQueryParams, NotificationsData> {
 
   /**
    * /notifications
@@ -25,6 +24,10 @@ export class APIListNotifications extends APIList<Notification, CollectionQueryP
   // /notifications/channels
   channels() {
     return new APIList<Enum, NoQueryParams, NoData>(this).push('channels');
+  }
+
+  channel(type: string) {
+    return new APIResourceChannel(this, type);
   }
 
 }

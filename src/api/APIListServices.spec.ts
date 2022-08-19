@@ -48,4 +48,22 @@ describe('APIListServices', () => {
     });
   });
 
+  describe('@byPrice', () => {
+    it('should initialize proper endpoint path', () => {
+      const result = service.byPrice();
+      expect(result.toUrl()).toEqual(`${baseUrl}`);
+      expect(result).toBeInstanceOf(APIList);
+      expect((<any>result).requestConfig.params.sort).toEqual('centPrice_a');
+    });
+  });
+
+  describe('@availableByPrice', () => {
+    it('should initialize proper endpoint path', () => {
+      const result = service.availableByPrice();
+      expect(result.toUrl()).toEqual(`${baseUrl}/available`);
+      expect(result).toBeInstanceOf(APIList);
+      expect((<any>result).requestConfig.params.sort).toEqual('centPrice_a');
+    });
+  });
+
 });

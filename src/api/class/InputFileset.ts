@@ -1,8 +1,9 @@
 import {API} from '../../API';
-import {APIEntity, NoData} from '../APIEntity';
+import {APIEntity} from '../APIEntity';
 import {APIList} from '../APIList'
 import {APIResource} from '../APIResource'
 import {NonRequestable} from '../decorators/NonRequestable';
+import {NoData} from '../models/HTTP';
 import {UserFile} from '../models/UserFile';
 import {FilesQueryParams} from './FilesQueryParams';
 

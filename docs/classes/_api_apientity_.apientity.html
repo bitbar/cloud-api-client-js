@@ -62,7 +62,7 @@
 					<a href="_api_apientity_.apientity.html">APIEntity</a>
 				</li>
 			</ul>
-			<h1>Class APIEntity</h1>
+			<h1>Class APIEntity&lt;RESPONSE, QUERY_PARAMS, DATA&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -71,14 +71,36 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>APIEntity</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>abstract</dt>
-						<dd></dd>
-					</dl>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>RESPONSE</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>HTTP Response return type.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<h4>QUERY_PARAMS<span class="tsd-signature-symbol">: </span><a href="../modules/_api_models_http_.html#queryparams" class="tsd-signature-type">QueryParams</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Allowed Query Params</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<h4>DATA</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Allowed    Data Object</p>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
@@ -109,21 +131,24 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external"><a href="_api_apientity_.apientity.html#allowed_http_methods" class="tsd-kind-icon">ALLOWED_<wbr>HTTP_<wbr>METHODS</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external"><a href="_api_apientity_.apientity.html#abortcontroller" class="tsd-kind-icon">abort<wbr>Controller</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external"><a href="_api_apientity_.apientity.html#requestconfig" class="tsd-kind-icon">request<wbr>Config</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#root" class="tsd-kind-icon">root</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external"><a href="_api_apientity_.apientity.html#stack" class="tsd-kind-icon">stack</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#first" class="tsd-kind-icon">first</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#first" class="tsd-kind-icon">first</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#last" class="tsd-kind-icon">last</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#abortrequest" class="tsd-kind-icon">abort<wbr>Request</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#data" class="tsd-kind-icon">data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#formdata" class="tsd-kind-icon">form<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#get" class="tsd-kind-icon">get</a></li>
@@ -131,15 +156,16 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#jsondata" class="tsd-kind-icon">json<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#method" class="tsd-kind-icon">method</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#params" class="tsd-kind-icon">params</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_api_apientity_.apientity.html#paramsserializer" class="tsd-kind-icon">params<wbr>Serializer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#pop" class="tsd-kind-icon">pop</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_api_apientity_.apientity.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-external"><a href="_api_apientity_.apientity.html#paramsserializer" class="tsd-kind-icon">params<wbr>Serializer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#post" class="tsd-kind-icon">post</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#push" class="tsd-kind-icon">push</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#removeparam" class="tsd-kind-icon">remove<wbr>Param</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#removerequestconfig" class="tsd-kind-icon">remove<wbr>Request<wbr>Config</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#send" class="tsd-kind-icon">send</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#restack" class="tsd-kind-icon">restack</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external"><a href="_api_apientity_.apientity.html#send" class="tsd-kind-icon">send</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#setrequestconfig" class="tsd-kind-icon">set<wbr>Request<wbr>Config</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#shift" class="tsd-kind-icon">shift</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_api_apientity_.apientity.html#tourl" class="tsd-kind-icon">to<wbr>Url</a></li>
 							</ul>
 						</section>
@@ -152,13 +178,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">new APIEntity<span class="tsd-signature-symbol">(</span>parent<span class="tsd-signature-symbol">: </span><a href="_api_apientity_.apientity.html" class="tsd-signature-type">APIEntity</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_api_apientity_.apientity.html" class="tsd-signature-type">APIEntity</a></li>
+						<li class="tsd-signature tsd-kind-icon">new APIEntity<span class="tsd-signature-symbol">(</span>parent<span class="tsd-signature-symbol">: </span><a href="_api_apientity_.apientity.html" class="tsd-signature-type">APIEntity</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESPONSE</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="_api_.api.html" class="tsd-signature-type">API</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_api_apientity_.apientity.html" class="tsd-signature-type">APIEntity</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L49">api/APIEntity.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L20">api/APIEntity.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -169,7 +195,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>parent: <a href="_api_apientity_.apientity.html" class="tsd-signature-type">APIEntity</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
+									<h5>parent: <a href="_api_apientity_.apientity.html" class="tsd-signature-type">APIEntity</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RESPONSE</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="_api_.api.html" class="tsd-signature-type">API</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_api_apientity_.apientity.html" class="tsd-signature-type">APIEntity</a></h4>
@@ -180,65 +206,69 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
+					<a name="allowed_http_methods" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> ALLOWED_<wbr>HTTP_<wbr>METHODS</h3>
+					<div class="tsd-signature tsd-kind-icon">ALLOWED_<wbr>HTTP_<wbr>METHODS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Method</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ALLOWED_HTTP_METHODS</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L19">api/APIEntity.ts:19</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
+					<a name="abortcontroller" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> abort<wbr>Controller</h3>
+					<div class="tsd-signature tsd-kind-icon">abort<wbr>Controller<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AbortController</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L20">api/APIEntity.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
 					<a name="requestconfig" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> request<wbr>Config</h3>
 					<div class="tsd-signature tsd-kind-icon">request<wbr>Config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AxiosRequestConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L41">api/APIEntity.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L18">api/APIEntity.ts:18</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>object of request config</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="root" class="tsd-anchor"></a>
 					<h3>root</h3>
-					<div class="tsd-signature tsd-kind-icon">root<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<div class="tsd-signature tsd-kind-icon">root<span class="tsd-signature-symbol">:</span> <a href="_api_.api.html" class="tsd-signature-type">API</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L49">api/APIEntity.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L15">api/APIEntity.ts:15</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Root</p>
-						</div>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
 					<a name="stack" class="tsd-anchor"></a>
-					<h3>stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> stack</h3>
+					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L33">api/APIEntity.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L17">api/APIEntity.ts:17</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Stack</p>
-						</div>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
 					<a name="first" class="tsd-anchor"></a>
 					<h3>first</h3>
-					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-external">
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> first<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> first<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L102">api/APIEntity.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L65">api/APIEntity.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -247,25 +277,6 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L109">api/APIEntity.ts:109</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Set first element of the stack</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>val: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -280,7 +291,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L116">api/APIEntity.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L72">api/APIEntity.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -293,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L123">api/APIEntity.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L79">api/APIEntity.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -315,16 +326,33 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="data" class="tsd-anchor"></a>
-					<h3>data</h3>
+					<a name="abortrequest" class="tsd-anchor"></a>
+					<h3>abort<wbr>Request</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">abort<wbr>Request<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L274">api/APIEntity.ts:274</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L43">api/APIEntity.ts:43</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="data" class="tsd-anchor"></a>
+					<h3>data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DATA</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L167">api/APIEntity.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -335,14 +363,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <span class="tsd-signature-type">object</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>object of data to be set</p>
-									</div>
+									<h5>data: <span class="tsd-signature-type">DATA</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -350,13 +374,13 @@
 					<a name="formdata" class="tsd-anchor"></a>
 					<h3>form<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">form<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">FormData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">form<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DATA</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L302">api/APIEntity.ts:302</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L185">api/APIEntity.ts:185</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -367,14 +391,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <span class="tsd-signature-type">FormData</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>JSON object to be set</p>
-									</div>
+									<h5>data: <span class="tsd-signature-type">DATA</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -388,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L217">api/APIEntity.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L136">api/APIEntity.ts:136</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -397,7 +417,6 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -405,22 +424,16 @@
 					<a name="getparams" class="tsd-anchor"></a>
 					<h3>get<wbr>Params</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Params<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Params<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">QUERY_PARAMS</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L251">api/APIEntity.ts:251</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L155">api/APIEntity.ts:155</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get params</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-							<p>object</p>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">QUERY_PARAMS</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -428,31 +441,22 @@
 					<a name="headers" class="tsd-anchor"></a>
 					<h3>headers</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L175">api/APIEntity.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L103">api/APIEntity.ts:103</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Set headers</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>headers: <span class="tsd-signature-type">object</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Headers object</p>
-									</div>
+									<h5>headers: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -460,13 +464,13 @@
 					<a name="jsondata" class="tsd-anchor"></a>
 					<h3>json<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">json<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">json<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DATA</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L288">api/APIEntity.ts:288</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L175">api/APIEntity.ts:175</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -477,14 +481,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <span class="tsd-signature-type">object</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>JSON object to be set</p>
-									</div>
+									<h5>data: <span class="tsd-signature-type">DATA</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -498,7 +498,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L198">api/APIEntity.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L120">api/APIEntity.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -510,27 +510,23 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>name: <span class="tsd-signature-type">Method</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>HTTP methods name</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
 					<a name="params" class="tsd-anchor"></a>
 					<h3>params</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">params&lt;T&gt;<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">QUERY_PARAMS</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L238">api/APIEntity.ts:238</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L150">api/APIEntity.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -538,70 +534,42 @@
 									<p>Set params</p>
 								</div>
 							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">QUERY_PARAMS</span></h4>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <span class="tsd-signature-type">object</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>object of params to be set</p>
-									</div>
+									<h5>params: <span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">QUERY_PARAMS</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-external">
 					<a name="paramsserializer" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> params<wbr>Serializer</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">params<wbr>Serializer<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> params<wbr>Serializer</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">params<wbr>Serializer<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DATA</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">QUERY_PARAMS</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L314">api/APIEntity.ts:314</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L226">api/APIEntity.ts:226</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Custom params serializer</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <span class="tsd-signature-type">object</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
+									<h5>params: <span class="tsd-signature-type">DATA</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">QUERY_PARAMS</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="pop" class="tsd-anchor"></a>
-					<h3>pop</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">pop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L94">api/APIEntity.ts:94</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Pop</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -615,7 +583,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L227">api/APIEntity.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L143">api/APIEntity.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -624,7 +592,6 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -638,14 +605,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L81">api/APIEntity.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L47">api/APIEntity.ts:47</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Push</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -653,7 +615,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -661,31 +622,22 @@
 					<a name="removeparam" class="tsd-anchor"></a>
 					<h3>remove<wbr>Param</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Param<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Param<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">QUERY_PARAMS</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L262">api/APIEntity.ts:262</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L159">api/APIEntity.ts:159</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Remove params key</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Key to me removed from params</p>
-									</div>
+									<h5>key: <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">QUERY_PARAMS</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
@@ -693,45 +645,59 @@
 					<a name="removerequestconfig" class="tsd-anchor"></a>
 					<h3>remove<wbr>Request<wbr>Config</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Request<wbr>Config<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Request<wbr>Config<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">AxiosRequestConfig</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L162">api/APIEntity.ts:162</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L98">api/APIEntity.ts:98</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Remove request config key</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Key to me removed from request config</p>
-									</div>
+									<h5>key: <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">AxiosRequestConfig</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="send" class="tsd-anchor"></a>
-					<h3>send</h3>
+					<a name="restack" class="tsd-anchor"></a>
+					<h3>restack</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">restack<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>items<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L326">api/APIEntity.ts:326</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L57">api/APIEntity.ts:57</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>items: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
+					<a name="send" class="tsd-anchor"></a>
+					<h3>send</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">send&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L195">api/APIEntity.ts:195</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -739,8 +705,13 @@
 									<p>Send request</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-							<p>Promise</p>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -754,25 +725,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L150">api/APIEntity.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L93">api/APIEntity.ts:93</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Set request config</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>requestConfig: <span class="tsd-signature-type">AxiosRequestConfig</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>object of request config to be set</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p>this</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="shift" class="tsd-anchor"></a>
+					<h3>shift</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">shift<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L52">api/APIEntity.ts:52</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -786,20 +765,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/marverix/cloud-api-client-js/blob/e6f0f3e/src/api/APIEntity.ts#L132">api/APIEntity.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/piotrsapiejewskismartbear/cloud-api-client-js/blob/c295d44/src/api/APIEntity.ts#L83">api/APIEntity.ts:83</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>To URL</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> absolute: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -821,16 +793,19 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-parent-kind-module tsd-is-external tsd-is-not-exported">
-						<a href="../enums/_api_apientity_.allowed_http_methods.html" class="tsd-kind-icon">ALLOWED_<wbr>HTTP_<wbr>METHODS</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module tsd-is-external">
+					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter tsd-is-external">
 						<a href="_api_apientity_.apientity.html" class="tsd-kind-icon">APIEntity</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
+								<a href="_api_apientity_.apientity.html#allowed_http_methods" class="tsd-kind-icon">ALLOWED_<wbr>HTTP_<wbr>METHODS</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
+								<a href="_api_apientity_.apientity.html#abortcontroller" class="tsd-kind-icon">abort<wbr>Controller</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
 								<a href="_api_apientity_.apientity.html#requestconfig" class="tsd-kind-icon">request<wbr>Config</a>
@@ -838,14 +813,17 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#root" class="tsd-kind-icon">root</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-external">
 								<a href="_api_apientity_.apientity.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#first" class="tsd-kind-icon">first</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#last" class="tsd-kind-icon">last</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_api_apientity_.apientity.html#abortrequest" class="tsd-kind-icon">abort<wbr>Request</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#data" class="tsd-kind-icon">data</a>
@@ -868,14 +846,11 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#method" class="tsd-kind-icon">method</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
 								<a href="_api_apientity_.apientity.html#params" class="tsd-kind-icon">params</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-external">
 								<a href="_api_apientity_.apientity.html#paramsserializer" class="tsd-kind-icon">params<wbr>Serializer</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
-								<a href="_api_apientity_.apientity.html#pop" class="tsd-kind-icon">pop</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#post" class="tsd-kind-icon">post</a>
@@ -890,10 +865,16 @@
 								<a href="_api_apientity_.apientity.html#removerequestconfig" class="tsd-kind-icon">remove<wbr>Request<wbr>Config</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_api_apientity_.apientity.html#restack" class="tsd-kind-icon">restack</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
 								<a href="_api_apientity_.apientity.html#send" class="tsd-kind-icon">send</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#setrequestconfig" class="tsd-kind-icon">set<wbr>Request<wbr>Config</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_api_apientity_.apientity.html#shift" class="tsd-kind-icon">shift</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_api_apientity_.apientity.html#tourl" class="tsd-kind-icon">to<wbr>Url</a>

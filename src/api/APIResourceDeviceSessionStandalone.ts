@@ -1,4 +1,4 @@
-import {NoData} from './APIEntity';
+import {APIAdminResourceUser} from './APIAdminResourceUser';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
 import {APIResourceUser} from './APIResourceUser';
@@ -7,14 +7,14 @@ import {OutputFileset} from './class/OutputFileset';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 import {Connection, ConnectionData} from './models/Connection';
 import {DeviceSession} from './models/DeviceSession';
-import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 
 export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSession> implements DeviceSessionStandalone {
 
   /**
    * /device-sessions/{id}
    */
-  constructor(parent: APIResourceUser, id: number) {
+  constructor(parent: APIResourceUser | APIAdminResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

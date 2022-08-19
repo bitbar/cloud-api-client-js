@@ -1,6 +1,7 @@
-import {ChargeType} from './AccountService';
+import {ChargeType, PaymentMethod} from './AccountService';
 import {CollectionQueryParams} from './HTTP';
 import {Role} from './Role';
+
 
 export type Service = {
   activateTime: number;
@@ -41,4 +42,26 @@ export interface AdminServicesParams extends CollectionQueryParams {
 
 export type ServiceActivateData = {
   activateTime: number;
+}
+
+export interface ServiceData {
+    address?: string;
+    braintreeNonce?: string;
+    cardNumber?: string;
+    city?: string;
+    count?: number;
+    country?: string;
+    cvv?: string;
+    email?: string;
+    expirationDate?: string;
+    firstName?: string;
+    lastName?: string;
+    organization?: string;
+    paymentMethod: PaymentMethod;
+    phone?: string;
+    serviceId: number;
+    state?: string;
+    stripeToken?: string;
+    vatId?: string;
+    zip?: string;
 }

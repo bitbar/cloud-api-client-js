@@ -1,15 +1,8 @@
 import {API} from '../API';
-import {APIList} from './APIList'
+import {APIList} from './APIList';
 import {CollectionQueryParams} from './models/HTTP';
-import {Property} from './models/Property';
+import {AppBansData, AppBansQueryParams, Property, PropertyData} from './models/Property';
 
-export type PropertyData = Pick<Property, 'description' | 'fromTime' | 'name' | 'toTime' | 'value'>;
-
-export interface AppBansQueryParams extends CollectionQueryParams {
-  testRunId: number;
-}
-
-export type AppBansData = AppBansQueryParams;
 
 export class APIListProperties extends APIList<Property, CollectionQueryParams, PropertyData> {
 
@@ -29,6 +22,14 @@ export class APIListProperties extends APIList<Property, CollectionQueryParams, 
 
     return new APIList<Property, AppBansQueryParams, AppBansData>(this).push('app-bans').params({
       testRunId: id
+    });
+  }
+
+  maintenance() {
+    return new APIList(this).params({
+      filter: 'name_eq_CLOUD_HEADER_ANNOUNCEMENT',
+      limit: 1,
+      sort: 'updateTime_d'
     });
   }
 

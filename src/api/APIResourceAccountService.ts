@@ -1,9 +1,10 @@
 import {API} from '../API';
-import {APIEntity, NoData} from './APIEntity';
+import {APIEntity} from './APIEntity';
 import {APIResource} from './APIResource'
 import {AccountService} from './models/AccountService';
 import {AccountServicePayment} from './models/AccountServicePayment';
 import {BillingPeriodQueryParams} from './models/BillingPeriod';
+import {NoData} from './models/HTTP';
 
 export class APIResourceAccountService extends APIResource<AccountService> {
 

@@ -1,11 +1,11 @@
-import {NoData} from '../APIEntity';
 import {APIList} from '../APIList';
 import {APIResource} from '../APIResource';
 import {DeviceSessionCommand, DeviceSessionStep, SessionQueryParams} from '../models/DeviceSession';
-import {NoQueryParams} from '../models/HTTP';
+import {NoData, NoQueryParams} from '../models/HTTP';
 import {Screenshot} from '../models/Screenshot';
 import {TestCaseRun} from '../models/TestCaseRun';
 import {DeviceSessionBase} from './DeviceSessionBase';
+
 
 export interface DeviceSessionCommon extends DeviceSessionBase {
   commands(): APIList<DeviceSessionCommand>;

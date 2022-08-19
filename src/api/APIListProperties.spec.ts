@@ -32,4 +32,14 @@ describe('APIListProperties', () => {
     });
   });
 
+  describe('@maintenance', () => {
+    it('should initialize proper endpoint path', () => {
+      const result = service.maintenance();
+      expect(result.toUrl()).toEqual(`${baseUrl}`);
+      expect((<any>result).requestConfig.params.filter).toEqual('name_eq_CLOUD_HEADER_ANNOUNCEMENT');
+      expect((<any>result).requestConfig.params.limit).toEqual(1);
+      expect((<any>result).requestConfig.params.sort).toEqual('updateTime_d');
+    });
+  });
+
 });

@@ -1,8 +1,7 @@
 import {APIAdminResource} from './APIAdminResource';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {Enum} from './models/Enum';
-import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
+import {CollectionQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {NotificationPlan, NotificationPlanData} from './models/NotificationPlan';
 
 

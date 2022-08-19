@@ -1,13 +1,8 @@
-import {APIEntity, NoData} from './APIEntity';
-import {APIList} from './APIList'
+import {APIEntity} from './APIEntity';
+import {APIList} from './APIList';
 import {APIResourceUser} from './APIResourceUser';
-import {CollectionQueryParams} from './models/HTTP';
-import {BasicDeviceTime, UserDeviceTime} from './models/UserDeviceTime';
-
-
-export interface DeviceTimeQueryParams extends CollectionQueryParams {
-  forWholeAccount: boolean;
-}
+import {NoData} from './models/HTTP';
+import {BasicDeviceTime, DeviceTimeQueryParams, UserDeviceTime} from './models/UserDeviceTime';
 
 
 export class APIListDeviceTime extends APIList<UserDeviceTime, DeviceTimeQueryParams, NoData> {

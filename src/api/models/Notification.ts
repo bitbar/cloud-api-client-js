@@ -1,5 +1,6 @@
 import {QueryParams} from './HTTP';
 
+
 export enum NotificationChannel {
   SLACK = 'SLACK',
   EMAIL = 'EMAIL',
@@ -35,3 +36,5 @@ export type Notification = {
 export interface NotificationData extends QueryParams {
   scope: NotificationScope;
 }
+
+export type NotificationsData = Pick<Notification, 'channel' | 'destination' | 'projectId' | 'scope'>;

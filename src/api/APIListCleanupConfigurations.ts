@@ -1,16 +1,9 @@
 import {APIAdminListDevices} from './APIAdminListDevices';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
+import {CleanupConfigurationData, SpecificCleanupConfigurationQueryParams} from './models/CleanupConfiguration';
 import {DeviceCleanupConfiguration} from './models/Device';
-import {CollectionQueryParams} from './models/HTTP';
-
-
-export type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content' | 'discriminator' | 'enabled' | 'osType'>;
-
-export interface SpecificCleanupConfigurationQueryParams {
-  serialId: string;
-}
+import {CollectionQueryParams, NoData} from './models/HTTP';
 
 
 export class APIListCleanupConfigurations extends APIList<DeviceCleanupConfiguration, CollectionQueryParams, CleanupConfigurationData> {

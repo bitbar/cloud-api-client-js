@@ -2,8 +2,11 @@ import axios, {AxiosInstance} from 'axios';
 // @ts-ignore
 import {version} from '../package.json';
 import {APIAdminResource} from './api/APIAdminResource';
+import {APIAdminResourceCluster} from './api/APIAdminResourceCluster';
 import {APIList} from './api/APIList';
 import {APIListDevices} from './api/APIListDevices';
+import {APIListProperties} from './api/APIListProperties';
+import {APIListServices} from './api/APIListServices';
 import {APIListUsers} from './api/APIListUsers';
 import {APIResource} from './api/APIResource';
 import {APIResourceAccount} from './api/APIResourceAccount';
@@ -11,8 +14,18 @@ import {APIResourceBroker} from './api/APIResourceBroker';
 import {APIResourceDevice} from './api/APIResourceDevice';
 import {APIResourceDeviceGroup} from './api/APIResourceDeviceGroup';
 import {APIResourceDeviceSession} from './api/APIResourceDeviceSession';
+import {APIResourceFile} from './api/APIResourceFile';
+import {APIResourceLabelGroup} from './api/APIResourceLabelGroup';
+import {APIResourceProject} from './api/APIResourceProject';
+import {APIResourceRun} from './api/APIResourceRun';
 import {APIResourceUser} from './api/APIResourceUser';
 import {APIResourceUserSession} from './api/APIResourceUserSession';
+import {Cluster} from './api/models/Cluster';
+import {NoData, NoQueryParams} from './api/models/HTTP';
+import {License} from './api/models/License';
+import {Project} from './api/models/Project';
+import {Property} from './api/models/Property';
+import {UserFile, UserFileData, UserFileParams} from './api/models/UserFile';
 import {ApiConfig} from './ApiConfig';
 import './finka';
 
@@ -94,8 +107,19 @@ export class API {
     return new APIAdminResource(this);
   }
 
+  // /broker
   broker() {
     return new APIResourceBroker(this);
+  }
+
+  // /clusters
+  clusters() {
+    return new APIList<Cluster>(this).push('clusters');
+  }
+
+  // /clusters/{id}
+  cluster(id: number) {
+    return new APIAdminResourceCluster(this, id);
   }
 
   // /devices/{id}
@@ -138,9 +162,24 @@ export class API {
     return new APIResource(this).push('enums');
   }
 
+  // /files
+  files() {
+    return new APIList<UserFile, UserFileParams, UserFileData>(this).push('files');
+  }
+
+  // /files/{id}
+  file(id: number) {
+    return new APIResourceFile(this, id);
+  }
+
   // /label-groups
   labelGroups() {
     return new APIList(this).push('label-groups');
+  }
+
+  // /label-groups/{id}
+  labelGroup(id: number) {
+    return new APIResourceLabelGroup(this, id);
   }
 
   // /labels
@@ -153,9 +192,44 @@ export class API {
     return new APIResource(this).push('licenses');
   }
 
+  // /license
+  license() {
+    return new APIResource<License, NoQueryParams, NoData>(this).push('license');
+  }
+
   // /me
   me() {
     return this.user('me');
+  }
+
+  // /projects
+  projects() {
+    return new APIList<Project>(this).push('projects');
+  }
+
+  // /projects/{id}
+  project(id: number) {
+    return new APIResourceProject(this, id);
+  }
+
+  // /properties
+  properties() {
+    return new APIListProperties(this);
+  }
+
+  // /properties/{id}
+  property(id: number) {
+    return new APIResource<Property>(this).push('properties', id);
+  }
+
+  // /runs/{id}
+  run(id: number) {
+    return new APIResourceRun(this, id);
+  }
+
+  // /services
+  services() {
+    return new APIListServices(this);
   }
 
   // /user/{id}

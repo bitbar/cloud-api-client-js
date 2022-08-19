@@ -53,7 +53,8 @@ describe('APIList', () => {
         },
         url: '/',
         method: 'POST',
-        data: 'test=me&properly=1'
+        data: 'test=me&properly=1',
+        signal: (<any>service).abortController.signal
       });
     });
   });

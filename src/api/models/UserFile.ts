@@ -1,5 +1,6 @@
 import {CollectionQueryParams, QueryParams} from './HTTP';
 
+
 export enum FileDirection {
   INPUT = 'INPUT',
   OUTPUT = 'OUTPUT'
@@ -65,4 +66,14 @@ export type BuildLogsParams = BuildLogsData;
 export interface FileSizeData extends QueryParams {
   height: number;
   width: number;
+}
+
+export type UploadObj = {
+  dir: string;
+  filename: string;
+}
+
+export interface FileData {
+  file: Blob;
+  global: boolean;
 }

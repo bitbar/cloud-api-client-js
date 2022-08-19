@@ -1,7 +1,7 @@
-declare class Filter {
+export declare class Filter<T = any> {
     name: string;
-    value: any;
+    value: T;
     operand: string;
-    constructor(name: string, value: any, operand: string);
+    constructor(name: string, value: T, operand: string);
 }
 export default Filter;

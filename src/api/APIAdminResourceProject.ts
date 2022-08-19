@@ -1,7 +1,7 @@
-import {NoData} from './APIEntity';
+
 import {APIResource} from './APIResource'
 import {APIResourceProject} from './APIResourceProject'
-import {NoQueryParams} from './models/HTTP';
+import {NoData, NoQueryParams} from './models/HTTP';
 
 
 export class APIAdminResourceProject extends APIResourceProject {

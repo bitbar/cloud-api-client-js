@@ -1,9 +1,11 @@
+import {API} from '../API';
 import {APIAdminResource} from './APIAdminResource';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceUser} from './APIResourceUser';
-import {CollectionBasicQueryParams} from './models/HTTP';
+import {DeviceGroupShareData} from './models/DeviceGroup';
+import {CollectionBasicQueryParams, NoData} from './models/HTTP';
+import {SharedResource} from './models/SharedResource';
 import {FileSizeData, UserFile, UserFileTag} from './models/UserFile';
 
 
@@ -12,7 +14,7 @@ export class APIResourceFile extends APIResource<UserFile> {
   /**
    * /files/{id}
    */
-  constructor(parent: APIAdminResource | APIResourceUser, id: number) {
+  constructor(parent: API | APIAdminResource | APIResourceUser, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }
@@ -35,6 +37,10 @@ export class APIResourceFile extends APIResource<UserFile> {
   // /files/{id}/tags
   tags() {
     return new APIList<UserFileTag, CollectionBasicQueryParams, NoData>(this).push('tags');
+  }
+
+  share() {
+    return new APIList<SharedResource, DeviceGroupShareData>(this).push('share');
   }
 
 }

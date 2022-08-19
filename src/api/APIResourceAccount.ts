@@ -1,10 +1,9 @@
 import {API} from '../API';
-import {NoData} from './APIEntity';
 import {APIResource} from './APIResource'
 import {Account} from './models/Account';
 import {AccountConcurrencyStatusMap} from './models/AccountConcurrencyStatusMap';
 import {AccountPreferences} from './models/AccountPreference';
-import {NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
+import {NoData, NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
 
 export class APIResourceAccount extends APIResource<Account> {
 

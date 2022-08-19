@@ -1,7 +1,8 @@
 import {API} from '../API';
-import {APIEntity, NoData} from './APIEntity';
+import {APIEntity} from './APIEntity';
 import {APIResource} from './APIResource'
 import {CleanupConfigurationSpecificData, DeviceCleanupConfiguration} from './models/Device';
+import {NoData} from './models/HTTP';
 
 
 export class APIResourceCleanupConfiguration extends APIResource<DeviceCleanupConfiguration> {
