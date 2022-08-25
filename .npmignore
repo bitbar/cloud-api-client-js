@@ -5,6 +5,7 @@ examples/
 test/
 src/
 typings/
+coverage/
 
 # Files
 rollup.config.js
@@ -13,10 +14,14 @@ bower.json
 .travis*
 .eslintrc.js
 tsconfig.json
+tsconfig.test.json
 .browserslistrc
 .whitesource
+Jenkinsfile.sonar
+sonar-project.properties
 
 # IDE
 .vscode/
 .idea/
 .editorconfig
+.nyc_output
