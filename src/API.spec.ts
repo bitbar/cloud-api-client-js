@@ -1,7 +1,10 @@
 import {API} from './API';
 import {APIAdminResource} from './api/APIAdminResource';
+import {APIAdminResourceCluster} from './api/APIAdminResourceCluster';
 import {APIList} from './api/APIList';
 import {APIListDevices} from './api/APIListDevices';
+import {APIListProperties} from './api/APIListProperties';
+import {APIListServices} from './api/APIListServices';
 import {APIListUsers} from './api/APIListUsers';
 import {APIResource} from './api/APIResource';
 import {APIResourceAccount} from './api/APIResourceAccount';
@@ -9,8 +12,13 @@ import {APIResourceBroker} from './api/APIResourceBroker';
 import {APIResourceDevice} from './api/APIResourceDevice';
 import {APIResourceDeviceGroup} from './api/APIResourceDeviceGroup';
 import {APIResourceDeviceSession} from './api/APIResourceDeviceSession';
+import {APIResourceFile} from './api/APIResourceFile';
+import {APIResourceLabelGroup} from './api/APIResourceLabelGroup';
+import {APIResourceProject} from './api/APIResourceProject';
+import {APIResourceRun} from './api/APIResourceRun';
 import {APIResourceUser} from './api/APIResourceUser';
 import {APIResourceUserSession} from './api/APIResourceUserSession';
+
 
 describe('API', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
@@ -121,6 +129,18 @@ describe('API', () => {
     expect(api.licenses()).toBeInstanceOf(APIResource);
     expect(api.labels()).toBeInstanceOf(APIList);
     expect(api.broker()).toBeInstanceOf(APIResourceBroker);
+    expect(api.clusters()).toBeInstanceOf(APIList);
+    expect(api.cluster(1)).toBeInstanceOf(APIAdminResourceCluster);
+    expect(api.files()).toBeInstanceOf(APIList);
+    expect(api.file(1)).toBeInstanceOf(APIResourceFile);
+    expect(api.labelGroup(1)).toBeInstanceOf(APIResourceLabelGroup);
+    expect(api.license()).toBeInstanceOf(APIResource);
+    expect(api.projects()).toBeInstanceOf(APIList);
+    expect(api.project(1)).toBeInstanceOf(APIResourceProject);
+    expect(api.properties()).toBeInstanceOf(APIListProperties);
+    expect(api.property(1)).toBeInstanceOf(APIResource);
+    expect(api.run(1)).toBeInstanceOf(APIResourceRun);
+    expect(api.services()).toBeInstanceOf(APIListServices);
   });
 
 });

@@ -1,31 +1,19 @@
 import {Method} from 'axios';
 import {API} from '../API';
-import {NoData} from './APIEntity';
-import {APIList} from './APIList'
-import {APIResource} from './APIResource'
-import {NoQueryParams, QueryParams} from './models/HTTP';
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
+import {NoData, NoQueryParams} from './models/HTTP';
 import {Message} from './models/Message';
-import {User, UserData} from './models/User';
+import {
+  User,
+  UserActivateData,
+  UserData,
+  UserPasswordData,
+  UserRecoveryQueryParams,
+  ValidateVatQueryParams
+} from './models/User';
 import {VatRate} from './models/VatRate';
 
-export type UserPasswordData = {
-  key: string
-  password: string;
-};
-
-export type UserActivateData = {
-  zip: string;
-} & UserPasswordData
-  & Pick<User, 'address' | 'city' | 'country' | 'email' | 'firstName' | 'lastName' | 'organization' | 'phone' | 'state' | 'vatId'>;
-
-export interface UserRecoveryQueryParams extends QueryParams {
-  recoveryKey: string;
-}
-
-export interface ValidateVatQueryParams extends QueryParams {
-  countryCode: string;
-  vatId: string;
-}
 
 export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 

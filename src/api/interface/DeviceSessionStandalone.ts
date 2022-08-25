@@ -1,8 +1,7 @@
-import {NoData} from '../APIEntity';
 import {APIList} from '../APIList';
 import {APIResource} from '../APIResource';
 import {DeviceSession, DeviceSessionConnection} from '../models/DeviceSession';
-import {NoQueryParams} from '../models/HTTP';
+import {NoData, NoQueryParams} from '../models/HTTP';
 import {DeviceSessionBase} from './DeviceSessionBase';
 
 export interface DeviceSessionStandalone extends DeviceSessionBase {

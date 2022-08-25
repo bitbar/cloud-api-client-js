@@ -1,8 +1,9 @@
 import {Device} from './Device';
 import {TunnelSettings} from './DeviceSession';
 import {OsType} from './Enum';
-import {QueryParams} from './HTTP';
+import {CollectionBasicQueryParams, QueryParams} from './HTTP';
 import {Tag} from './Tag';
+
 
 export enum LimitationType {
   PACKAGE = 'PACKAGE',
@@ -125,4 +126,21 @@ export interface RunData extends TestRunData {
 
 export interface RunQueryParam extends QueryParams {
   projectId: number;
+}
+
+export interface TestRunsData {
+  configuration: TestRunConfig;
+}
+
+export interface TestRunsConfigData extends TestRunsData {
+  includeDeviceGroups: boolean;
+  includeDevices: boolean;
+  includeFrameworks: boolean;
+}
+
+// for users/{userid}/runs
+export interface TestRunsQueryParams extends CollectionBasicQueryParams {
+  forWholeAccount: boolean;
+  skipCommonProject: boolean;
+  skipShared: boolean;
 }

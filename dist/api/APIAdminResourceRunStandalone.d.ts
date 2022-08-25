@@ -1,13 +1,12 @@
-import APIList from './APIList';
-import APIResource from './APIResource';
-import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
-declare class APIAdminResourceRunStandalone extends APIResource {
-    constructor(parent: object, id: number);
-    abort(): APIResource;
-    changeBillable(billable: boolean): APIResource;
-    changePriority(priority: boolean): APIResource;
-    retry(ids?: Array<number>): APIResource;
-    deviceSessions(): APIList;
-    deviceSession(id: number): APIResourceDeviceSessionCommon;
+import { APIAdminResource } from './APIAdminResource';
+import { APIResource } from './APIResource';
+import { AdminTestRun, RunChangeBillableParams, RunChangePriorityParams } from './models/AdminTestRun';
+import { NoData, NoQueryParams } from './models/HTTP';
+export declare class APIAdminResourceRunStandalone extends APIResource<AdminTestRun, NoQueryParams, NoData> {
+    constructor(parent: APIAdminResource, id: number);
+    abort(): APIResource<AdminTestRun, NoQueryParams, void>;
+    changeBillable(billable: boolean): APIResource<AdminTestRun, RunChangeBillableParams, RunChangeBillableParams>;
+    changePriority(priority: boolean): APIResource<AdminTestRun, RunChangePriorityParams, RunChangePriorityParams>;
+    retry(ids?: Array<number>): APIResource<AdminTestRun, import("./models/UserFile").BuildLogsData, import("./models/UserFile").BuildLogsData>;
 }
 export default APIAdminResourceRunStandalone;

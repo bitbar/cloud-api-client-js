@@ -1,7 +1,6 @@
 import {APIAdminResource} from './APIAdminResource';
-import {NoData} from './APIEntity';
 import {APIResource} from './APIResource'
-import {NoQueryParams} from './models/HTTP';
+import {NoData, NoQueryParams} from './models/HTTP';
 import {Service, ServiceActivateData} from './models/Service';
 
 

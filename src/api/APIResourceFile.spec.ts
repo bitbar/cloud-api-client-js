@@ -55,4 +55,12 @@ describe('APIResourceFile', () => {
     });
   });
 
+  describe('@share', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.share();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/share`);
+    });
+  });
+
 });

@@ -1,14 +1,14 @@
-import APIEntity from './APIEntity';
-import FilterBuilder from '../FilterBuilder';
-declare enum APIOrder {
-    'asc' = "a",
-    'desc' = "d"
-}
-declare class APIList extends APIEntity {
-    create(data: object): any;
+import { AxiosResponse } from 'axios';
+import { FilterBuilder } from '../FilterBuilder';
+import { APIEntity } from './APIEntity';
+import { APIOrder, CollectionBasicQueryParams, CollectionQueryParams, CollectionResponse, NoQueryParams, SimpleCollectionResponse } from './models/HTTP';
+export declare const DEFAULT_LIMIT: number;
+export declare const DEFAULT_OFFSET: number;
+export declare class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any> extends APIEntity<CollectionResponse<RESPONSE> | APIEntity<SimpleCollectionResponse<RESPONSE>>, QUERY_PARAMS, DATA> {
+    create(data: DATA): Promise<AxiosResponse<RESPONSE>>;
     sort(name: string, order?: APIOrder): this;
     limit(limit?: number): this;
-    getLimit(): any;
+    getLimit(): number;
     noLimit(): this;
     offset(offset?: number): this;
     between(from: number, to: number): this;
@@ -16,8 +16,6 @@ declare class APIList extends APIEntity {
     page(page?: number): this;
     search(query: string): this;
     filter(filter: FilterBuilder | string): this;
-}
-interface APIList {
     all: typeof APIList.prototype.noLimit;
     cut: typeof APIList.prototype.between;
 }

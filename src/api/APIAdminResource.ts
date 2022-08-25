@@ -16,7 +16,6 @@ import {APIAdminResourceNotificationPlan} from './APIAdminResourceNotificationPl
 import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
 import {APIAdminResourceService} from './APIAdminResourceService';
 import {APIAdminResourceUser} from './APIAdminResourceUser';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceAccessGroup} from './APIResourceAccessGroup';
@@ -53,7 +52,7 @@ import {DeviceGroup} from './models/DeviceGroup';
 import {DeviceModel} from './models/DeviceModel';
 import {DeviceProblem} from './models/DeviceProblem';
 import {DeviceStatus} from './models/DeviceStatus';
-import {CollectionQueryParams, NoQueryParams} from './models/HTTP';
+import {CollectionQueryParams, NoData, NoQueryParams} from './models/HTTP';
 
 @NonRequestable
 export class APIAdminResource extends APIResource {

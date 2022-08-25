@@ -1,6 +1,7 @@
 import {API} from '../API';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
+import {Browser} from './models/Browser';
 import {Device, DeviceProperiesData, DeviceProperty} from './models/Device';
 import {CollectionBasicQueryParams} from './models/HTTP';
 
@@ -22,6 +23,10 @@ export class APIResourceDevice extends APIResource<Device> {
   // /devices/{id}/properties
   properties() {
     return new APIList<DeviceProperty, CollectionBasicQueryParams, DeviceProperiesData>(this).push('properties');
+  }
+
+  browsers() {
+    return new APIList<Browser>(this).push('browsers');
   }
 
 }

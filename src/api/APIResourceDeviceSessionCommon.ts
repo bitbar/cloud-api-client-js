@@ -1,12 +1,12 @@
 import {API} from '../API';
-import {APIEntity, NoData} from './APIEntity';
+import {APIEntity} from './APIEntity';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {InputFileset} from './class/InputFileset'
 import {OutputFileset} from './class/OutputFileset'
 import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
 import {DeviceSession, DeviceSessionCommand, DeviceSessionStep, SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams} from './models/DeviceSession';
-import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {Screenshot} from './models/Screenshot';
 import {TestCaseRun} from './models/TestCaseRun';
 
@@ -75,6 +75,17 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
   // /device-sessions/{id}/test-case-runs
   testCaseRuns() {
     return new APIList<TestCaseRun, SessionQueryParams | NoQueryParams, NoData>(this).push('test-case-runs');
+  }
+
+  // /device-sessions/{id}/connections
+  connections() {
+    return new APIList(this).push('connections');
+  }
+
+  logs() {
+    return new APIResource(this).push('logs').setRequestConfig({
+      responseType: 'text'
+    });
   }
 
 }

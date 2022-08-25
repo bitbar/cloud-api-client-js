@@ -1,9 +1,8 @@
 import {APIAdminResource} from './APIAdminResource';
-import {NoData} from './APIEntity';
 import {APIResource} from './APIResource'
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
 import {AdminTestRun, RunChangeBillableParams, RunChangePriorityParams} from './models/AdminTestRun';
-import {NoQueryParams} from './models/HTTP';
+import {NoData, NoQueryParams} from './models/HTTP';
 
 
 export class APIAdminResourceRunStandalone extends APIResource<AdminTestRun, NoQueryParams, NoData> {

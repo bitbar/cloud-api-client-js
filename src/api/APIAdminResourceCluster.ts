@@ -1,3 +1,4 @@
+import {API} from '../API';
 import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
@@ -10,7 +11,7 @@ export class APIAdminResourceCluster extends APIResource<Cluster, ClusterParams,
   /**
    * /clusters/{id}
    */
-  constructor(parent: APIAdminResource, id: number) {
+  constructor(parent: API | APIAdminResource, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

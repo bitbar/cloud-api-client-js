@@ -1,19 +1,9 @@
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
-import {APIList} from './APIList'
+import {APIList} from './APIList';
 import {FilesQueryParams} from './class/FilesQueryParams';
-import {UserFile} from './models/UserFile';
+import {FileData, UploadObj, UserFile} from './models/UserFile';
 
-
-type UploadObj = {
-  dir: string;
-  filename: string;
-}
-
-export interface FileData {
-  file: Blob;
-  global: boolean;
-}
 
 export class APIListFiles extends APIList<UserFile, FilesQueryParams, FileData> {
 

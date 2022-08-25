@@ -258,7 +258,8 @@ describe('APIEntity', () => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         },
-        url: '/'
+        url: '/',
+        signal: (<any>service).abortController.signal
       });
     });
 
@@ -279,7 +280,8 @@ describe('APIEntity', () => {
         },
         url: '/',
         method: 'POST',
-        data: 'test=me'
+        data: 'test=me',
+        signal: (<any>service).abortController.signal
       });
     });
 
@@ -302,8 +304,17 @@ describe('APIEntity', () => {
         params: {
           test: 'me'
         },
-        paramsSerializer: (<any>service).paramsSerializer
+        paramsSerializer: (<any>service).paramsSerializer,
+        signal: (<any>service).abortController.signal
       });
+    });
+  });
+
+  describe('@abortRequest', () => {
+    it('should set data in existing configuration', () => {
+      jest.spyOn((<any>service).abortController, 'abort');
+      service.abortRequest();
+      expect((<any>service).abortController.abort).toHaveBeenCalled();
     });
   });
 });

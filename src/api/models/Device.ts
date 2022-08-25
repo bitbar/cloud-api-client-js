@@ -1,8 +1,8 @@
-
-import {TestRunQueryParams} from '../APIListRuns';
 import {Browser} from './Browser';
 import {OsType} from './Enum';
-import {CollectionBasicQueryParams, CollectionResponse, QueryParams} from './HTTP';
+import {CollectionBasicQueryParams, CollectionQueryParams, CollectionResponse, QueryParams} from './HTTP';
+import {TestRunsQueryParams} from './TestRun';
+
 
 export enum DeviceGroupOrigin {
   STATIC = 'STATIC',
@@ -105,10 +105,20 @@ export interface CleanupConfigurationSpecificData extends QueryParams {
 export interface DeviceTimeSummaryQueryParams extends CollectionBasicQueryParams {
   forWholeAccount: boolean;
 }
-export interface DeviceUsageQueryParams extends TestRunQueryParams {
+export interface DeviceUsageQueryParams extends TestRunsQueryParams {
   startTime: number;
 }
 
-export interface DeviceStatisticQueryParam extends TestRunQueryParams {
+export interface DeviceStatisticQueryParam extends TestRunsQueryParams {
   mode: string
+}
+
+export interface DevicesQueryParams extends CollectionQueryParams {
+  labelIds: Array<string>;
+  liveTestingOnly: boolean;
+  withBrowsers: boolean;
+  withDedicated: boolean;
+  withDisabled: boolean;
+  withProperties: boolean;
+  withSupportedCreators: boolean;
 }

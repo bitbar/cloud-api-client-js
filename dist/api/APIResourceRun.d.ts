@@ -1,6 +1,6 @@
-import APIResourceRunCommon from './APIResourceRunCommon';
-import APIResourceDeviceSession from './APIResourceDeviceSession';
-declare class APIResourceRun extends APIResourceRunCommon {
+import { APIResourceDeviceSession } from './APIResourceDeviceSession';
+import { APIResourceRunCommon } from './APIResourceRunCommon';
+export declare class APIResourceRun extends APIResourceRunCommon {
     deviceSession(id: number): APIResourceDeviceSession;
 }
 export default APIResourceRun;

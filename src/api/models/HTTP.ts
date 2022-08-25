@@ -1,5 +1,6 @@
 import {Method} from 'axios';
 
+
 /**
  * Allowed methods
  *
@@ -45,3 +46,4 @@ export type CollectionResponse<T> = {
 }
 
 export type SimpleCollectionResponse<T> = Pick<CollectionResponse<T>, 'data' | 'id'>;
+export type NoData = void;

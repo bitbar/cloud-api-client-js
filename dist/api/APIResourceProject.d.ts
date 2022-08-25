@@ -1,15 +1,15 @@
-import APIResource from './APIResource';
-import APIResourceRun from './APIResourceRun';
-import APIList from './APIList';
-declare class APIResourceProject extends APIResource {
-    constructor(parent: object, id: number);
-    runs(): APIList;
+import { API } from '../API';
+import { APIAdminResource } from './APIAdminResource';
+import { APIList } from './APIList';
+import { APIResource } from './APIResource';
+import { APIResourceRun } from './APIResourceRun';
+import { APIResourceUser } from './APIResourceUser';
+import { CollectionBasicQueryParams } from './models/HTTP';
+import { Project } from './models/Project';
+import { TestRun } from './models/TestRun';
+export declare class APIResourceProject extends APIResource<Project> {
+    constructor(parent: API | APIAdminResource | APIResourceUser, id: number);
+    runs(): APIList<TestRun, CollectionBasicQueryParams, void>;
     run(id: number): APIResourceRun;
-    runsExtended(): APIList;
-    runExtended(id: number): APIResource;
-    files(): APIList;
-    filesZip(): APIResource;
-    sharings(): APIList;
-    sharing(id: number): APIResource;
 }
 export default APIResourceProject;

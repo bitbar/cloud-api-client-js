@@ -6,6 +6,7 @@ import {NonRequestable} from '../decorators/NonRequestable';
 import {Screenshot} from '../models/Screenshot';
 import {UserFile} from '../models/UserFile';
 import {FilesQueryParams} from './FilesQueryParams';
+import {IMAGE_FILES_FILTER} from './Images.filter';
 import {NON_MEDIA_FILES_FILTER} from './NonMedia.filter';
 
 
@@ -63,6 +64,16 @@ export class OutputFileset extends APIResource<UserFile, FilesQueryParams> {
   // Filter files out by non-media
   nonMediaFiles() {
     return this.files().filter(NON_MEDIA_FILES_FILTER);
+  }
+
+  performance() {
+    return this.files().params({
+      tag: ['performance']
+    })
+  }
+
+  images() {
+    return this.files().filter(IMAGE_FILES_FILTER);
   }
 
 }

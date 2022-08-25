@@ -1,12 +1,6 @@
-import APIResource from './APIResource';
-import APIList from './APIList';
-import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
-import DeviceSessionStandalone from './interface/DeviceSessionStandalone';
-import DeviceSessionCommon from './interface/DeviceSessionCommon';
-declare class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCommon implements DeviceSessionCommon, DeviceSessionStandalone {
-    changeBillable(billable: boolean): APIResource;
-    connections(): APIList;
-    connection(id: number): APIResource;
-    release(): APIResource;
+import { APIResourceDeviceSessionCommon } from './APIResourceDeviceSessionCommon';
+import { DeviceSessionCommon } from './interface/DeviceSessionCommon';
+export declare class APIAdminResourceDeviceSessionStandalone extends APIResourceDeviceSessionCommon implements DeviceSessionCommon {
+    changeBillable(billable: boolean): import("./APIResource").APIResource<import("./models/DeviceSession").DeviceSession, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
 }
 export default APIAdminResourceDeviceSessionStandalone;

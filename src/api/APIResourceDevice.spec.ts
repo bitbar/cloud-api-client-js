@@ -35,4 +35,12 @@ describe('APIResourceDevice', () => {
     });
   });
 
+  describe('@browsers', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.browsers();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/browsers`);
+    });
+  });
+
 });

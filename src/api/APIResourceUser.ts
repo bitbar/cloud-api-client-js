@@ -1,5 +1,4 @@
 import {API} from '../API';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIListDeviceTime} from './APIListDeviceTime'
 import {APIListFiles} from './APIListFiles'
@@ -30,7 +29,7 @@ import {UserDeviceTimeSummary} from './models/UserDeviceTimeSummary';
 import {UiPreferencesData, UserPreference} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
 import {DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
-import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams} from './models/Device';
 
 export class APIResourceUser extends APIResource {
@@ -213,6 +212,10 @@ export class APIResourceUser extends APIResource {
   // /users/{id}/tunnels
   smartbearTunnels() {
     return new APIListSmartbearTunnels(this);
+  }
+
+  deleteAccount() {
+    return new APIResource(this).push('delete');
   }
 }
 

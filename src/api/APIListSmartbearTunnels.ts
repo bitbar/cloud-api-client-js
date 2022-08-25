@@ -1,14 +1,9 @@
 import {Method} from 'axios';
-import {NoData} from './APIEntity';
-import {APIList} from './APIList'
+import {APIList} from './APIList';
 import {APIResourceUser} from './APIResourceUser';
-import {CollectionQueryParams} from './models/HTTP';
-import {SmartbearTunnel} from './models/SmartbearTunnel';
+import {NoData} from './models/HTTP';
+import {SmartbearTunnel, TunnelQueryParams} from './models/SmartbearTunnel';
 
-
-export interface TunnelQueryParams extends CollectionQueryParams {
-  active: boolean;
-}
 
 export class APIListSmartbearTunnels extends APIList<SmartbearTunnel, TunnelQueryParams, NoData> {
 

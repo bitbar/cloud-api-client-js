@@ -1,5 +1,4 @@
 import {APIAdminResource} from './APIAdminResource';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {AdminDevice, AdminDeviceData} from './models/AdminDevice';
@@ -10,7 +9,7 @@ import {
   DeviceLabelData,
   DeviceProperty
 } from './models/Device';
-import {NoQueryParams, QueryParams} from './models/HTTP';
+import {NoData, NoQueryParams, QueryParams} from './models/HTTP';
 
 
 export class APIAdminResourceDevice extends APIResource<AdminDevice, NoQueryParams, AdminDeviceData> {

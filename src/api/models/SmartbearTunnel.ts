@@ -1,3 +1,6 @@
+import {CollectionQueryParams} from './HTTP';
+
+
 export type SmartbearTunnel = {
   acceptAllCerts: boolean;
   active: boolean;
@@ -13,4 +16,8 @@ export type SmartbearTunnel = {
   tunnelSource: string;
   tunnelType: string;
   user: string;
+}
+
+export interface TunnelQueryParams extends CollectionQueryParams {
+    active: boolean;
 }

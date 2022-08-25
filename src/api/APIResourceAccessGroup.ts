@@ -1,10 +1,9 @@
 import {APIAdminResource} from './APIAdminResource';
-import {NoData} from './APIEntity';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceUser} from './APIResourceUser';
 import {AccessGroup} from './models/AccessGroup';
-import {CollectionBasicQueryParams, NoQueryParams} from './models/HTTP';
+import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {SharedResource} from './models/SharedResource';
 import {User, UserData} from './models/User';
 

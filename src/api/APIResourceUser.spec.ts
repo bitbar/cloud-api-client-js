@@ -305,4 +305,12 @@ describe('APIResourceUser', () => {
       expect(call.toUrl()).toEqual(`${baseUrl}/tunnels/1`);
     });
   });
+
+  describe('@deleteAccount', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = serviceNumberId.deleteAccount();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/delete`);
+    });
+  });
 });
