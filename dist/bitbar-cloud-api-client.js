@@ -993,7 +993,7 @@
           return new APIResource(this).push('selectors', id);
       }
       share() {
-          return new APIResource(this).push('share');
+          return new APIList(this).push('share');
       }
   }
 
@@ -1016,6 +1016,12 @@
       }
       share() {
           return new APIList(this).push('share');
+      }
+      property(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          return new APIResource(this).push('properties', id);
       }
   }
 
@@ -1101,6 +1107,12 @@
       }
       run(id) {
           return new APIResourceRun(this, id);
+      }
+      share() {
+          return new APIList(this).push('share');
+      }
+      unarchive() {
+          return new APIResource(this).push('unarchive');
       }
   }
 

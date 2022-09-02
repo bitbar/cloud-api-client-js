@@ -1,6 +1,7 @@
 import {OsType} from './Enum';
 import {CollectionBasicQueryParams, QueryParams} from './HTTP';
 
+
 export type DeviceGroup = {
   deviceCount: number;
   displayName: string;
@@ -18,11 +19,6 @@ export interface DeviceGroupSelectorData extends QueryParams {
 export interface DeviceGroupIdsData extends QueryParams {
   deviceId: number;
   deviceIds: Array<number>;
-}
-
-export interface DeviceGroupShareData extends QueryParams {
-  accessGroupId: number;
-  email: string;
 }
 
 export interface DeviceGroupParams extends CollectionBasicQueryParams {

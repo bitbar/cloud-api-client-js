@@ -17,10 +17,6 @@ export interface DeviceGroupIdsData extends QueryParams {
     deviceId: number;
     deviceIds: Array<number>;
 }
-export interface DeviceGroupShareData extends QueryParams {
-    accessGroupId: number;
-    email: string;
-}
 export interface DeviceGroupParams extends CollectionBasicQueryParams {
     withProperties: boolean;
 }

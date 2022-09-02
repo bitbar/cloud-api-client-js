@@ -45,4 +45,20 @@ describe('APIResourceProject', () => {
       expect(call.toUrl()).toEqual(`${baseUrl}/runs/1`);
     });
   });
+
+  describe('@share', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.share();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/share`);
+    });
+  });
+
+  describe('@unarchive', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.unarchive();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/unarchive`);
+    });
+  });
 });

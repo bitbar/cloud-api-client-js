@@ -4,9 +4,9 @@ import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import APIResourceUser from './APIResourceUser';
 import {Device, DeviceProperty} from './models/Device';
-import {DeviceGroup, DeviceGroupData, DeviceGroupParams, DeviceGroupSelectorData, DeviceGroupShareData} from './models/DeviceGroup';
+import {DeviceGroup, DeviceGroupData, DeviceGroupParams, DeviceGroupSelectorData} from './models/DeviceGroup';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
-import {SharedResource} from './models/SharedResource';
+import {ShareData, SharedResource} from './models/SharedResource';
 
 export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
@@ -52,7 +52,7 @@ export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   // /device-groups/{id}/share
   share() {
-    return new APIResource<SharedResource, NoQueryParams, DeviceGroupShareData>(this).push('share');
+    return new APIList<SharedResource, NoQueryParams, ShareData>(this).push('share');
   }
 
 }

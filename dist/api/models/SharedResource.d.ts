@@ -1,3 +1,4 @@
+import { QueryParams } from './HTTP';
 export declare enum SharedResourceType {
     DEVICE_GROUP = "DEVICE_GROUP",
     FILE = "FILE",
@@ -9,3 +10,7 @@ export declare type SharedResource = {
     resourceId: number;
     type: SharedResourceType;
 };
+export interface ShareData extends QueryParams {
+    accessGroupId: number;
+    email: string;
+}

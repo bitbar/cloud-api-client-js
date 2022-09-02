@@ -63,4 +63,18 @@ describe('APIResourceFile', () => {
     });
   });
 
+  describe('@property', () => {
+    it('should throw error if resource ID is missing', () => {
+      const id: any = undefined;
+      expect(() => service.property(id)).toThrow(new Error('Resource ID cannot be null!'));
+    });
+
+    it('should initialize proper endpoint path', () => {
+      const id: any = 1;
+      const call = service.property(id);
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/properties/${id}`);
+    });
+  });
+
 });

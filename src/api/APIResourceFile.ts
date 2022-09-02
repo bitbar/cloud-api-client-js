@@ -3,9 +3,9 @@ import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceUser} from './APIResourceUser';
-import {DeviceGroupShareData} from './models/DeviceGroup';
 import {CollectionBasicQueryParams, NoData} from './models/HTTP';
-import {SharedResource} from './models/SharedResource';
+import {Property} from './models/Property';
+import {ShareData, SharedResource} from './models/SharedResource';
 import {FileSizeData, UserFile, UserFileTag} from './models/UserFile';
 
 
@@ -40,7 +40,14 @@ export class APIResourceFile extends APIResource<UserFile> {
   }
 
   share() {
-    return new APIList<SharedResource, DeviceGroupShareData>(this).push('share');
+    return new APIList<SharedResource, ShareData>(this).push('share');
+  }
+
+  property(id: number) {
+    if (id == null) {
+      throw new Error('Resource ID cannot be null!');
+    }
+    return new APIResource<Property>(this).push('properties', id);
   }
 
 }
