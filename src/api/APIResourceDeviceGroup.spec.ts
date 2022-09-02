@@ -1,7 +1,7 @@
 import {API} from '../API';
-import {APIResourceDeviceGroup} from './APIResourceDeviceGroup';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
+import {APIResourceDeviceGroup} from './APIResourceDeviceGroup';
 import {APIResourceUser} from './APIResourceUser';
 
 
@@ -76,7 +76,7 @@ describe('APIResourceDeviceGroup', () => {
   describe('@share', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.share();
-      expect(call).toBeInstanceOf(APIResource);
+      expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual(`${baseUrl}/share`);
     });
   });
