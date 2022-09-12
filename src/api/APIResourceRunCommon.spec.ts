@@ -179,4 +179,12 @@ describe('APIResourceRunCommon', () => {
       expect(() => service.tag(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
+
+  describe('@buildLogsZip', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.buildLogsZip();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/build-logs.zip`);
+    });
+  });
 });

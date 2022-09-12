@@ -1,7 +1,6 @@
 import {API} from '../API';
 import {APIAdminResourceDeviceSession} from './APIAdminResourceDeviceSession';
 import {APIAdminResourceRun} from './APIAdminResourceRun';
-import {APIResource} from './APIResource';
 
 
 describe('APIAdminResourceRun', () => {
@@ -26,14 +25,6 @@ describe('APIAdminResourceRun', () => {
   it('should throw error if resource ID is missing', () => {
     const id: any = undefined;
     expect(() => new APIAdminResourceRun(api, id)).toThrow(new Error('Resource ID cannot be null!'));
-  });
-
-  describe('@buildLogsZip', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.buildLogsZip();
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/build-logs.zip`);
-    });
   });
 
   describe('@deviceSession', () => {

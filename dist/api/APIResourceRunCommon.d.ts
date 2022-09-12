@@ -13,6 +13,7 @@ import { UserFile } from './models/UserFile';
 export declare class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, TestRunData | RunData> {
     constructor(parent: APIEntity<any> | API, id: number);
     abort(): APIResource<TestRun | AdminTestRun, NoQueryParams, RunData>;
+    buildLogsZip(ids?: Array<number>): APIResource<UserFile, import("./models/UserFile").BuildLogsData, import("./models/UserFile").BuildLogsData>;
     dataAvailability(): APIResource<TestRunDataAvailability, TestRunDataAvailabilityQueryParams, void>;
     deviceSessions(): APIList<DeviceSession, CollectionBasicQueryParams | TRunDeviceSessionQueryParams, void>;
     filesZip(ids?: Array<number>): APIResource<UserFile, import("./models/UserFile").BuildLogsData, import("./models/UserFile").BuildLogsData>;

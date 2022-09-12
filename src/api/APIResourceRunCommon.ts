@@ -31,6 +31,11 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
     return new APIResource<AdminTestRun | TestRun, NoQueryParams, RunData>(this).push('abort').post();
   }
 
+  // /runs/{id}/build-logs.zip
+  buildLogsZip(ids?: Array<number>) {
+    return postDeviceRunIds<UserFile>(this, 'build-logs.zip', ids);
+  }
+
   // /runs/{id}/data-availability
   dataAvailability() {
     return new APIResource<TestRunDataAvailability, TestRunDataAvailabilityQueryParams, NoData>(this).push('data-availability');
