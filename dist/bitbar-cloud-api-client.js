@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.0.0 | Copyright 2022 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.0.2 | Copyright 2022 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.0.0";
+  var version = "1.0.2";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -1044,6 +1044,9 @@
       }
       abort() {
           return new APIResource(this).push('abort').post();
+      }
+      buildLogsZip(ids) {
+          return postDeviceRunIds(this, 'build-logs.zip', ids);
       }
       dataAvailability() {
           return new APIResource(this).push('data-availability');
