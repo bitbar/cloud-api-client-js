@@ -84,7 +84,6 @@ export declare type DeviceLabelData = {
 export interface DeviceProperiesData extends QueryParams {
     labelId: number;
 }
-export declare type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content' | 'discriminator' | 'enabled'>;
 export interface CleanupConfigurationSpecificData extends QueryParams {
     serialId: string;
 }

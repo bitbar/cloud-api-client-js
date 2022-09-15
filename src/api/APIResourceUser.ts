@@ -15,7 +15,6 @@ import {APIResourceFile} from './APIResourceFile'
 import {APIResourceNotification} from './APIResourceNotification'
 import {APIResourceProject} from './APIResourceProject'
 import {APIUserResourceAccount} from './APIUserResourceAccount'
-import {DeviceSession} from './interface/DeviceSession';
 import {AccessGroup, AccessGroupsData} from './models/AccessGroup';
 import {BillingPeriod} from './models/BillingPeriod';
 import {DeviceGroup, DeviceGroupIdsData, DeviceGroupWithPublicParams} from './models/DeviceGroup';
@@ -28,7 +27,7 @@ import {User} from './models/User';
 import {UserDeviceTimeSummary} from './models/UserDeviceTimeSummary';
 import {UiPreferencesData, UserPreference} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
-import {DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
+import {DeviceSession, DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams} from './models/Device';
 

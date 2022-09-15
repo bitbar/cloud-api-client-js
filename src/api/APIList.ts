@@ -8,7 +8,7 @@ export const DEFAULT_LIMIT: number = 20;
 export const DEFAULT_OFFSET: number = 0;
 
 export class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any>
-  extends APIEntity<CollectionResponse<RESPONSE> | APIEntity<SimpleCollectionResponse<RESPONSE>>, QUERY_PARAMS, DATA> {
+  extends APIEntity<CollectionResponse<RESPONSE> | SimpleCollectionResponse<RESPONSE>, QUERY_PARAMS, DATA> {
 
   /**
    * Shortcut for sending data POST

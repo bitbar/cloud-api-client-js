@@ -52,6 +52,7 @@ export declare class API {
     labels(): APIList<any, import("./api/models/HTTP").CollectionQueryParams, any>;
     licenses(): APIResource<any, import("./api/models/HTTP").QueryParams, import("./api/models/HTTP").QueryParams>;
     license(): APIResource<License, NoQueryParams, void>;
+    ma(): APIAdminResource | APIResourceUser;
     me(): APIResourceUser;
     projects(): APIList<Project, import("./api/models/HTTP").CollectionQueryParams, any>;
     project(id: number): APIResourceProject;
