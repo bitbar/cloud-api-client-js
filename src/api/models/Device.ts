@@ -96,8 +96,6 @@ export interface DeviceProperiesData extends QueryParams {
   labelId: number
 }
 
-export type CleanupConfigurationData = Pick<DeviceCleanupConfiguration, 'content' | 'discriminator' | 'enabled'>
-
 export interface CleanupConfigurationSpecificData extends QueryParams {
   serialId: string;
 }

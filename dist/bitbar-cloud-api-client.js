@@ -1,16 +1,16 @@
-/* @bitbar/cloud-api-client v1.0.2 | Copyright 2022 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.0.3 | Copyright 2022 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
-  typeof define === 'function' && define.amd ? define(['axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global["bitbar-cloud-api-client"] = factory(global.axios, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
-})(this, (function (axios, finka, qs, nodeAbortController) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global.axios, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
+})(this, (function (exports, axios, finka, qs, nodeAbortController) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.0.2";
+  var version = "1.0.3";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -155,11 +155,11 @@
   }
 
   const ALLOWED_HTTP_METHODS = ['GET', 'POST', 'DELETE'];
-  var APIOrder;
+  exports.APIOrder = void 0;
   (function (APIOrder) {
       APIOrder["asc"] = "a";
       APIOrder["desc"] = "d";
-  })(APIOrder || (APIOrder = {}));
+  })(exports.APIOrder || (exports.APIOrder = {}));
 
   class APIEntity {
       constructor(parent) {
@@ -311,7 +311,7 @@
       create(data) {
           return this.post().data(data).send();
       }
-      sort(name, order = APIOrder.asc) {
+      sort(name, order = exports.APIOrder.asc) {
           return this.params({
               sort: `${name}_${order}`
           });
@@ -589,7 +589,7 @@
       }
   }
 
-  let InputFileset = class InputFileset extends APIResource {
+  exports.InputFileset = class InputFileset extends APIResource {
       constructor(parent) {
           super(parent);
           this.push('input-file-set');
@@ -601,9 +601,9 @@
           return new APIResource(this).push('files.zip');
       }
   };
-  InputFileset = __decorate([
+  exports.InputFileset = __decorate([
       NonRequestable
-  ], InputFileset);
+  ], exports.InputFileset);
 
   const IMAGE_FILES_FILTER = new FilterBuilder();
   IMAGE_FILES_FILTER.eq('state', 'READY');
@@ -619,7 +619,7 @@
       'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg'
   ]);
 
-  let OutputFileset = class OutputFileset extends APIResource {
+  exports.OutputFileset = class OutputFileset extends APIResource {
       constructor(parent) {
           super(parent);
           this.push('output-file-set');
@@ -660,9 +660,9 @@
           return this.files().filter(IMAGE_FILES_FILTER);
       }
   };
-  OutputFileset = __decorate([
+  exports.OutputFileset = __decorate([
       NonRequestable
-  ], OutputFileset);
+  ], exports.OutputFileset);
 
   class APIResourceDeviceSessionCommon extends APIResource {
       constructor(parent, id) {
@@ -676,10 +676,10 @@
           return new APIList(this).push('commands');
       }
       input() {
-          return new InputFileset(this);
+          return new exports.InputFileset(this);
       }
       output() {
-          return new OutputFileset(this);
+          return new exports.OutputFileset(this);
       }
       screenshots() {
           return new APIList(this).push('screenshots');
@@ -897,10 +897,10 @@
           return new APIResource(this).push('connections', id);
       }
       input() {
-          return new InputFileset(this);
+          return new exports.InputFileset(this);
       }
       output() {
-          return new OutputFileset(this);
+          return new exports.OutputFileset(this);
       }
       release() {
           return new APIResource(this).push('release').post();
@@ -1878,6 +1878,9 @@
       license() {
           return new APIResource(this).push('license');
       }
+      ma() {
+          throw new Error('Requires prototype extension covering ACL check');
+      }
       me() {
           return this.user('me');
       }
@@ -1915,7 +1918,363 @@
       FilterBuilder
   };
 
-  return CloudAPIClient;
+  exports.AccessGroupScope = void 0;
+  (function (AccessGroupScope) {
+      AccessGroupScope["USER"] = "USER";
+      AccessGroupScope["ACCOUNT"] = "ACCOUNT";
+      AccessGroupScope["GLOBAL"] = "GLOBAL";
+  })(exports.AccessGroupScope || (exports.AccessGroupScope = {}));
+
+  exports.PaymentStatus = void 0;
+  (function (PaymentStatus) {
+      PaymentStatus["SUCCEEDED"] = "SUCCEEDED";
+      PaymentStatus["FAILED"] = "FAILED";
+      PaymentStatus["REDIRECTED"] = "REDIRECTED";
+  })(exports.PaymentStatus || (exports.PaymentStatus = {}));
+  exports.PaymentMethod = void 0;
+  (function (PaymentMethod) {
+      PaymentMethod["PAYPAL"] = "PAYPAL";
+      PaymentMethod["BRAINTREE"] = "BRAINTREE";
+      PaymentMethod["STRIPE"] = "STRIPE";
+      PaymentMethod["INVOICE"] = "INVOICE";
+      PaymentMethod["PROMOTION"] = "PROMOTION";
+      PaymentMethod["AWS"] = "AWS";
+  })(exports.PaymentMethod || (exports.PaymentMethod = {}));
+  exports.ChargeType = void 0;
+  (function (ChargeType) {
+      ChargeType["USAGE_MOBILE"] = "USAGE_MOBILE";
+      ChargeType["CONCURRENCY_MOBILE"] = "CONCURRENCY_MOBILE";
+      ChargeType["CONCURRENCY_DESKTOP"] = "CONCURRENCY_DESKTOP";
+  })(exports.ChargeType || (exports.ChargeType = {}));
+  exports.DeactivateReason = void 0;
+  (function (DeactivateReason) {
+      DeactivateReason["INITIAL_FAILURE"] = "INITIAL_FAILURE";
+      DeactivateReason["SCA_FAILURE"] = "SCA_FAILURE";
+      DeactivateReason["CHARGE_FAILURE"] = "CHARGE_FAILURE";
+      DeactivateReason["CANCEL"] = "CANCEL";
+      DeactivateReason["SUSPENDED"] = "SUSPENDED";
+      DeactivateReason["ANOTHER_PURCHASE"] = "ANOTHER_PURCHASE";
+  })(exports.DeactivateReason || (exports.DeactivateReason = {}));
+
+  exports.InitStep = void 0;
+  (function (InitStep) {
+      InitStep["SKIP"] = "SKIP";
+      InitStep["REBOOT"] = "REBOOT";
+      InitStep["REBOOT_WITH_UNLOCK"] = "REBOOT_WITH_UNLOCK";
+      InitStep["UNLOCK_ONLY"] = "UNLOCK_ONLY";
+  })(exports.InitStep || (exports.InitStep = {}));
+  exports.DeviceState = void 0;
+  (function (DeviceState) {
+      DeviceState["OFFLINE_CLEANING"] = "OFFLINE_CLEANING";
+      DeviceState["OFFLINE_DIRTY"] = "OFFLINE_DIRTY";
+      DeviceState["OFFLINE_FREE"] = "OFFLINE_FREE";
+      DeviceState["OFFLINE_TESTING"] = "OFFLINE_TESTING";
+      DeviceState["ONLINE_CLEANING"] = "ONLINE_CLEANING";
+      DeviceState["ONLINE_DIRTY"] = "ONLINE_DIRTY";
+      DeviceState["ONLINE_FREE"] = "ONLINE_FREE";
+      DeviceState["ONLINE_TESTING"] = "ONLINE_TESTING";
+  })(exports.DeviceState || (exports.DeviceState = {}));
+
+  exports.AdminErrorType = void 0;
+  (function (AdminErrorType) {
+      AdminErrorType["ABORT_REQUEST"] = "ABORT_REQUEST";
+      AdminErrorType["ADB_COMMAND_REJECTED"] = "ADB_COMMAND_REJECTED";
+      AdminErrorType["ADB_SHELL_COMMAND_FAILED"] = "ADB_SHELL_COMMAND_FAILED";
+      AdminErrorType["APP_LOCK_NOT_INSTALLED"] = "APP_LOCK_NOT_INSTALLED";
+      AdminErrorType["DEVICE_OFFLINE"] = "DEVICE_OFFLINE";
+      AdminErrorType["DEVICE_OUTPUT_NULL"] = "DEVICE_OUTPUT_NULL";
+      AdminErrorType["GAMEBENCH_ERROR"] = "GAMEBENCH_ERROR";
+      AdminErrorType["GAMEBENCH_NOT_SUPPORTED"] = "GAMEBENCH_NOT_SUPPORTED";
+      AdminErrorType["GRANT_FAILED"] = "GRANT_FAILED";
+      AdminErrorType["INSTALL_FAILED"] = "INSTALL_FAILED";
+      AdminErrorType["INTERACTIVE_SETUP_FAILED"] = "INTERACTIVE_SETUP_FAILED";
+      AdminErrorType["INTERNAL_INSTALL_FAILED"] = "INTERNAL_INSTALL_FAILED";
+      AdminErrorType["INVALID_TEST_SESSION_FILE"] = "INVALID_TEST_SESSION_FILE";
+      AdminErrorType["LOCK_EXPIRED"] = "LOCK_EXPIRED";
+      AdminErrorType["LOCK_TIMEOUT"] = "LOCK_TIMEOUT";
+      AdminErrorType["NO_NETWORK_CONNECTION"] = "NO_NETWORK_CONNECTION";
+      AdminErrorType["OTHER"] = "OTHER";
+      AdminErrorType["REBOOTING_TIMEOUT"] = "REBOOTING_TIMEOUT";
+      AdminErrorType["REPACKAGING"] = "REPACKAGING";
+      AdminErrorType["RESULTS_PREPARING"] = "RESULTS_PREPARING";
+      AdminErrorType["RESULTS_PROCESSING"] = "RESULTS_PROCESSING";
+      AdminErrorType["RESULTS_SENDING"] = "RESULTS_SENDING";
+      AdminErrorType["STEP_TIMEOUT"] = "STEP_TIMEOUT";
+      AdminErrorType["SYSTEM_FAILURE"] = "SYSTEM_FAILURE";
+      AdminErrorType["TEST_RUN_FAILED"] = "TEST_RUN_FAILED";
+      AdminErrorType["TEST_RUN_INTERRUPTED"] = "TEST_RUN_INTERRUPTED";
+      AdminErrorType["TEST_RUN_TIMEOUT"] = "TEST_RUN_TIMEOUT";
+      AdminErrorType["TEST_RUN_WARNED"] = "TEST_RUN_WARNED";
+      AdminErrorType["TEST_TIMEOUT"] = "TEST_TIMEOUT";
+      AdminErrorType["VNC_CONNECTION_SETUP_FAILED"] = "VNC_CONNECTION_SETUP_FAILED";
+      AdminErrorType["XCRUN_INSTRUMENTS_COMMAND_FAILED"] = "XCRUN_INSTRUMENTS_COMMAND_FAILED";
+      AdminErrorType["XCRUN_INSTRUMENTS_JS_ERROR"] = "XCRUN_INSTRUMENTS_JS_ERROR";
+  })(exports.AdminErrorType || (exports.AdminErrorType = {}));
+
+  exports.FrameworkType = void 0;
+  (function (FrameworkType) {
+      FrameworkType["AUTOMATIC"] = "AUTOMATIC";
+      FrameworkType["MANUAL_APP"] = "MANUAL_APP";
+      FrameworkType["MANUAL_WEB"] = "MANUAL_WEB";
+      FrameworkType["REMOTE"] = "REMOTE";
+  })(exports.FrameworkType || (exports.FrameworkType = {}));
+
+  exports.BrokerType = void 0;
+  (function (BrokerType) {
+      BrokerType["MOBILE"] = "MOBILE";
+      BrokerType["DESKTOP"] = "DESKTOP";
+  })(exports.BrokerType || (exports.BrokerType = {}));
+
+  exports.ClusterState = void 0;
+  (function (ClusterState) {
+      ClusterState[ClusterState["OFFLINE"] = 0] = "OFFLINE";
+      ClusterState["ONLINE"] = "ONLINE";
+      ClusterState["RESTARTING"] = "RESTARTING";
+      ClusterState["QUIET_DOWN"] = "QUIET_DOWN";
+      ClusterState["MAINTENANCE"] = "MAINTENANCE";
+  })(exports.ClusterState || (exports.ClusterState = {}));
+
+  exports.DeviceGroupOrigin = void 0;
+  (function (DeviceGroupOrigin) {
+      DeviceGroupOrigin["STATIC"] = "STATIC";
+      DeviceGroupOrigin["DYNAMIC"] = "DYNAMIC";
+      DeviceGroupOrigin["HYBRID"] = "HYBRID";
+  })(exports.DeviceGroupOrigin || (exports.DeviceGroupOrigin = {}));
+  exports.Platform = void 0;
+  (function (Platform) {
+      Platform["IOS"] = "IOS";
+      Platform["ANDROID"] = "ANDROID";
+      Platform["WINDOWS"] = "WINDOWS";
+      Platform["MAC"] = "MAC";
+      Platform["LINUX"] = "LINUX";
+      Platform["UNDEFINED"] = "UNDEFINED";
+  })(exports.Platform || (exports.Platform = {}));
+  exports.SupportedCreators = void 0;
+  (function (SupportedCreators) {
+      SupportedCreators["MANUAL"] = "MANUAL";
+      SupportedCreators["ROBOT"] = "ROBOT";
+      SupportedCreators["AUTOMATIC"] = "AUTOMATIC";
+  })(exports.SupportedCreators || (exports.SupportedCreators = {}));
+
+  exports.CriterionField = void 0;
+  (function (CriterionField) {
+      CriterionField["NAME"] = "NAME";
+      CriterionField["FINGERPRINT"] = "FINGERPRINT";
+      CriterionField["SERIAL_ID"] = "SERIAL_ID";
+      CriterionField["UNLOCK_GESTURE"] = "UNLOCK_GESTURE";
+      CriterionField["SOFTWARE_VERSION"] = "SOFTWARE_VERSION";
+      CriterionField["INIT_STEP"] = "INIT_STEP";
+      CriterionField["ACCOUNT"] = "ACCOUNT";
+      CriterionField["BROWSERS"] = "BROWSERS";
+  })(exports.CriterionField || (exports.CriterionField = {}));
+
+  exports.RetentionStrategy = void 0;
+  (function (RetentionStrategy) {
+      RetentionStrategy["CLUSTER_ON_OFF"] = "CLUSTER_ON_OFF";
+      RetentionStrategy["MIN_FREE_MAX_TOTAL"] = "MIN_FREE_MAX_TOTAL";
+      RetentionStrategy["POOL_MANAGER_AWARE"] = "POOL_MANAGER_AWARE";
+  })(exports.RetentionStrategy || (exports.RetentionStrategy = {}));
+
+  exports.ProblemType = void 0;
+  (function (ProblemType) {
+      ProblemType["CLEANING"] = "CLEANING";
+      ProblemType["DIRTY"] = "DIRTY";
+      ProblemType["OFFLINE"] = "OFFLINE";
+      ProblemType["LOW_BATTERY"] = "LOW_BATTERY";
+      ProblemType["HIGH_FAIL_RATE"] = "HIGH_FAIL_RATE";
+      ProblemType["NO_INTERNET_CONNECTION"] = "NO_INTERNET_CONNECTION";
+  })(exports.ProblemType || (exports.ProblemType = {}));
+
+  exports.DeviceSessionType = void 0;
+  (function (DeviceSessionType) {
+      DeviceSessionType["AUTOMATIC"] = "AUTOMATIC";
+      DeviceSessionType["MANUAL"] = "MANUAL";
+      DeviceSessionType["MANUAL_APP"] = "MANUAL_APP";
+      DeviceSessionType["MANUAL_WEB"] = "MANUAL_WEB";
+      DeviceSessionType["REMOTE"] = "REMOTE";
+  })(exports.DeviceSessionType || (exports.DeviceSessionType = {}));
+  exports.RetryState = void 0;
+  (function (RetryState) {
+      RetryState["NONE"] = "NONE";
+      RetryState["MANUAL"] = "MANUAL";
+      RetryState["AUTO"] = "AUTO";
+  })(exports.RetryState || (exports.RetryState = {}));
+  exports.DeviceSessionState = void 0;
+  (function (DeviceSessionState) {
+      DeviceSessionState["ABORTED"] = "ABORTED";
+      DeviceSessionState["EXCLUDED"] = "EXCLUDED";
+      DeviceSessionState["FAILED"] = "FAILED";
+      DeviceSessionState["RUNNING"] = "RUNNING";
+      DeviceSessionState["SUCCEEDED"] = "SUCCEEDED";
+      DeviceSessionState["TIMEOUT"] = "TIMEOUT";
+      DeviceSessionState["WAITING"] = "WAITING";
+      DeviceSessionState["WARNING"] = "WARNING";
+  })(exports.DeviceSessionState || (exports.DeviceSessionState = {}));
+  exports.DeviceSessionStepType = void 0;
+  (function (DeviceSessionStepType) {
+      DeviceSessionStepType["WAITING"] = "WAITING";
+      DeviceSessionStepType["PREPARING"] = "PREPARING";
+      DeviceSessionStepType["UNINSTALL"] = "UNINSTALL";
+      DeviceSessionStepType["INSTALL"] = "INSTALL";
+      DeviceSessionStepType["RUNNING"] = "RUNNING";
+      DeviceSessionStepType["SENDING_RESULTS"] = "SENDING_RESULTS";
+      DeviceSessionStepType["PROCESSING_RESULTS"] = "PROCESSING_RESULTS";
+  })(exports.DeviceSessionStepType || (exports.DeviceSessionStepType = {}));
+
+  exports.OsType = void 0;
+  (function (OsType) {
+      OsType["IOS"] = "IOS";
+      OsType["ANDROID"] = "ANDROID";
+      OsType["DESKTOP"] = "DESKTOP";
+      OsType["UNDEFINED"] = "UNDEFINED";
+  })(exports.OsType || (exports.OsType = {}));
+
+  exports.LicenseStatus = void 0;
+  (function (LicenseStatus) {
+      LicenseStatus["ACTIVE"] = "ACTIVE";
+      LicenseStatus["EXPIRED"] = "EXPIRED";
+      LicenseStatus["INACTIVE"] = "INACTIVE";
+      LicenseStatus["CLOSED"] = "CLOSED";
+  })(exports.LicenseStatus || (exports.LicenseStatus = {}));
+
+  exports.MaintenanceType = void 0;
+  (function (MaintenanceType) {
+      MaintenanceType["BARE_METAL"] = "BARE_METAL";
+      MaintenanceType["EC2"] = "EC2";
+      MaintenanceType["VM"] = "VM";
+  })(exports.MaintenanceType || (exports.MaintenanceType = {}));
+
+  exports.NotificationChannel = void 0;
+  (function (NotificationChannel) {
+      NotificationChannel["SLACK"] = "SLACK";
+      NotificationChannel["EMAIL"] = "EMAIL";
+      NotificationChannel["WEBHOOK"] = "WEBHOOK";
+  })(exports.NotificationChannel || (exports.NotificationChannel = {}));
+  exports.NotificationScope = void 0;
+  (function (NotificationScope) {
+      NotificationScope["ALL"] = "ALL";
+      NotificationScope["TEST_RUN"] = "TEST_RUN";
+      NotificationScope["TEST_RUN_FAILURE"] = "TEST_RUN_FAILURE";
+      NotificationScope["TEST_RUN_SUCCEEDED"] = "TEST_RUN_SUCCEEDED";
+      NotificationScope["MAINTENANCE"] = "MAINTENANCE";
+      NotificationScope["MAINTENANCE_RELEASE"] = "MAINTENANCE_RELEASE";
+      NotificationScope["CUSTOM"] = "CUSTOM";
+      NotificationScope["NEWS"] = "NEWS";
+      NotificationScope["SYSTEM"] = "SYSTEM";
+      NotificationScope["CHECK"] = "CHECK";
+      NotificationScope["PLAN_LIMIT_REACHED"] = "PLAN_LIMIT_REACHED";
+      NotificationScope["PLAN_INVOICE"] = "PLAN_INVOICE";
+  })(exports.NotificationScope || (exports.NotificationScope = {}));
+
+  exports.ArchivingStrategy = void 0;
+  (function (ArchivingStrategy) {
+      ArchivingStrategy["NEVER"] = "NEVER";
+      ArchivingStrategy["DAYS"] = "DAYS";
+      ArchivingStrategy["RUNS"] = "RUNS";
+  })(exports.ArchivingStrategy || (exports.ArchivingStrategy = {}));
+
+  exports.ScreenshotType = void 0;
+  (function (ScreenshotType) {
+      ScreenshotType["LANDSCAPE"] = "LANDSCAPE";
+      ScreenshotType["PORTRAIT"] = "PORTRAIT";
+  })(exports.ScreenshotType || (exports.ScreenshotType = {}));
+
+  exports.ServiceUnit = void 0;
+  (function (ServiceUnit) {
+      ServiceUnit["DAY"] = "DAY";
+      ServiceUnit["HOUR"] = "HOUR";
+      ServiceUnit["MONTH"] = "MONTH";
+      ServiceUnit["PROJECT"] = "PROJECT";
+      ServiceUnit["RUN"] = "RUN";
+      ServiceUnit["YEAR"] = "YEAR";
+  })(exports.ServiceUnit || (exports.ServiceUnit = {}));
+
+  exports.SharedResourceType = void 0;
+  (function (SharedResourceType) {
+      SharedResourceType["DEVICE_GROUP"] = "DEVICE_GROUP";
+      SharedResourceType["FILE"] = "FILE";
+      SharedResourceType["PROJECT"] = "PROJECT";
+  })(exports.SharedResourceType || (exports.SharedResourceType = {}));
+
+  exports.TestResult = void 0;
+  (function (TestResult) {
+      TestResult["PASSED"] = "PASSED";
+      TestResult["FAILED"] = "FAILED";
+      TestResult["SKIPPED"] = "SKIPPED";
+      TestResult["NOT_AVAILABLE"] = "NOT_AVAILABLE";
+  })(exports.TestResult || (exports.TestResult = {}));
+  exports.TestStepType = void 0;
+  (function (TestStepType) {
+      TestStepType["ASSERTION"] = "ASSERTION";
+      TestStepType["CLICK"] = "CLICK";
+      TestStepType["CONFIG"] = "CONFIG";
+      TestStepType["DRAG"] = "DRAG";
+      TestStepType["INPUT"] = "INPUT";
+      TestStepType["NAVIGATION"] = "NAVIGATION";
+      TestStepType["OTHER"] = "OTHER";
+      TestStepType["SCROLL"] = "SCROLL";
+      TestStepType["UTIL"] = "UTIL";
+      TestStepType["WAIT"] = "WAIT";
+  })(exports.TestStepType || (exports.TestStepType = {}));
+
+  exports.LimitationType = void 0;
+  (function (LimitationType) {
+      LimitationType["PACKAGE"] = "PACKAGE";
+      LimitationType["CLASS"] = "CLASS";
+  })(exports.LimitationType || (exports.LimitationType = {}));
+  exports.TestScheduler = void 0;
+  (function (TestScheduler) {
+      TestScheduler["PARALLEL"] = "PARALLEL";
+      TestScheduler["SERIAL"] = "SERIAL";
+      TestScheduler["SINGLE"] = "SINGLE";
+      TestScheduler["ALL_INSTANCES"] = "ALL_INSTANCES";
+  })(exports.TestScheduler || (exports.TestScheduler = {}));
+  exports.TestState = void 0;
+  (function (TestState) {
+      TestState["WAITING"] = "WAITING";
+      TestState["RUNNING"] = "RUNNING";
+      TestState["FINISHED"] = "FINISHED";
+  })(exports.TestState || (exports.TestState = {}));
+
+  exports.MfaStatus = void 0;
+  (function (MfaStatus) {
+      MfaStatus["VERIFICATION_NEED"] = "VERIFICATION_NEED";
+      MfaStatus["DISABLED"] = "DISABLED";
+      MfaStatus["ENABLED"] = "ENABLED";
+  })(exports.MfaStatus || (exports.MfaStatus = {}));
+  exports.UserStatus = void 0;
+  (function (UserStatus) {
+      UserStatus["INACTIVE"] = "INACTIVE";
+      UserStatus["DISABLED"] = "DISABLED";
+      UserStatus["ENABLED"] = "ENABLED";
+  })(exports.UserStatus || (exports.UserStatus = {}));
+
+  exports.FileDirection = void 0;
+  (function (FileDirection) {
+      FileDirection["INPUT"] = "INPUT";
+      FileDirection["OUTPUT"] = "OUTPUT";
+  })(exports.FileDirection || (exports.FileDirection = {}));
+  exports.FileInputType = void 0;
+  (function (FileInputType) {
+      FileInputType["APPLICATION"] = "APPLICATION";
+      FileInputType["TEST"] = "TEST";
+      FileInputType["DATA"] = "DATA";
+  })(exports.FileInputType || (exports.FileInputType = {}));
+  exports.FileState = void 0;
+  (function (FileState) {
+      FileState["PREPARING"] = "PREPARING";
+      FileState["READY"] = "READY";
+  })(exports.FileState || (exports.FileState = {}));
+
+  exports.ALLOWED_HTTP_METHODS = ALLOWED_HTTP_METHODS;
+  exports.API = API;
+  exports.CloudAPIClient = CloudAPIClient;
+  exports.FilterBuilder = FilterBuilder;
+  exports.IMAGE_FILES_FILTER = IMAGE_FILES_FILTER;
+  exports.NON_MEDIA_FILES_FILTER = NON_MEDIA_FILES_FILTER;
+  exports["default"] = CloudAPIClient;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
 //# sourceMappingURL=bitbar-cloud-api-client.js.map

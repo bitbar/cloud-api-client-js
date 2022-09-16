@@ -197,6 +197,14 @@ export class API {
     return new APIResource<License, NoQueryParams, NoData>(this).push('license');
   }
 
+  /*
+    /me or /admin
+    Requires prototype extension covering ACL check
+  */
+  ma(): APIAdminResource | APIResourceUser {
+    throw new Error('Requires prototype extension covering ACL check');
+  }
+
   // /me
   me() {
     return this.user('me');

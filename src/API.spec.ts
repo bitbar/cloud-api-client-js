@@ -116,6 +116,7 @@ describe('API', () => {
     expect(api.users()).toBeInstanceOf(APIListUsers);
     expect(api.account(1)).toBeInstanceOf(APIResourceAccount);
     expect(api.me()).toBeInstanceOf(APIResourceUser);
+    expect(() => api.ma()).toThrow(new Error('Requires prototype extension covering ACL check'));
     expect(api.admin()).toBeInstanceOf(APIAdminResource);
     expect(api.devices()).toBeInstanceOf(APIListDevices);
     expect(api.device(1)).toBeInstanceOf(APIResourceDevice);
