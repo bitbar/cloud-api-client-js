@@ -54,6 +54,14 @@ describe('APIResourceDeviceSessionCommon', () => {
     });
   });
 
+  describe('@release', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.release();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/release`);
+    });
+  });
+
   describe('@screenshots', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.screenshots();

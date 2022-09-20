@@ -39,6 +39,11 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
     return new OutputFileset(this);
   }
 
+  // /device-sessions/{id}/release
+  release() {
+    return new APIResource<DeviceSession, NoQueryParams, NoData>(this).push('release').post();
+  }
+
   // /device-sessions/{id}/screenshots
   screenshots() {
     return new APIList<Screenshot, SessionQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, NoData>(this).push('screenshots');
