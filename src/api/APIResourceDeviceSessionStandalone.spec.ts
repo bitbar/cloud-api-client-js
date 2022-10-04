@@ -78,4 +78,13 @@ describe('APIResourceDeviceSessionStandalone', () => {
     });
   });
 
+  describe('@visualTestsImages', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.visualTestsImages();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(
+        `${baseUrl}/visual-tests/images`);
+    });
+  });
+
 });
