@@ -64,3 +64,4 @@ export * from './api/models/UserFile';
 export * from './api/models/UserPreference';
 export * from './api/models/UserStatistics';
 export * from './api/models/VatRate';
+export * from './api/models/VisualTestImage';
