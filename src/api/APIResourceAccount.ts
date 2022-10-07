@@ -4,6 +4,7 @@ import {Account} from './models/Account';
 import {AccountConcurrencyStatusMap} from './models/AccountConcurrencyStatusMap';
 import {AccountPreferences} from './models/AccountPreference';
 import {NoData, NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
+import {VisualTestAccess} from './models/VisualTesting';
 
 export class APIResourceAccount extends APIResource<Account> {
 
@@ -27,6 +28,11 @@ export class APIResourceAccount extends APIResource<Account> {
   // /accounts/{id}/preferences
   preferences() {
     return new APIResource<AccountPreferences, NoQueryParams, SimpleCollectionResponse<AccountPreferences>>(this).push('preferences');
+  }
+
+  // /accounts/{id}/visual-tests-access
+  visualTestsAccess() {
+    return new APIResource<VisualTestAccess, NoQueryParams, SimpleCollectionResponse<VisualTestAccess>>(this).push('visual-tests-access');
   }
 
 }
