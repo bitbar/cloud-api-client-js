@@ -8,7 +8,7 @@ import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 import {Connection, ConnectionData} from './models/Connection';
 import {DeviceSession} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
-import {VisualTestImage} from './models/VisualTestImage';
+import {VisualTesting} from './models/VisualTesting';
 
 export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSession> implements DeviceSessionStandalone {
 
@@ -55,7 +55,7 @@ export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSessio
 
   // /device-sessions/{id}/visual-tests/images
   visualTestsImages() {
-    return new APIList<VisualTestImage, NoQueryParams, NoData>(this).push('visual-tests', 'images');
+    return new APIList<VisualTesting, NoQueryParams, NoData>(this).push('visual-tests', 'images');
   }
 
 }

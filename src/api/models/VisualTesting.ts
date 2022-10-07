@@ -4,7 +4,12 @@ export enum VTImageType {
   ELEMENT_SCREENSHOT = 'ELEMENT_SCREENSHOT'
 }
 
-export type VisualTestImage = {
+export type VisualTestAccess = {
+  enabled: boolean;
+  apiKey: string | null;
+}
+
+export type VisualTesting = {
   comparisonStatus:	string;
   comparisonUrl:	string;
   createdAt:	string;
