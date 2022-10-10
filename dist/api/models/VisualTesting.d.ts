@@ -3,7 +3,11 @@ export declare enum VTImageType {
     VIEWPORT = "VIEWPORT",
     ELEMENT_SCREENSHOT = "ELEMENT_SCREENSHOT"
 }
-export declare type VisualTestImage = {
+export declare type VisualTestAccess = {
+    enabled: boolean;
+    apiKey: string | null;
+};
+export declare type VisualTesting = {
     comparisonStatus: string;
     comparisonUrl: string;
     createdAt: string;
