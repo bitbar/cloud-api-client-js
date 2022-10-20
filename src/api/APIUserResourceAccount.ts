@@ -7,7 +7,7 @@ import {AccountServicePayment} from './models/AccountServicePayment';
 import {BillingPeriodQueryParams} from './models/BillingPeriod';
 import {CollectionBasicQueryParams, NoData, NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
 import {User, UserData} from './models/User';
-import {VisualTestAccess} from './models/VisualTesting';
+import {VisualTestAccess} from './models/VisualTest';
 
 export class APIUserResourceAccount extends APIResource<Account> {
 
@@ -41,9 +41,9 @@ export class APIUserResourceAccount extends APIResource<Account> {
     return a;
   }
 
-  // /account/visual-tests-access
-  visualTestsAccess() {
-    return new APIResource<VisualTestAccess, NoQueryParams, SimpleCollectionResponse<VisualTestAccess>>(this).push('visual-tests-access');
+  // /account/visualtest/access
+  visualTestAccess() {
+    return new APIResource<VisualTestAccess, NoQueryParams, SimpleCollectionResponse<VisualTestAccess>>(this).push('visualtest', 'access');
   }
 
 }

@@ -1,4 +1,4 @@
-export enum VTImageType {
+export enum VisualTestImageType {
   FULL_PAGE = 'FULL_PAGE',
   VIEWPORT = 'VIEWPORT',
   ELEMENT_SCREENSHOT = 'ELEMENT_SCREENSHOT'
@@ -9,14 +9,14 @@ export type VisualTestAccess = {
   apiKey: string | null;
 }
 
-export type VisualTesting = {
+export type VisualTest = {
   comparisonStatus:	string;
-  comparisonUrl:	string;
+  appUrl:	string;
   createdAt:	string;
   id: number;
   imageName:	string;
   imageThumbnailUrl:	string;
-  imageType:	VTImageType;
+  imageType:	VisualTestImageType;
   imageUrl:	string;
   sessionId:	string;
   testUrl:	string;

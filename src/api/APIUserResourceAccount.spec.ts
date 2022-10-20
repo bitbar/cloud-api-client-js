@@ -58,9 +58,9 @@ describe('APIUserResourceAccount', () => {
 
   describe('@visualTestsAccess', () => {
     it('should initialize proper endpoint path', () => {
-      const call = service.visualTestsAccess();
+      const call = service.visualTestAccess();
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/visual-tests-access`);
+      expect(call.toUrl()).toEqual(`${baseUrl}/visualtest/access`);
     });
   });
 });

@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.0.8 | Copyright 2022 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.0.9 | Copyright 2022 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.0.8";
+  var version = "1.0.9";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -908,8 +908,8 @@
       release() {
           return new APIResource(this).push('release').post();
       }
-      visualTestsImages() {
-          return new APIList(this).push('visual-tests', 'images');
+      visualTestImages() {
+          return new APIList(this).push('visualtest', 'images');
       }
   }
 
@@ -1643,8 +1643,8 @@
           a.push(id, 'billing-period');
           return a;
       }
-      visualTestsAccess() {
-          return new APIResource(this).push('visual-tests-access');
+      visualTestAccess() {
+          return new APIResource(this).push('visualtest', 'access');
       }
   }
 
@@ -2275,12 +2275,12 @@
       FileState["READY"] = "READY";
   })(exports.FileState || (exports.FileState = {}));
 
-  exports.VTImageType = void 0;
-  (function (VTImageType) {
-      VTImageType["FULL_PAGE"] = "FULL_PAGE";
-      VTImageType["VIEWPORT"] = "VIEWPORT";
-      VTImageType["ELEMENT_SCREENSHOT"] = "ELEMENT_SCREENSHOT";
-  })(exports.VTImageType || (exports.VTImageType = {}));
+  exports.VisualTestImageType = void 0;
+  (function (VisualTestImageType) {
+      VisualTestImageType["FULL_PAGE"] = "FULL_PAGE";
+      VisualTestImageType["VIEWPORT"] = "VIEWPORT";
+      VisualTestImageType["ELEMENT_SCREENSHOT"] = "ELEMENT_SCREENSHOT";
+  })(exports.VisualTestImageType || (exports.VisualTestImageType = {}));
 
   exports.ALLOWED_HTTP_METHODS = ALLOWED_HTTP_METHODS;
   exports.API = API;
