@@ -1,13 +1,14 @@
-import {APIList} from './APIList'
-import {APIResource} from './APIResource'
+import {APIList} from './APIList';
+import {APIResource} from './APIResource';
 import {APIResourceAdditionalUser} from './APIResourceAdditionalUser';
 import {APIResourceUser} from './APIResourceUser';
 import {Account} from './models/Account';
 import {AccountServicePayment} from './models/AccountServicePayment';
 import {BillingPeriodQueryParams} from './models/BillingPeriod';
-import {CollectionBasicQueryParams, NoData, NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
+import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {User, UserData} from './models/User';
 import {VisualTestAccess} from './models/VisualTest';
+
 
 export class APIUserResourceAccount extends APIResource<Account> {
 
@@ -43,7 +44,7 @@ export class APIUserResourceAccount extends APIResource<Account> {
 
   // /account/visualtest/access
   visualTestAccess() {
-    return new APIResource<VisualTestAccess, NoQueryParams, SimpleCollectionResponse<VisualTestAccess>>(this).push('visualtest', 'access');
+    return new APIResource<VisualTestAccess, NoQueryParams, VisualTestAccess>(this).push('visualtest', 'access');
   }
 
 }
