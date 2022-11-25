@@ -61,4 +61,12 @@ describe('APIResourceUserSession', () => {
       expect(call.toUrl()).toEqual(`${baseUrl}/portal-login`);
     });
   });
+
+  describe('@sbidCallbackUrl', () => {
+    it('should return redirect URL for SBID login callback', () => {
+      const url = service.sbidCallbackUrl();
+
+      expect(url).toEqual(`${cloudUrl}/api${baseUrl}/sbid/callback`);
+    });
+  });
 });
