@@ -2,7 +2,7 @@ import {Method} from 'axios';
 import {API} from '../API';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
-import {NoData, NoQueryParams} from './models/HTTP';
+import {NoQueryParams} from './models/HTTP';
 import {Message} from './models/Message';
 import {
   User,
@@ -10,9 +10,7 @@ import {
   UserData,
   UserPasswordData,
   UserRecoveryQueryParams,
-  ValidateVatQueryParams
 } from './models/User';
-import {VatRate} from './models/VatRate';
 
 
 export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
@@ -40,11 +38,6 @@ export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
   // /users/passwordRecovery
   passwordRecovery() {
     return new APIResource<User, NoQueryParams, UserPasswordData>(this).push('password-recovery');
-  }
-
-  // /users/resetApiKey
-  validateVatId() {
-    return new APIResource<VatRate, ValidateVatQueryParams, NoData>(this).push('validateVatId');
   }
 
 }
