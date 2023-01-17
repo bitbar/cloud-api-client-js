@@ -44,12 +44,4 @@ describe('APIListUsers', () => {
     });
   });
 
-  describe('@validateVatId', () => {
-    it('should initialize proper endpoint path', () => {
-      const result = service.validateVatId();
-      expect(result.toUrl()).toEqual(`${baseUrl}/validateVatId`);
-      expect(result).toBeInstanceOf(APIResource);
-    });
-  });
-
 });

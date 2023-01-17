@@ -23,5 +23,6 @@ export declare class APIResourceDeviceSessionCommon extends APIResource<DeviceSe
     testCaseRuns(): APIList<TestCaseRun, SessionQueryParams | NoQueryParams, void>;
     connections(): APIList<any, import("./models/HTTP").CollectionQueryParams, any>;
     logs(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
+    clusterLogs(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
 }
 export default APIResourceDeviceSessionCommon;

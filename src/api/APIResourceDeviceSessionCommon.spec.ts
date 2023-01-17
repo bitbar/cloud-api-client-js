@@ -137,4 +137,13 @@ describe('APIResourceDeviceSessionCommon', () => {
     });
   });
 
+  describe('@clusterLogs', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.clusterLogs();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/cluster-logs`);
+      expect((<any>call).requestConfig.responseType).toEqual('text');
+    });
+  });
+
 });

@@ -93,6 +93,12 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
     });
   }
 
+  clusterLogs() {
+    return new APIResource(this).push('cluster-logs').setRequestConfig({
+      responseType: 'text'
+    });
+  }
+
 }
 
 export default APIResourceDeviceSessionCommon

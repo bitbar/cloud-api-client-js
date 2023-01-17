@@ -1,8 +1,8 @@
-import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
+import {APIResourceDeviceSession} from './APIResourceDeviceSession';
 import {postAdminDeviceSessionChangeBillable} from './factory/postAdminDeviceSessionChangeBillable';
 
 
-export class APIAdminResourceDeviceSession extends APIResourceDeviceSessionCommon {
+export class APIAdminResourceDeviceSession extends APIResourceDeviceSession {
 
   // /admin/device-sessions/{id}/changebillable
   changeBillable (billable: boolean) {
