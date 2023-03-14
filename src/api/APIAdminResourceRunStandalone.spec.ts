@@ -51,11 +51,18 @@ describe('APIAdminResourceRunStandalone', () => {
 
   describe('@changePriority', () => {
     it('should initialize proper endpoint path', () => {
-      const call = service.changePriority(false);
+      const call = service.changePriority();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/changepriority`);
+      expect((<any>call).requestConfig.data ).toBeUndefined();
+    });
+
+    it('should initialize proper endpoint path with post data', () => {
+      const call = service.changePriority(50);
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/changepriority`);
       expect((<any>call).requestConfig.method).toEqual('POST');
-      expect((<any>call).requestConfig.params.priority).toEqual(false);
+      expect((<any>call).requestConfig.data.priority).toEqual(50);
     });
   });
 
