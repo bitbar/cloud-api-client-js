@@ -32,10 +32,14 @@ export class APIAdminResourceRunStandalone extends APIResource<AdminTestRun, NoQ
   }
 
   // /runs/{id}/changepriority
-  changePriority(priority: boolean) {
-    return new APIResource<AdminTestRun, RunChangePriorityParams>(this).push('changepriority').post().params({
-      priority
-    });
+  changePriority(priority?: number) {
+    const resource = new APIResource<AdminTestRun, RunChangePriorityParams>(this).push('changepriority');
+    if (priority) {
+      resource.post().data({
+        priority
+      });
+    }
+    return resource;
   }
 
   // /admin/runs/{id}/retry
