@@ -6,7 +6,7 @@ export declare class APIAdminResourceRunStandalone extends APIResource<AdminTest
     constructor(parent: APIAdminResource, id: number);
     abort(): APIResource<AdminTestRun, NoQueryParams, void>;
     changeBillable(billable: boolean): APIResource<AdminTestRun, RunChangeBillableParams, RunChangeBillableParams>;
-    changePriority(priority: boolean): APIResource<AdminTestRun, RunChangePriorityParams, RunChangePriorityParams>;
+    changePriority(priority?: number): APIResource<AdminTestRun, RunChangePriorityParams, RunChangePriorityParams>;
     retry(ids?: Array<number>): APIResource<AdminTestRun, import("..").BuildLogsData, import("..").BuildLogsData>;
 }
 export default APIAdminResourceRunStandalone;

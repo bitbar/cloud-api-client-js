@@ -27,5 +27,5 @@ export interface RunChangeBillableParams extends QueryParams {
     billable: boolean;
 }
 export interface RunChangePriorityParams extends QueryParams {
-    priority: boolean;
+    priority: number;
 }
