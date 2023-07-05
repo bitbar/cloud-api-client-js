@@ -78,7 +78,7 @@ export type DeviceCleanupConfiguration = {
   discriminator: string;
   enabled: boolean;
   global: boolean;
-  example: true
+  example: true;
   id: number;
   lastModificationTime: number;
   osType: OsType;
@@ -93,7 +93,7 @@ export type DeviceLabelData = {
 }
 
 export interface DeviceProperiesData extends QueryParams {
-  labelId: number
+  labelId: number;
 }
 
 export interface CleanupConfigurationSpecificData extends QueryParams {
@@ -108,7 +108,7 @@ export interface DeviceUsageQueryParams extends TestRunsQueryParams {
 }
 
 export interface DeviceStatisticQueryParam extends TestRunsQueryParams {
-  mode: string
+  mode: string;
 }
 
 export interface DevicesQueryParams extends CollectionQueryParams {

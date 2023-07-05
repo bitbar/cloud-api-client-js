@@ -64,13 +64,13 @@ export interface UserParams extends CollectionQueryParams {
 export type UserUpdateAccount = Pick<User, 'accountId'>;
 
 export interface LoginData {
-  username: string,
-  password: string
+  username: string;
+  password: string;
 }
 
 
 export type UserPasswordData = {
-  key: string
+  key: string;
   password: string;
 };
 export type UserActivateData = {

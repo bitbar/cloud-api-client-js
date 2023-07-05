@@ -13,4 +13,4 @@ export interface RoleParams extends CollectionQueryParams {
   withoutPriorities: boolean;
 }
 
-export type RoleData = Pick<Role, 'expireTime' | 'value'> & {roleId: number;};
+export type RoleData = Pick<Role, 'expireTime' | 'value'> & {roleId: number};

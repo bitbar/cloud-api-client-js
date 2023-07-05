@@ -6,8 +6,8 @@ export type Tag = {
 }
 
 export interface TestRunTagsData {
-  projectId: number,
-  name: string
+  projectId: number;
+  name: string;
 }
 
 export type TagsData = Pick<TestRunTagsData, 'name'>;
