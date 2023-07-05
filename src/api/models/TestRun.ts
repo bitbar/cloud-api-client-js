@@ -26,7 +26,7 @@ export enum TestState {
 
 export type TestRun = {
   abortedDeviceCount: number;
-  billable: boolean
+  billable: boolean;
   config: TestRunConfig;
   createTime: number;
   deviceCount: number;
@@ -90,7 +90,7 @@ export type TestRunConfig = {
   limitationType: LimitationType;
   limitationValue: string;
   loadedPrevious: boolean;
-  example: true
+  example: true;
   maxAutoRetriesCount: number;
   maxTestTimeout: any;
   osType: OsType;

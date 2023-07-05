@@ -20,6 +20,7 @@ export declare enum DeviceState {
 export declare type AdminDevice = {
     accountId: number;
     cluster: unknown;
+    dedicationEndTime: number;
     deviceModelId: number;
     deviceModelName: string;
     enabled: boolean;

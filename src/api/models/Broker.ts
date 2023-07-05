@@ -7,5 +7,5 @@ export type Broker = {
   id: number;
   location: string;
   type: BrokerType;
-  url: string
+  url: string;
 }

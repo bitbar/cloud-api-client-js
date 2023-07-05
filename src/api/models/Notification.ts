@@ -26,7 +26,7 @@ export type Notification = {
   channel: NotificationChannel;
   destination: string;
   id: number;
-  projectId?: number
+  projectId?: number;
   projectName?: string;
   scope: NotificationScope;
   userEmail: string;

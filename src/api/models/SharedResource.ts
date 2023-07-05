@@ -11,7 +11,7 @@ export type SharedResource = {
   id: number;
   name: string;
   resourceId: number;
-  type: SharedResourceType
+  type: SharedResourceType;
 }
 
 export interface ShareData extends QueryParams {

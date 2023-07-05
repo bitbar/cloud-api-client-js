@@ -3,7 +3,7 @@ import {DeviceSessionState, DeviceSessionStepType} from './DeviceSession';
 export type AdminDeviceSession = {
   billable: boolean;
   createTime: number;
-  currentStepType: DeviceSessionStepType
+  currentStepType: DeviceSessionStepType;
   deviceTime: number;
   endTime: number;
   errorMessage: string;

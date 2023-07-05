@@ -25,7 +25,7 @@ export type FileProperty = {
 
 export type UserFileTag = {
   id: number;
-  name: string
+  name: string;
 }
 
 export type UserFile = {

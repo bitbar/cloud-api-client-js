@@ -24,6 +24,7 @@ export enum DeviceState {
 export type AdminDevice = {
   accountId: number;
   cluster: unknown;
+  dedicationEndTime: number;
   deviceModelId: number;
   deviceModelName: string;
   enabled: boolean;
@@ -51,4 +52,4 @@ export type AdminDevice = {
 export type AdminDevicesQueryParams = Pick<DevicesQueryParams, 'withDisabled'> & CollectionQueryParams;
 
 export type AdminDeviceData = Pick<AdminDevice, 'accountId' | 'enabled' | 'initStep' | 'ipAddress' | 'name' |
-  'serialId' | 'testTimeLimit' | 'unlockGesture'> & {apiLevel: number; releaseVersion: string;};
+  'serialId' | 'testTimeLimit' | 'unlockGesture'> & {apiLevel: number; releaseVersion: string};
