@@ -1,5 +1,7 @@
 import { QueryParams } from './HTTP';
 export declare type UserStatistics = {
+    additionalUsers: number;
+    allTimeProjects: number;
     devicesUsed: number;
     id: number;
     overallTestCaseSuccessRatio: number;

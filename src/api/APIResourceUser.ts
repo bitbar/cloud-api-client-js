@@ -17,7 +17,7 @@ import {APIResourceProject} from './APIResourceProject'
 import {APIUserResourceAccount} from './APIUserResourceAccount'
 import {AccessGroup, AccessGroupsData} from './models/AccessGroup';
 import {BillingPeriod} from './models/BillingPeriod';
-import {DeviceGroup, DeviceGroupIdsData, DeviceGroupWithPublicParams} from './models/DeviceGroup';
+import {DeviceGroup, DeviceGroupData, DeviceGroupIdsData, DeviceGroupWithPublicParams} from './models/DeviceGroup';
 import {DeviceStatistics} from './models/DeviceStatistics';
 import {DeviceUsage} from './models/DeviceUsage';
 import {Framework} from './models/Framework';
@@ -93,7 +93,7 @@ export class APIResourceUser extends APIResource {
 
   // /users/{id}/device-groups
   deviceGroups() {
-    return new APIList<DeviceGroup, DeviceGroupWithPublicParams, DeviceGroupIdsData>(this).push('device-groups');
+    return new APIList<DeviceGroup, DeviceGroupWithPublicParams, DeviceGroupIdsData | Omit<DeviceGroupData, 'displayName'>>(this).push('device-groups');
   }
 
   // /users/{id}/device-groups/{id}

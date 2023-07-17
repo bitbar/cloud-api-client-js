@@ -17,7 +17,7 @@ import { APIResourceProject } from './APIResourceProject';
 import { APIUserResourceAccount } from './APIUserResourceAccount';
 import { AccessGroup, AccessGroupsData } from './models/AccessGroup';
 import { BillingPeriod } from './models/BillingPeriod';
-import { DeviceGroup, DeviceGroupIdsData, DeviceGroupWithPublicParams } from './models/DeviceGroup';
+import { DeviceGroup, DeviceGroupData, DeviceGroupIdsData, DeviceGroupWithPublicParams } from './models/DeviceGroup';
 import { DeviceStatistics } from './models/DeviceStatistics';
 import { DeviceUsage } from './models/DeviceUsage';
 import { Framework } from './models/Framework';
@@ -39,7 +39,7 @@ export declare class APIResourceUser extends APIResource {
     service(id: number): APIResource<Service, NoQueryParams, void>;
     billingPeriods(): APIList<BillingPeriod, CollectionBasicQueryParams, void>;
     billingPeriod(id: number): APIResourceBillingPeriod;
-    deviceGroups(): APIList<DeviceGroup, DeviceGroupWithPublicParams, DeviceGroupIdsData>;
+    deviceGroups(): APIList<DeviceGroup, DeviceGroupWithPublicParams, DeviceGroupIdsData | Omit<DeviceGroupData, "displayName">>;
     deviceGroup(id: number): APIResourceDeviceGroup;
     deviceSessions(): APIList<DeviceSession, DeviceSessionQueryParams, DeviceSessionData>;
     deviceSession(id: number): APIResourceDeviceSessionStandalone;

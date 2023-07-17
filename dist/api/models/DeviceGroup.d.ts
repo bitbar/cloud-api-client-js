@@ -23,4 +23,7 @@ export interface DeviceGroupParams extends CollectionBasicQueryParams {
 export interface DeviceGroupWithPublicParams extends CollectionBasicQueryParams {
     withPublic: boolean;
 }
-export declare type DeviceGroupData = Pick<DeviceGroup, 'displayName' | 'name' | 'osType'>;
+export declare type DeviceGroupData = Pick<DeviceGroup, 'displayName' | 'name' | 'osType'> | {
+    deviceIds?: Array<number>;
+    selectorIds?: Array<number>;
+};
