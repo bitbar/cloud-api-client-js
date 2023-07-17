@@ -15,7 +15,7 @@ import {
 
 export class APIListUsers extends APIList<User, NoQueryParams, UserData> {
 
-  protected ALLOWED_HTTP_METHODS: Array<Method> = ['POST'];
+  protected ALLOWED_HTTP_METHODS: Array<Method> = ['GET', 'POST'];
 
   /**
    * /users

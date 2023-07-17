@@ -1,6 +1,8 @@
 import {QueryParams} from './HTTP';
 
 export type UserStatistics = {
+  additionalUsers: number;
+  allTimeProjects: number;
   devicesUsed: number;
   id: number;
   overallTestCaseSuccessRatio: number;
@@ -14,3 +16,4 @@ export interface StatisticQueryParams extends QueryParams {
   skipShared: boolean;
   startTime: number;
 }
+

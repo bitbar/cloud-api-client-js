@@ -23,6 +23,7 @@ export declare class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams 
     method(name: Method): this;
     get(): this;
     post(): this;
+    delete(): this;
     params<T extends keyof QUERY_PARAMS = keyof QUERY_PARAMS>(params: Pick<QUERY_PARAMS, T>): this;
     getParams(): Partial<QUERY_PARAMS>;
     removeParam(key: keyof QUERY_PARAMS): this;

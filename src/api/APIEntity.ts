@@ -145,6 +145,13 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
   }
 
   /**
+   * Set DELETE as HTTP method
+   */
+  delete(): this {
+    return this.method('DELETE');
+  }
+
+  /**
    * Set params
    */
   params<T extends keyof QUERY_PARAMS = keyof QUERY_PARAMS>(params: Pick<QUERY_PARAMS, T>): this {

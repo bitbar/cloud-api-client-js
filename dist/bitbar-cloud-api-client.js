@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.0.16 | Copyright 2023 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.0.17 | Copyright 2023 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.0.16";
+  var version = "1.0.17";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -245,6 +245,9 @@
       post() {
           return this.method('POST');
       }
+      delete() {
+          return this.method('DELETE');
+      }
       params(params) {
           this.setRequestConfig({ params });
           return this;
@@ -391,9 +394,6 @@
   }
 
   class APIResource extends APIEntity {
-      delete() {
-          return this.method('DELETE');
-      }
   }
 
   class APIListCleanupConfigurations extends APIList {
@@ -1429,7 +1429,7 @@
   class APIListUsers extends APIList {
       constructor(parent) {
           super(parent);
-          this.ALLOWED_HTTP_METHODS = ['POST'];
+          this.ALLOWED_HTTP_METHODS = ['GET', 'POST'];
           this.push('users');
       }
       activate() {
