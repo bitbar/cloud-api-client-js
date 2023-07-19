@@ -19,7 +19,7 @@ export class APIListDevices extends APIList<Device, DevicesQueryParams> {
 
   // /devices/filters
   filters() {
-    return new APIResource<DevicePicker, CollectionQueryParams, NoData>(this).push('filters');
+    return new APIResource<DevicePicker, CollectionQueryParams, Pick<DevicePicker, 'deviceFilterGroups'>>(this).push('filters');
   }
 
   // /devices/desktop-browser-capabilities
