@@ -59,6 +59,10 @@ export class FilterBuilder {
     return this.add(name, undefined, 'isnull');
   }
 
+  isnotnull(name: string): this {
+    return this.add(name, undefined, 'isnotnull');
+  }
+
   in(name: string, value: Array<any>): this {
     return this.add(name, value, 'in', true);
   }
