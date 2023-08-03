@@ -14,6 +14,7 @@ export declare class FilterBuilder {
     like(name: string, value: string): this;
     notlike(name: string, value: string): this;
     isnull(name: string): this;
+    isnotnull(name: string): this;
     in(name: string, value: Array<any>): this;
     notin(name: string, value: Array<any>): this;
     raw(filter: Filter | string | Filter[] | string[]): void;

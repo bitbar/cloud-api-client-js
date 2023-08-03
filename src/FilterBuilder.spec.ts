@@ -192,6 +192,14 @@ describe('FilterBuilder', () => {
     });
   });
 
+  describe('@isnotnull', () => {
+    it('should generate proper string', () => {
+      const f = new FilterBuilder();
+      f.isnotnull('test');
+      expect(f.toString()).toEqual('test_isnotnull');
+    });
+  });
+
   describe('@in', () => {
     it('should generate proper string for list of booleans', () => {
       const test = [true, false];
