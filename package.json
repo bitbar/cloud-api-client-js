@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.10",
-    "@bitbar/finka": "^2.3.0",
+    "@bitbar/finka": "^2.4.2",
     "axios": "^0.26.1",
     "form-data": "^4.0.0",
     "node-abort-controller": "^3.0.1",
