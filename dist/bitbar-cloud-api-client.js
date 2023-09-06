@@ -185,6 +185,7 @@
       }
       abortRequest() {
           this.abortController.abort();
+          this.abortController = new nodeAbortController.AbortController();
       }
       push(...items) {
           this.stack = this.stack.concat(items);

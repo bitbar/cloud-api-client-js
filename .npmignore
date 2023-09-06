@@ -7,6 +7,7 @@ src/
 typings/
 coverage/
 
+
 # Files
 rollup.config.js
 bower.json
@@ -19,6 +20,8 @@ tsconfig.test.json
 .whitesource
 Jenkinsfile.sonar
 sonar-project.properties
+.github
+.babelrc
 
 # IDE
 .vscode/
