@@ -42,6 +42,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
 
   abortRequest() {
     this.abortController.abort();
+    this.abortController = new AbortController();
   }
 
   push(...items: Array<string | number>): this {
