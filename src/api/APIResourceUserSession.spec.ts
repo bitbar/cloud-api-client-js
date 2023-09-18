@@ -49,7 +49,7 @@ describe('APIResourceUserSession', () => {
       const call = service.sso(userName);
 
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`/user-sessions/${userName}-login`);
+      expect(call.toUrl()).toEqual(`/user-sessions/oauth/authorize/${userName}-login`);
     });
   });
 
