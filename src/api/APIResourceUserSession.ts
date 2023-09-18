@@ -21,9 +21,9 @@ export class APIResourceUserSession extends APIResource {
     return new APIResource(this).push('logout').post();
   }
 
-  // /user-sessions/{name}-login
+  // /user-sessions/oauth/authorize/{name}-login
   sso(name: string) {
-    return new APIResource(this).push(name + '-login');
+    return new APIResource(this).push('oauth', 'authorize', name + '-login');
   }
 
   // /user-sessions/portal-login

@@ -312,9 +312,9 @@ describe('APIEntity', () => {
 
   describe('@abortRequest', () => {
     it('should set data in existing configuration', () => {
-      jest.spyOn((<any>service).abortController, 'abort');
+      const spy = jest.spyOn((<any>service).abortController, 'abort');
       service.abortRequest();
-      expect((<any>service).abortController.abort).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalled();
     });
   });
 });
