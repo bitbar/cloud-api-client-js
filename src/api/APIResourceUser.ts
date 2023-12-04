@@ -31,7 +31,7 @@ import {DeviceSession, DeviceSessionData, DeviceSessionQueryParams} from './mode
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams} from './models/Device';
 
-export class APIResourceUser extends APIResource {
+export class APIResourceUser extends APIResource<User> {
 
   /**
    * /users/{id} | /me
