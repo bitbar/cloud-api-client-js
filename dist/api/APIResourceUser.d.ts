@@ -30,7 +30,7 @@ import { StatisticQueryParams, UserStatistics } from './models/UserStatistics';
 import { DeviceSession, DeviceSessionData, DeviceSessionQueryParams } from './models/DeviceSession';
 import { CollectionBasicQueryParams, NoQueryParams } from './models/HTTP';
 import { DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams } from './models/Device';
-export declare class APIResourceUser extends APIResource {
+export declare class APIResourceUser extends APIResource<User> {
     constructor(parent: API, id: number | 'me');
     account(): APIUserResourceAccount;
     deviceTime(): APIListDeviceTime;
