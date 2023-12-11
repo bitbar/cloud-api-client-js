@@ -27,6 +27,16 @@
     "umd"
   ],
   "author": "Marek Sierociński (https://github.com/marverix/)",
+  "contributors": [
+    {
+      "name": "Piotr Sapiejewski",
+      "email": "piotr.sapiejewski@smartbear.com"
+    },
+    {
+      "name": "Marietta Suchanek",
+      "email": "marietta.suchanek@smartbear.com"
+    }
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -37,9 +47,9 @@
     "access": "public"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.10",
-    "@babel/core": "^7.22.10",
-    "@babel/preset-env": "^7.22.10",
+    "@babel/cli": "^7.23.2",
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^21.0.3",
     "@rollup/plugin-json": "^4.1.0",
