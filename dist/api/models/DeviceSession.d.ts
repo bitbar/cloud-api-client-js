@@ -52,6 +52,7 @@ export declare type DeviceSession = {
     billable: boolean;
     config: DeviceSessionConfig;
     createTime: number;
+    clientSideId: string;
     device: Device;
     deviceInstanceId: number;
     deviceLogFirstTimestamp: number;

@@ -15,6 +15,7 @@ export type Framework = {
   mainUserEmail: string;
   name: string;
   osType: OsType;
+  queueWait: number;
   requiredAppExtensions: string;
   requiredTestExtensions: string;
   requiredTestFileTags: string;
