@@ -31,6 +31,7 @@ import {AdminDeviceSession, AdminInteractiveDeviceSession} from './models/AdminD
 import {AdminDeviceType, DeviceTypeData} from './models/AdminDeviceType';
 import {AdminEmail} from './models/AdminEmail';
 import {AdminError} from './models/AdminError';
+import {Administrator} from './models/Administrator';
 import {AdminOverview} from './models/AdminOverview';
 import {BillingPeriod} from './models/BillingPeriod';
 import {Browser, BrowserData} from './models/Browser';
@@ -101,6 +102,11 @@ export class APIAdminResource extends APIResource {
   // activities
   activities() {
     return new APIList<Activity>(this).push('admin', 'activities');
+  }
+
+  // admin/administrators
+  administrators() {
+    return new APIList<Administrator>(this).push('admin', 'administrators');
   }
 
   // /admin/billing-periods
