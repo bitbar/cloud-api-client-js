@@ -11,6 +11,7 @@ export * from './api/models/AdminDeviceSessionStatistics';
 export * from './api/models/AdminDeviceType';
 export * from './api/models/AdminEmail';
 export * from './api/models/AdminError';
+export * from './api/models/Administrator';
 export * from './api/models/AdminFrameworkStatistics';
 export * from './api/models/AdminOverview';
 export * from './api/models/AdminTestRun';

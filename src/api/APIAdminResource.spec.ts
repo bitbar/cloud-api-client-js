@@ -98,6 +98,14 @@ describe('APIAdminResource', () => {
     });
   });
 
+  describe('@administrators', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.administrators();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/administrators`);
+    });
+  });
+
   describe('@billingPeriods', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.billingPeriods();

@@ -30,6 +30,7 @@ import { AdminDeviceSession, AdminInteractiveDeviceSession } from './models/Admi
 import { AdminDeviceType, DeviceTypeData } from './models/AdminDeviceType';
 import { AdminEmail } from './models/AdminEmail';
 import { AdminError } from './models/AdminError';
+import { Administrator } from './models/Administrator';
 import { AdminOverview } from './models/AdminOverview';
 import { BillingPeriod } from './models/BillingPeriod';
 import { Browser, BrowserData } from './models/Browser';
@@ -61,6 +62,7 @@ export declare class APIAdminResource extends APIResource {
     accountServices(): APIList<AccountService, CollectionQueryParams, any>;
     accountService(id: number): APIAdminResourceAccountService;
     activities(): APIList<Activity, CollectionQueryParams, any>;
+    administrators(): APIList<Administrator, CollectionQueryParams, any>;
     billingPeriods(): APIList<BillingPeriod, CollectionQueryParams, any>;
     billingPeriod(id: number): APIResource<BillingPeriod, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     browsers(): APIList<Browser, CollectionQueryParams, BrowserData>;
