@@ -1,23 +1,12 @@
+import {Method} from 'axios';
 import {CollectionResponse} from './HTTP';
+
 
 export enum TestResult {
   PASSED = 'PASSED',
   FAILED = 'FAILED',
   SKIPPED = 'SKIPPED',
   NOT_AVAILABLE = 'NOT_AVAILABLE'
-}
-
-export enum TestStepType {
-  ASSERTION = 'ASSERTION',
-  CLICK = 'CLICK',
-  CONFIG = 'CONFIG',
-  DRAG = 'DRAG',
-  INPUT = 'INPUT',
-  NAVIGATION = 'NAVIGATION',
-  OTHER = 'OTHER',
-  SCROLL = 'SCROLL',
-  UTIL = 'UTIL',
-  WAIT = 'WAIT'
 }
 
 export type TestCaseRun = {
@@ -34,11 +23,12 @@ export type TestCaseRun = {
 }
 
 export type TestCaseRunStep = {
-  description: string;
   duration: number;
-  errorMessage: string;
-  fromActivity: string;
+  httpMethod: Uppercase<Method>;
   id: number;
-  screenshots: any;
-  type: TestStepType;
+  requestBody: string;
+  responseBody: string;
+  responseCode: number;
+  timestamp: number;
+  uri: string;
 }
