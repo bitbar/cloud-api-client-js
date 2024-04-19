@@ -35,6 +35,7 @@ export declare type SoftwareVersion = {
 };
 export declare type Device = {
     accountId: number;
+    accountName: string;
     available: boolean;
     browsers: CollectionResponse<Browser>;
     creditsPrice: number;
@@ -53,7 +54,6 @@ export declare type Device = {
     imageTop: number;
     imageWidth: number;
     locked: boolean;
-    mainUserEmail: string;
     manufacturer: string;
     online: boolean;
     osType: OsType;

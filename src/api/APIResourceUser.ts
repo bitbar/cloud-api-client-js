@@ -111,6 +111,11 @@ export class APIResourceUser extends APIResource<User> {
     return new APIResourceDeviceSessionStandalone(this, id);
   }
 
+  // /users/{id}/mark-account-owner
+  markAccountOwner() {
+    return new APIResource<User, NoQueryParams, NoData>(this).push('mark-account-owner').post();
+  }
+
   // /users/{id}/projects
   projects() {
     return new APIList<Project, UserProjectQueryParams, UserProjectData>(this).push('projects');
