@@ -23,6 +23,7 @@ export enum DeviceState {
 
 export type AdminDevice = {
   accountId: number;
+  accountName: string;
   cluster: unknown;
   comment: string;
   dedicationEndTime: number;
@@ -36,8 +37,6 @@ export type AdminDevice = {
   lastOnlineTime: number;
   location: string;
   locked: boolean;
-  mainUserEmail: string;
-  mainUserId: number;
   manufacturer: string;
   name: string;
   osType: OsType;
