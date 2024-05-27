@@ -43,6 +43,7 @@ export declare class APIResourceUser extends APIResource<User> {
     deviceGroup(id: number): APIResourceDeviceGroup;
     deviceSessions(): APIList<DeviceSession, DeviceSessionQueryParams, DeviceSessionData>;
     deviceSession(id: number): APIResourceDeviceSessionStandalone;
+    markAccountOwner(): APIResource<User, NoQueryParams, void>;
     projects(): APIList<Project, UserProjectQueryParams, UserProjectData>;
     project(id: number): APIResourceProject;
     files(): APIListFiles;

@@ -3,6 +3,7 @@ import {UserFile} from './UserFile';
 
 export type Framework = {
   accountId: number;
+  accountName: string;
   canRunFromUI: boolean;
   createTime: number;
   description: string;
@@ -12,7 +13,6 @@ export type Framework = {
   id: number;
   labelId: number;
   labelName: string;
-  mainUserEmail: string;
   name: string;
   osType: OsType;
   queueWait: number;

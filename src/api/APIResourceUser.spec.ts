@@ -154,6 +154,14 @@ describe('APIResourceUser', () => {
     });
   });
 
+  describe('@markAccountOwner', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = serviceNumberId.markAccountOwner();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/mark-account-owner`);
+    });
+  });
+
   describe('@project', () => {
     it('should initialize proper endpoint path', () => {
       const call = serviceNumberId.project(1);

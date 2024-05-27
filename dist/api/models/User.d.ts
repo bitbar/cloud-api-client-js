@@ -27,12 +27,10 @@ export declare type User = {
     enabled: boolean;
     firstName: string;
     id: number;
-    isMainUser: boolean;
+    isAccountOwner: boolean;
     lastLaunchedTestTime: number;
     lastLoginTime: number;
     lastName: string;
-    mainUserEmail: string;
-    mainUserId: number;
     mfaQRCodeUrl: string;
     mfaStatus: MfaStatus;
     organization: string;

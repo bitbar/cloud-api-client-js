@@ -33,6 +33,7 @@ export declare type ServicePaymentStatus = {
 };
 export declare type AccountService = {
     accountId: number;
+    accountName: string;
     activatedById: number;
     activatedByName: string;
     active: boolean;
@@ -57,7 +58,6 @@ export declare type AccountService = {
     total: number;
     unit: ServiceUnit;
     unitCount: number;
-    userEmail: string;
     userId: number;
     vatRate: number;
 };
