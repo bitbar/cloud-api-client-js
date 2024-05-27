@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.0.27 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.1.0 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.0.27";
+  var version = "1.1.0";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -1387,14 +1387,6 @@
           super(parent);
           this.push('properties');
       }
-      appBan(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIList(this).push('app-bans').params({
-              testRunId: id
-          });
-      }
       maintenance() {
           return new APIList(this).params({
               filter: 'name_eq_CLOUD_HEADER_ANNOUNCEMENT',
@@ -1463,6 +1455,21 @@
       }
       preferences() {
           return new APIResource(this).push('preferences');
+      }
+      users() {
+          return new APIList(this).push('users');
+      }
+      removeUser(id) {
+          return new APIResource(this).push('users', id);
+      }
+      disableUser(id) {
+          return new APIResource(this).push('users', id, 'disable').post();
+      }
+      enableUser(id) {
+          return new APIResource(this).push('users', id, 'enable').post();
+      }
+      resendActivation(id) {
+          return new APIResource(this).push('users', id, 'resend-activation').post();
       }
   }
 
@@ -1623,29 +1630,10 @@
       }
   }
 
-  class APIResourceAdditionalUser extends APIResource {
-      constructor(parent, id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          super(parent);
-          this.push('additional-users', id);
-      }
-      resendActivation() {
-          return new APIResource(this).push('resend-activation');
-      }
-  }
-
   class APIUserResourceAccount extends APIResource {
       constructor(parent) {
           super(parent);
           this.push('account');
-      }
-      additionalUsers() {
-          return new APIList(this).push('additional-users');
-      }
-      additionalUser(id) {
-          return new APIResourceAdditionalUser(this, id);
       }
       serviceBillingPeriod(id) {
           if (id == null) {
@@ -1712,6 +1700,9 @@
       }
       deviceSession(id) {
           return new APIResourceDeviceSessionStandalone(this, id);
+      }
+      markAccountOwner() {
+          return new APIResource(this).push('mark-account-owner').post();
       }
       projects() {
           return new APIList(this).push('projects');

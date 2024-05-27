@@ -1,4 +1,14 @@
+type ConcurrencyDetails = {
+  accountConcurrency: number,
+  runningSessions: number,
+  sessions: number,
+  unlimitedConcurrency: boolean,
+  usedBy: Array<string>,
+  waitingSessions: number
+}
+
 export type AccountConcurrencyStatusMap = {
   id: number;
-  mainUserEmail: string;
+  AUTOMATIC: ConcurrencyDetails,
+  MANUAL: ConcurrencyDetails
 }

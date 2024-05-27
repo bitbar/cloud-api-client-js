@@ -16,7 +16,6 @@ export declare type BillingPeriod = {
     endBillingPeriod: number;
     id: number;
     lastPaymentDate: number;
-    mail: string;
     paid: boolean;
     paymentMethod: PaymentMethod;
     plan: string;
@@ -26,7 +25,6 @@ export declare type BillingPeriod = {
     subscriptionStart: number;
     totalPrice: number;
     usages: Array<BillingPeriodUsage>;
-    userId: number;
 };
 export declare type BillingPeriodUsage = {
     billableSeconds: number;

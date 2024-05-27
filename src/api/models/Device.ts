@@ -42,6 +42,7 @@ export type SoftwareVersion = {
 
 export type Device = {
   accountId: number;
+  accountName: string;
   available: boolean;
   browsers: CollectionResponse<Browser>;
   creditsPrice: number;
@@ -60,7 +61,6 @@ export type Device = {
   imageTop: number;
   imageWidth: number;
   locked: boolean;
-  mainUserEmail: string;
   manufacturer: string;
   online: boolean;
   osType: OsType;

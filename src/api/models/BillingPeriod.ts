@@ -18,7 +18,6 @@ export type BillingPeriod = {
   endBillingPeriod: number;
   id: number;
   lastPaymentDate: number;
-  mail: string;
   paid: boolean;
   paymentMethod: PaymentMethod;
   plan: string;
@@ -28,7 +27,6 @@ export type BillingPeriod = {
   subscriptionStart: number;
   totalPrice: number;
   usages: Array<BillingPeriodUsage>;
-  userId: number;
 }
 
 export type BillingPeriodUsage = {

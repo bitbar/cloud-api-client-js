@@ -1,6 +1,7 @@
 import {API} from '../API';
 import {APIResourceAccount} from './APIResourceAccount';
 import {APIResource} from './APIResource';
+import APIList from './APIList';
 
 
 describe('APIResourceAccount', () => {
@@ -40,6 +41,50 @@ describe('APIResourceAccount', () => {
       const call = service.preferences();
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/preferences`);
+    });
+  });
+
+  describe('@users', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.users();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/users`);
+    });
+  });
+
+  describe('@removeUser', () => {
+    it('should initialize proper endpoint path', () => {
+      const userId = 123;
+      const call = service.removeUser(userId);
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/users/${userId}`);
+    });
+  });
+
+  describe('@disableUser', () => {
+    it('should initialize proper endpoint path', () => {
+      const userId = 123;
+      const call = service.disableUser(userId);
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/users/${userId}/disable`);
+    });
+  });
+
+  describe('@enableUser', () => {
+    it('should initialize proper endpoint path', () => {
+      const userId = 123;
+      const call = service.enableUser(userId);
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/users/${userId}/enable`);
+    });
+  });
+
+  describe('@resendActivation', () => {
+    it('should initialize proper endpoint path', () => {
+      const userId = 123;
+      const call = service.resendActivation(userId);
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/users/${userId}/resend-activation`);
     });
   });
 

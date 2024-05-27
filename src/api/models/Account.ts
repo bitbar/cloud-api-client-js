@@ -4,7 +4,5 @@ export type Account = {
   createTime: number;
   dedicatedDevicesCount: number;
   id: number;
-  mainUserEmail: string;
-  mainUserFirstName: string;
-  mainUserLastName: string;
+  name: string;
 }
