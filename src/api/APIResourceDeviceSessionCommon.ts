@@ -5,7 +5,15 @@ import {APIResource} from './APIResource'
 import {InputFileset} from './class/InputFileset'
 import {OutputFileset} from './class/OutputFileset'
 import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
-import {DeviceSession, DeviceSessionCommand, DeviceSessionStep, SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams} from './models/DeviceSession';
+import {
+  DeviceSession,
+  DeviceSessionCommand,
+  DeviceSessionRelease,
+  DeviceSessionStep,
+  SessionQueryParams,
+  SessionRunStepQueryParams,
+  SessionStepQueryParams
+} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {Screenshot} from './models/Screenshot';
 import {TestCaseRun} from './models/TestCaseRun';
@@ -41,7 +49,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
 
   // /device-sessions/{id}/release
   release() {
-    return new APIResource<DeviceSession, NoQueryParams, NoData>(this).push('release').post();
+    return new APIResource<DeviceSession, NoQueryParams, DeviceSessionRelease>(this).push('release').post();
   }
 
   // /device-sessions/{id}/screenshots
