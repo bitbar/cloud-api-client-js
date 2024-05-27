@@ -6,7 +6,7 @@ import {InputFileset} from './class/InputFileset';
 import {OutputFileset} from './class/OutputFileset';
 import {DeviceSessionStandalone} from './interface/DeviceSessionStandalone';
 import {Connection, ConnectionData} from './models/Connection';
-import {DeviceSession} from './models/DeviceSession';
+import {DeviceSession, DeviceSessionRelease} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {VisualTest} from './models/VisualTest';
 
@@ -50,7 +50,7 @@ export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSessio
 
   // /device-sessions/{id}/release
   release() {
-    return new APIResource<DeviceSession, NoQueryParams, NoData>(this).push('release').post();
+    return new APIResource<DeviceSession, NoQueryParams, DeviceSessionRelease>(this).push('release').post();
   }
 
   // /device-sessions/{id}/visualtest/images
