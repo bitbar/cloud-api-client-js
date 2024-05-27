@@ -136,3 +136,6 @@ export interface SessionStepQueryParams extends SessionRunStepQueryParams {
 export interface TRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
     projectId: number;
 }
+export declare type DeviceSessionRelease = {
+    reason: string;
+};
