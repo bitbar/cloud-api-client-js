@@ -26,7 +26,7 @@ export declare type Framework = {
     skipQueue: boolean;
     type: string;
 };
-export declare type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'mainUserEmail' | 'sampleApp' | 'sampleTest'> & {
+export declare type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'accountName' | 'sampleApp' | 'sampleTest'> & {
     addLabelToDevices: boolean;
     roleIds: Array<number>;
     sampleAppId: number;

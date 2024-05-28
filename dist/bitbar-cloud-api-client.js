@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.1.1 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.1.2 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.1.1";
+  var version = "1.1.2";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -2136,6 +2136,14 @@
       DeviceSessionStepType["SENDING_RESULTS"] = "SENDING_RESULTS";
       DeviceSessionStepType["PROCESSING_RESULTS"] = "PROCESSING_RESULTS";
   })(exports.DeviceSessionStepType || (exports.DeviceSessionStepType = {}));
+  exports.SessionReleaseReason = void 0;
+  (function (SessionReleaseReason) {
+      SessionReleaseReason["INACTIVITY"] = "INACTIVITY";
+      SessionReleaseReason["TIMEOUT"] = "TIMEOUT";
+      SessionReleaseReason["USER_ACTION"] = "USER_ACTION";
+      SessionReleaseReason["CHANGE_DEVICE"] = "CHANGE_DEVICE";
+      SessionReleaseReason["WEBSOCKET_CLOSED"] = "WEBSOCKET_CLOSED";
+  })(exports.SessionReleaseReason || (exports.SessionReleaseReason = {}));
 
   exports.OsType = void 0;
   (function (OsType) {

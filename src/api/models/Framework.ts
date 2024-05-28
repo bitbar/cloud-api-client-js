@@ -28,7 +28,7 @@ export type Framework = {
   type: string;
 }
 
-export type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'mainUserEmail' | 'sampleApp' |
+export type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'accountName' | 'sampleApp' |
   'sampleTest'> & {
     addLabelToDevices: boolean;
     roleIds: Array<number>;
