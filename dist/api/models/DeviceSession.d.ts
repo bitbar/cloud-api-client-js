@@ -136,6 +136,13 @@ export interface SessionStepQueryParams extends SessionRunStepQueryParams {
 export interface TRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
     projectId: number;
 }
+export declare enum SessionReleaseReason {
+    INACTIVITY = "INACTIVITY",
+    TIMEOUT = "TIMEOUT",
+    USER_ACTION = "USER_ACTION",
+    CHANGE_DEVICE = "CHANGE_DEVICE",
+    WEBSOCKET_CLOSED = "WEBSOCKET_CLOSED"
+}
 export declare type DeviceSessionRelease = {
-    reason: string;
+    reason: SessionReleaseReason;
 };

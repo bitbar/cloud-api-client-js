@@ -8,7 +8,6 @@ import {DeviceSessionCommon} from './interface/DeviceSessionCommon';
 import {
   DeviceSession,
   DeviceSessionCommand,
-  DeviceSessionRelease,
   DeviceSessionStep,
   SessionQueryParams,
   SessionRunStepQueryParams,
@@ -49,7 +48,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
 
   // /device-sessions/{id}/release
   release() {
-    return new APIResource<DeviceSession, NoQueryParams, DeviceSessionRelease>(this).push('release').post();
+    return new APIResource<DeviceSession, NoQueryParams, void>(this).push('release').post();
   }
 
   // /device-sessions/{id}/screenshots

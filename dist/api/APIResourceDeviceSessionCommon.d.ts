@@ -5,7 +5,7 @@ import { APIResource } from './APIResource';
 import { InputFileset } from './class/InputFileset';
 import { OutputFileset } from './class/OutputFileset';
 import { DeviceSessionCommon } from './interface/DeviceSessionCommon';
-import { DeviceSession, DeviceSessionCommand, DeviceSessionRelease, DeviceSessionStep, SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams } from './models/DeviceSession';
+import { DeviceSession, DeviceSessionCommand, DeviceSessionStep, SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams } from './models/DeviceSession';
 import { CollectionBasicQueryParams, NoQueryParams } from './models/HTTP';
 import { Screenshot } from './models/Screenshot';
 import { TestCaseRun } from './models/TestCaseRun';
@@ -14,7 +14,7 @@ export declare class APIResourceDeviceSessionCommon extends APIResource<DeviceSe
     commands(): APIList<DeviceSessionCommand, import("./models/HTTP").CollectionQueryParams, any>;
     input(): InputFileset;
     output(): OutputFileset;
-    release(): APIResource<DeviceSession, NoQueryParams, DeviceSessionRelease>;
+    release(): APIResource<DeviceSession, NoQueryParams, void>;
     screenshots(): APIList<Screenshot, SessionQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, void>;
     screenshot(id: number): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     steps(): APIList<DeviceSessionStep, SessionRunStepQueryParams | SessionStepQueryParams | CollectionBasicQueryParams, void>;
