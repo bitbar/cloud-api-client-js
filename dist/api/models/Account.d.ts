@@ -5,4 +5,5 @@ export declare type Account = {
     dedicatedDevicesCount: number;
     id: number;
     name: string;
+    userName: string;
 };
