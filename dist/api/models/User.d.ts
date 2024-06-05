@@ -13,6 +13,7 @@ export declare enum UserStatus {
 export declare type User = {
     accountId: number;
     accountName: string;
+    userAccountName: string;
     accountOwners: Array<User>;
     accountServiceIds: Array<number>;
     address: string;
