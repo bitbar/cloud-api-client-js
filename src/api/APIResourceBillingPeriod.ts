@@ -1,7 +1,9 @@
 import {APIResource} from './APIResource'
-import {APIResourceUser} from './APIResourceUser';
 import {BillingPeriod} from './models/BillingPeriod';
 import {NoData, NoQueryParams} from './models/HTTP';
+import {APIResourceAccount} from './APIResourceAccount';
+
+
 
 
 export class APIResourceBillingPeriod extends APIResource<BillingPeriod, NoQueryParams, NoData> {
@@ -9,7 +11,7 @@ export class APIResourceBillingPeriod extends APIResource<BillingPeriod, NoQuery
   /**
    * /billing-periods/{id}
    */
-  constructor(parent: APIResourceUser, id: number) {
+  constructor(parent: APIResourceAccount, id: number) {
     if (id == null) {
       throw new Error('Resource ID cannot be null!');
     }

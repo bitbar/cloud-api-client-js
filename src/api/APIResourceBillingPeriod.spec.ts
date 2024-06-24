@@ -1,24 +1,25 @@
 import {API} from '../API';
 import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
 import {APIResource} from './APIResource';
-import {APIResourceUser} from './APIResourceUser';
+import {APIResourceAccount} from './APIResourceAccount';
 
 
 describe('APIResourceBillingPeriod', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
   let service: APIResourceBillingPeriod;
-  let resourceUser: APIResourceUser;
+  let resourceAccount: APIResourceAccount;
   let api: API;
   const baseId = 1;
-  const baseUrl = `/users/${baseId}/billing-periods/${baseId}`;
+  const baseUrl = `/accounts/${baseId}/billing-periods/${baseId}`;
 
   beforeEach(() => {
     api = new API({
       baseURL: '',
       cloudUrl
     });
-    resourceUser = new APIResourceUser(api, baseId);
-    service = new APIResourceBillingPeriod(resourceUser, baseId);
+
+    resourceAccount = new APIResourceAccount(api, baseId);
+    service = new APIResourceBillingPeriod(resourceAccount, baseId);
   });
 
   it('should initialize proper endpoint path', () => {
@@ -27,7 +28,7 @@ describe('APIResourceBillingPeriod', () => {
 
   it('should throw error if resource ID is missing', () => {
     const id: any = undefined;
-    expect(() => new APIResourceBillingPeriod(resourceUser, id)).toThrow(new Error('Resource ID cannot be null!'));
+    expect(() => new APIResourceBillingPeriod(resourceAccount, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
   describe('@receipt', () => {

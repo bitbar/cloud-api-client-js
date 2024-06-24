@@ -26,19 +26,6 @@ describe('APIUserResourceAccount', () => {
     expect(service.toUrl()).toEqual(baseUrl);
   });
 
-  describe('@serviceBillingPeriod', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.serviceBillingPeriod(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}-services/1/billing-period`);
-    });
-
-    it('should throw error if resource ID is nulll', () => {
-      const id: any = undefined;
-      expect(() => service.serviceBillingPeriod(id)).toThrow(new Error('Resource ID cannot be null!'));
-    });
-  });
-
   describe('@visualTestsAccess', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.visualTestAccess();

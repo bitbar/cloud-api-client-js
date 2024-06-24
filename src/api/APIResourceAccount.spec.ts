@@ -1,7 +1,8 @@
 import {API} from '../API';
 import {APIResourceAccount} from './APIResourceAccount';
 import {APIResource} from './APIResource';
-import APIList from './APIList';
+import {APIList} from './APIList';
+import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
 
 
 describe('APIResourceAccount', () => {
@@ -33,6 +34,22 @@ describe('APIResourceAccount', () => {
       const call = service.concurrencyStatus();
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/concurrency-status`);
+    });
+  });
+
+  describe('@deviceTime', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.deviceTime();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-time`);
+    });
+  });
+
+  describe('@deviceTimeSummary', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.deviceTimeSummary();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/device-time-summary`);
     });
   });
 
@@ -85,6 +102,35 @@ describe('APIResourceAccount', () => {
       const call = service.resendActivation(userId);
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/users/${userId}/resend-activation`);
+    });
+  });
+
+  describe('@billingPeriods', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.billingPeriods();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/billing-periods`);
+    });
+  });
+
+  describe('@billingPeriod', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.billingPeriod(1);
+      expect(call).toBeInstanceOf(APIResourceBillingPeriod);
+      expect(call.toUrl()).toEqual(`${baseUrl}/billing-periods/1`);
+    });
+  });
+
+  describe('@serviceBillingPeriod', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.serviceBillingPeriod(1);
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}-services/1/billing-period`);
+    });
+
+    it('should throw error if resource ID is nulll', () => {
+      const id: any = undefined;
+      expect(() => service.serviceBillingPeriod(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 

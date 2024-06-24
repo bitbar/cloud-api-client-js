@@ -1,6 +1,5 @@
 import {API} from '../API';
 import {APIList} from './APIList'
-import {APIListDeviceTime} from './APIListDeviceTime'
 import {APIListFiles} from './APIListFiles'
 import {APIListNotifications} from './APIListNotifications'
 import {APIListRuns} from './APIListRuns'
@@ -8,7 +7,6 @@ import {APIListServices} from './APIListServices'
 import {APIListSmartbearTunnels} from './APIListSmartbearTunnels'
 import {APIResource} from './APIResource'
 import {APIResourceAccessGroup} from './APIResourceAccessGroup'
-import {APIResourceBillingPeriod} from './APIResourceBillingPeriod'
 import {APIResourceDeviceGroup} from './APIResourceDeviceGroup'
 import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone'
 import {APIResourceFile} from './APIResourceFile'
@@ -16,7 +14,6 @@ import {APIResourceNotification} from './APIResourceNotification'
 import {APIResourceProject} from './APIResourceProject'
 import {APIUserResourceAccount} from './APIUserResourceAccount'
 import {AccessGroup, AccessGroupsData} from './models/AccessGroup';
-import {BillingPeriod} from './models/BillingPeriod';
 import {DeviceGroup, DeviceGroupData, DeviceGroupIdsData, DeviceGroupWithPublicParams} from './models/DeviceGroup';
 import {DeviceStatistics} from './models/DeviceStatistics';
 import {DeviceUsage} from './models/DeviceUsage';
@@ -24,12 +21,11 @@ import {Framework} from './models/Framework';
 import {Project, UserProjectData, UserProjectQueryParams} from './models/Project';
 import {Service} from './models/Service';
 import {User} from './models/User';
-import {UserDeviceTimeSummary} from './models/UserDeviceTimeSummary';
 import {UiPreferencesData, UserPreference} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
 import {DeviceSession, DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
-import {DeviceStatisticQueryParam, DeviceTimeSummaryQueryParams, DeviceUsageQueryParams} from './models/Device';
+import {DeviceStatisticQueryParam, DeviceUsageQueryParams} from './models/Device';
 
 export class APIResourceUser extends APIResource<User> {
 
@@ -57,16 +53,6 @@ export class APIResourceUser extends APIResource<User> {
     return new APIUserResourceAccount(this);
   }
 
-  // /users/{id}/device-time
-  deviceTime() {
-    return new APIListDeviceTime(this);
-  }
-
-  // /users/{id}/device-time-summary
-  deviceTimeSummary() {
-    return new APIList<UserDeviceTimeSummary, DeviceTimeSummaryQueryParams, NoData>(this).push('device-time-summary');
-  }
-
   // /users/{id}/services
   services() {
     return new APIListServices(this);
@@ -79,16 +65,6 @@ export class APIResourceUser extends APIResource<User> {
     }
 
     return new APIResource<Service, NoQueryParams, NoData>(this).push('services', id);
-  }
-
-  // /users/{id}/billing-periods
-  billingPeriods() {
-    return new APIList<BillingPeriod, CollectionBasicQueryParams, NoData>(this).push('billing-periods');
-  }
-
-  // /users/{id}/billing-periods/{id}
-  billingPeriod(id: number) {
-    return new APIResourceBillingPeriod(this, id);
   }
 
   // /users/{id}/device-groups
