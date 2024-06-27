@@ -6,14 +6,25 @@ import { AccountPreferences } from './models/AccountPreference';
 import { CollectionBasicQueryParams, NoQueryParams, SimpleCollectionResponse } from './models/HTTP';
 import { User, UserData } from './models/User';
 import { APIList } from './APIList';
+import { BillingPeriod, BillingPeriodQueryParams } from './models/BillingPeriod';
+import { APIResourceBillingPeriod } from './APIResourceBillingPeriod';
+import { AccountServicePayment } from './models/AccountServicePayment';
+import { UserDeviceTimeSummary } from './models/UserDeviceTimeSummary';
+import { DeviceTimeSummaryQueryParams } from './models/Device';
+import { DeviceTimeQueryParams, UserDeviceTime } from './models/UserDeviceTime';
 export declare class APIResourceAccount extends APIResource<Account> {
     constructor(parent: API, id: number);
     concurrencyStatus(): APIResource<AccountConcurrencyStatusMap, NoQueryParams, void>;
+    deviceTime(): APIList<UserDeviceTime, DeviceTimeQueryParams, void>;
+    deviceTimeSummary(): APIList<UserDeviceTimeSummary, DeviceTimeSummaryQueryParams, void>;
     preferences(): APIResource<AccountPreferences, NoQueryParams, SimpleCollectionResponse<AccountPreferences>>;
     users(): APIList<User, CollectionBasicQueryParams, UserData>;
     removeUser(id: number): APIResource<User, NoQueryParams, void>;
     disableUser(id: number): APIResource<User, NoQueryParams, void>;
     enableUser(id: number): APIResource<User, NoQueryParams, void>;
     resendActivation(id: number): APIResource<User, NoQueryParams, void>;
+    billingPeriods(): APIList<BillingPeriod, CollectionBasicQueryParams, void>;
+    billingPeriod(id: number): APIResourceBillingPeriod;
+    serviceBillingPeriod(id: number): APIResource<AccountServicePayment, BillingPeriodQueryParams, void>;
 }
 export default APIResourceAccount;

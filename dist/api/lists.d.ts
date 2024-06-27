@@ -1,7 +1,6 @@
 import { APIList as OriginAPIList } from './APIList';
 import { APIListCleanupConfigurations as OriginAPIListCleanupConfigurations } from './APIListCleanupConfigurations';
 import { APIListDevices as OriginAPIListDevices } from './APIListDevices';
-import { APIListDeviceTime as OriginAPIListDeviceTime } from './APIListDeviceTime';
 import { APIListFiles as OriginAPIListFiles } from './APIListFiles';
 import { APIListNotifications as OriginAPIListNotifications } from './APIListNotifications';
 import { APIListProperties as OriginAPIListProperties } from './APIListProperties';
@@ -12,7 +11,6 @@ import { APIListUsers as OriginAPIListUsers } from './APIListUsers';
 export declare type APIList = InstanceType<typeof OriginAPIList>;
 export declare type APIListCleanupConfigurations = InstanceType<typeof OriginAPIListCleanupConfigurations>;
 export declare type APIListDevices = InstanceType<typeof OriginAPIListDevices>;
-export declare type APIListDeviceTime = InstanceType<typeof OriginAPIListDeviceTime>;
 export declare type APIListFiles = InstanceType<typeof OriginAPIListFiles>;
 export declare type APIListNotifications = InstanceType<typeof OriginAPIListNotifications>;
 export declare type APIListProperties = InstanceType<typeof OriginAPIListProperties>;

@@ -2,7 +2,6 @@ import {API} from '../API';
 import {APIResourceUser} from './APIResourceUser';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
-import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
 import {APIResourceDeviceGroup} from './APIResourceDeviceGroup';
 import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone';
 import {APIResourceProject} from './APIResourceProject';
@@ -14,7 +13,6 @@ import {APIResourceNotification} from './APIResourceNotification';
 import {APIResourceAccessGroup} from './APIResourceAccessGroup';
 import {APIListSmartbearTunnels} from './APIListSmartbearTunnels';
 import {APIListServices} from './APIListServices';
-import {APIListDeviceTime} from './APIListDeviceTime';
 import {APIUserResourceAccount} from './APIUserResourceAccount';
 
 
@@ -61,22 +59,6 @@ describe('APIResourceUser', () => {
     });
   });
 
-  describe('@deviceTime', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = serviceNumberId.deviceTime();
-      expect(call).toBeInstanceOf(APIListDeviceTime);
-      expect(call.toUrl()).toEqual(`${baseUrl}/device-time`);
-    });
-  });
-
-  describe('@deviceTimeSummary', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = serviceNumberId.deviceTimeSummary();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/device-time-summary`);
-    });
-  });
-
   describe('@services', () => {
     it('should initialize proper endpoint path', () => {
       const call = serviceNumberId.services();
@@ -95,22 +77,6 @@ describe('APIResourceUser', () => {
     it('should throw error if resource ID is nulll', () => {
       const id: any = undefined;
       expect(() => serviceNumberId.service(id)).toThrow(new Error('Resource ID cannot be null!'));
-    });
-  });
-
-  describe('@billingPeriods', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = serviceNumberId.billingPeriods();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/billing-periods`);
-    });
-  });
-
-  describe('@billingPeriod', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = serviceNumberId.billingPeriod(1);
-      expect(call).toBeInstanceOf(APIResourceBillingPeriod);
-      expect(call.toUrl()).toEqual(`${baseUrl}/billing-periods/1`);
     });
   });
 

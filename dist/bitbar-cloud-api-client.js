@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.1.4 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.1.5 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.1.4";
+  var version = "1.1.5";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -1442,6 +1442,21 @@
       }
   }
 
+  class APIResourceBillingPeriod extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('billing-periods', id);
+      }
+      receipt() {
+          return new APIResource(this).push('receipt').setRequestConfig({
+              responseType: 'arraybuffer'
+          });
+      }
+  }
+
   class APIResourceAccount extends APIResource {
       constructor(parent, id) {
           if (id == null) {
@@ -1452,6 +1467,12 @@
       }
       concurrencyStatus() {
           return new APIResource(this).push('concurrency-status');
+      }
+      deviceTime() {
+          return new APIList(this).push('device-time');
+      }
+      deviceTimeSummary() {
+          return new APIList(this).push('device-time-summary');
       }
       preferences() {
           return new APIResource(this).push('preferences');
@@ -1470,6 +1491,21 @@
       }
       resendActivation(id) {
           return new APIResource(this).push('users', id, 'resend-activation').post();
+      }
+      billingPeriods() {
+          return new APIList(this).push('billing-periods');
+      }
+      billingPeriod(id) {
+          return new APIResourceBillingPeriod(this, id);
+      }
+      serviceBillingPeriod(id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          const billingPeriod = new APIResource(this);
+          billingPeriod.last += '-services';
+          billingPeriod.push(id, 'billing-period');
+          return billingPeriod;
       }
   }
 
@@ -1512,19 +1548,6 @@
       }
       label(id) {
           return new APIResource(this).push('labels', id);
-      }
-  }
-
-  class APIListDeviceTime extends APIList {
-      constructor(parent) {
-          super(parent);
-          this.push('device-time');
-      }
-      reserved() {
-          return new APIEntity(this).push('reserved');
-      }
-      used() {
-          return new APIEntity(this).push('used');
       }
   }
 
@@ -1602,21 +1625,6 @@
       }
   }
 
-  class APIResourceBillingPeriod extends APIResource {
-      constructor(parent, id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          super(parent);
-          this.push('billing-periods', id);
-      }
-      receipt() {
-          return new APIResource(this).push('receipt').setRequestConfig({
-              responseType: 'arraybuffer'
-          });
-      }
-  }
-
   class APIResourceNotification extends APIResource {
       constructor(parent, id) {
           if (id == null) {
@@ -1634,15 +1642,6 @@
       constructor(parent) {
           super(parent);
           this.push('account');
-      }
-      serviceBillingPeriod(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          const a = new APIResource(this);
-          a.last += '-services';
-          a.push(id, 'billing-period');
-          return a;
       }
       visualTestAccess() {
           return new APIResource(this).push('visualtest', 'access');
@@ -1668,12 +1667,6 @@
       account() {
           return new APIUserResourceAccount(this);
       }
-      deviceTime() {
-          return new APIListDeviceTime(this);
-      }
-      deviceTimeSummary() {
-          return new APIList(this).push('device-time-summary');
-      }
       services() {
           return new APIListServices(this);
       }
@@ -1682,12 +1675,6 @@
               throw new Error('Resource ID cannot be null!');
           }
           return new APIResource(this).push('services', id);
-      }
-      billingPeriods() {
-          return new APIList(this).push('billing-periods');
-      }
-      billingPeriod(id) {
-          return new APIResourceBillingPeriod(this, id);
       }
       deviceGroups() {
           return new APIList(this).push('device-groups');
