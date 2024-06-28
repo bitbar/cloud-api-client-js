@@ -89,10 +89,7 @@ export class APIResourceAccount extends APIResource<Account> {
       throw new Error('Resource ID cannot be null!');
     }
 
-    const billingPeriod = new APIResource<AccountServicePayment, BillingPeriodQueryParams, NoData>(this);
-    billingPeriod.last += '-services';
-    billingPeriod.push(id, 'billing-period');
-    return billingPeriod;
+    return new APIResource<AccountServicePayment, BillingPeriodQueryParams, NoData>(this).push('account-services', id, 'billing-period');
   }
 
 }
