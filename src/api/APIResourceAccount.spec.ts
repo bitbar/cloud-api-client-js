@@ -125,7 +125,7 @@ describe('APIResourceAccount', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.serviceBillingPeriod(1);
       expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}-services/1/billing-period`);
+      expect(call.toUrl()).toEqual(`${baseUrl}/account-services/1/billing-period`);
     });
 
     it('should throw error if resource ID is nulll', () => {
