@@ -6,6 +6,7 @@ import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStan
 import {NonRequestable} from './decorators/NonRequestable';
 import {CollectionQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {License} from './models/License';
+import {Role, RoleParams} from './models/Role';
 import {User} from './models/User';
 
 
@@ -24,34 +25,44 @@ export class APIAdminResourceUser extends APIResource<User> {
     this.push('admin', 'users', id);
   }
 
-  // /users/{id}/disable
+  // /admin/users/{id}/disable
   disable() {
     return new APIResource<User, NoQueryParams, NoData>(this).push('disable');
   }
 
-  // /users/{id}/enable
+  // /admin/users/{id}/enable
   enable() {
     return new APIResource<User, NoQueryParams, NoData>(this).push('enable');
   }
 
-  // /users/{id}/licenses
+  // /admin/users/{id}/licenses
   licenses() {
     return new APIList<License, CollectionQueryParams, NoData>(this).push('licenses');
   }
 
-  // /users/{id}/resend-activation
+  // /admin/users/{id}/resend-activation
   resendActivation() {
     return new APIResource<User, NoQueryParams, NoData>(this).push('resend-activation').post();
   }
 
-  // users/{id}/account
+  // /admin/users/{id}/account
   account() {
     return new APIAdminResourceUserAccount(this);
   }
 
-  // /users/{id}/device-sessions/{id}
+  // /admin/users/{id}/device-sessions/{id}
   deviceSession(id: number) {
     return new APIResourceDeviceSessionStandalone(this, id);
+  }
+
+  // /admin/users/{id}/roles
+  roles() {
+    return new APIList<Role, RoleParams, NoData>(this).push('roles');
+  }
+
+  // /admin/users/{id}/roles/{id}
+  role(id: number) {
+    return new APIResource<Role, RoleParams, NoData>(this).push('roles', id);
   }
 
 }

@@ -100,4 +100,20 @@ describe('APIAdminResourceUser', () => {
     });
   });
 
+  describe('@roles', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.roles();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/roles`);
+    });
+  });
+
+  describe('@role', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.role(1);
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/roles/1`);
+    });
+  });
+
 });

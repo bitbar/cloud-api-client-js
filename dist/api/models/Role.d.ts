@@ -6,6 +6,7 @@ export declare type Role = {
     name: string;
     value: number;
     valueCalculated: boolean;
+    userRole: boolean;
 };
 export interface RoleParams extends CollectionQueryParams {
     withoutPriorities: boolean;
