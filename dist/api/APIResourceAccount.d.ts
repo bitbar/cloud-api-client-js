@@ -1,17 +1,17 @@
 import { API } from '../API';
+import { APIList } from './APIList';
 import { APIResource } from './APIResource';
+import { APIResourceBillingPeriod } from './APIResourceBillingPeriod';
 import { Account } from './models/Account';
 import { AccountConcurrencyStatusMap } from './models/AccountConcurrencyStatusMap';
 import { AccountPreferences } from './models/AccountPreference';
+import { AccountServicePayment } from './models/AccountServicePayment';
+import { BillingPeriod, BillingPeriodQueryParams } from './models/BillingPeriod';
+import { DeviceTimeSummaryQueryParams } from './models/Device';
 import { CollectionBasicQueryParams, NoQueryParams, SimpleCollectionResponse } from './models/HTTP';
 import { User, UserData } from './models/User';
-import { APIList } from './APIList';
-import { BillingPeriod, BillingPeriodQueryParams } from './models/BillingPeriod';
-import { APIResourceBillingPeriod } from './APIResourceBillingPeriod';
-import { AccountServicePayment } from './models/AccountServicePayment';
-import { UserDeviceTimeSummary } from './models/UserDeviceTimeSummary';
-import { DeviceTimeSummaryQueryParams } from './models/Device';
 import { DeviceTimeQueryParams, UserDeviceTime } from './models/UserDeviceTime';
+import { UserDeviceTimeSummary } from './models/UserDeviceTimeSummary';
 export declare class APIResourceAccount extends APIResource<Account> {
     constructor(parent: API, id: number);
     concurrencyStatus(): APIResource<AccountConcurrencyStatusMap, NoQueryParams, void>;
