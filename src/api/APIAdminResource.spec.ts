@@ -5,6 +5,7 @@ import {APIAdminListRuns} from './APIAdminListRuns';
 import {APIAdminListServices} from './APIAdminListServices';
 import {APIAdminListStatistics} from './APIAdminListStatistics';
 import {APIAdminResource} from './APIAdminResource';
+import {APIAdminResourceAccount} from './APIAdminResourceAccount';
 import {APIAdminResourceAccountService} from './APIAdminResourceAccountService';
 import {APIAdminResourceCluster} from './APIAdminResourceCluster';
 import {APIAdminResourceDevice} from './APIAdminResourceDevice';
@@ -65,7 +66,7 @@ describe('APIAdminResource', () => {
   describe('@account', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.account(1);
-      expect(call).toBeInstanceOf(APIResource);
+      expect(call).toBeInstanceOf(APIAdminResourceAccount);
       expect(call.toUrl()).toEqual(`${baseUrl}/accounts/1`);
     });
 

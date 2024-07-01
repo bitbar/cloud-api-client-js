@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.1.7 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.1.8 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.1.7";
+  var version = "1.1.8";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -525,6 +525,22 @@
   APIAdminListStatistics = __decorate([
       NonRequestable
   ], APIAdminListStatistics);
+
+  class APIAdminResourceAccount extends APIResource {
+      constructor(parent, id) {
+          if (id == null) {
+              throw new Error('Resource ID cannot be null!');
+          }
+          super(parent);
+          this.push('admin', 'accounts', id);
+      }
+      roles() {
+          return new APIList(this).push('roles');
+      }
+      role(id) {
+          return new APIResource(this).push('roles', id);
+      }
+  }
 
   class APIAdminResourceAccountService extends APIResource {
       constructor(parent, id) {
@@ -1161,7 +1177,7 @@
           if (id == null) {
               throw new Error('Resource ID cannot be null!');
           }
-          return new APIResource(this).push('admin', 'accounts', id);
+          return new APIAdminResourceAccount(this, id);
       }
       accountServices() {
           return new APIList(this).push('admin', 'account-services');

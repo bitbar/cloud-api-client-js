@@ -4,6 +4,7 @@ import { APIAdminListNotificationPlans } from './APIAdminListNotificationPlans';
 import { APIAdminListRuns } from './APIAdminListRuns';
 import { APIAdminListServices } from './APIAdminListServices';
 import { APIAdminListStatistics } from './APIAdminListStatistics';
+import APIAdminResourceAccount from './APIAdminResourceAccount';
 import { APIAdminResourceAccountService } from './APIAdminResourceAccountService';
 import { APIAdminResourceCluster } from './APIAdminResourceCluster';
 import { APIAdminResourceDevice } from './APIAdminResourceDevice';
@@ -58,7 +59,7 @@ export declare class APIAdminResource extends APIResource {
     accessGroups(): APIList<AccessGroup, CollectionQueryParams, AccessGroupData>;
     accessGroup(id: number): APIResourceAccessGroup;
     accounts(): APIList<Account, CollectionQueryParams, any>;
-    account(id: number): APIResource<Account, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
+    account(id: number): APIAdminResourceAccount;
     accountServices(): APIList<AccountService, CollectionQueryParams, any>;
     accountService(id: number): APIAdminResourceAccountService;
     activities(): APIList<Activity, CollectionQueryParams, any>;
