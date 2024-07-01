@@ -4,6 +4,7 @@ import {APIAdminListNotificationPlans} from './APIAdminListNotificationPlans';
 import {APIAdminListRuns} from './APIAdminListRuns';
 import {APIAdminListServices} from './APIAdminListServices';
 import {APIAdminListStatistics} from './APIAdminListStatistics';
+import APIAdminResourceAccount from './APIAdminResourceAccount';
 import {APIAdminResourceAccountService} from './APIAdminResourceAccountService';
 import {APIAdminResourceCluster} from './APIAdminResourceCluster';
 import {APIAdminResourceDevice} from './APIAdminResourceDevice';
@@ -86,7 +87,7 @@ export class APIAdminResource extends APIResource {
       throw new Error('Resource ID cannot be null!');
     }
 
-    return new APIResource<Account>(this).push('admin', 'accounts', id);
+    return new APIAdminResourceAccount(this, id);
   }
 
   // /admin/account-services
