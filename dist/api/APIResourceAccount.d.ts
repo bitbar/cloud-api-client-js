@@ -12,6 +12,7 @@ import { CollectionBasicQueryParams, NoQueryParams, SimpleCollectionResponse } f
 import { User, UserData } from './models/User';
 import { DeviceTimeQueryParams, UserDeviceTime } from './models/UserDeviceTime';
 import { UserDeviceTimeSummary } from './models/UserDeviceTimeSummary';
+import { VisualTestAccess } from './models/VisualTest';
 export declare class APIResourceAccount extends APIResource<Account> {
     constructor(parent: API, id: number);
     concurrencyStatus(): APIResource<AccountConcurrencyStatusMap, NoQueryParams, void>;
@@ -26,5 +27,6 @@ export declare class APIResourceAccount extends APIResource<Account> {
     billingPeriods(): APIList<BillingPeriod, CollectionBasicQueryParams, void>;
     billingPeriod(id: number): APIResourceBillingPeriod;
     serviceBillingPeriod(id: number): APIResource<AccountServicePayment, BillingPeriodQueryParams, void>;
+    visualTestAccess(): APIResource<VisualTestAccess, NoQueryParams, VisualTestAccess>;
 }
 export default APIResourceAccount;

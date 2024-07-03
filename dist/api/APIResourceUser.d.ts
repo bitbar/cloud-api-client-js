@@ -12,7 +12,6 @@ import { APIResourceDeviceSessionStandalone } from './APIResourceDeviceSessionSt
 import { APIResourceFile } from './APIResourceFile';
 import { APIResourceNotification } from './APIResourceNotification';
 import { APIResourceProject } from './APIResourceProject';
-import { APIUserResourceAccount } from './APIUserResourceAccount';
 import { AccessGroup, AccessGroupsData } from './models/AccessGroup';
 import { DeviceGroup, DeviceGroupData, DeviceGroupIdsData, DeviceGroupWithPublicParams } from './models/DeviceGroup';
 import { DeviceStatistics } from './models/DeviceStatistics';
@@ -28,7 +27,6 @@ import { CollectionBasicQueryParams, NoQueryParams } from './models/HTTP';
 import { DeviceStatisticQueryParam, DeviceUsageQueryParams } from './models/Device';
 export declare class APIResourceUser extends APIResource<User> {
     constructor(parent: API, id: number | 'me');
-    account(): APIUserResourceAccount;
     services(): APIListServices;
     service(id: number): APIResource<Service, NoQueryParams, void>;
     deviceGroups(): APIList<DeviceGroup, DeviceGroupWithPublicParams, DeviceGroupIdsData | Omit<DeviceGroupData, "displayName">>;

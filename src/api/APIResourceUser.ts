@@ -1,18 +1,17 @@
 import {API} from '../API';
-import {APIList} from './APIList'
-import {APIListFiles} from './APIListFiles'
-import {APIListNotifications} from './APIListNotifications'
-import {APIListRuns} from './APIListRuns'
-import {APIListServices} from './APIListServices'
-import {APIListSmartbearTunnels} from './APIListSmartbearTunnels'
-import {APIResource} from './APIResource'
-import {APIResourceAccessGroup} from './APIResourceAccessGroup'
-import {APIResourceDeviceGroup} from './APIResourceDeviceGroup'
-import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone'
-import {APIResourceFile} from './APIResourceFile'
-import {APIResourceNotification} from './APIResourceNotification'
-import {APIResourceProject} from './APIResourceProject'
-import {APIUserResourceAccount} from './APIUserResourceAccount'
+import {APIList} from './APIList';
+import {APIListFiles} from './APIListFiles';
+import {APIListNotifications} from './APIListNotifications';
+import {APIListRuns} from './APIListRuns';
+import {APIListServices} from './APIListServices';
+import {APIListSmartbearTunnels} from './APIListSmartbearTunnels';
+import {APIResource} from './APIResource';
+import {APIResourceAccessGroup} from './APIResourceAccessGroup';
+import {APIResourceDeviceGroup} from './APIResourceDeviceGroup';
+import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStandalone';
+import {APIResourceFile} from './APIResourceFile';
+import {APIResourceNotification} from './APIResourceNotification';
+import {APIResourceProject} from './APIResourceProject';
 import {AccessGroup, AccessGroupsData} from './models/AccessGroup';
 import {DeviceGroup, DeviceGroupData, DeviceGroupIdsData, DeviceGroupWithPublicParams} from './models/DeviceGroup';
 import {DeviceStatistics} from './models/DeviceStatistics';
@@ -46,11 +45,6 @@ export class APIResourceUser extends APIResource<User> {
     } else {
       throw new TypeError('id is not a number');
     }
-  }
-
-  // /users/{id}/account
-  account() {
-    return new APIUserResourceAccount(this);
   }
 
   // /users/{id}/services

@@ -19,7 +19,6 @@ import {APIResourceRun as OriginAPIResourceRun} from './APIResourceRun';
 import {APIResourceRunCommon as OriginAPIResourceRunCommon} from './APIResourceRunCommon';
 import {APIResourceUser as OriginAPIResourceUser} from'./APIResourceUser';
 import {APIResourceUserSession as OriginAPIResourceUserSession} from './APIResourceUserSession';
-import {APIUserResourceAccount as OriginAPIUserResourceAccount} from './APIUserResourceAccount';
 
 export type APIResource = InstanceType<typeof OriginAPIResource>;
 export type APIResourceAccessGroup = InstanceType<typeof OriginAPIResourceAccessGroup>;
@@ -42,4 +41,3 @@ export type APIResourceRun = InstanceType<typeof OriginAPIResourceRun>;
 export type APIResourceRunCommon = InstanceType<typeof OriginAPIResourceRunCommon>;
 export type APIResourceUser = InstanceType<typeof OriginAPIResourceUser>;
 export type APIResourceUserSession = InstanceType<typeof OriginAPIResourceUserSession>;
-export type APIUserResourceAccount = InstanceType<typeof OriginAPIUserResourceAccount>;

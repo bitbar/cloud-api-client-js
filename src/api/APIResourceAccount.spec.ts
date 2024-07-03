@@ -134,4 +134,12 @@ describe('APIResourceAccount', () => {
     });
   });
 
+  describe('@visualTestAccess', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.visualTestAccess();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/visual-tests/access`);
+    });
+  });
+
 });
