@@ -55,4 +55,12 @@ describe('APIAdminResourceAccount', () => {
     });
   });
 
+  describe('@preferences', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.preferences();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual('/admin/accounts/1/preferences');
+    });
+  });
+
 });
