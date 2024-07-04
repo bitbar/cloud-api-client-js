@@ -13,7 +13,6 @@ import {APIResourceNotification} from './APIResourceNotification';
 import {APIResourceAccessGroup} from './APIResourceAccessGroup';
 import {APIListSmartbearTunnels} from './APIListSmartbearTunnels';
 import {APIListServices} from './APIListServices';
-import {APIUserResourceAccount} from './APIUserResourceAccount';
 
 
 describe('APIResourceUser', () => {
@@ -49,14 +48,6 @@ describe('APIResourceUser', () => {
   it('should throw error if resource ID is not a number', () => {
     const id: any = 'not a number';
     expect(() => new APIResourceUser(api, id)).toThrow(new Error('id is not a number'));
-  });
-
-  describe('@account', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = serviceNumberId.account();
-      expect(call).toBeInstanceOf(APIUserResourceAccount);
-      expect(call.toUrl()).toEqual(`${baseUrl}/account`);
-    });
   });
 
   describe('@services', () => {

@@ -12,6 +12,7 @@ import {CollectionBasicQueryParams, NoData, NoQueryParams, SimpleCollectionRespo
 import {User, UserData} from './models/User';
 import {DeviceTimeQueryParams, UserDeviceTime} from './models/UserDeviceTime';
 import {UserDeviceTimeSummary} from './models/UserDeviceTimeSummary';
+import {VisualTestAccess} from './models/VisualTest';
 
 
 export class APIResourceAccount extends APIResource<Account> {
@@ -90,6 +91,11 @@ export class APIResourceAccount extends APIResource<Account> {
     }
 
     return new APIResource<AccountServicePayment, BillingPeriodQueryParams, NoData>(this).push('account-services', id, 'billing-period');
+  }
+
+  // /account/{accountId}/visual-test/access
+  visualTestAccess() {
+    return new APIResource<VisualTestAccess, NoQueryParams, VisualTestAccess>(this).push('visual-tests', 'access');
   }
 
 }
