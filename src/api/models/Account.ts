@@ -17,3 +17,10 @@ export type Invoice = {
   state: string,
   update: boolean
 }
+
+export type AccountData = Partial<{
+  comment: string,
+  invoiceDetails: Invoice,
+  name: string,
+  userName: string
+}>
