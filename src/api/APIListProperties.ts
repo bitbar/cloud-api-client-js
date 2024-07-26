@@ -15,7 +15,7 @@ export class APIListProperties extends APIList<Property, CollectionQueryParams, 
   }
 
   maintenance() {
-    return new APIList(this).params({
+    return new APIList<Property>(this).params({
       filter: 'name_eq_CLOUD_HEADER_ANNOUNCEMENT',
       limit: 1,
       sort: 'updateTime_d'
