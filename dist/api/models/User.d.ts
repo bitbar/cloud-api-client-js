@@ -55,6 +55,9 @@ export interface UserParams extends CollectionQueryParams {
     withRoles: boolean;
 }
 export declare type UserUpdateAccount = Pick<User, 'accountId'>;
+export declare type UserDeleteData = {
+    password: string;
+};
 export interface LoginData {
     username: string;
     password: string;

@@ -19,8 +19,8 @@ import {DeviceUsage} from './models/DeviceUsage';
 import {Framework} from './models/Framework';
 import {Project, UserProjectData, UserProjectQueryParams} from './models/Project';
 import {Service} from './models/Service';
-import {User} from './models/User';
-import {UiPreferencesData, UserPreference} from './models/UserPreference';
+import {User, UserDeleteData} from './models/User';
+import {UiPreferencesData, UserPreference, UserPreferenceData} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
 import {DeviceSession, DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
@@ -145,7 +145,7 @@ export class APIResourceUser extends APIResource<User> {
 
   // /users/{id}/preferences
   preferences() {
-    return new APIResource<UserPreference, NoQueryParams, UserPreference>(this).push('preferences');
+    return new APIResource<UserPreference, NoQueryParams, UserPreferenceData>(this).push('preferences');
   }
 
   // /users/{id}/ui-preferences
@@ -189,7 +189,7 @@ export class APIResourceUser extends APIResource<User> {
   }
 
   deleteAccount() {
-    return new APIResource(this).push('delete');
+    return new APIResource<User, void, UserDeleteData>(this).push('delete');
   }
 }
 

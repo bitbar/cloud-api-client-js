@@ -4,6 +4,6 @@ import { CollectionQueryParams } from './models/HTTP';
 import { Property, PropertyData } from './models/Property';
 export declare class APIListProperties extends APIList<Property, CollectionQueryParams, PropertyData> {
     constructor(parent: API);
-    maintenance(): APIList<any, CollectionQueryParams, any>;
+    maintenance(): APIList<Property, CollectionQueryParams, any>;
 }
 export default APIListProperties;

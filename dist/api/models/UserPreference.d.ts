@@ -1,10 +1,11 @@
 import { QueryParams } from './HTTP';
 export declare type UserPreference = {
     defaultHttpSessionMaxInactiveInterval: number;
-    defaultTestTimeout: number;
-    httpSessionMaxInactiveInterval: number;
+    httpSessionMaxInactiveInterval: number | null;
     id: number;
-    testTimeout: number;
+};
+export declare type UserPreferenceData = {
+    httpSessionMaxInactiveInterval: number | null;
 };
 export interface UiPreferencesData extends QueryParams {
     data: string;
