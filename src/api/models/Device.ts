@@ -67,7 +67,7 @@ export type Device = {
   platform: Platform;
   properties: CollectionResponse<DeviceProperty>;
   softwareVersion: SoftwareVersion;
-  supportedCreators: SupportedCreators;
+  supportedCreators: Array<SupportedCreators>;
 }
 
 export type DeviceCleanupConfiguration = {

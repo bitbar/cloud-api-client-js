@@ -60,7 +60,7 @@ export declare type Device = {
     platform: Platform;
     properties: CollectionResponse<DeviceProperty>;
     softwareVersion: SoftwareVersion;
-    supportedCreators: SupportedCreators;
+    supportedCreators: Array<SupportedCreators>;
 };
 export declare type DeviceCleanupConfiguration = {
     content: string;
