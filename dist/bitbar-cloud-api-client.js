@@ -1535,6 +1535,9 @@
       visualTestAccess() {
           return new APIResource(this).push('visual-tests', 'access');
       }
+      accountServices() {
+          return new APIList(this).push('account-services');
+      }
   }
 
   class APIResourceBroker extends APIResource {
