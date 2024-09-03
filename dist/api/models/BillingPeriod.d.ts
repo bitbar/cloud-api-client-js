@@ -7,7 +7,7 @@ export declare enum BillingType {
     CHARGE = "CHARGE",
     CANCEL = "CANCEL"
 }
-export declare type BillingPeriod = {
+export type BillingPeriod = {
     accountServiceId: number;
     additionalHours: number;
     additionalHoursPrice: number;
@@ -26,7 +26,7 @@ export declare type BillingPeriod = {
     totalPrice: number;
     usages: Array<BillingPeriodUsage>;
 };
-export declare type BillingPeriodUsage = {
+export type BillingPeriodUsage = {
     billableSeconds: number;
     id: number;
     nonBillableSeconds: number;

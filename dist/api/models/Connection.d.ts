@@ -1,4 +1,4 @@
-export declare type Connection = {
+export type Connection = {
     createTime: number;
     deviceSessionId: number;
     endTime: number;
@@ -12,4 +12,4 @@ export declare type Connection = {
     url: string;
     urlSchema: string;
 };
-export declare type ConnectionData = Pick<Connection, 'host' | 'port' | 'type' | 'password'>;
+export type ConnectionData = Pick<Connection, 'host' | 'port' | 'type' | 'password'>;
