@@ -1,4 +1,4 @@
-export declare type ProjectJobConfig = {
+export type ProjectJobConfig = {
     content: string;
     frameworkId: number;
     global: boolean;

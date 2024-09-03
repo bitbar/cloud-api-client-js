@@ -74,8 +74,8 @@ export class FilterBuilder {
   raw(filter: Filter | string | Filter[] | string[]): void {
     const filters = Array.wrap(filter);
     for (const filter of filters) {
-      if (this.isFilterPart(filter)) {
-        this.filters.push(filter);
+      if (this.isFilterPart(<string>filter)) {
+        this.filters.push(<Filter>filter);
       } else {
         throw new SyntaxError(`Filter ${filter} has invalid syntax`);
       }

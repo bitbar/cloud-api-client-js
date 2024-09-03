@@ -6,7 +6,7 @@ export declare enum TestResult {
     SKIPPED = "SKIPPED",
     NOT_AVAILABLE = "NOT_AVAILABLE"
 }
-export declare type TestCaseRun = {
+export type TestCaseRun = {
     className: string;
     createTime: number;
     duration: number;
@@ -18,7 +18,7 @@ export declare type TestCaseRun = {
     steps: CollectionResponse<TestCaseRunStep>;
     suiteName: string;
 };
-export declare type TestCaseRunStep = {
+export type TestCaseRunStep = {
     duration: number;
     httpMethod: Uppercase<Method>;
     id: number;

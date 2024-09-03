@@ -1,4 +1,4 @@
-export declare type AdminOverview = {
+export type AdminOverview = {
     activeUsersCount: number;
     id: number;
     inspectorSessionsCount: number;

@@ -1,4 +1,4 @@
-export declare type Property = {
+export type Property = {
     description: string;
     fromTime: number;
     id: number;
@@ -9,4 +9,4 @@ export declare type Property = {
     updatedById: number;
     value: string;
 };
-export declare type PropertyData = Pick<Property, 'description' | 'fromTime' | 'name' | 'toTime' | 'value'>;
+export type PropertyData = Pick<Property, 'description' | 'fromTime' | 'name' | 'toTime' | 'value'>;
