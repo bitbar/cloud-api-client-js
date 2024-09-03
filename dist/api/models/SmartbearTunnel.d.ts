@@ -1,5 +1,5 @@
 import { CollectionQueryParams } from './HTTP';
-export declare type SmartbearTunnel = {
+export type SmartbearTunnel = {
     acceptAllCerts: boolean;
     active: boolean;
     bypassPublicHosts: boolean;

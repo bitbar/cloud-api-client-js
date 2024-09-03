@@ -8,7 +8,7 @@ export declare enum CriterionField {
     ACCOUNT = "ACCOUNT",
     BROWSERS = "BROWSERS"
 }
-export declare type DeviceModelCriterion = {
+export type DeviceModelCriterion = {
     createTime: number;
     field: CriterionField;
     id: number;
@@ -16,4 +16,4 @@ export declare type DeviceModelCriterion = {
     labelGroupId: number;
     labelGroupName: string;
 };
-export declare type DeviceModelCriterionData = Pick<DeviceModelCriterion, 'field' | 'labelGroupId'>;
+export type DeviceModelCriterionData = Pick<DeviceModelCriterion, 'field' | 'labelGroupId'>;

@@ -1,5 +1,5 @@
 import { OsType } from './Enum';
-export declare type DeviceStatistics = {
+export type DeviceStatistics = {
     deviceName: string;
     failedDevices: number;
     failedRatio: number;

@@ -1,5 +1,5 @@
 import { DeviceSessionState, DeviceSessionStepType } from './DeviceSession';
-export declare type AdminDeviceSession = {
+export type AdminDeviceSession = {
     billable: boolean;
     createTime: number;
     currentStepType: DeviceSessionStepType;
@@ -17,7 +17,7 @@ export declare type AdminDeviceSession = {
     testRunId: number;
     testRunName: string;
 };
-export declare type AdminInteractiveDeviceSession = {
+export type AdminInteractiveDeviceSession = {
     billable: boolean;
     createTime: number;
     deviceId: number;

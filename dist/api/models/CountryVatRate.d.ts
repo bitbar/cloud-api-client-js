@@ -1,7 +1,7 @@
-export declare type CountryVatRate = {
+export type CountryVatRate = {
     country: string;
     countryCode: string;
     id: number;
     vatRate: number;
 };
-export declare type CountryVatRateData = Pick<CountryVatRate, 'countryCode' | 'vatRate'>;
+export type CountryVatRateData = Pick<CountryVatRate, 'countryCode' | 'vatRate'>;
