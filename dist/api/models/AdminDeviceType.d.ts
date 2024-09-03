@@ -1,4 +1,4 @@
-export declare type AdminDeviceType = {
+export type AdminDeviceType = {
     frameExtraWidth: number;
     id: number;
     imageHeight: number;
@@ -7,6 +7,6 @@ export declare type AdminDeviceType = {
     imageTop: number;
     imageWidth: number;
 };
-export declare type DeviceTypeData = Omit<AdminDeviceType, 'id'> & {
+export type DeviceTypeData = Omit<AdminDeviceType, 'id'> & {
     deviceTypeId: number;
 };

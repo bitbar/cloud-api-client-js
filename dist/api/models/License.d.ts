@@ -4,38 +4,38 @@ export declare enum LicenseStatus {
     INACTIVE = "INACTIVE",
     CLOSED = "CLOSED"
 }
-export declare type BaseLicense = {
+export type BaseLicense = {
     enabled: boolean;
 };
-export declare type FeatureLicense = {
+export type FeatureLicense = {
     deviceLimit: number;
     deviceLimited: boolean;
     projectLimit: number;
     projectLimited: boolean;
 };
-export declare type AndroidLicense = BaseLicense & FeatureLicense & {
+export type AndroidLicense = BaseLicense & FeatureLicense & {
     cts: CTSLicense;
     uiAutomator: UIAutomatorLicense;
 };
-export declare type BuildLicense = BaseLicense & {
+export type BuildLicense = BaseLicense & {
     limit: number;
     limited: boolean;
 };
-export declare type DesktopLicense = BaseLicense & FeatureLicense;
-export declare type GlobalLicense = FeatureLicense;
-export declare type InspectorLicense = BaseLicense;
-export declare type IOSLicense = BaseLicense & FeatureLicense;
-export declare type RecorderLicense = BaseLicense & {
+export type DesktopLicense = BaseLicense & FeatureLicense;
+export type GlobalLicense = FeatureLicense;
+export type InspectorLicense = BaseLicense;
+export type IOSLicense = BaseLicense & FeatureLicense;
+export type RecorderLicense = BaseLicense & {
     limit: number;
     limited: boolean;
 };
-export declare type ServerLicense = BaseLicense & {
+export type ServerLicense = BaseLicense & {
     androidEnabled: boolean;
     iosEnabled: boolean;
 };
-export declare type CTSLicense = BaseLicense;
-export declare type UIAutomatorLicense = BaseLicense;
-export declare type License = {
+export type CTSLicense = BaseLicense;
+export type UIAutomatorLicense = BaseLicense;
+export type License = {
     activateTime: number;
     android: AndroidLicense;
     build: BuildLicense;
@@ -53,7 +53,7 @@ export declare type License = {
     userEmail: string;
     userId: number;
 };
-export declare type LicenseData = Pick<License, 'privateInstance' | 'userId'> & {
+export type LicenseData = Pick<License, 'privateInstance' | 'userId'> & {
     androidDeviceLimit: number;
     androidEnabled: boolean;
     androidProjectLimit: number;

@@ -1,7 +1,7 @@
-export declare type AccountPreferences = {
+export type AccountPreferences = {
     allowedFileExtensions: Array<string>;
     id: number;
     defaultTestTimeout: number;
     testTimeout: number;
 };
-export declare type AccountPreferencesData = Partial<Omit<AccountPreferences, 'id'>>;
+export type AccountPreferencesData = Partial<Omit<AccountPreferences, 'id'>>;

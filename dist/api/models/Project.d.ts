@@ -5,7 +5,7 @@ export declare enum ArchivingStrategy {
     DAYS = "DAYS",
     RUNS = "RUNS"
 }
-export declare type Project = {
+export type Project = {
     archiveTime: number;
     archivingItemCount: number;
     archivingStrategy: ArchivingStrategy;
@@ -25,7 +25,7 @@ export declare type Project = {
     userEmail: string;
     userId: number;
 };
-export declare type UserProjectData = Pick<Project, 'name'>;
+export type UserProjectData = Pick<Project, 'name'>;
 export interface UserProjectQueryParams extends TestRunsQueryParams {
     showStatistics: boolean;
 }

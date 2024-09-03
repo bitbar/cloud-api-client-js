@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-export declare type Activity = {
+export type Activity = {
     body: string;
     createTime: number;
     deprecatedResource: boolean;

@@ -1,6 +1,6 @@
 import { Platform } from './Device';
 import { OsType } from './Enum';
-export declare type DeviceModel = {
+export type DeviceModel = {
     avgWaitingTime: number;
     dedicated: boolean;
     enabled: boolean;
@@ -16,7 +16,7 @@ export declare type DeviceModel = {
     total: number;
     freeTrial: boolean;
 };
-export declare type DeviceModelData = Pick<DeviceModel, 'enabled' | 'name' | 'releaseVersion'> & {
+export type DeviceModelData = Pick<DeviceModel, 'enabled' | 'name' | 'releaseVersion'> & {
     apiLevel: number;
     creditsPrice: number;
     manufacturer: string;

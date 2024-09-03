@@ -1,6 +1,6 @@
 import { DeviceSessionType } from './DeviceSession';
 import { CollectionQueryParams } from './HTTP';
-export declare type UserDeviceTime = BasicDeviceTime & {
+export type UserDeviceTime = BasicDeviceTime & {
     billableTime: number;
     createTime: number;
     endTime: number;
@@ -9,7 +9,7 @@ export declare type UserDeviceTime = BasicDeviceTime & {
     userId: number;
     userName: string;
 };
-export declare type BasicDeviceTime = {
+export type BasicDeviceTime = {
     deviceTime: number;
     id: number;
 };

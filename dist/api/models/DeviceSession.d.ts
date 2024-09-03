@@ -1,6 +1,6 @@
 import { Device } from './Device';
 import { CollectionBasicQueryParams } from './HTTP';
-export declare type TunnelSettings = {
+export type TunnelSettings = {
     domain: string;
     email: string;
 };
@@ -35,7 +35,7 @@ export declare enum DeviceSessionStepType {
     SENDING_RESULTS = "SENDING_RESULTS",
     PROCESSING_RESULTS = "PROCESSING_RESULTS"
 }
-export declare type DeviceSessionConfig = {
+export type DeviceSessionConfig = {
     adbVersion: string;
     browserName: string;
     browserVersion: string;
@@ -46,7 +46,7 @@ export declare type DeviceSessionConfig = {
     type: DeviceSessionConfig;
     url: string;
 };
-export declare type DeviceSession = {
+export type DeviceSession = {
     accountId: number;
     autoRetriesLeftCount: number;
     billable: boolean;
@@ -84,7 +84,7 @@ export declare type DeviceSession = {
     userEmail: string;
     userId: number;
 };
-export declare type DeviceSessionCommand = {
+export type DeviceSessionCommand = {
     duration: number;
     httpMethod: string;
     id: number;
@@ -94,7 +94,7 @@ export declare type DeviceSessionCommand = {
     timestamp: number;
     uri: string;
 };
-export declare type DeviceSessionStep = {
+export type DeviceSessionStep = {
     deviceSessionId: number;
     excludeReason: string;
     failReason: string;
@@ -103,7 +103,7 @@ export declare type DeviceSessionStep = {
     startTimeMS: number;
     type: DeviceSessionStepType;
 };
-export declare type DeviceSessionConnection = {
+export type DeviceSessionConnection = {
     createTime: number;
     deviceSessionId: number;
     endTime: number;
@@ -117,7 +117,7 @@ export declare type DeviceSessionConnection = {
     url: string;
     urlSchema: string;
 };
-export declare type DeviceSessionData = Omit<DeviceSessionConfig, 'adbVersion' | 'id' | 'tunnelSettings' | 'type'> & {
+export type DeviceSessionData = Omit<DeviceSessionConfig, 'adbVersion' | 'id' | 'tunnelSettings' | 'type'> & {
     configuration: DeviceSessionConfig;
 };
 export interface DeviceSessionQueryParams extends CollectionBasicQueryParams {
@@ -143,6 +143,6 @@ export declare enum SessionReleaseReason {
     CHANGE_DEVICE = "CHANGE_DEVICE",
     WEBSOCKET_CLOSED = "WEBSOCKET_CLOSED"
 }
-export declare type DeviceSessionRelease = {
+export type DeviceSessionRelease = {
     reason: SessionReleaseReason;
 };

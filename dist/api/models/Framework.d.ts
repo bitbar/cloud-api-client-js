@@ -1,6 +1,6 @@
 import { OsType } from './Enum';
 import { UserFile } from './UserFile';
-export declare type Framework = {
+export type Framework = {
     accountId: number;
     accountName: string;
     canRunFromUI: boolean;
@@ -26,13 +26,13 @@ export declare type Framework = {
     skipQueue: boolean;
     type: string;
 };
-export declare type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'accountName' | 'sampleApp' | 'sampleTest'> & {
+export type FrameworkData = Omit<Framework, 'createTime' | 'id' | 'labelName' | 'accountName' | 'sampleApp' | 'sampleTest'> & {
     addLabelToDevices: boolean;
     roleIds: Array<number>;
     sampleAppId: number;
     sampleTestId: number;
 };
-export declare type FrameworkEditData = Omit<FrameworkData, 'accountId' | 'id' | 'secured'>;
-export declare type FrameworkConfigData = {
+export type FrameworkEditData = Omit<FrameworkData, 'accountId' | 'id' | 'secured'>;
+export type FrameworkConfigData = {
     content: string;
 };

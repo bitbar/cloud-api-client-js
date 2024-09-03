@@ -1,5 +1,5 @@
 import { OsType } from './Enum';
-export declare type Browser = {
+export type Browser = {
     architecture: string;
     displayName: string;
     id: number;
@@ -9,7 +9,7 @@ export declare type Browser = {
     osType: OsType;
     version: string;
 };
-export declare type BrowserData = Omit<Browser, 'id' | 'install'>;
-export declare type DeviceBrowserData = {
+export type BrowserData = Omit<Browser, 'id' | 'install'>;
+export type DeviceBrowserData = {
     browserIds: Array<number>;
 };

@@ -32,7 +32,7 @@ export declare enum AdminErrorType {
     XCRUN_INSTRUMENTS_COMMAND_FAILED = "XCRUN_INSTRUMENTS_COMMAND_FAILED",
     XCRUN_INSTRUMENTS_JS_ERROR = "XCRUN_INSTRUMENTS_JS_ERROR"
 }
-export declare type AdminError = {
+export type AdminError = {
     id: number;
     quantity: number;
     type: AdminErrorType;

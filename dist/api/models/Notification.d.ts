@@ -18,7 +18,7 @@ export declare enum NotificationScope {
     PLAN_LIMIT_REACHED = "PLAN_LIMIT_REACHED",
     PLAN_INVOICE = "PLAN_INVOICE"
 }
-export declare type Notification = {
+export type Notification = {
     channel: NotificationChannel;
     destination: string;
     id: number;
@@ -31,4 +31,4 @@ export declare type Notification = {
 export interface NotificationData extends QueryParams {
     scope: NotificationScope;
 }
-export declare type NotificationsData = Pick<Notification, 'channel' | 'destination' | 'projectId' | 'scope'>;
+export type NotificationsData = Pick<Notification, 'channel' | 'destination' | 'projectId' | 'scope'>;

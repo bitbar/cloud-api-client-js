@@ -6,7 +6,7 @@ export declare enum ProblemType {
     HIGH_FAIL_RATE = "HIGH_FAIL_RATE",
     NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION"
 }
-export declare type DeviceProblem = {
+export type DeviceProblem = {
     clusterId: number;
     clusterName: string;
     deviceId: number;
@@ -16,7 +16,7 @@ export declare type DeviceProblem = {
     id: number;
     problems: Array<DeviceProblemPair>;
 };
-export declare type DeviceProblemPair = {
+export type DeviceProblemPair = {
     id: number;
     type: ProblemType;
     value: any;

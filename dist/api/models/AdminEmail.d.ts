@@ -1,4 +1,4 @@
-export declare type AdminEmail = {
+export type AdminEmail = {
     createTime: number;
     id: number;
     lastEntryTime: number;

@@ -1,4 +1,4 @@
-export declare type Maintenance = {
+export type Maintenance = {
     enabled: boolean;
     id: number;
 };
@@ -7,7 +7,7 @@ export declare enum MaintenanceType {
     EC2 = "EC2",
     VM = "VM"
 }
-export declare type MaintenanceData = {
+export type MaintenanceData = {
     enabled: boolean;
     type: MaintenanceType;
 };

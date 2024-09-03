@@ -6,7 +6,7 @@ export declare enum FrameworkType {
     MANUAL_WEB = "MANUAL_WEB",
     REMOTE = "REMOTE"
 }
-export declare type AdminFrameworkStatistics = {
+export type AdminFrameworkStatistics = {
     cloudName: string;
     count: number;
     day: number;

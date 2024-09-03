@@ -1,3 +1,3 @@
-export declare type Message = {
+export type Message = {
     message: string;
 };

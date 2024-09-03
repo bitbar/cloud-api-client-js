@@ -1,7 +1,7 @@
 import { ChargeType, PaymentMethod } from './AccountService';
 import { CollectionQueryParams } from './HTTP';
 import { Role } from './Role';
-export declare type Service = {
+export type Service = {
     activateTime: number;
     activated: boolean;
     archiveTime: number;
@@ -34,7 +34,7 @@ export interface AdminServicesParams extends CollectionQueryParams {
     inUse: boolean;
     notArchive: boolean;
 }
-export declare type ServiceActivateData = {
+export type ServiceActivateData = {
     activateTime: number;
 };
 export interface ServiceData {

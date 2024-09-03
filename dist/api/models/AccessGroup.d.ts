@@ -3,12 +3,12 @@ export declare enum AccessGroupScope {
     ACCOUNT = "ACCOUNT",
     GLOBAL = "GLOBAL"
 }
-export declare type AccessGroup = {
+export type AccessGroup = {
     id: number;
     name: string;
     scope: AccessGroupScope;
     userEmail: string;
     userId: number;
 };
-export declare type AccessGroupData = Pick<AccessGroup, 'name' | 'scope' | 'userId'>;
-export declare type AccessGroupsData = Omit<AccessGroupData, 'userId'>;
+export type AccessGroupData = Pick<AccessGroup, 'name' | 'scope' | 'userId'>;
+export type AccessGroupsData = Omit<AccessGroupData, 'userId'>;

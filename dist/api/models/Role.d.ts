@@ -1,5 +1,5 @@
 import { CollectionQueryParams } from './HTTP';
-export declare type Role = {
+export type Role = {
     addedByEmail: string;
     expireTime: number;
     id: number;
@@ -11,6 +11,6 @@ export declare type Role = {
 export interface RoleParams extends CollectionQueryParams {
     withoutPriorities: boolean;
 }
-export declare type RoleData = Pick<Role, 'expireTime' | 'value'> & {
+export type RoleData = Pick<Role, 'expireTime' | 'value'> & {
     roleId: number;
 };

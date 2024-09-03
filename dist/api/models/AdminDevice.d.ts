@@ -17,7 +17,7 @@ export declare enum DeviceState {
     ONLINE_FREE = "ONLINE_FREE",
     ONLINE_TESTING = "ONLINE_TESTING"
 }
-export declare type AdminDevice = {
+export type AdminDevice = {
     accountId: number;
     accountName: string;
     cluster: unknown;
@@ -47,8 +47,8 @@ export declare type AdminDevice = {
     testTimeLimit: number;
     unlockGesture: string;
 };
-export declare type AdminDevicesQueryParams = Pick<DevicesQueryParams, 'withDisabled'> & CollectionQueryParams;
-export declare type AdminDeviceData = Pick<AdminDevice, 'accountId' | 'enabled' | 'initStep' | 'ipAddress' | 'name' | 'serialId' | 'testTimeLimit' | 'unlockGesture'> & {
+export type AdminDevicesQueryParams = Pick<DevicesQueryParams, 'withDisabled'> & CollectionQueryParams;
+export type AdminDeviceData = Pick<AdminDevice, 'accountId' | 'enabled' | 'initStep' | 'ipAddress' | 'name' | 'serialId' | 'testTimeLimit' | 'unlockGesture'> & {
     apiLevel: number;
     releaseVersion: string;
 };

@@ -3,9 +3,10 @@ import {APIEntity} from './APIEntity';
 import {APIList} from './APIList';
 import {FilesQueryParams} from './class/FilesQueryParams';
 import {FileData, UploadObj, UserFile} from './models/UserFile';
+import FormData from 'form-data';
 
 
-export class APIListFiles extends APIList<UserFile, FilesQueryParams, FileData> {
+export class APIListFiles extends APIList<UserFile, FilesQueryParams, FileData | FormData> {
 
   /**
    * /files
@@ -35,7 +36,6 @@ export class APIListFiles extends APIList<UserFile, FilesQueryParams, FileData> 
 
   private nodeUpload(file: UploadObj): this {
     const fs = require('fs');
-    const FormData = require('form-data');
     const form = new FormData();
     form.append('file', fs.createReadStream(file.dir + '/' + file.filename), {
       filename: file.filename

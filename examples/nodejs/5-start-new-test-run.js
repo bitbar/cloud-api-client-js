@@ -1,5 +1,5 @@
 
-const CloudApiClient = require('@bitbar/cloud-api-client');
+import CloudApiClient from '@bitbar/cloud-api-client';
 
 const api = new CloudApiClient.API({
   cloudUrl: 'https://cloud.bitbar.com',
@@ -11,7 +11,7 @@ const api = new CloudApiClient.API({
 
 var config = {
   deviceGroupId: 14, // enter id of your device group - #14 is "Trial Android Devices"
-  deviceLanguageCode: "en_US",
+  deviceLanguageCode: 'en_US',
   files: [
     {
       action: 'INSTALL',

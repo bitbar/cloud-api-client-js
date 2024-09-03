@@ -1,5 +1,5 @@
 import { NotificationChannel, NotificationScope } from './Notification';
-export declare type NotificationPlan = {
+export type NotificationPlan = {
     channel: NotificationChannel;
     contentTemplate: string;
     createTime: number;
@@ -12,9 +12,9 @@ export declare type NotificationPlan = {
     subjectTemplate: string;
     updateTime: number;
 };
-export declare type NotificationPlanData = Pick<NotificationPlan, 'channel' | 'name'> & {
+export type NotificationPlanData = Pick<NotificationPlan, 'channel' | 'name'> & {
     notificationContent: string;
     notificationSubject: string;
     scope: NotificationScope;
 };
-export declare type NotificationPlanEditData = Omit<NotificationPlanData, 'channel'>;
+export type NotificationPlanEditData = Omit<NotificationPlanData, 'channel'>;

@@ -1,13 +1,13 @@
 'use strict';
 
-import pluginCommonjs from '@rollup/plugin-commonjs';
+import commonjs from '@rollup/plugin-commonjs';
 import pluginTypeScript from 'rollup-plugin-typescript2';
 import pluginJson from '@rollup/plugin-json';
-import pluginBabel from '@rollup/plugin-babel';
-import { terser as pluginTerser } from 'rollup-plugin-terser';
+import {babel} from '@rollup/plugin-babel';
+import terser from '@rollup/plugin-terser';
 import pluginDelete from 'rollup-plugin-delete';
 
-import $package from './package.json';
+import $package from './package.json' with {type: 'json'};
 
 const input = 'src/index.ts';
 const external = Object.keys($package.dependencies || []).concat(['fs']);
@@ -51,7 +51,7 @@ function getTS() {
 }
 
 function getBabel() {
-  return pluginBabel({
+  return babel({
     babelHelpers: 'runtime',
     exclude: 'node_modules/**',
     presets: [
@@ -74,7 +74,7 @@ function getBabel() {
 }
 
 function getPluginCJS() {
-  return pluginCommonjs({
+  return commonjs({
     extensions,
     include: 'node_modules/**'
   });
@@ -105,10 +105,10 @@ export default [
       getBabel(),
       pluginJson(),
       getPluginCJS(),
-      pluginTerser({
+      terser({
         output: {
           comments: (node, comment) => {
-            if (comment.type === "comment2") {
+            if (comment.type === 'comment2') {
               // multiline comment
               return /LICENSE|\(c\)/.test(comment.value);
             }
