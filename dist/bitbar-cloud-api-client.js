@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.2.4 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.2.6 | Copyright 2024 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -10,7 +10,7 @@
   var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
   var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
 
-  var version = "1.2.4";
+  var version = "1.2.6";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -2039,6 +2039,13 @@
       FrameworkType["MANUAL_WEB"] = "MANUAL_WEB";
       FrameworkType["REMOTE"] = "REMOTE";
   })(exports.FrameworkType || (exports.FrameworkType = {}));
+
+  exports.BillingType = void 0;
+  (function (BillingType) {
+      BillingType["BUY"] = "BUY";
+      BillingType["CHARGE"] = "CHARGE";
+      BillingType["CANCEL"] = "CANCEL";
+  })(exports.BillingType || (exports.BillingType = {}));
 
   exports.BrokerType = void 0;
   (function (BrokerType) {
