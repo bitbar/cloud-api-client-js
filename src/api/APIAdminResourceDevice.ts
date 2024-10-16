@@ -26,11 +26,6 @@ export class APIAdminResourceDevice extends APIResource<AdminDevice, NoQueryPara
     this.push('admin', 'devices', id);
   }
 
-  // /admin/devices/{id}/blink
-  blink() {
-    return new APIResource<AdminDevice, NoQueryParams, NoData>(this).push('blink').post();
-  }
-
   // /admin/devices/{id}/cleanup-configuration
   cleanupConfiguration() {
     return new APIResource<DeviceCleanupConfiguration, QueryParams, DeviceCleanupConfigurationData>(this).push('cleanup-configuration');

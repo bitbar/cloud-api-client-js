@@ -1,6 +1,3 @@
-import {CollectionQueryParams} from './HTTP';
-
-
 export type Property = {
   description: string;
   fromTime: number;
