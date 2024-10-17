@@ -30,15 +30,6 @@ describe('APIAdminResourceDevice', () => {
     expect(() => new APIAdminResourceDevice(adminResource, id)).toThrow(new Error('Resource ID cannot be null!'));
   });
 
-  describe('@blink', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.blink();
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/1/blink`);
-      expect((<any>call).requestConfig.method).toEqual('POST');
-    });
-  });
-
   describe('@cleanupConfiguration', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.cleanupConfiguration();

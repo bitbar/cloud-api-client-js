@@ -7,7 +7,6 @@ import { DeviceCleanupConfiguration, DeviceCleanupConfigurationData, DeviceLabel
 import { NoQueryParams, QueryParams } from './models/HTTP';
 export declare class APIAdminResourceDevice extends APIResource<AdminDevice, NoQueryParams, AdminDeviceData> {
     constructor(parent: APIAdminResource, id: number);
-    blink(): APIResource<AdminDevice, NoQueryParams, void>;
     cleanupConfiguration(): APIResource<DeviceCleanupConfiguration, QueryParams, DeviceCleanupConfigurationData>;
     labels(): APIList<DeviceProperty, NoQueryParams, DeviceLabelData>;
     label(id: number): APIResource<DeviceProperty, NoQueryParams, void>;
