@@ -21,13 +21,14 @@ import {APIResourceRun} from './api/APIResourceRun';
 import {APIResourceUser} from './api/APIResourceUser';
 import {APIResourceUserSession} from './api/APIResourceUserSession';
 import {Cluster} from './api/models/Cluster';
-import {NoData, NoQueryParams} from './api/models/HTTP';
+import {NoData, NoQueryParams, QueryParams} from './api/models/HTTP';
 import {License} from './api/models/License';
 import {Project} from './api/models/Project';
 import {Property} from './api/models/Property';
 import {UserFile, UserFileData, UserFileParams} from './api/models/UserFile';
 import {ApiConfig} from './ApiConfig';
 import './finka';
+import {LabelGroup} from './api/models/LabelGroup';
 
 // @ts-ignore
 if (globalThis.isNodeJs) {
@@ -174,7 +175,7 @@ export class API {
 
   // /label-groups
   labelGroups() {
-    return new APIList(this).push('label-groups');
+    return new APIList<LabelGroup, QueryParams, NoData>(this).push('label-groups');
   }
 
   // /label-groups/{id}
