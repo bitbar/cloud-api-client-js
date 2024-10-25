@@ -21,7 +21,7 @@ import {APIResourceRun} from './api/APIResourceRun';
 import {APIResourceUser} from './api/APIResourceUser';
 import {APIResourceUserSession} from './api/APIResourceUserSession';
 import {Cluster} from './api/models/Cluster';
-import {NoData, NoQueryParams, QueryParams} from './api/models/HTTP';
+import {CollectionQueryParams, NoData, NoQueryParams} from './api/models/HTTP';
 import {License} from './api/models/License';
 import {Project} from './api/models/Project';
 import {Property} from './api/models/Property';
@@ -175,7 +175,7 @@ export class API {
 
   // /label-groups
   labelGroups() {
-    return new APIList<LabelGroup, QueryParams, NoData>(this).push('label-groups');
+    return new APIList<LabelGroup, CollectionQueryParams, NoData>(this).push('label-groups');
   }
 
   // /label-groups/{id}
