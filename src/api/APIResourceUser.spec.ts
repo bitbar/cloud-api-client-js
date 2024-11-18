@@ -58,19 +58,6 @@ describe('APIResourceUser', () => {
     });
   });
 
-  describe('@service', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = serviceNumberId.service(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/services/1`);
-    });
-
-    it('should throw error if resource ID is nulll', () => {
-      const id: any = undefined;
-      expect(() => serviceNumberId.service(id)).toThrow(new Error('Resource ID cannot be null!'));
-    });
-  });
-
   describe('@deviceGroups', () => {
     it('should initialize proper endpoint path', () => {
       const call = serviceNumberId.deviceGroups();

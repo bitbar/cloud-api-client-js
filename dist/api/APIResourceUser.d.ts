@@ -18,7 +18,6 @@ import { DeviceStatistics } from './models/DeviceStatistics';
 import { DeviceUsage } from './models/DeviceUsage';
 import { Framework } from './models/Framework';
 import { Project, UserProjectData, UserProjectQueryParams } from './models/Project';
-import { Service } from './models/Service';
 import { User, UserDeleteData } from './models/User';
 import { UiPreferencesData, UserPreference, UserPreferenceData } from './models/UserPreference';
 import { StatisticQueryParams, UserStatistics } from './models/UserStatistics';
@@ -28,7 +27,6 @@ import { DeviceStatisticQueryParam, DeviceUsageQueryParams } from './models/Devi
 export declare class APIResourceUser extends APIResource<User> {
     constructor(parent: API, id: number | 'me');
     services(): APIListServices;
-    service(id: number): APIResource<Service, NoQueryParams, void>;
     deviceGroups(): APIList<DeviceGroup, DeviceGroupWithPublicParams, DeviceGroupIdsData | Omit<DeviceGroupData, "displayName">>;
     deviceGroup(id: number): APIResourceDeviceGroup;
     deviceSessions(): APIList<DeviceSession, DeviceSessionQueryParams, DeviceSessionData>;
