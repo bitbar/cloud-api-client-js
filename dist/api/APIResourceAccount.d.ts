@@ -30,5 +30,6 @@ export declare class APIResourceAccount extends APIResource<Account, QueryParams
     serviceBillingPeriod(id: number): APIResource<AccountServicePayment, BillingPeriodQueryParams, void>;
     visualTestAccess(): APIResource<VisualTestAccess, NoQueryParams, VisualTestAccess>;
     accountServices(): APIList<AccountService, import("./models/HTTP").CollectionQueryParams, any>;
+    accountService(id: number): APIList<AccountService, import("./models/HTTP").CollectionQueryParams, any>;
 }
 export default APIResourceAccount;

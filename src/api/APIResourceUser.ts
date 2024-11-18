@@ -18,7 +18,6 @@ import {DeviceStatistics} from './models/DeviceStatistics';
 import {DeviceUsage} from './models/DeviceUsage';
 import {Framework} from './models/Framework';
 import {Project, UserProjectData, UserProjectQueryParams} from './models/Project';
-import {Service} from './models/Service';
 import {User, UserDeleteData} from './models/User';
 import {UiPreferencesData, UserPreference, UserPreferenceData} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
@@ -50,15 +49,6 @@ export class APIResourceUser extends APIResource<User> {
   // /users/{id}/services
   services() {
     return new APIListServices(this);
-  }
-
-  // /users/{id}/services/{id}
-  service(id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource<Service, NoQueryParams, NoData>(this).push('services', id);
   }
 
   // /users/{id}/device-groups

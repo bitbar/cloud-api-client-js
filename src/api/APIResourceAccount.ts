@@ -104,6 +104,11 @@ export class APIResourceAccount extends APIResource<Account, QueryParams, Accoun
     return new APIList<AccountService>(this).push('account-services');
   }
 
+  // /account/{accountId}/account-services/{id}
+  accountService(id: number) {
+    return new APIList<AccountService>(this).push('account-services', id);
+  }
+
 }
 
 export default APIResourceAccount;

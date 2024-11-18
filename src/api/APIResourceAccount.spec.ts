@@ -150,4 +150,12 @@ describe('APIResourceAccount', () => {
     });
   });
 
+  describe('@accountService', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.accountService(1);
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/account-services/1`);
+    });
+  });
+
 });
