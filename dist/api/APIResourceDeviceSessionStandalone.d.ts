@@ -16,6 +16,6 @@ export declare class APIResourceDeviceSessionStandalone extends APIResource<Devi
     input(): InputFileset;
     output(): OutputFileset;
     release(): APIResource<DeviceSession, NoQueryParams, DeviceSessionRelease>;
-    visualTestImages(): APIList<VisualTest, NoQueryParams, void>;
+    visualTestsImages(): APIList<VisualTest, NoQueryParams, void>;
 }
 export default APIResourceDeviceSessionStandalone;

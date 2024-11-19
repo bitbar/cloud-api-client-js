@@ -53,9 +53,9 @@ export class APIResourceDeviceSessionStandalone extends APIResource<DeviceSessio
     return new APIResource<DeviceSession, NoQueryParams, DeviceSessionRelease>(this).push('release').post();
   }
 
-  // /device-sessions/{id}/visualtest/images
-  visualTestImages() {
-    return new APIList<VisualTest, NoQueryParams, NoData>(this).push('visualtest', 'images');
+  // /device-sessions/{id}/visual-tests/images
+  visualTestsImages() {
+    return new APIList<VisualTest, NoQueryParams, NoData>(this).push('visual-tests', 'images');
   }
 
 }
