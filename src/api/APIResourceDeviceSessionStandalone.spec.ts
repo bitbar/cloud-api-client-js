@@ -80,10 +80,10 @@ describe('APIResourceDeviceSessionStandalone', () => {
 
   describe('@visualTestsImages', () => {
     it('should initialize proper endpoint path', () => {
-      const call = service.visualTestImages();
+      const call = service.visualTestsImages();
       expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual(
-        `${baseUrl}/visualtest/images`);
+        `${baseUrl}/visual-tests/images`);
     });
   });
 
