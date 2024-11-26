@@ -7,7 +7,6 @@ export type Service = {
   activateTime: number;
   activated: boolean;
   archiveTime: number;
-  autoRenew: boolean;
   centPrice: number;
   chargeType: ChargeType;
   commonId: string;
