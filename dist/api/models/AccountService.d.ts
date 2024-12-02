@@ -37,7 +37,6 @@ export declare type AccountService = {
     activatedById: number;
     activatedByName: string;
     active: boolean;
-    autoRenew: boolean;
     braintreeId: string;
     chargeType: ChargeType;
     createTime: number;
