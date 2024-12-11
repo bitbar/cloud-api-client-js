@@ -1,3 +1,4 @@
+import { Platform } from './Device';
 export declare type DesktopBrowserCapabilities = {
     id: number;
     platforms: Array<any>;
@@ -7,7 +8,7 @@ export declare type DesktopPlatform = {
     id: number;
     name: string;
     resolutions: Array<string>;
-    value: string;
+    value: Platform;
     version: string;
 };
 export declare type DesktopBrowser = {
