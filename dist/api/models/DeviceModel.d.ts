@@ -14,6 +14,7 @@ export declare type DeviceModel = {
     releaseVersion: string;
     running: number;
     total: number;
+    freeTrial: boolean;
 };
 export declare type DeviceModelData = Pick<DeviceModel, 'enabled' | 'name' | 'releaseVersion'> & {
     apiLevel: number;
