@@ -15,6 +15,7 @@ export type DeviceModel = {
   releaseVersion: string;
   running: number;
   total: number;
+  freeTrial: boolean
 }
 
 export type DeviceModelData = Pick<DeviceModel, 'enabled' | 'name' | 'releaseVersion'> & {
