@@ -33,6 +33,11 @@ export declare type SoftwareVersion = {
     id: number;
     releaseVersion: string;
 };
+export declare enum LockReason {
+    TESTING = "TESTING",
+    CLEANING = "CLEANING",
+    NOT_OPERATIONAL = "NOT_OPERATIONAL"
+}
 export declare type Device = {
     accountId: number;
     accountName: string;
@@ -54,6 +59,7 @@ export declare type Device = {
     imageTop: number;
     imageWidth: number;
     locked: boolean;
+    lockReason: LockReason;
     manufacturer: string;
     online: boolean;
     osType: OsType;

@@ -40,6 +40,12 @@ export type SoftwareVersion = {
   releaseVersion: string;
 }
 
+export enum LockReason {
+  TESTING = 'TESTING',
+  CLEANING = 'CLEANING',
+  NOT_OPERATIONAL = 'NOT_OPERATIONAL'
+}
+
 export type Device = {
   accountId: number;
   accountName: string;
@@ -61,6 +67,7 @@ export type Device = {
   imageTop: number;
   imageWidth: number;
   locked: boolean;
+  lockReason: LockReason;
   manufacturer: string;
   online: boolean;
   osType: OsType;
