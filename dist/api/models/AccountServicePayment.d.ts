@@ -1,4 +1,4 @@
-export declare type AccountServicePayment = {
+export type AccountServicePayment = {
     accountId: number;
     additionalTime: number;
     endBillingPeriod: number;

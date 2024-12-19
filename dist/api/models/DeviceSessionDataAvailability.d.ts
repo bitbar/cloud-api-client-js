@@ -1,4 +1,4 @@
-export declare type DeviceSessionDataAvailability = {
+export type DeviceSessionDataAvailability = {
     buildLogs: boolean;
     deviceRunId: number;
     id: number;

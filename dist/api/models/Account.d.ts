@@ -1,4 +1,4 @@
-export declare type Account = {
+export type Account = {
     activeServiceName: string;
     comment: string;
     createTime: number;
@@ -8,7 +8,7 @@ export declare type Account = {
     name: string;
     userName: string;
 };
-export declare type Invoice = {
+export type Invoice = {
     address: string;
     city: string;
     code: string;
@@ -16,7 +16,7 @@ export declare type Invoice = {
     state: string;
     update: boolean;
 };
-export declare type AccountData = Partial<{
+export type AccountData = Partial<{
     comment: string;
     invoiceDetails: Invoice;
     name: string;

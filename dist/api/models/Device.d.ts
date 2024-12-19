@@ -20,7 +20,7 @@ export declare enum SupportedCreators {
     ROBOT = "ROBOT",
     AUTOMATIC = "AUTOMATIC"
 }
-export declare type DeviceProperty = {
+export type DeviceProperty = {
     displayName: string;
     id: number;
     labelGroupName: string;
@@ -28,12 +28,12 @@ export declare type DeviceProperty = {
     propertyGroupId: number;
     propertyGroupName: string;
 };
-export declare type SoftwareVersion = {
+export type SoftwareVersion = {
     apiLevel: number;
     id: number;
     releaseVersion: string;
 };
-export declare type Device = {
+export type Device = {
     accountId: number;
     accountName: string;
     available: boolean;
@@ -62,7 +62,7 @@ export declare type Device = {
     softwareVersion: SoftwareVersion;
     supportedCreators: Array<SupportedCreators>;
 };
-export declare type DeviceCleanupConfiguration = {
+export type DeviceCleanupConfiguration = {
     content: string;
     createTime: number;
     createdByEmail: string;
@@ -75,10 +75,10 @@ export declare type DeviceCleanupConfiguration = {
     lastModificationTime: number;
     osType: OsType;
 };
-export declare type DeviceCleanupConfigurationData = {
+export type DeviceCleanupConfigurationData = {
     deviceCleanupConfigurationId: number;
 };
-export declare type DeviceLabelData = {
+export type DeviceLabelData = {
     labelId: number;
 };
 export interface DeviceProperiesData extends QueryParams {

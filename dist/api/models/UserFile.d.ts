@@ -12,16 +12,16 @@ export declare enum FileState {
     PREPARING = "PREPARING",
     READY = "READY"
 }
-export declare type FileProperty = {
+export type FileProperty = {
     id: number;
     key: string;
     value: string;
 };
-export declare type UserFileTag = {
+export type UserFileTag = {
     id: number;
     name: string;
 };
-export declare type UserFile = {
+export type UserFile = {
     createTime: number;
     directUrl: string;
     direction: FileDirection;
@@ -41,21 +41,21 @@ export declare type UserFile = {
 export interface UserFileParams extends CollectionQueryParams {
     tag: Array<string>;
 }
-export declare type UserFileData = {
+export type UserFileData = {
     file: FormData;
     global: boolean;
 };
-export declare type BuildLogsData = {
+export type BuildLogsData = {
     deviceRunIds: Array<number>;
     projectId: number;
     userId: number;
 };
-export declare type BuildLogsParams = BuildLogsData;
+export type BuildLogsParams = BuildLogsData;
 export interface FileSizeData extends QueryParams {
     height: number;
     width: number;
 }
-export declare type UploadObj = {
+export type UploadObj = {
     dir: string;
     filename: string;
 };
