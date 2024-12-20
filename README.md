@@ -90,10 +90,10 @@ Now that you know how to build a chaining call you probably will want to e.g. se
 All classes are documented so it should be easy to read docs from code.
 
 If resource chain ends on method that is _singular_ (so in Swagger it returns single object) then it's descendant of
-[APIResource](src/APIResource.coffee). It means that you can use all methods that are there.
+[APIResource](src/APIResource.ts). It means that you can use all methods that are there.
 
 If resource chain ends on method that is _plural_ (so in Swagger it returns list) then it's descendant of
-[APIList](src/APIList.coffee). It means that you can use all methods that are there.
+[APIList](src/APIList.ts). It means that you can use all methods that are there.
 
 Both `APIResource` and `APIList` are children of `APIEntity`.
 
