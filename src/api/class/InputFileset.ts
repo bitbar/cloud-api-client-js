@@ -17,14 +17,14 @@ export class InputFileset extends APIResource<NoData> {
   }
 
   /**
-   * @endpoint /input-file-set/files
+   * @remarks Endpoint /input-file-set/files
    */
   files() {
     return new APIList<UserFile, FilesQueryParams, NoData>(this).push('files');
   }
 
   /**
-   * @endpoint /input-file-set/files.zip
+   * @remarks Endpoint /input-file-set/files.zip
    */
   filesZip() {
     return new APIResource<Blob, FilesQueryParams>(this).push('files.zip');
