@@ -4,7 +4,6 @@ import {Method} from 'axios';
 /**
  * Allowed methods
  *
- * @constant
  * @type {Array}
  * @default
  */
