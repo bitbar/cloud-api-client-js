@@ -9,7 +9,7 @@
     "test": "npx jest --runInBand",
     "test:coverage": "npx jest --coverage=true --runInBand",
     "lint": "npx eslint .",
-    "docs": "npx typedoc --out ./docs --ignoreCompilerErrors --mode modules --module umd --target ES5 --theme default --includes ./src src/CloudAPIClient.ts"
+    "docs": "npx typedoc --options typedoc.json"
   },
   "type": "module",
   "resolutions": {
