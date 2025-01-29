@@ -3,6 +3,7 @@ import { TunnelSettings } from './DeviceSession';
 import { OsType } from './Enum';
 import { CollectionBasicQueryParams, QueryParams } from './HTTP';
 import { Tag } from './Tag';
+import { UserFile } from './UserFile';
 export declare enum LimitationType {
     PACKAGE = "PACKAGE",
     CLASS = "CLASS"
@@ -58,7 +59,7 @@ export type TestRun = {
     waitingDeviceCount: number;
     warningDeviceCount: number;
 };
-export enum TestRunConfigFileAction {
+export declare enum TestRunConfigFileAction {
     COPY_TO_DEVICE = "COPY_TO_DEVICE",
     INSTALL = "INSTALL",
     RUN_TEST = "RUN_TEST"
