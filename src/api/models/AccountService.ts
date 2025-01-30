@@ -58,6 +58,7 @@ export type AccountService = {
   serviceCount: number;
   serviceId: number;
   serviceName: string;
+  slmLicenseId: string;
   startTime: number;
   subscriptionManagementURL: string;
   total: number;
