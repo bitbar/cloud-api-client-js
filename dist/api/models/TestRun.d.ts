@@ -3,6 +3,7 @@ import { TunnelSettings } from './DeviceSession';
 import { OsType } from './Enum';
 import { CollectionBasicQueryParams, QueryParams } from './HTTP';
 import { Tag } from './Tag';
+import { UserFile } from './UserFile';
 export declare enum LimitationType {
     PACKAGE = "PACKAGE",
     CLASS = "CLASS"
@@ -58,6 +59,11 @@ export declare type TestRun = {
     waitingDeviceCount: number;
     warningDeviceCount: number;
 };
+export declare enum TestRunConfigFileAction {
+    COPY_TO_DEVICE = "COPY_TO_DEVICE",
+    INSTALL = "INSTALL",
+    RUN_TEST = "RUN_TEST"
+}
 export declare type TestRunConfig = {
     appCrawlerRun: boolean;
     appiumBrokerAddress: string;
@@ -75,7 +81,11 @@ export declare type TestRunConfig = {
     deviceLanguageCode: string;
     deviceNamePattern: string;
     disableResigning: boolean;
-    files: any;
+    files: Array<{
+        action: TestRunConfigFileAction;
+        availableActions: Array<TestRunConfigFileAction>;
+        file: UserFile;
+    }>;
     frameworkId: number;
     hookURL: string;
     id: number;
