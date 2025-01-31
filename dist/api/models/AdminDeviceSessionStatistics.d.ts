@@ -1,5 +1,5 @@
 import { CollectionQueryParams } from './HTTP';
-export declare type AdminDeviceSessionStatistics = {
+export type AdminDeviceSessionStatistics = {
     abortedDeviceCount: number;
     avgDeviceSessionDeviceTime: number;
     avgDeviceSessionDuration: number;

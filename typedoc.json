@@ -1,0 +1,32 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "out": "./docs",
+  "validation": {
+    "notExported": false
+  },
+  "entryPointStrategy": "expand",
+  "plugin": [
+    "typedoc-github-theme"
+  ],
+  "highlightLanguages": [
+    "typescript",
+    "js",
+    "css",
+    "json",
+    "sh",
+    "html"
+  ],
+  "markdownItOptions": {
+    "html": true
+  },
+  "navigation": {
+    "compactFolders": true,
+    "includeCategories": false,
+    "excludeReferences": true,
+    "includeGroups": false
+  },
+  "githubPages": true,
+  "hideGenerator": true,
+  "entryPoints": ["./src"],
+  "exclude": ["./src/index.ts", "./src/**/*.spec.ts"]
+}

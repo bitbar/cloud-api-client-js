@@ -18,7 +18,7 @@ export declare enum TestState {
     RUNNING = "RUNNING",
     FINISHED = "FINISHED"
 }
-export declare type TestRun = {
+export type TestRun = {
     abortedDeviceCount: number;
     billable: boolean;
     config: TestRunConfig;
@@ -58,7 +58,7 @@ export declare type TestRun = {
     waitingDeviceCount: number;
     warningDeviceCount: number;
 };
-export declare type TestRunConfig = {
+export type TestRunConfig = {
     appCrawlerRun: boolean;
     appiumBrokerAddress: string;
     applicationPassword: string;
