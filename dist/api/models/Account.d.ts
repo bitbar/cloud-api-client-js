@@ -6,6 +6,7 @@ export declare type Account = {
     id: number;
     invoiceDetails: Invoice;
     name: string;
+    slmOrganizationId: string;
     userName: string;
 };
 export declare type Invoice = {
@@ -20,5 +21,6 @@ export declare type AccountData = Partial<{
     comment: string;
     invoiceDetails: Invoice;
     name: string;
+    slmOrganizationId: string;
     userName: string;
 }>;
