@@ -3,7 +3,7 @@ import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {Account} from './models/Account';
 import {NoData, NoQueryParams} from './models/HTTP';
-import {Role, RoleParams} from './models/Role';
+import {Role, RoleData, RoleParams} from './models/Role';
 import {AccountService} from './models/AccountService';
 import {AccountPreferences, AccountPreferencesData} from './models/AccountPreference';
 
@@ -24,7 +24,7 @@ export class APIAdminResourceAccount extends APIResource<Account, NoQueryParams,
 
   // /admin/accounts/{id}/roles
   roles() {
-    return new APIList<Role, RoleParams, NoData>(this).push('roles');
+    return new APIList<Role, RoleParams, RoleData>(this).push('roles');
   }
 
   // /admin/accounts/{id}/roles/{id}
