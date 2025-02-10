@@ -1,5 +1,5 @@
 import { DeviceState } from './AdminDevice';
-export declare type DeviceStatus = {
+export type DeviceStatus = {
     alarmOn: boolean;
     aslOn: boolean;
     batteryLevel: number;

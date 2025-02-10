@@ -1,5 +1,5 @@
 import { CollectionQueryParams } from './HTTP';
-export declare type UserDeviceTimeSummary = {
+export type UserDeviceTimeSummary = {
     automaticDeviceTime: number;
     freeDeviceTime: number;
     id: number;

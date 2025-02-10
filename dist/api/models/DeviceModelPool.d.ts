@@ -3,7 +3,7 @@ export declare enum RetentionStrategy {
     MIN_FREE_MAX_TOTAL = "MIN_FREE_MAX_TOTAL",
     POOL_MANAGER_AWARE = "POOL_MANAGER_AWARE"
 }
-export declare type DeviceModelPool = {
+export type DeviceModelPool = {
     createTime: number;
     enabled: boolean;
     id: number;
@@ -16,4 +16,4 @@ export declare type DeviceModelPool = {
     retentionStrategy: RetentionStrategy;
     running: number;
 };
-export declare type DeviceModelPoolData = Pick<DeviceModelPool, 'maxTotal' | 'minAvailable'>;
+export type DeviceModelPoolData = Pick<DeviceModelPool, 'maxTotal' | 'minAvailable'>;
