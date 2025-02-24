@@ -31,6 +31,7 @@ export type AdminDevice = {
   deviceModelName: string;
   enabled: boolean;
   fingerprint: string;
+  forceRestore: boolean;
   id: number;
   initStep: InitStep;
   ipAddress: string;
@@ -40,6 +41,7 @@ export type AdminDevice = {
   manufacturer: string;
   name: string;
   osType: OsType;
+  ownerHasAccountService: boolean;
   platform: Platform;
   serialId: string;
   softwareVersion: SoftwareVersion;
