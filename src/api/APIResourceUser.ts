@@ -22,7 +22,7 @@ import {User, UserDeleteData} from './models/User';
 import {UiPreferencesData, UserPreference, UserPreferenceData} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
 import {DeviceSession, DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
-import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
+import {CollectionBasicQueryParams, NoData, NoQueryParams, QueryParams} from './models/HTTP';
 import {DeviceStatisticQueryParam, DeviceUsageQueryParams} from './models/Device';
 
 export class APIResourceUser extends APIResource<User> {
@@ -120,7 +120,7 @@ export class APIResourceUser extends APIResource<User> {
 
   // /users/{id}/feedback
   feedback() {
-    return new APIResource(this).push('feedback');
+    return new APIResource<void, QueryParams, FormData>(this).push('feedback');
   }
 
   // /users/{id}/notifications
