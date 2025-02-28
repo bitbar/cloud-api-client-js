@@ -420,7 +420,7 @@
           this.push('cleanup-configurations', id);
       }
       devices() {
-          return new APIResource(this).push('devices');
+          return new APIList(this).push('devices');
       }
   }
 

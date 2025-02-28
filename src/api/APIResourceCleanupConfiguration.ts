@@ -3,6 +3,7 @@ import {APIEntity} from './APIEntity';
 import {APIResource} from './APIResource'
 import {CleanupConfigurationSpecificData, DeviceCleanupConfiguration} from './models/Device';
 import {NoData} from './models/HTTP';
+import APIList from './APIList';
 
 
 export class APIResourceCleanupConfiguration extends APIResource<DeviceCleanupConfiguration> {
@@ -20,9 +21,9 @@ export class APIResourceCleanupConfiguration extends APIResource<DeviceCleanupCo
     this.push('cleanup-configurations', id);
   }
 
-  // admin/devices/cleanup-configurations/specific
+  // admin/devices/cleanup-configurations/{id}/devices
   devices() {
-    return new APIResource<DeviceCleanupConfiguration, CleanupConfigurationSpecificData, NoData>(this).push('devices');
+    return new APIList<DeviceCleanupConfiguration, CleanupConfigurationSpecificData, NoData>(this).push('devices');
   }
 
 }

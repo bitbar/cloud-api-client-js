@@ -1,6 +1,6 @@
 import {API} from '../API';
 import {APIResourceCleanupConfiguration} from './APIResourceCleanupConfiguration';
-import {APIResource} from './APIResource';
+import APIList from './APIList';
 
 
 describe('APIResourceCleanupConfiguration', () => {
@@ -30,7 +30,7 @@ describe('APIResourceCleanupConfiguration', () => {
   describe('@devices', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.devices();
-      expect(call).toBeInstanceOf(APIResource);
+      expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual(`${baseUrl}/devices`);
     });
   });

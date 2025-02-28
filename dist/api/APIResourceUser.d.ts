@@ -22,7 +22,7 @@ import { User, UserDeleteData } from './models/User';
 import { UiPreferencesData, UserPreference, UserPreferenceData } from './models/UserPreference';
 import { StatisticQueryParams, UserStatistics } from './models/UserStatistics';
 import { DeviceSession, DeviceSessionData, DeviceSessionQueryParams } from './models/DeviceSession';
-import { CollectionBasicQueryParams, NoQueryParams } from './models/HTTP';
+import { CollectionBasicQueryParams, NoQueryParams, QueryParams } from './models/HTTP';
 import { DeviceStatisticQueryParam, DeviceUsageQueryParams } from './models/Device';
 export declare class APIResourceUser extends APIResource<User> {
     constructor(parent: API, id: number | 'me');
@@ -40,7 +40,7 @@ export declare class APIResourceUser extends APIResource<User> {
     availableFrameworks(): APIList<Framework, CollectionBasicQueryParams, void>;
     resetApiKey(): APIResource<User, NoQueryParams, void>;
     restore(): APIResource<User, NoQueryParams, void>;
-    feedback(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
+    feedback(): APIResource<void, QueryParams, FormData>;
     notifications(): APIListNotifications;
     notification(id: number): APIResourceNotification;
     preferences(): APIResource<UserPreference, NoQueryParams, UserPreferenceData>;
@@ -50,7 +50,7 @@ export declare class APIResourceUser extends APIResource<User> {
     deviceStatistics(): APIList<DeviceStatistics, DeviceStatisticQueryParam, void>;
     accessGroups(): APIList<AccessGroup, CollectionBasicQueryParams, AccessGroupsData>;
     accessGroup(id: number): APIResourceAccessGroup;
-    smartbearTunnel(id: number): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
+    smartbearTunnel(id: number): APIResource<any, QueryParams, QueryParams>;
     smartbearTunnels(): APIListSmartbearTunnels;
     deleteAccount(): APIResource<User, void, UserDeleteData>;
 }
