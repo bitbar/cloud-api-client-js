@@ -61,6 +61,6 @@ export declare type AccountService = {
     userId: number;
     vatRate: number;
 };
-export declare type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId'> & {
+export declare type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId' | 'slmLicenseId'> & {
     count: number;
 };
