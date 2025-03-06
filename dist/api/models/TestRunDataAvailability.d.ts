@@ -1,6 +1,6 @@
 import { DeviceSessionDataAvailability } from './DeviceSessionDataAvailability';
 import { QueryParams } from './HTTP';
-export declare type TestRunDataAvailability = {
+export type TestRunDataAvailability = {
     deviceRunDataAvailabilities: DeviceSessionDataAvailability[];
     id: number;
     testRunId: number;

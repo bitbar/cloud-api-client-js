@@ -1,5 +1,5 @@
 import { CollectionBasicQueryParams, QueryParams } from './HTTP';
-export declare type Tag = {
+export type Tag = {
     id: number;
     name: string;
 };
@@ -7,7 +7,7 @@ export interface TestRunTagsData {
     projectId: number;
     name: string;
 }
-export declare type TagsData = Pick<TestRunTagsData, 'name'>;
+export type TagsData = Pick<TestRunTagsData, 'name'>;
 export interface TagsQueryParams extends CollectionBasicQueryParams {
     projectId: number;
 }

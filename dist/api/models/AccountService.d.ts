@@ -25,13 +25,13 @@ export declare enum DeactivateReason {
     SUSPENDED = "SUSPENDED",
     ANOTHER_PURCHASE = "ANOTHER_PURCHASE"
 }
-export declare type ServicePaymentStatus = {
+export type ServicePaymentStatus = {
     accountService: AccountService;
     message: string;
     redirectUrl: string;
     status: PaymentStatus;
 };
-export declare type AccountService = {
+export type AccountService = {
     accountId: number;
     accountName: string;
     activatedById: number;
@@ -61,6 +61,6 @@ export declare type AccountService = {
     userId: number;
     vatRate: number;
 };
-export declare type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId' | 'slmLicenseId'> & {
+export type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId' | 'slmLicenseId'> & {
     count: number;
 };

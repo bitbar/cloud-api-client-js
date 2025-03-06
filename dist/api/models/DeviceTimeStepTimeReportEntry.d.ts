@@ -1,5 +1,5 @@
 import { OsType } from './Enum';
-export declare type DeviceTimeStepTimeReportEntry = {
+export type DeviceTimeStepTimeReportEntry = {
     day: number;
     deviceModelName: string;
     deviceTime: number;

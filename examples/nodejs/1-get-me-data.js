@@ -1,5 +1,5 @@
 
-const CloudApiClient = require('@bitbar/cloud-api-client');
+import CloudApiClient from '@bitbar/cloud-api-client';
 
 const api = new CloudApiClient.API({
   cloudUrl: 'https://cloud.bitbar.com',

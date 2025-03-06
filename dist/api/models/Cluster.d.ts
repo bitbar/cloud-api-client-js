@@ -1,6 +1,6 @@
 import { AdminDevice } from './AdminDevice';
 import { CollectionResponse, QueryParams } from './HTTP';
-export declare type Cluster = {
+export type Cluster = {
     devices: CollectionResponse<AdminDevice>;
     enabled: boolean;
     id: number;
@@ -25,7 +25,7 @@ export declare enum ClusterState {
 export interface ClusterParams extends QueryParams {
     withDevices: boolean;
 }
-export declare type ClusterData = Pick<Cluster, 'enabled' | 'url'> & {
+export type ClusterData = Pick<Cluster, 'enabled' | 'url'> & {
     quietDown: boolean;
     restart: boolean;
     turnMaintenance: boolean;

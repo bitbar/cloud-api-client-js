@@ -4,7 +4,7 @@ export declare enum SharedResourceType {
     FILE = "FILE",
     PROJECT = "PROJECT"
 }
-export declare type SharedResource = {
+export type SharedResource = {
     id: number;
     name: string;
     resourceId: number;

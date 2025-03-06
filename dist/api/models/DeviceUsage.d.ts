@@ -1,5 +1,5 @@
 import { Device } from './Device';
-export declare type DeviceUsage = {
+export type DeviceUsage = {
     device: Device;
     failedDeviceSessions: number;
     id: number;

@@ -2,7 +2,7 @@ export declare enum BrokerType {
     MOBILE = "MOBILE",
     DESKTOP = "DESKTOP"
 }
-export declare type Broker = {
+export type Broker = {
     id: number;
     location: string;
     type: BrokerType;

@@ -4,14 +4,14 @@ export declare enum ScreenshotType {
     LANDSCAPE = "LANDSCAPE",
     PORTRAIT = "PORTRAIT"
 }
-export declare type Screenshot = {
+export type Screenshot = {
     fail: boolean;
     id: number;
     originalName: string;
     takeTimestamp: number;
     type: ScreenshotType;
 };
-export declare type ScreenshotExtended = Screenshot & {
+export type ScreenshotExtended = Screenshot & {
     device: Device;
     deviceRunId: number;
     projectId: number;

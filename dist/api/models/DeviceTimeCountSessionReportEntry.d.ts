@@ -1,5 +1,5 @@
 import { OsType } from './Enum';
-export declare type DeviceTimeCountSessionReportEntry = {
+export type DeviceTimeCountSessionReportEntry = {
     countDeviceSessions: number;
     countTestRuns: number;
     day: number;

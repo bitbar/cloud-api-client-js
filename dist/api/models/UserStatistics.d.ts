@@ -1,5 +1,5 @@
 import { QueryParams } from './HTTP';
-export declare type UserStatistics = {
+export type UserStatistics = {
     additionalUsers: number;
     allTimeProjects: number;
     devicesUsed: number;

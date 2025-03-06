@@ -13,7 +13,7 @@ rollup.config.js
 bower.json
 *.tgz
 .travis*
-.eslintrc.js
+.eslintrc.config.mjs
 tsconfig.json
 tsconfig.test.json
 .browserslistrc

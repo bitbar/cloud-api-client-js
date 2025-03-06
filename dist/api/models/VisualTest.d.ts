@@ -3,11 +3,11 @@ export declare enum VisualTestImageType {
     VIEWPORT = "VIEWPORT",
     ELEMENT_SCREENSHOT = "ELEMENT_SCREENSHOT"
 }
-export declare type VisualTestAccess = {
+export type VisualTestAccess = {
     enabled: boolean;
     apiKey: string | null;
 };
-export declare type VisualTest = {
+export type VisualTest = {
     comparisonStatus: string;
     appUrl: string;
     createdAt: string;

@@ -10,7 +10,7 @@ export declare enum UserStatus {
     DISABLED = "DISABLED",
     ENABLED = "ENABLED"
 }
-export declare type User = {
+export type User = {
     accountId: number;
     accountName: string;
     userAccountName: string;
@@ -45,7 +45,7 @@ export declare type User = {
     timeZone: string;
     vatId: string;
 };
-export declare type UserData = Pick<User, 'email'>;
+export type UserData = Pick<User, 'email'>;
 export interface UserParams extends CollectionQueryParams {
     WITH_ADDRESS: boolean;
     WITH_USER_INFO: boolean;
@@ -54,19 +54,19 @@ export interface UserParams extends CollectionQueryParams {
     withRole: string;
     withRoles: boolean;
 }
-export declare type UserUpdateAccount = Pick<User, 'accountId'>;
-export declare type UserDeleteData = {
+export type UserUpdateAccount = Pick<User, 'accountId'>;
+export type UserDeleteData = {
     password: string;
 };
 export interface LoginData {
     username: string;
     password: string;
 }
-export declare type UserPasswordData = {
+export type UserPasswordData = {
     key: string;
     password: string;
 };
-export declare type UserActivateData = {
+export type UserActivateData = {
     zip: string;
 } & UserPasswordData & Pick<User, 'address' | 'city' | 'country' | 'email' | 'firstName' | 'lastName' | 'organization' | 'phone' | 'state' | 'vatId'>;
 export interface UserRecoveryQueryParams extends QueryParams {

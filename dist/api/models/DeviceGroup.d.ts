@@ -1,6 +1,6 @@
 import { OsType } from './Enum';
 import { CollectionBasicQueryParams, QueryParams } from './HTTP';
-export declare type DeviceGroup = {
+export type DeviceGroup = {
     deviceCount: number;
     displayName: string;
     id: number;
@@ -23,7 +23,7 @@ export interface DeviceGroupParams extends CollectionBasicQueryParams {
 export interface DeviceGroupWithPublicParams extends CollectionBasicQueryParams {
     withPublic: boolean;
 }
-export declare type DeviceGroupData = Pick<DeviceGroup, 'displayName' | 'name' | 'osType'> | {
+export type DeviceGroupData = Pick<DeviceGroup, 'displayName' | 'name' | 'osType'> | {
     deviceIds?: Array<number>;
     selectorIds?: Array<number>;
 };

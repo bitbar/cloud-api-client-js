@@ -1,5 +1,5 @@
 import { AxiosBasicCredentials } from 'axios';
-export declare type ApiConfig = {
+export type ApiConfig = {
     baseURL: string;
     cloudUrl: string;
     v2?: boolean;

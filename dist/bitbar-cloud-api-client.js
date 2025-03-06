@@ -1,16 +1,11 @@
-/* @bitbar/cloud-api-client v1.3.8 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.4.0 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global.axios, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
-})(this, (function (exports, axios, finka, qs, nodeAbortController) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller'), require('form-data')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller', 'form-data'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global.axios, global["@bitbar/finka"], global.qs, global["node-abort-controller"], global["form-data"]));
+})(this, (function (exports, axios, finka, qs, nodeAbortController, FormData) { 'use strict';
 
-  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-  var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
-  var finka__default = /*#__PURE__*/_interopDefaultLegacy(finka);
-
-  var version = "1.3.8";
+  var version = "1.4.0";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -26,6 +21,8 @@
   OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
   PERFORMANCE OF THIS SOFTWARE.
   ***************************************************************************** */
+  /* global Reflect, Promise, SuppressedError, Symbol, Iterator */
+
 
   function __decorate(decorators, target, key, desc) {
       var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -33,6 +30,11 @@
       else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
       return c > 3 && r && Object.defineProperty(target, key, r), r;
   }
+
+  typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+      var e = new Error(message);
+      return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+  };
 
   class Filter {
       constructor(name, value, operand) {
@@ -42,7 +44,7 @@
       }
   }
 
-  finka__default["default"]();
+  finka();
 
   class FilterBuilder {
       constructor() {
@@ -1597,7 +1599,6 @@
       }
       nodeUpload(file) {
           const fs = require('fs');
-          const FormData = require('form-data');
           const form = new FormData();
           form.append('file', fs.createReadStream(file.dir + '/' + file.filename), {
               filename: file.filename
@@ -1791,10 +1792,13 @@
   }
 
   if (globalThis.isNodeJs) {
-      axios__default["default"].defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
+      axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
   }
-  axios__default["default"].defaults.maxContentLength = 1073741824;
+  axios.defaults.maxContentLength = 1073741824;
   class API {
+      get baseUrl() {
+          return this.axiosConfig.baseURL;
+      }
       constructor(config) {
           this.config = config;
           this.axiosConfig = {};
@@ -1828,10 +1832,7 @@
               };
           }
           this.axiosConfig.withCredentials = config.withCredentials == null ? false : config.withCredentials;
-          this.axios = axios__default["default"].create(this.axiosConfig);
-      }
-      get baseUrl() {
-          return this.axiosConfig.baseURL;
+          this.axios = axios.create(this.axiosConfig);
       }
       account(id) {
           return new APIResourceAccount(this, id);
@@ -2308,7 +2309,7 @@
   exports.FilterBuilder = FilterBuilder;
   exports.IMAGE_FILES_FILTER = IMAGE_FILES_FILTER;
   exports.NON_MEDIA_FILES_FILTER = NON_MEDIA_FILES_FILTER;
-  exports["default"] = CloudAPIClient;
+  exports.default = CloudAPIClient;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -4,7 +4,7 @@ export declare enum OsType {
     DESKTOP = "DESKTOP",
     UNDEFINED = "UNDEFINED"
 }
-export declare type Enum = {
+export type Enum = {
     id: number;
     value: string;
 };
