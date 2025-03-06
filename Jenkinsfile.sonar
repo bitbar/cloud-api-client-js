@@ -5,6 +5,9 @@ import com.bitbar.Config
 
 node('npm && chromium && docker') {
     ansiColor('xterm') {
+        // Define NVM_DIR and source nvm.sh once
+        def nvmSetup = 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' 
+
         stage('Checkout') {
             git([
                 url          : 'git@github.com:bitbar/cloud-api-client-js.git',
@@ -14,12 +17,16 @@ node('npm && chromium && docker') {
             ])
         }
 
+        stage('Install Node Version') {
+          sh("${nvmSetup} && nvm install && nvm alias default \$(cat .nvmrc)")
+        }
+
         stage('Install') {
-          sh('npm ci')
+          sh("${nvmSetup} && npm ci")
         }
 
         stage('Build') {
-          sh('npm run build')
+          sh("${nvmSetup} && npm run build")
         }
 
         stage('Tests with coverage') {
@@ -28,7 +35,7 @@ node('npm && chromium && docker') {
             activity: true,
             unit: 'MINUTES'
           ]) {
-            sh('npm run test:coverage')
+            sh("${nvmSetup} && npm run test:coverage")
           }
         }
 
