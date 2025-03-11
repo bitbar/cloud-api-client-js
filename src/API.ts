@@ -1,4 +1,7 @@
-import axios, {AxiosInstance} from 'axios';
+import {AxiosInstance} from 'axios';
+// this version of axios has some issue paired with rollup and is not handling default import correctly
+// as a workaround we need to use require instead of import until migrating to newer axios version
+const axios = require('axios').default;
 // @ts-ignore
 import {version} from '../package.json';
 import {APIAdminResource} from './api/APIAdminResource';

@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/bitbar-cloud-api-client.min.js",
   "types": "dist/index.d.ts",
@@ -12,10 +12,6 @@
     "docs": "npx typedoc --options typedoc.json"
   },
   "type": "module",
-  "resolutions": {
-    "terser": "5.16.5",
-    "semver": "7.5.4"
-  },
   "keywords": [
     "testdroid",
     "api",
@@ -50,10 +46,13 @@
     "@babel/cli": "^7.25.6",
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.23.2",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.9.1",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
     "@types/qs": "^6.9.7",
@@ -77,16 +76,14 @@
   "dependencies": {
     "@babel/runtime": "^7.22.10",
     "@bitbar/finka": "^2.4.4",
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.9.1",
-    "@rollup/plugin-terser": "^0.4.4",
     "axios": "^0.26.1",
     "form-data": "^4.0.0",
-    "node-abort-controller": "^3.0.1",
-    "qs": "^6.10.3"
+    "node-abort-controller": "^3.1.1",
+    "qs": "6.10.3"
   },
   "overrides": {
-    "glob": "^9.0.0"
+    "glob": "^9.0.0",
+    "side-channel": "1.0.4"
   },
   "jest": {
     "preset": "ts-jest",

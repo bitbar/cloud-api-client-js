@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.4.0 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.4.1 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('axios'), require('@bitbar/finka'), require('qs'), require('node-abort-controller'), require('form-data')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'axios', '@bitbar/finka', 'qs', 'node-abort-controller', 'form-data'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global.axios, global["@bitbar/finka"], global.qs, global["node-abort-controller"], global["form-data"]));
-})(this, (function (exports, axios, finka, qs, nodeAbortController, FormData) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
+  typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
+})(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.4.0";
+  var version = "1.4.1";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -1599,6 +1599,7 @@
       }
       nodeUpload(file) {
           const fs = require('fs');
+          const FormData = require('form-data');
           const form = new FormData();
           form.append('file', fs.createReadStream(file.dir + '/' + file.filename), {
               filename: file.filename
@@ -1791,6 +1792,7 @@
       }
   }
 
+  const axios = require('axios').default;
   if (globalThis.isNodeJs) {
       axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
   }
