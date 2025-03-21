@@ -14,4 +14,6 @@ export type DeviceFilterGroup = {
     deviceFilters: Array<DeviceFilter>;
     id: number;
     name: string;
+    hidden: boolean;
+    expanded: boolean;
 };
