@@ -1,10 +1,5 @@
 import { CollectionQueryParams, QueryParams } from './HTTP';
 import { Role } from './Role';
-export declare enum MfaStatus {
-    VERIFICATION_NEED = "VERIFICATION_NEED",
-    DISABLED = "DISABLED",
-    ENABLED = "ENABLED"
-}
 export declare enum UserStatus {
     INACTIVE = "INACTIVE",
     DISABLED = "DISABLED",
@@ -33,8 +28,6 @@ export type User = {
     lastLaunchedTestTime: number;
     lastLoginTime: number;
     lastName: string;
-    mfaQRCodeUrl: string;
-    mfaStatus: MfaStatus;
     organization: string;
     phone: string;
     registrationIP: string;
