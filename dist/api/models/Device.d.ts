@@ -73,6 +73,7 @@ export type DeviceCleanupConfiguration = {
     createTime: number;
     createdByEmail: string;
     createdById: number;
+    description: string;
     discriminator: string;
     enabled: boolean;
     global: boolean;
