@@ -6,7 +6,7 @@ import {APIResourceDeviceSessionStandalone} from './APIResourceDeviceSessionStan
 import {NonRequestable} from './decorators/NonRequestable';
 import {CollectionQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {License} from './models/License';
-import {Role, RoleParams} from './models/Role';
+import {Role, RoleData, RoleParams} from './models/Role';
 import {User} from './models/User';
 
 
@@ -57,7 +57,7 @@ export class APIAdminResourceUser extends APIResource<User> {
 
   // /admin/users/{id}/roles
   roles() {
-    return new APIList<Role, RoleParams, NoData>(this).push('roles');
+    return new APIList<Role, RoleParams, RoleData>(this).push('roles');
   }
 
   // /admin/users/{id}/roles/{id}
