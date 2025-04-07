@@ -31,4 +31,5 @@ export type Notification = {
 export interface NotificationData extends QueryParams {
     scope: NotificationScope;
 }
+export type IntegrationNotification = Pick<Notification, 'id' | 'destination' | 'scope'>;
 export type NotificationsData = Pick<Notification, 'channel' | 'destination' | 'projectId' | 'scope'>;

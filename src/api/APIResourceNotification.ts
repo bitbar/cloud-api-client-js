@@ -1,9 +1,9 @@
 
 import {APIResource} from './APIResource'
 import {APIResourceUser} from './APIResourceUser';
-import {NoData, NoQueryParams} from './models/HTTP';
+import {NoQueryParams} from './models/HTTP';
 import {Message} from './models/Message';
-import {Notification, NotificationData} from './models/Notification';
+import {IntegrationNotification, Notification, NotificationData} from './models/Notification';
 
 export class APIResourceNotification extends APIResource<Notification, NoQueryParams, NotificationData> {
 
@@ -21,7 +21,7 @@ export class APIResourceNotification extends APIResource<Notification, NoQueryPa
 
   // /notifications/{id}/test
   test() {
-    return new APIResource<Message, NoQueryParams, NoData>(this).push('test');
+    return new APIResource<Message, NoQueryParams, IntegrationNotification>(this).push('test');
   }
 
 }
