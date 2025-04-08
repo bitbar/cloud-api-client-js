@@ -40,7 +40,7 @@ export class APIResourceFile extends APIResource<UserFile> {
   }
 
   share() {
-    return new APIList<SharedResource, ShareData>(this).push('share');
+    return new APIList<SharedResource, ShareData, ShareData>(this).push('share');
   }
 
   property(id: number) {

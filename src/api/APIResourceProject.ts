@@ -34,7 +34,7 @@ export class APIResourceProject extends APIResource<Project> {
   }
 
   share() {
-    return new APIList<SharedResource, ShareData>(this).push('share');
+    return new APIList<SharedResource, ShareData, ShareData>(this).push('share');
   }
 
   // /unarchive

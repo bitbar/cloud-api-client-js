@@ -12,7 +12,7 @@ export declare class APIResourceProject extends APIResource<Project> {
     constructor(parent: API | APIAdminResource | APIResourceUser, id: number);
     runs(): APIList<TestRun, CollectionBasicQueryParams, void>;
     run(id: number): APIResourceRun;
-    share(): APIList<SharedResource, ShareData, any>;
+    share(): APIList<SharedResource, ShareData, ShareData>;
     unarchive(): APIResource<void, NoQueryParams, void>;
 }
 export default APIResourceProject;

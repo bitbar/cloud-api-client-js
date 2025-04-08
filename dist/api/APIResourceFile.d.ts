@@ -12,7 +12,7 @@ export declare class APIResourceFile extends APIResource<UserFile> {
     file(): APIResource<UserFile, FileSizeData, void>;
     icon(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     tags(): APIList<UserFileTag, CollectionBasicQueryParams, void>;
-    share(): APIList<SharedResource, ShareData, any>;
+    share(): APIList<SharedResource, ShareData, ShareData>;
     property(id: number): APIResource<Property, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
 }
 export default APIResourceFile;

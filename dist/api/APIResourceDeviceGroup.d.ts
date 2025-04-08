@@ -13,6 +13,6 @@ export declare class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
     device(id: number): APIResource<void, NoQueryParams, void>;
     selectors(): APIList<DeviceGroup | DeviceProperty, CollectionBasicQueryParams, DeviceGroupSelectorData>;
     selector(id: number): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
-    share(): APIList<SharedResource, NoQueryParams, ShareData>;
+    share(): APIList<SharedResource, ShareData, ShareData>;
 }
 export default APIResourceDeviceGroup;
