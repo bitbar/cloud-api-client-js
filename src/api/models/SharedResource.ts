@@ -14,7 +14,12 @@ export type SharedResource = {
   type: SharedResourceType;
 }
 
-export interface ShareData extends QueryParams {
+export interface ShareWithGroup extends QueryParams {
   accessGroupId: number;
+}
+
+export interface ShareWithEmail extends QueryParams {
   email: string;
 }
+
+export type ShareData = ShareWithGroup | ShareWithEmail;

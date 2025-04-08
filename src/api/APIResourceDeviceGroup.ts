@@ -52,7 +52,7 @@ export class APIResourceDeviceGroup extends APIResource<DeviceGroup> {
 
   // /device-groups/{id}/share
   share() {
-    return new APIList<SharedResource, NoQueryParams, ShareData>(this).push('share');
+    return new APIList<SharedResource, ShareData, ShareData>(this).push('share');
   }
 
 }
