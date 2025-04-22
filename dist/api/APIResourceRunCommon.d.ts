@@ -3,7 +3,7 @@ import { APIEntity } from './APIEntity';
 import { APIList } from './APIList';
 import { APIResource } from './APIResource';
 import { AdminTestRun } from './models/AdminTestRun';
-import { DeviceSession, DeviceSessionStep, TRunDeviceSessionQueryParams } from './models/DeviceSession';
+import { DeviceSession, DeviceSessionStep, TestRunDeviceSessionQueryParams } from './models/DeviceSession';
 import { CollectionBasicQueryParams, NoQueryParams } from './models/HTTP';
 import { Screenshot, ScreenshotExtended, ScreenshotQueryParams } from './models/Screenshot';
 import { Tag, TagsData, TagsQueryParams, TaqQueryParams, TestRunTagsData } from './models/Tag';
@@ -15,7 +15,7 @@ export declare class APIResourceRunCommon extends APIResource<TestRun, RunQueryP
     abort(): APIResource<TestRun | AdminTestRun, NoQueryParams, RunData>;
     buildLogsZip(ids?: Array<number>): APIResource<UserFile, import("./models/UserFile").BuildLogsData, import("./models/UserFile").BuildLogsData>;
     dataAvailability(): APIResource<TestRunDataAvailability, TestRunDataAvailabilityQueryParams, void>;
-    deviceSessions(): APIList<DeviceSession, CollectionBasicQueryParams | TRunDeviceSessionQueryParams, void>;
+    deviceSessions(): APIList<DeviceSession, CollectionBasicQueryParams | TestRunDeviceSessionQueryParams, void>;
     filesZip(ids?: Array<number>): APIResource<UserFile, import("./models/UserFile").BuildLogsData, import("./models/UserFile").BuildLogsData>;
     logsZip(ids?: Array<number>): APIResource<UserFile, import("./models/UserFile").BuildLogsData, import("./models/UserFile").BuildLogsData>;
     performanceZip(ids?: Array<number>): APIResource<UserFile, import("./models/UserFile").BuildLogsData, import("./models/UserFile").BuildLogsData>;

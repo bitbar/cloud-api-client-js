@@ -18,6 +18,8 @@ export type AdminTestRun = {
   startedById: number;
   state: TestState;
   successRatio: number;
+  testRunName: string;
+  userName: string;
 }
 
 export interface RunsConfigParams extends QueryParams {

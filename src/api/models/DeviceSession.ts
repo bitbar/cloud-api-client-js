@@ -147,7 +147,7 @@ export interface SessionStepQueryParams extends SessionRunStepQueryParams {
   projectId: number;
 }
 
-export interface TRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
+export interface TestRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
   projectId: number;
 }
 

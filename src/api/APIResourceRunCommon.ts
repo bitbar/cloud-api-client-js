@@ -4,7 +4,7 @@ import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {postDeviceRunIds} from './factory/postDeviceRunIds';
 import {AdminTestRun} from './models/AdminTestRun';
-import {DeviceSession, DeviceSessionStep, TRunDeviceSessionQueryParams} from './models/DeviceSession';
+import {DeviceSession, DeviceSessionStep, TestRunDeviceSessionQueryParams} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {Screenshot, ScreenshotExtended, ScreenshotQueryParams} from './models/Screenshot';
 import {Tag, TagsData, TagsQueryParams, TaqQueryParams, TestRunTagsData} from './models/Tag';
@@ -43,7 +43,7 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
 
   // /runs/{id}/device-sessions
   deviceSessions() {
-    return new APIList<DeviceSession, CollectionBasicQueryParams | TRunDeviceSessionQueryParams, NoData>(this).push('device-sessions');
+    return new APIList<DeviceSession, CollectionBasicQueryParams | TestRunDeviceSessionQueryParams, NoData>(this).push('device-sessions');
   }
 
   // /runs/{id}/files.zip
