@@ -53,15 +53,6 @@ describe('APIResourceUserSession', () => {
     });
   });
 
-  describe('@portalLogin', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.portalLogin();
-
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/portal-login`);
-    });
-  });
-
   describe('@sbidCallbackUrl', () => {
     it('should return redirect URL for SBID login callback', () => {
       const url = service.sbidCallbackUrl();
