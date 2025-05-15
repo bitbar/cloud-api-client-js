@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.4.7 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.4.8 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
 })(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.4.7";
+  var version = "1.4.8";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -1783,9 +1783,6 @@
       }
       sso(name) {
           return new APIResource(this).push('oauth', 'authorize', name + '-login');
-      }
-      portalLogin() {
-          return new APIResource(this).push('portal-login').post();
       }
       sbidCallbackUrl() {
           return new APIResource(this).push('oauth', 'authorize', 'sbid-login').toUrl(true);

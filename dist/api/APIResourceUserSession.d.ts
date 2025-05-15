@@ -7,7 +7,6 @@ export declare class APIResourceUserSession extends APIResource {
     login(data: LoginData): APIResource<User, NoQueryParams, LoginData>;
     logout(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     sso(name: string): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
-    portalLogin(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     sbidCallbackUrl(): string;
 }
 export default APIResourceUserSession;

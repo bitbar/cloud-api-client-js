@@ -26,11 +26,6 @@ export class APIResourceUserSession extends APIResource {
     return new APIResource(this).push('oauth', 'authorize', name + '-login');
   }
 
-  // /user-sessions/portal-login
-  portalLogin() {
-    return new APIResource(this).push('portal-login').post();
-  }
-
   // /user-sessions/oauth/authorize/sbid-login
   sbidCallbackUrl() {
     return new APIResource(this).push('oauth', 'authorize', 'sbid-login').toUrl(true);
