@@ -120,7 +120,7 @@ export interface DeviceStatisticQueryParam extends TestRunsQueryParams {
 }
 
 export interface DevicesQueryParams extends CollectionQueryParams {
-  labelIds: Array<string>;
+  labelIds: Array<number>;
   liveTestingOnly: boolean;
   withBrowsers: boolean;
   withDedicated: boolean;
