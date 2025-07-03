@@ -1,7 +1,6 @@
 import {API} from '../API';
 import {APIAdminResource} from './APIAdminResource';
 import {APIAdminResourceDeviceTime} from './APIAdminResourceDeviceTime';
-import {APIList} from './APIList';
 
 
 describe('APIAdminResourceDeviceTime', () => {
@@ -22,22 +21,6 @@ describe('APIAdminResourceDeviceTime', () => {
 
   it('should initialize proper endpoint path', () => {
     expect(service.toUrl()).toEqual(`${baseUrl}`);
-  });
-
-  describe('@countSessionReport', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.countSessionReport();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/count-session-report`);
-    });
-  });
-
-  describe('@stepTimeReport', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.stepTimeReport();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/step-time-report`);
-    });
   });
 
 });

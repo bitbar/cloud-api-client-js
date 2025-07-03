@@ -1,3 +1,4 @@
+import { CollectionQueryParams } from './HTTP';
 import { DeviceSessionState } from './DeviceSession';
 import { OsType } from './Enum';
 export declare enum FrameworkType {
@@ -22,3 +23,6 @@ export type AdminFrameworkStatistics = {
     userEmail: string;
     userId: number;
 };
+export interface AdminStatisticsParams extends CollectionQueryParams {
+    days: number;
+}
