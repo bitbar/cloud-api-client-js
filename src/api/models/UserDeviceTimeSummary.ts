@@ -2,7 +2,6 @@ import {CollectionQueryParams} from './HTTP';
 
 export type UserDeviceTimeSummary = {
   automaticDeviceTime: number;
-  freeDeviceTime: number;
   id: number;
   inspectorDeviceTime: number;
   periodEnd: number;

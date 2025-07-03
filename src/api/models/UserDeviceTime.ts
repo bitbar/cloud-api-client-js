@@ -2,20 +2,15 @@ import {DeviceSessionType} from './DeviceSession';
 import {CollectionQueryParams} from './HTTP';
 
 
-export type UserDeviceTime = BasicDeviceTime & {
-  billableTime: number;
+export type UserDeviceTime = {
   createTime: number;
+  duration: number;
   endTime: number;
-  freeTime: number;
+  id: number;
   type: DeviceSessionType;
   userId: number;
   userName: string;
 };
-
-export type BasicDeviceTime = {
-  deviceTime: number;
-  id: number;
-}
 
 export interface DeviceTimeParams extends CollectionQueryParams {
   forWholeAccount: boolean;

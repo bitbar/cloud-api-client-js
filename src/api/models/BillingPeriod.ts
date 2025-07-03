@@ -30,9 +30,8 @@ export type BillingPeriod = {
 }
 
 export type BillingPeriodUsage = {
-  billableSeconds: number;
+  duration: number;
   id: number;
-  nonBillableSeconds: number;
   osType: OsType;
   type: DeviceSessionType;
 }
