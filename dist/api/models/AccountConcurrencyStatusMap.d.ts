@@ -10,5 +10,6 @@ export type AccountConcurrencyStatusMap = {
     id: number;
     AUTOMATIC: ConcurrencyDetails;
     MANUAL: ConcurrencyDetails;
+    DEDICATED: ConcurrencyDetails;
 };
 export {};
