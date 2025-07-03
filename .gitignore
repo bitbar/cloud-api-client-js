@@ -12,3 +12,5 @@ node_modules/
 # nyc coverage report
 .nyc_output
 coverage
+
+dist/.DS_Store

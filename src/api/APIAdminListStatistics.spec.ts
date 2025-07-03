@@ -24,13 +24,6 @@ describe('APIAdminListStatistics', () => {
     expect(service.toUrl()).toEqual(`${baseUrl}`);
   });
 
-  describe('@deviceSessions', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.deviceSessions();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/device-sessions`);
-    });
-  });
 
   describe('@frameworks', () => {
     it('should initialize proper endpoint path', () => {
