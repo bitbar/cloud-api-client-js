@@ -4,7 +4,7 @@ export type AdminDeviceSession = {
   billable: boolean;
   createTime: number;
   currentStepType: DeviceSessionStepType;
-  deviceTime: number;
+  duration: number;
   endTime: number;
   errorMessage: string;
   id: number;
@@ -26,7 +26,6 @@ export type AdminInteractiveDeviceSession = {
   deviceModelId: number;
   deviceModelName: string;
   deviceName: string;
-  deviceTime: number;
   duration: number;
   endTime: number;
   errorMessage: string;

@@ -57,7 +57,6 @@ export type DeviceSession = {
     deviceInstanceId: number;
     deviceLogFirstTimestamp: number;
     deviceRunId: number;
-    deviceTime: number;
     duration: number;
     endTime: number;
     excludeReason: string;
