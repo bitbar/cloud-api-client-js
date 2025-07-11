@@ -56,6 +56,7 @@ export type DeviceSessionConfig = {
 export type DeviceSession = {
   accountId: number;
   autoRetriesLeftCount: number;
+  biometricInstrumentation: boolean;
   billable: boolean;
   config: DeviceSessionConfig;
   createTime: number;
