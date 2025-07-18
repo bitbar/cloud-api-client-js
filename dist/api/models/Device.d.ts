@@ -74,7 +74,7 @@ export type DeviceCleanupConfiguration = {
     createdByEmail: string;
     createdById: number;
     description: string;
-    discriminator: string;
+    name: string;
     enabled: boolean;
     global: boolean;
     example: true;
