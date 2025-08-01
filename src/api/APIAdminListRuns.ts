@@ -2,8 +2,8 @@ import {Method} from 'axios';
 import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource';
-import {AdminTestRun, RunsConfigParams} from './models/AdminTestRun';
-import {TestRunConfig} from './models/TestRun';
+import {AdminTestRun} from './models/AdminTestRun';
+import {RunsConfigParams, TestRunConfig} from './models/TestRun';
 
 export class APIAdminListRuns extends APIList<AdminTestRun> {
 

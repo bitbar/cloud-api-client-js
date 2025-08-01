@@ -22,12 +22,6 @@ export type AdminTestRun = {
   userName: string;
 }
 
-export interface RunsConfigParams extends QueryParams {
-  includeDeviceGroups: boolean;
-  includeDevices: boolean;
-  includeFrameworks: boolean;
-}
-
 export interface RunChangeBillableParams extends QueryParams {
   billable: boolean;
 }
