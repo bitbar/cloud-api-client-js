@@ -1,8 +1,14 @@
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
 import {APIResourceUser} from './APIResourceUser';
-import {NoQueryParams} from './models/HTTP';
-import {TestRun, TestRunConfig, TestRunsConfigData, TestRunsData, TestRunsQueryParams} from './models/TestRun';
+import {
+  RunsConfigParams,
+  TestRun,
+  TestRunConfig,
+  TestRunsConfigData,
+  TestRunsData,
+  TestRunsQueryParams
+} from './models/TestRun';
 
 
 export class APIListRuns extends APIList<TestRun, TestRunsQueryParams, TestRunsData> {
@@ -17,7 +23,7 @@ export class APIListRuns extends APIList<TestRun, TestRunsQueryParams, TestRunsD
 
   // /runs/config
   config() {
-    return new APIResource<TestRunConfig, NoQueryParams, TestRunsConfigData>(this).push('config');
+    return new APIResource<TestRunConfig, RunsConfigParams, TestRunsConfigData>(this).push('config');
   }
 
 }
