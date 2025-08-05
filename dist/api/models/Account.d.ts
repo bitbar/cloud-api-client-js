@@ -24,3 +24,23 @@ export type AccountData = Partial<{
     slmOrganizationId: string;
     userName: string;
 }>;
+export type AccountUsageSummary = {
+    sessionsCount: number;
+    duration: number;
+    deviceModelsCount: number;
+    tunnelEnabledCount: number;
+    osVersionsCount: number;
+    projectsCount: number;
+    usersCount: number;
+};
+export type AccountUsage = {
+    timestamp: number;
+    timestampLabel: string;
+    sessionsCount: number;
+    automatedConcurrency: number;
+    automatedUsage: number;
+    dedicatedConcurrency: number;
+    dedicatedUsage: number;
+    manualConcurrency: number;
+    manualUsage: number;
+};

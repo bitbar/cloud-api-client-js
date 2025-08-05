@@ -1,8 +1,8 @@
 import { APIAdminResource } from './APIAdminResource';
 import { APIList } from './APIList';
 import { APIResource } from './APIResource';
-import { Account } from './models/Account';
-import { NoData, NoQueryParams } from './models/HTTP';
+import { Account, AccountUsage, AccountUsageSummary } from './models/Account';
+import { NoData, NoQueryParams, SimpleCollectionResponse } from './models/HTTP';
 import { Role, RoleData, RoleParams } from './models/Role';
 import { AccountService } from './models/AccountService';
 import { AccountPreferences } from './models/AccountPreference';
@@ -12,5 +12,7 @@ export declare class APIAdminResourceAccount extends APIResource<Account, NoQuer
     role(id: number): APIResource<Role, RoleParams, void>;
     accountServices(): APIList<AccountService, import("./models/HTTP").CollectionQueryParams, any>;
     preferences(): APIResource<AccountPreferences, NoQueryParams, Partial<Omit<AccountPreferences, "id">>>;
+    usage(): APIList<SimpleCollectionResponse<AccountUsage>, import("./models/HTTP").CollectionQueryParams, any>;
+    usageSummary(): APIResource<AccountUsageSummary, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
 }
 export default APIAdminResourceAccount;

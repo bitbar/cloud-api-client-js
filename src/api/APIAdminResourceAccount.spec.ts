@@ -63,4 +63,20 @@ describe('APIAdminResourceAccount', () => {
     });
   });
 
+  describe('@usage', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.usage();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual('/admin/accounts/1/usage');
+    });
+  });
+
+  describe('@usageSummary', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.usageSummary();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual('/admin/accounts/1/usage-summary');
+    });
+  });
+
 });
