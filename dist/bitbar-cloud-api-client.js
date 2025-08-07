@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.4.16 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.4.17 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
 })(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.4.16";
+  var version = "1.4.17";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -1936,6 +1936,24 @@
       AccessGroupScope["ACCOUNT"] = "ACCOUNT";
       AccessGroupScope["GLOBAL"] = "GLOBAL";
   })(exports.AccessGroupScope || (exports.AccessGroupScope = {}));
+
+  exports.UtilizationType = void 0;
+  (function (UtilizationType) {
+      UtilizationType["ALL"] = "all";
+      UtilizationType["PUBLIC"] = "public";
+      UtilizationType["DEDICATED"] = "dedicated";
+  })(exports.UtilizationType || (exports.UtilizationType = {}));
+  exports.SessionType = void 0;
+  (function (SessionType) {
+      SessionType["ALL"] = "all";
+      SessionType["AUTOMATED"] = "automated";
+      SessionType["MANUAL"] = "manual";
+  })(exports.SessionType || (exports.SessionType = {}));
+  exports.TimeResolution = void 0;
+  (function (TimeResolution) {
+      TimeResolution["HOUR"] = "hour";
+      TimeResolution["DAY"] = "day";
+  })(exports.TimeResolution || (exports.TimeResolution = {}));
 
   exports.PaymentStatus = void 0;
   (function (PaymentStatus) {

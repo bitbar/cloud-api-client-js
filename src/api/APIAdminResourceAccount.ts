@@ -1,7 +1,13 @@
 import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource'
-import {Account, AccountUsage, AccountUsageSummary} from './models/Account';
+import {
+  Account,
+  AccountUsage,
+  AccountUsageParams,
+  AccountUsageSummary,
+  AccountUsageSummaryParams
+} from './models/Account';
 import {NoData, NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
 import {Role, RoleData, RoleParams} from './models/Role';
 import {AccountService} from './models/AccountService';
@@ -44,12 +50,12 @@ export class APIAdminResourceAccount extends APIResource<Account, NoQueryParams,
 
   // /admin/accounts/{id}/usage
   usage() {
-    return new APIList<SimpleCollectionResponse<AccountUsage>>(this).push('usage');
+    return new APIList<SimpleCollectionResponse<AccountUsage>, AccountUsageParams>(this).push('usage');
   }
 
   // /admin/accounts/{id}/usage-summary
   usageSummary() {
-    return new APIResource<AccountUsageSummary>(this).push('usage-summary');
+    return new APIResource<AccountUsageSummary, AccountUsageSummaryParams>(this).push('usage-summary');
   }
 
 }

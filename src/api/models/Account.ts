@@ -1,3 +1,6 @@
+import {CollectionQueryParams} from './HTTP';
+
+
 export type Account = {
   activeServiceName: string;
   comment: string;
@@ -47,4 +50,31 @@ export type AccountUsage = {
   dedicatedUsage: number,
   manualConcurrency: number,
   manualUsage: number
+}
+
+export enum UtilizationType {
+  ALL = 'all',
+  PUBLIC = 'public',
+  DEDICATED = 'dedicated'
+}
+
+export enum SessionType {
+  ALL = 'all',
+  AUTOMATED = 'automated',
+  MANUAL = 'manual'
+}
+
+export enum TimeResolution {
+  HOUR = 'hour',
+  DAY = 'day'
+}
+
+export type AccountUsageParams = CollectionQueryParams & {
+  grouping?: TimeResolution,
+  sessionType?: SessionType,
+  utilizationType?: UtilizationType,
+}
+
+export type AccountUsageSummaryParams = CollectionQueryParams & {
+  grouping?: TimeResolution,
 }
