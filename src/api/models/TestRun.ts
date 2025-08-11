@@ -79,7 +79,32 @@ export type TestRunConfigFile = {
   id: number;
 };
 
-export type TestRunConfig = {
+export type TestRunParameter = {
+  name: string;
+  key: string;
+  value: string;
+  label: string;
+}
+
+export type TRCDefaultSettings = {
+  deviceLanguageCode: string;
+  disableResigning: boolean;
+  hookURL: string;
+  instrumentationRunner: string;
+  limitationType: string;
+  limitationValue: string;
+  scheduler: string;
+  screenshotDir: string;
+  withAnnotation: string;
+  withoutAnnotation: string;
+  timeout: string;
+  projectName: string;
+  testRunName: string;
+  testRunParameters: TestRunParameter[];
+  biometricInstrumentation: boolean;
+}
+
+export type TestRunConfig = TRCDefaultSettings & {
   appCrawlerRun: boolean;
   appiumBrokerAddress: string;
   applicationPassword: string;
@@ -88,47 +113,33 @@ export type TestRunConfig = {
   availableDevices: Array<Device>;
   availableFrameworks: any;
   availableOsTypes: Array<OsType>;
-  biometricInstrumentation: boolean;
   clientSideTestConfig: any;
   computedDevices: Array<number>;
   creditsPrice: number;
   deviceGroupId: number;
   deviceIds: any;
-  deviceLanguageCode: string;
   deviceNamePattern: string;
-  disableResigning: boolean;
   files: Array<TestRunConfigFile> | null;
   frameworkId: number;
-  hookURL: string;
   id: number;
-  instrumentationRunner: string;
-  limitationType: LimitationType;
-  limitationValue: string;
   loadedPrevious: boolean;
   example: true;
   maxAutoRetriesCount: number;
   maxTestTimeout: any;
   osType: OsType;
   projectId: number;
-  projectName: string;
   resignFiles: boolean;
   runAvailable: boolean;
-  scheduler: TestScheduler;
-  screenshotDir: string;
   status: string;
   statusCode: number;
   testRunId: number;
-  testRunName: string;
   testRunNameGrouping: string;
-  testRunParameters: any;
-  timeout: number;
   tunnelSettings: TunnelSettings;
   useSamples: boolean;
   usedDeviceGroupId: number;
   usedDeviceGroupName: string;
   videoRecordingEnabled: boolean;
   withAnnotation: string;
-  withoutAnnotation: string;
 }
 
 export interface TestRunData extends QueryParams {
