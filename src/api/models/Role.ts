@@ -5,7 +5,7 @@ export type Role = {
   expireTime: number;
   id: number;
   name: string;
-  value: number;
+  value: number | null;
   valueCalculated: boolean;
   userRole: boolean;
 }
