@@ -4,6 +4,7 @@ import {OsType} from './Enum';
 import {CollectionBasicQueryParams, QueryParams} from './HTTP';
 import {Tag} from './Tag';
 import {UserFile} from './UserFile';
+import {DeviceGroup} from './DeviceGroup';
 
 
 export enum LimitationType {
@@ -80,10 +81,10 @@ export type TestRunConfigFile = {
 };
 
 export type TestRunParameter = {
-  name: string;
+  name?: string;
   key: string;
   value: string;
-  label: string;
+  label?: string;
 }
 
 export type TRCDefaultSettings = {
@@ -100,7 +101,7 @@ export type TRCDefaultSettings = {
   timeout: string;
   projectName: string;
   testRunName: string;
-  testRunParameters: TestRunParameter[];
+  testRunParameters?: TestRunParameter[];
   biometricInstrumentation: boolean;
 }
 
@@ -109,14 +110,14 @@ export type TestRunConfig = TRCDefaultSettings & {
   appiumBrokerAddress: string;
   applicationPassword: string;
   applicationUsername: string;
-  availableDeviceGroups: any;
+  availableDeviceGroups: DeviceGroup[];
   availableDevices: Array<Device>;
   availableFrameworks: any;
   availableOsTypes: Array<OsType>;
   clientSideTestConfig: any;
   computedDevices: Array<number>;
   creditsPrice: number;
-  deviceGroupId: number;
+  deviceGroupId?: number;
   deviceIds: any;
   deviceNamePattern: string;
   files: Array<TestRunConfigFile> | null;
@@ -158,7 +159,7 @@ export interface TestRunsData {
   configuration: TestRunConfig;
 }
 
-export interface TestRunsIncludes {
+export type TestRunsIncludes = {
   includeDeviceGroups: boolean;
   includeDevices: boolean;
   includeFrameworks: boolean;
