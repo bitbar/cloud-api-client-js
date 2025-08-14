@@ -1,7 +1,6 @@
 import { QueryParams } from './HTTP';
 import { TestScheduler, TestState } from './TestRun';
 export type AdminTestRun = {
-    appCrawlerRun: boolean;
     createTime: number;
     duration: number;
     endTime: number;

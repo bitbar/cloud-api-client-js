@@ -1,4 +1,4 @@
-import { ChargeType, PaymentMethod } from './AccountService';
+import { PaymentMethod } from './AccountService';
 import { CollectionQueryParams } from './HTTP';
 import { Role } from './Role';
 export type Service = {
@@ -6,7 +6,6 @@ export type Service = {
     activated: boolean;
     archiveTime: number;
     centPrice: number;
-    chargeType: ChargeType;
     commonId: string;
     customPlan: boolean;
     defaultConcurrences: Array<number>;
@@ -14,9 +13,7 @@ export type Service = {
     externalId: string;
     features: string;
     id: number;
-    includedHours: number;
     name: string;
-    pricePerHour: number;
     priceString: string;
     roles: Array<Role>;
     unit: ServiceUnit;
@@ -39,7 +36,6 @@ export type ServiceActivateData = {
 };
 export interface ServiceData {
     address?: string;
-    braintreeNonce?: string;
     cardNumber?: string;
     city?: string;
     count?: number;

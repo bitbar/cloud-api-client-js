@@ -6,10 +6,8 @@ export type TunnelSettings = {
 };
 export declare enum DeviceSessionType {
     AUTOMATIC = "AUTOMATIC",
-    MANUAL = "MANUAL",
     MANUAL_APP = "MANUAL_APP",
-    MANUAL_WEB = "MANUAL_WEB",
-    REMOTE = "REMOTE"
+    MANUAL_WEB = "MANUAL_WEB"
 }
 export declare enum RetryState {
     NONE = "NONE",
@@ -50,7 +48,6 @@ export type DeviceSession = {
     accountId: number;
     autoRetriesLeftCount: number;
     biometricInstrumentation: boolean;
-    billable: boolean;
     config: DeviceSessionConfig;
     createTime: number;
     clientSideId: string;
@@ -68,7 +65,6 @@ export type DeviceSession = {
     projectId: number;
     projectName: string;
     retryState: RetryState;
-    rowIndex: number;
     startTime: number;
     state: DeviceSessionState;
     successRatio: number;
@@ -81,6 +77,7 @@ export type DeviceSession = {
     testRunName: string;
     timeLimit: number;
     type: DeviceSessionType;
+    uiLink: string;
     userEmail: string;
     userId: number;
 };
@@ -114,7 +111,6 @@ export type DeviceSessionConnection = {
     path: string;
     port: number;
     type: string;
-    url: string;
     urlSchema: string;
 };
 export type DeviceSessionData = Omit<DeviceSessionConfig, 'adbVersion' | 'id' | 'tunnelSettings' | 'type'> & {

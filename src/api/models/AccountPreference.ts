@@ -1,6 +1,7 @@
 export type AccountPreferences = {
   allowedFileExtensions: Array<string>;
   id: number;
+  dedicatedDevicesTestTimeout: number;
   defaultTestTimeout: number;
   testTimeout: number
 }

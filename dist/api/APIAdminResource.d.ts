@@ -1,6 +1,5 @@
 import { API } from '../API';
 import { APIAdminListDevices } from './APIAdminListDevices';
-import { APIAdminListNotificationPlans } from './APIAdminListNotificationPlans';
 import { APIAdminListRuns } from './APIAdminListRuns';
 import { APIAdminListServices } from './APIAdminListServices';
 import { APIAdminListStatistics } from './APIAdminListStatistics';
@@ -13,7 +12,6 @@ import { APIAdminResourceDeviceSessionStandalone } from './APIAdminResourceDevic
 import { APIAdminResourceDeviceTime } from './APIAdminResourceDeviceTime';
 import { APIAdminResourceFramework } from './APIAdminResourceFramework';
 import { APIAdminResourceLicense } from './APIAdminResourceLicense';
-import { APIAdminResourceNotificationPlan } from './APIAdminResourceNotificationPlan';
 import { APIAdminResourceRunStandalone } from './APIAdminResourceRunStandalone';
 import { APIAdminResourceService } from './APIAdminResourceService';
 import { APIAdminResourceUser } from './APIAdminResourceUser';
@@ -30,12 +28,10 @@ import { Activity } from './models/Activity';
 import { AdminDeviceSession, AdminInteractiveDeviceSession } from './models/AdminDeviceSession';
 import { AdminDeviceType, DeviceTypeData } from './models/AdminDeviceType';
 import { AdminEmail } from './models/AdminEmail';
-import { AdminError } from './models/AdminError';
 import { Administrator } from './models/Administrator';
 import { AdminOverview } from './models/AdminOverview';
 import { BillingPeriod } from './models/BillingPeriod';
 import { Browser, BrowserData } from './models/Browser';
-import { CountryVatRate, CountryVatRateData } from './models/CountryVatRate';
 import { DeviceModelCriterion, DeviceModelCriterionData } from './models/DeviceModelCriterion';
 import { DeviceModelPool, DeviceModelPoolData } from './models/DeviceModelPool';
 import { Framework, FrameworkData } from './models/Framework';
@@ -70,8 +66,6 @@ export declare class APIAdminResource extends APIResource {
     browser(id: number): APIResource<Browser, NoQueryParams, BrowserData>;
     clusters(): APIList<Cluster, CollectionQueryParams, any>;
     cluster(id: number): APIAdminResourceCluster;
-    countryVatRates(): APIList<CountryVatRate, CollectionQueryParams, CountryVatRateData>;
-    countryVatRate(id: number): APIResource<CountryVatRate, NoQueryParams, Omit<CountryVatRate, "country">>;
     devices(): APIAdminListDevices;
     device(id: number): APIAdminResourceDevice;
     devicesForModel(id: number): APIAdminListDevices;
@@ -91,7 +85,6 @@ export declare class APIAdminResource extends APIResource {
     deviceGroup(id: number): APIResourceDeviceGroup;
     emails(): APIList<AdminEmail, CollectionQueryParams, any>;
     resendEmail(id: number): APIResource<AdminEmail, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
-    errors(): APIList<AdminError, CollectionQueryParams, any>;
     files(): APIList<UserFile, UserFileParams, UserFileData>;
     file(id: number): APIResourceFile;
     frameworks<T = Framework, U extends CollectionQueryParams = CollectionQueryParams, W = FrameworkData>(): APIList<T, U, W>;
@@ -101,8 +94,6 @@ export declare class APIAdminResource extends APIResource {
     licenses(): APIList<License, CollectionQueryParams, LicenseData>;
     license(id: number): APIAdminResourceLicense;
     maintenance(): APIResource<Maintenance, NoQueryParams, MaintenanceData>;
-    notificationPlans(): APIAdminListNotificationPlans;
-    notificationPlan(id: number): APIAdminResourceNotificationPlan;
     overview(): APIResource<AdminOverview, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     pools(): APIList<DeviceModelPool, CollectionQueryParams, any>;
     pool(id: number): APIResource<DeviceModelPool, NoQueryParams, DeviceModelPoolData>;

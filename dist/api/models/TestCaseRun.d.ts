@@ -19,6 +19,7 @@ export type TestCaseRun = {
     suiteName: string;
 };
 export type TestCaseRunStep = {
+    description: string;
     duration: number;
     httpMethod: Uppercase<Method>;
     id: number;

@@ -1,5 +1,5 @@
 import {OsType} from './Enum';
-import {TestRunsQueryParams} from './TestRun';
+import {TestRunConfig, TestRunsQueryParams} from './TestRun';
 
 export enum ArchivingStrategy {
   NEVER = 'NEVER',
@@ -20,10 +20,9 @@ export type Project = {
   readOnly: boolean;
   rowIndex: number;
   shared: boolean;
-  sharedByEmail: string;
-  sharedById: number;
   sharedWithCaller: boolean;
   successRatio: number;
+  testRunConfig: TestRunConfig;
   userEmail: string;
   userId: number;
 }

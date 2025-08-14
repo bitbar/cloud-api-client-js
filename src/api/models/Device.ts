@@ -25,6 +25,25 @@ export enum SupportedCreators {
   AUTOMATIC = 'AUTOMATIC'
 }
 
+export enum PoolSize {
+  XL= 'XL',
+  L = 'L',
+  M = 'M',
+  S = 'S'
+}
+
+export enum Code {
+  HIGH = 'HIGH',
+  MODERATE = 'MODERATE',
+  LOW = 'LOW',
+  NONE = 'NONE',
+}
+
+export type DeviceAvailability = {
+  poolSize: PoolSize,
+  code: Code
+}
+
 export type DeviceProperty = {
   displayName: string;
   id: number;
@@ -50,6 +69,7 @@ export type Device = {
   accountId: number;
   accountName: string;
   available: boolean;
+  availability: DeviceAvailability;
   browsers: CollectionResponse<Browser>;
   creditsPrice: number;
   deviceGroupOrigin: DeviceGroupOrigin;

@@ -1,6 +1,5 @@
 import {API} from '../API';
 import {APIAdminListDevices} from './APIAdminListDevices';
-import {APIAdminListNotificationPlans} from './APIAdminListNotificationPlans';
 import {APIAdminListRuns} from './APIAdminListRuns';
 import {APIAdminListServices} from './APIAdminListServices';
 import {APIAdminListStatistics} from './APIAdminListStatistics';
@@ -14,7 +13,6 @@ import {APIAdminResourceDeviceSessionStandalone} from './APIAdminResourceDeviceS
 import {APIAdminResourceDeviceTime} from './APIAdminResourceDeviceTime';
 import {APIAdminResourceFramework} from './APIAdminResourceFramework';
 import {APIAdminResourceLicense} from './APIAdminResourceLicense';
-import {APIAdminResourceNotificationPlan} from './APIAdminResourceNotificationPlan';
 import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
 import {APIAdminResourceService} from './APIAdminResourceService';
 import {APIAdminResourceUser} from './APIAdminResourceUser';
@@ -161,27 +159,6 @@ describe('APIAdminResource', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.cluster(1);
       expect(call).toBeInstanceOf(APIAdminResourceCluster);
-    });
-  });
-
-  describe('@countryVatRates', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.countryVatRates();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/country-vat-rates`);
-    });
-  });
-
-  describe('@countryVatRate', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.countryVatRate(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/country-vat-rates/1`);
-    });
-
-    it('should throw error if resource ID is missing', () => {
-      const id: any = undefined;
-      expect(() => service.countryVatRate(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 
@@ -347,14 +324,6 @@ describe('APIAdminResource', () => {
     });
   });
 
-  describe('@errors', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.errors();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/errors`);
-    });
-  });
-
   describe('@files', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.files();
@@ -421,20 +390,6 @@ describe('APIAdminResource', () => {
       const call = service.maintenance();
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/maintenance`);
-    });
-  });
-
-  describe('@notificationPlans', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.notificationPlans();
-      expect(call).toBeInstanceOf(APIAdminListNotificationPlans);
-    });
-  });
-
-  describe('@notificationPlan', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.notificationPlan(1);
-      expect(call).toBeInstanceOf(APIAdminResourceNotificationPlan);
     });
   });
 

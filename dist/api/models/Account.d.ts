@@ -16,7 +16,6 @@ export type Invoice = {
     code: string;
     country: string;
     state: string;
-    update: boolean;
 };
 export type AccountData = Partial<{
     comment: string;

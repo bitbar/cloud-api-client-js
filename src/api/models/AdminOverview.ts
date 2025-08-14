@@ -1,10 +1,16 @@
 export type AdminOverview = {
   activeUsersCount: number;
   id: number;
-  inspectorSessionsCount: number;
-  remoteSessionsCount: number;
-  runningDeviceModelsCount: number;
+  offlineClusterCount: number;
+  offlineDeviceCount: number;
+  offlineDeviceModelCount: number;
+  runningInspectorSessionsCount: number;
   runningTestRunsCount: number;
-  waitingDeviceModelsCount: number;
+  totalClusterCount: number;
+  totalDeviceCount: number;
+  totalDeviceModelCount: number;
+  totalInspectorSessionsCount: number;
+  totalTestRunCount: number;
+  totalUserCount: number;
   waitingTestRunsCount: number;
 }

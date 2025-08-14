@@ -2,7 +2,6 @@ import { Device } from './Device';
 import { TunnelSettings } from './DeviceSession';
 import { OsType } from './Enum';
 import { CollectionBasicQueryParams, QueryParams } from './HTTP';
-import { Tag } from './Tag';
 import { UserFile } from './UserFile';
 import { DeviceGroup } from './DeviceGroup';
 export declare enum LimitationType {
@@ -22,7 +21,6 @@ export declare enum TestState {
 }
 export type TestRun = {
     abortedDeviceCount: number;
-    billable: boolean;
     config: TestRunConfig;
     createTime: number;
     deviceCount: number;
@@ -51,10 +49,8 @@ export type TestRun = {
     succeededDeviceCount: number;
     successRatio: number;
     successfulTestCaseCount: number;
-    tags: Array<Tag>;
     testCaseCount: number;
     timeoutedDeviceCount: number;
-    totalDeviceCount: number;
     uiLink: string;
     userId: number;
     waitingDeviceCount: number;
@@ -97,6 +93,7 @@ export type TRCDefaultSettings = {
 export type TestRunConfig = TRCDefaultSettings & {
     appCrawlerRun: boolean;
     appiumBrokerAddress: string;
+    appiumBrokerQueueName: string;
     applicationPassword: string;
     applicationUsername: string;
     availableDeviceGroups: DeviceGroup[];
@@ -113,9 +110,9 @@ export type TestRunConfig = TRCDefaultSettings & {
     frameworkId: number;
     id: number;
     loadedPrevious: boolean;
-    example: true;
     maxAutoRetriesCount: number;
     maxTestTimeout: any;
+    maxWaitTime: number;
     osType: OsType;
     projectId: number;
     resignFiles: boolean;

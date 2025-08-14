@@ -8,6 +8,8 @@ export declare enum BillingType {
     CANCEL = "CANCEL"
 }
 export type BillingPeriod = {
+    accountId: number;
+    accountName: string;
     accountServiceId: number;
     additionalHours: number;
     additionalHoursPrice: number;

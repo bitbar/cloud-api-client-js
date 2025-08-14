@@ -23,6 +23,7 @@ export type TestCaseRun = {
 }
 
 export type TestCaseRunStep = {
+  description: string;
   duration: number;
   httpMethod: Uppercase<Method>;
   id: number;

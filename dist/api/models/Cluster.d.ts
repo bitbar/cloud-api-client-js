@@ -6,6 +6,7 @@ export type Cluster = {
     id: number;
     ipAddress: string;
     jenkinsUrl: string;
+    jenkinsVersion: string;
     location: string;
     name: string;
     pluginVersion: string;
@@ -13,6 +14,7 @@ export type Cluster = {
     state: ClusterState;
     stateChangeTime: number;
     stateTime: number;
+    type: ClusterType;
     url: string;
 };
 export declare enum ClusterState {
@@ -21,6 +23,11 @@ export declare enum ClusterState {
     RESTARTING = "RESTARTING",
     QUIET_DOWN = "QUIET_DOWN",
     MAINTENANCE = "MAINTENANCE"
+}
+export declare enum ClusterType {
+    BARE_METAL = "BARE_METAL",
+    EC2 = "EC2",
+    VM = "VM"
 }
 export interface ClusterParams extends QueryParams {
     withDevices: boolean;

@@ -5,7 +5,7 @@ import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
 import {Account, AccountData} from './models/Account';
 import {AccountConcurrencyStatusMap} from './models/AccountConcurrencyStatusMap';
 import {AccountPreferences} from './models/AccountPreference';
-import {AccountService} from './models/AccountService';
+import {AccountService, ServicePaymentStatus} from './models/AccountService';
 import {AccountServicePayment} from './models/AccountServicePayment';
 import {BillingPeriod, BillingPeriodQueryParams} from './models/BillingPeriod';
 import {DeviceTimeSummaryQueryParams} from './models/Device';
@@ -107,6 +107,11 @@ export class APIResourceAccount extends APIResource<Account, QueryParams, Accoun
   // /account/{accountId}/account-services/{id}
   accountService(id: number) {
     return new APIList<AccountService>(this).push('account-services', id);
+  }
+
+  // /account/{accountId}/services
+  services() {
+    return new APIResource<ServicePaymentStatus>(this).push('services');
   }
 
 }
