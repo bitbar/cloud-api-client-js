@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.4.19 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.5.0 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
 })(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.4.19";
+  var version = "1.5.0";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -439,19 +439,6 @@
       }
   }
 
-  class APIAdminListNotificationPlans extends APIList {
-      constructor(parent) {
-          super(parent);
-          this.push('admin', 'notification-plans');
-      }
-      channels() {
-          return new APIList(this).push('channels');
-      }
-      scopes() {
-          return new APIList(this).push('scopes');
-      }
-  }
-
   class APIAdminListRuns extends APIList {
       constructor(parent) {
           super(parent);
@@ -810,25 +797,6 @@
       }
   }
 
-  class APIAdminResourceNotificationPlan extends APIResource {
-      constructor(parent, id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          super(parent);
-          this.push('admin', 'notification-plans', id);
-      }
-      check() {
-          return new APIList(this).push('check');
-      }
-      test() {
-          return new APIResource(this).push('test');
-      }
-      execute() {
-          return new APIResource(this).push('execute');
-      }
-  }
-
   function postDeviceRunIds(parent, name, ids) {
       const a = new APIResource(parent).push(name);
       if (ids != null) {
@@ -1111,26 +1079,11 @@
               timeout: 0
           });
       }
-      screenshotNames() {
-          return new APIList(this).push('screenshot-names');
-      }
-      screenshots() {
-          return new APIList(this).push('screenshots');
-      }
       screenshotsZip(ids) {
           return postDeviceRunIds(this, 'screenshots.zip', ids);
       }
       steps() {
           return new APIList(this).push('steps');
-      }
-      tags() {
-          return new APIList(this).push('tags');
-      }
-      tag(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('tags', id);
       }
   }
 
@@ -1217,15 +1170,6 @@
       cluster(id) {
           return new APIAdminResourceCluster(this, id);
       }
-      countryVatRates() {
-          return new APIList(this).push('admin', 'country-vat-rates');
-      }
-      countryVatRate(id) {
-          if (id == null) {
-              throw new Error('Resource ID cannot be null!');
-          }
-          return new APIResource(this).push('admin', 'country-vat-rates', id);
-      }
       devices() {
           return new APIAdminListDevices(this);
       }
@@ -1296,9 +1240,6 @@
           }
           return new APIResource(this).push('admin', 'emails', id, 'resend').post();
       }
-      errors() {
-          return new APIList(this).push('admin', 'errors');
-      }
       files() {
           return new APIList(this).push('files');
       }
@@ -1327,12 +1268,6 @@
       }
       maintenance() {
           return new APIResource(this).push('admin', 'maintenance');
-      }
-      notificationPlans() {
-          return new APIAdminListNotificationPlans(this);
-      }
-      notificationPlan(id) {
-          return new APIAdminResourceNotificationPlan(this, id);
       }
       overview() {
           return new APIResource(this).push('admin', 'overview');
@@ -1536,6 +1471,9 @@
       }
       accountService(id) {
           return new APIList(this).push('account-services', id);
+      }
+      services() {
+          return new APIResource(this).push('services');
       }
   }
 
@@ -1970,12 +1908,6 @@
       PaymentMethod["PROMOTION"] = "PROMOTION";
       PaymentMethod["AWS"] = "AWS";
   })(exports.PaymentMethod || (exports.PaymentMethod = {}));
-  exports.ChargeType = void 0;
-  (function (ChargeType) {
-      ChargeType["USAGE_MOBILE"] = "USAGE_MOBILE";
-      ChargeType["CONCURRENCY_MOBILE"] = "CONCURRENCY_MOBILE";
-      ChargeType["CONCURRENCY_DESKTOP"] = "CONCURRENCY_DESKTOP";
-  })(exports.ChargeType || (exports.ChargeType = {}));
   exports.DeactivateReason = void 0;
   (function (DeactivateReason) {
       DeactivateReason["INITIAL_FAILURE"] = "INITIAL_FAILURE";
@@ -2004,42 +1936,6 @@
       DeviceState["ONLINE_FREE"] = "ONLINE_FREE";
       DeviceState["ONLINE_TESTING"] = "ONLINE_TESTING";
   })(exports.DeviceState || (exports.DeviceState = {}));
-
-  exports.AdminErrorType = void 0;
-  (function (AdminErrorType) {
-      AdminErrorType["ABORT_REQUEST"] = "ABORT_REQUEST";
-      AdminErrorType["ADB_COMMAND_REJECTED"] = "ADB_COMMAND_REJECTED";
-      AdminErrorType["ADB_SHELL_COMMAND_FAILED"] = "ADB_SHELL_COMMAND_FAILED";
-      AdminErrorType["APP_LOCK_NOT_INSTALLED"] = "APP_LOCK_NOT_INSTALLED";
-      AdminErrorType["DEVICE_OFFLINE"] = "DEVICE_OFFLINE";
-      AdminErrorType["DEVICE_OUTPUT_NULL"] = "DEVICE_OUTPUT_NULL";
-      AdminErrorType["GAMEBENCH_ERROR"] = "GAMEBENCH_ERROR";
-      AdminErrorType["GAMEBENCH_NOT_SUPPORTED"] = "GAMEBENCH_NOT_SUPPORTED";
-      AdminErrorType["GRANT_FAILED"] = "GRANT_FAILED";
-      AdminErrorType["INSTALL_FAILED"] = "INSTALL_FAILED";
-      AdminErrorType["INTERACTIVE_SETUP_FAILED"] = "INTERACTIVE_SETUP_FAILED";
-      AdminErrorType["INTERNAL_INSTALL_FAILED"] = "INTERNAL_INSTALL_FAILED";
-      AdminErrorType["INVALID_TEST_SESSION_FILE"] = "INVALID_TEST_SESSION_FILE";
-      AdminErrorType["LOCK_EXPIRED"] = "LOCK_EXPIRED";
-      AdminErrorType["LOCK_TIMEOUT"] = "LOCK_TIMEOUT";
-      AdminErrorType["NO_NETWORK_CONNECTION"] = "NO_NETWORK_CONNECTION";
-      AdminErrorType["OTHER"] = "OTHER";
-      AdminErrorType["REBOOTING_TIMEOUT"] = "REBOOTING_TIMEOUT";
-      AdminErrorType["REPACKAGING"] = "REPACKAGING";
-      AdminErrorType["RESULTS_PREPARING"] = "RESULTS_PREPARING";
-      AdminErrorType["RESULTS_PROCESSING"] = "RESULTS_PROCESSING";
-      AdminErrorType["RESULTS_SENDING"] = "RESULTS_SENDING";
-      AdminErrorType["STEP_TIMEOUT"] = "STEP_TIMEOUT";
-      AdminErrorType["SYSTEM_FAILURE"] = "SYSTEM_FAILURE";
-      AdminErrorType["TEST_RUN_FAILED"] = "TEST_RUN_FAILED";
-      AdminErrorType["TEST_RUN_INTERRUPTED"] = "TEST_RUN_INTERRUPTED";
-      AdminErrorType["TEST_RUN_TIMEOUT"] = "TEST_RUN_TIMEOUT";
-      AdminErrorType["TEST_RUN_WARNED"] = "TEST_RUN_WARNED";
-      AdminErrorType["TEST_TIMEOUT"] = "TEST_TIMEOUT";
-      AdminErrorType["VNC_CONNECTION_SETUP_FAILED"] = "VNC_CONNECTION_SETUP_FAILED";
-      AdminErrorType["XCRUN_INSTRUMENTS_COMMAND_FAILED"] = "XCRUN_INSTRUMENTS_COMMAND_FAILED";
-      AdminErrorType["XCRUN_INSTRUMENTS_JS_ERROR"] = "XCRUN_INSTRUMENTS_JS_ERROR";
-  })(exports.AdminErrorType || (exports.AdminErrorType = {}));
 
   exports.FrameworkType = void 0;
   (function (FrameworkType) {
@@ -2070,6 +1966,12 @@
       ClusterState["QUIET_DOWN"] = "QUIET_DOWN";
       ClusterState["MAINTENANCE"] = "MAINTENANCE";
   })(exports.ClusterState || (exports.ClusterState = {}));
+  exports.ClusterType = void 0;
+  (function (ClusterType) {
+      ClusterType["BARE_METAL"] = "BARE_METAL";
+      ClusterType["EC2"] = "EC2";
+      ClusterType["VM"] = "VM";
+  })(exports.ClusterType || (exports.ClusterType = {}));
 
   exports.DeviceGroupOrigin = void 0;
   (function (DeviceGroupOrigin) {
@@ -2092,6 +1994,20 @@
       SupportedCreators["ROBOT"] = "ROBOT";
       SupportedCreators["AUTOMATIC"] = "AUTOMATIC";
   })(exports.SupportedCreators || (exports.SupportedCreators = {}));
+  exports.PoolSize = void 0;
+  (function (PoolSize) {
+      PoolSize["XL"] = "XL";
+      PoolSize["L"] = "L";
+      PoolSize["M"] = "M";
+      PoolSize["S"] = "S";
+  })(exports.PoolSize || (exports.PoolSize = {}));
+  exports.Code = void 0;
+  (function (Code) {
+      Code["HIGH"] = "HIGH";
+      Code["MODERATE"] = "MODERATE";
+      Code["LOW"] = "LOW";
+      Code["NONE"] = "NONE";
+  })(exports.Code || (exports.Code = {}));
   exports.LockReason = void 0;
   (function (LockReason) {
       LockReason["TESTING"] = "TESTING";
@@ -2131,10 +2047,8 @@
   exports.DeviceSessionType = void 0;
   (function (DeviceSessionType) {
       DeviceSessionType["AUTOMATIC"] = "AUTOMATIC";
-      DeviceSessionType["MANUAL"] = "MANUAL";
       DeviceSessionType["MANUAL_APP"] = "MANUAL_APP";
       DeviceSessionType["MANUAL_WEB"] = "MANUAL_WEB";
-      DeviceSessionType["REMOTE"] = "REMOTE";
   })(exports.DeviceSessionType || (exports.DeviceSessionType = {}));
   exports.RetryState = void 0;
   (function (RetryState) {
@@ -2188,13 +2102,6 @@
       LicenseStatus["CLOSED"] = "CLOSED";
   })(exports.LicenseStatus || (exports.LicenseStatus = {}));
 
-  exports.MaintenanceType = void 0;
-  (function (MaintenanceType) {
-      MaintenanceType["BARE_METAL"] = "BARE_METAL";
-      MaintenanceType["EC2"] = "EC2";
-      MaintenanceType["VM"] = "VM";
-  })(exports.MaintenanceType || (exports.MaintenanceType = {}));
-
   exports.NotificationChannel = void 0;
   (function (NotificationChannel) {
       NotificationChannel["SLACK"] = "SLACK";
@@ -2207,14 +2114,8 @@
       NotificationScope["TEST_RUN"] = "TEST_RUN";
       NotificationScope["TEST_RUN_FAILURE"] = "TEST_RUN_FAILURE";
       NotificationScope["TEST_RUN_SUCCEEDED"] = "TEST_RUN_SUCCEEDED";
-      NotificationScope["MAINTENANCE"] = "MAINTENANCE";
-      NotificationScope["MAINTENANCE_RELEASE"] = "MAINTENANCE_RELEASE";
-      NotificationScope["CUSTOM"] = "CUSTOM";
-      NotificationScope["NEWS"] = "NEWS";
       NotificationScope["SYSTEM"] = "SYSTEM";
       NotificationScope["CHECK"] = "CHECK";
-      NotificationScope["PLAN_LIMIT_REACHED"] = "PLAN_LIMIT_REACHED";
-      NotificationScope["PLAN_INVOICE"] = "PLAN_INVOICE";
   })(exports.NotificationScope || (exports.NotificationScope = {}));
 
   exports.ArchivingStrategy = void 0;

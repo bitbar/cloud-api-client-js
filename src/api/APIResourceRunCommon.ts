@@ -6,8 +6,6 @@ import {postDeviceRunIds} from './factory/postDeviceRunIds';
 import {AdminTestRun} from './models/AdminTestRun';
 import {DeviceSession, DeviceSessionStep, TestRunDeviceSessionQueryParams} from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
-import {Screenshot, ScreenshotExtended, ScreenshotQueryParams} from './models/Screenshot';
-import {Tag, TagsData, TagsQueryParams, TaqQueryParams, TestRunTagsData} from './models/Tag';
 import {RunData, RunQueryParam, TestRun, TestRunData} from './models/TestRun';
 import {TestRunDataAvailability, TestRunDataAvailabilityQueryParams} from './models/TestRunDataAvailability';
 import {UserFile} from './models/UserFile';
@@ -68,16 +66,6 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
     });
   }
 
-  // /runs/{id}/screenshot-names
-  screenshotNames() {
-    return new APIList<Screenshot, NoQueryParams, NoData>(this).push('screenshot-names');
-  }
-
-  // /runs/{id}/screenshots
-  screenshots() {
-    return new APIList<ScreenshotExtended, ScreenshotQueryParams, NoData>(this).push('screenshots');
-  }
-
   // /runs/{id}/screenshots.zip
   screenshotsZip(ids?: Array<number>) {
     return postDeviceRunIds<UserFile>(this, 'screenshots.zip', ids);
@@ -86,20 +74,6 @@ export class APIResourceRunCommon extends APIResource<TestRun, RunQueryParam, Te
   // /runs/{id}/steps
   steps() {
     return new APIList<DeviceSessionStep, CollectionBasicQueryParams, NoData>(this).push('steps');
-  }
-
-  // /runs/{id}/tags
-  tags() {
-    return new APIList<Tag, CollectionBasicQueryParams | TagsQueryParams, TagsData | TestRunTagsData>(this).push('tags');
-  }
-
-  // /runs/{id}/tag
-  tag(id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource<Tag, TaqQueryParams, NoData>(this).push('tags', id);
   }
 
 }

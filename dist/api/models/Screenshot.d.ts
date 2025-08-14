@@ -1,4 +1,3 @@
-import { Device } from './Device';
 import { CollectionBasicQueryParams } from './HTTP';
 export declare enum ScreenshotType {
     LANDSCAPE = "LANDSCAPE",
@@ -10,12 +9,6 @@ export type Screenshot = {
     originalName: string;
     takeTimestamp: number;
     type: ScreenshotType;
-};
-export type ScreenshotExtended = Screenshot & {
-    device: Device;
-    deviceRunId: number;
-    projectId: number;
-    testRunId: number;
 };
 export interface ScreenshotQueryParams extends CollectionBasicQueryParams {
     name: string;

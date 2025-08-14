@@ -119,22 +119,6 @@ describe('APIResourceRunCommon', () => {
     });
   });
 
-  describe('@screenshotNames', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.screenshotNames();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/screenshot-names`);
-    });
-  });
-
-  describe('@screenshots', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.screenshots();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/screenshots`);
-    });
-  });
-
   describe('@screenshotsZip', () => {
     it('should initialize proper endpoint path without passing a parameter', () => {
       const call = service.screenshotsZip();
@@ -156,27 +140,6 @@ describe('APIResourceRunCommon', () => {
       const call = service.steps();
       expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual(`${baseUrl}/steps`);
-    });
-  });
-
-  describe('@tags', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.tags();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/tags`);
-    });
-  });
-
-  describe('@tag', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.tag(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/tags/1`);
-    });
-
-    it('should throw error if resource ID is nulll', () => {
-      const id: any = undefined;
-      expect(() => service.tag(id)).toThrow(new Error('Resource ID cannot be null!'));
     });
   });
 

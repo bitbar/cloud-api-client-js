@@ -18,8 +18,7 @@ export type Invoice = {
   city: string,
   code: string,
   country: string,
-  state: string,
-  update: boolean
+  state: string
 }
 
 export type AccountData = Partial<{

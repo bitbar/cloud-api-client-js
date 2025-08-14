@@ -1,6 +1,7 @@
 import {Method} from 'axios';
 
 export type Activity = {
+  accept: string;
   body: string;
   createTime: number;
   deprecatedResource: boolean;

@@ -10,6 +10,8 @@ export enum BillingType {
 }
 
 export type BillingPeriod = {
+  accountId: number;
+  accountName: string;
   accountServiceId: number;
   additionalHours: number;
   additionalHoursPrice: number;

@@ -12,7 +12,6 @@ export type User = {
   accountId: number;
   accountName: string;
   userAccountName: string;
-  accountOwners: Array<User>;
   accountServiceIds: Array<number>;
   address: string;
   apiKey: string;
@@ -39,7 +38,6 @@ export type User = {
   state: string;
   status: UserStatus;
   timeZone: string;
-  vatId: string;
 }
 
 export type UserData = Pick<User, 'email'>;
@@ -72,13 +70,8 @@ export type UserPasswordData = {
 export type UserActivateData = {
   zip: string;
 } & UserPasswordData
-  & Pick<User, 'address' | 'city' | 'country' | 'email' | 'firstName' | 'lastName' | 'organization' | 'phone' | 'state' | 'vatId'>;
+  & Pick<User, 'address' | 'city' | 'country' | 'email' | 'firstName' | 'lastName' | 'organization' | 'phone' | 'state'>;
 
 export interface UserRecoveryQueryParams extends QueryParams {
   recoveryKey: string;
-}
-
-export interface ValidateVatQueryParams extends QueryParams {
-  countryCode: string;
-  vatId: string;
 }

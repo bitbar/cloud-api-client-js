@@ -1,5 +1,4 @@
 import {APIAdminListDevices as OriginAPIAdminListDevices} from'./APIAdminListDevices';
-import {APIAdminListNotificationPlans as OriginAPIAdminListNotificationPlans} from'./APIAdminListNotificationPlans';
 import {APIAdminListRuns as OriginAPIAdminListRuns} from'./APIAdminListRuns';
 import {APIAdminListServices as OriginAPIAdminListServices} from'./APIAdminListServices';
 import {APIAdminListStatistics as OriginAPIAdminListStatistics} from'./APIAdminListStatistics';
@@ -14,7 +13,6 @@ import {APIAdminResourceDeviceSessionStandalone as OriginAPIAdminResourceDeviceS
 import {APIAdminResourceDeviceTime as OriginAPIAdminResourceDeviceTime} from'./APIAdminResourceDeviceTime';
 import {APIAdminResourceFramework as OriginAPIAdminResourceFramework} from'./APIAdminResourceFramework';
 import {APIAdminResourceLicense as OriginAPIAdminResourceLicense} from'./APIAdminResourceLicense';
-import {APIAdminResourceNotificationPlan as OriginAPIAdminResourceNotificationPlan} from'./APIAdminResourceNotificationPlan';
 import {APIAdminResourceRun as OriginAPIAdminResourceRun} from'./APIAdminResourceRun';
 import {APIAdminResourceRunStandalone as OriginAPIAdminResourceRunStandalone} from'./APIAdminResourceRunStandalone';
 import {APIAdminResourceService as OriginAPIAdminResourceService} from'./APIAdminResourceService';
@@ -22,7 +20,6 @@ import {APIAdminResourceUser as OriginAPIAdminResourceUser} from'./APIAdminResou
 import {APIAdminResourceUserAccount as OriginAPIAdminResourceUserAccount} from'./APIAdminResourceUserAccount';
 
 export type APIAdminListDevices = InstanceType<typeof OriginAPIAdminListDevices>;
-export type APIAdminListNotificationPlans = InstanceType<typeof OriginAPIAdminListNotificationPlans>;
 export type APIAdminListRuns = InstanceType<typeof OriginAPIAdminListRuns>;
 export type APIAdminListServices = InstanceType<typeof OriginAPIAdminListServices>;
 export type APIAdminListStatistics = InstanceType<typeof OriginAPIAdminListStatistics>;
@@ -37,7 +34,6 @@ export type APIAdminResourceDeviceSessionStandalone = InstanceType<typeof Origin
 export type APIAdminResourceDeviceTime = InstanceType<typeof OriginAPIAdminResourceDeviceTime>;
 export type APIAdminResourceFramework = InstanceType<typeof OriginAPIAdminResourceFramework>;
 export type APIAdminResourceLicense = InstanceType<typeof OriginAPIAdminResourceLicense>;
-export type APIAdminResourceNotificationPlan = InstanceType<typeof OriginAPIAdminResourceNotificationPlan>;
 export type APIAdminResourceRun = InstanceType<typeof OriginAPIAdminResourceRun>;
 export type APIAdminResourceRunStandalone = InstanceType<typeof OriginAPIAdminResourceRunStandalone>;
 export type APIAdminResourceService = InstanceType<typeof OriginAPIAdminResourceService>;

@@ -1,6 +1,5 @@
 import {API} from '../API';
 import {APIAdminListDevices} from './APIAdminListDevices';
-import {APIAdminListNotificationPlans} from './APIAdminListNotificationPlans';
 import {APIAdminListRuns} from './APIAdminListRuns';
 import {APIAdminListServices} from './APIAdminListServices';
 import {APIAdminListStatistics} from './APIAdminListStatistics';
@@ -13,7 +12,6 @@ import {APIAdminResourceDeviceSessionStandalone} from './APIAdminResourceDeviceS
 import {APIAdminResourceDeviceTime} from './APIAdminResourceDeviceTime';
 import {APIAdminResourceFramework} from './APIAdminResourceFramework';
 import {APIAdminResourceLicense} from './APIAdminResourceLicense';
-import {APIAdminResourceNotificationPlan} from './APIAdminResourceNotificationPlan';
 import {APIAdminResourceRunStandalone} from './APIAdminResourceRunStandalone';
 import {APIAdminResourceService} from './APIAdminResourceService';
 import {APIAdminResourceUser} from './APIAdminResourceUser';
@@ -31,12 +29,10 @@ import {Activity} from './models/Activity';
 import {AdminDeviceSession, AdminInteractiveDeviceSession} from './models/AdminDeviceSession';
 import {AdminDeviceType, DeviceTypeData} from './models/AdminDeviceType';
 import {AdminEmail} from './models/AdminEmail';
-import {AdminError} from './models/AdminError';
 import {Administrator} from './models/Administrator';
 import {AdminOverview} from './models/AdminOverview';
 import {BillingPeriod} from './models/BillingPeriod';
 import {Browser, BrowserData} from './models/Browser';
-import {CountryVatRate, CountryVatRateData} from './models/CountryVatRate';
 import {DeviceModelCriterion, DeviceModelCriterionData} from './models/DeviceModelCriterion';
 import {DeviceModelPool, DeviceModelPoolData} from './models/DeviceModelPool';
 import {Framework, FrameworkData} from './models/Framework';
@@ -148,20 +144,6 @@ export class APIAdminResource extends APIResource {
     return new APIAdminResourceCluster(this, id);
   }
 
-  // /admin/country-vat-rates
-  countryVatRates() {
-    return new APIList<CountryVatRate, CollectionQueryParams, CountryVatRateData>(this).push('admin', 'country-vat-rates');
-  }
-
-  // /admin/country-vat-rates/{id}
-  countryVatRate(id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource<CountryVatRate, NoQueryParams, Omit<CountryVatRate, 'country'>>(this).push('admin', 'country-vat-rates', id);
-  }
-
   // /admin/devices
   devices() {
     return new APIAdminListDevices(this);
@@ -271,11 +253,6 @@ export class APIAdminResource extends APIResource {
     return new APIResource<AdminEmail>(this).push('admin', 'emails', id, 'resend').post();
   }
 
-  // /admin/errors
-  errors() {
-    return new APIList<AdminError>(this).push('admin', 'errors');
-  }
-
   // /files
   files() {
     return new APIList<UserFile, UserFileParams, UserFileData>(this).push('files');
@@ -321,16 +298,6 @@ export class APIAdminResource extends APIResource {
   // /admin/maintenance
   maintenance() {
     return new APIResource<Maintenance, NoQueryParams, MaintenanceData>(this).push('admin', 'maintenance');
-  }
-
-  // /admin/notification-plans
-  notificationPlans() {
-    return new APIAdminListNotificationPlans(this);
-  }
-
-  // /admin/notification-plans/{id}
-  notificationPlan(id: number) {
-    return new APIAdminResourceNotificationPlan(this, id);
   }
 
   // /admin/overview

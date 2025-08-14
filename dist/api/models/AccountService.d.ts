@@ -12,11 +12,6 @@ export declare enum PaymentMethod {
     PROMOTION = "PROMOTION",
     AWS = "AWS"
 }
-export declare enum ChargeType {
-    USAGE_MOBILE = "USAGE_MOBILE",
-    CONCURRENCY_MOBILE = "CONCURRENCY_MOBILE",
-    CONCURRENCY_DESKTOP = "CONCURRENCY_DESKTOP"
-}
 export declare enum DeactivateReason {
     INITIAL_FAILURE = "INITIAL_FAILURE",
     SCA_FAILURE = "SCA_FAILURE",
@@ -38,7 +33,6 @@ export type AccountService = {
     activatedByName: string;
     active: boolean;
     braintreeId: string;
-    chargeType: ChargeType;
     createTime: number;
     deactivateReason: DeactivateReason;
     deactivatedById: number;
@@ -55,10 +49,8 @@ export type AccountService = {
     slmLicenseId: string;
     startTime: number;
     subscriptionManagementURL: string;
-    total: number;
     unit: ServiceUnit;
     unitCount: number;
-    userId: number;
     vatRate: number;
 };
 export type AccountServiceData = Pick<AccountService, 'endTime' | 'serviceId' | 'slmLicenseId'> & {

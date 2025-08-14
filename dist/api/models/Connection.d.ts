@@ -9,7 +9,6 @@ export type Connection = {
     path: string;
     port: number;
     type: string;
-    url: string;
     urlSchema: string;
 };
 export type ConnectionData = Pick<Connection, 'host' | 'port' | 'type' | 'password'>;

@@ -5,7 +5,7 @@ import { APIResourceBillingPeriod } from './APIResourceBillingPeriod';
 import { Account, AccountData } from './models/Account';
 import { AccountConcurrencyStatusMap } from './models/AccountConcurrencyStatusMap';
 import { AccountPreferences } from './models/AccountPreference';
-import { AccountService } from './models/AccountService';
+import { AccountService, ServicePaymentStatus } from './models/AccountService';
 import { AccountServicePayment } from './models/AccountServicePayment';
 import { BillingPeriod, BillingPeriodQueryParams } from './models/BillingPeriod';
 import { DeviceTimeSummaryQueryParams } from './models/Device';
@@ -31,5 +31,6 @@ export declare class APIResourceAccount extends APIResource<Account, QueryParams
     visualTestAccess(): APIResource<VisualTestAccess, NoQueryParams, VisualTestAccess>;
     accountServices(): APIList<AccountService, import("./models/HTTP").CollectionQueryParams, any>;
     accountService(id: number): APIList<AccountService, import("./models/HTTP").CollectionQueryParams, any>;
+    services(): APIResource<ServicePaymentStatus, QueryParams, QueryParams>;
 }
 export default APIResourceAccount;

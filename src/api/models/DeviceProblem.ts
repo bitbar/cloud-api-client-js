@@ -16,6 +16,7 @@ export type DeviceProblem = {
   deviceName: string;
   id: number;
   problems: Array<DeviceProblemPair>;
+  location: string;
 }
 
 export type DeviceProblemPair = {

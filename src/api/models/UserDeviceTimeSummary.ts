@@ -6,7 +6,6 @@ export type UserDeviceTimeSummary = {
   inspectorDeviceTime: number;
   periodEnd: number;
   periodStart: number;
-  remoteDeviceTime: number;
   totalDeviceTime: number;
 }
 

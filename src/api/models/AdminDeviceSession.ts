@@ -1,7 +1,6 @@
-import {DeviceSessionState, DeviceSessionStepType} from './DeviceSession';
+import {DeviceSessionState, DeviceSessionStepType, DeviceSessionType} from './DeviceSession';
 
 export type AdminDeviceSession = {
-  billable: boolean;
   createTime: number;
   currentStepType: DeviceSessionStepType;
   duration: number;
@@ -20,7 +19,6 @@ export type AdminDeviceSession = {
 }
 
 export type AdminInteractiveDeviceSession = {
-  billable: boolean;
   createTime: number;
   deviceId: number;
   deviceModelId: number;
@@ -32,6 +30,7 @@ export type AdminInteractiveDeviceSession = {
   id: number;
   startTime: number;
   state: DeviceSessionState;
+  type: DeviceSessionType;
   userEmail: string;
   userId: number;
 }
