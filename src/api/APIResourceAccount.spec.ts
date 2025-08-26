@@ -158,4 +158,20 @@ describe('APIResourceAccount', () => {
     });
   });
 
+  describe('@usageDetails', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.usageDetails();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/usage-details`);
+    });
+  });
+
+  describe('@usageDetailsSummary', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.usageDetailsSummary();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/usage-details-summary`);
+    });
+  });
+
 });

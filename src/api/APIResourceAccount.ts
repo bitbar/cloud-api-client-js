@@ -2,7 +2,7 @@ import {API} from '../API';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
 import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
-import {Account, AccountData} from './models/Account';
+import {Account, AccountData, AccountSessionUsage, AccountSessionUsageSummary} from './models/Account';
 import {AccountConcurrencyStatusMap} from './models/AccountConcurrencyStatusMap';
 import {AccountPreferences} from './models/AccountPreference';
 import {AccountService, ServicePaymentStatus} from './models/AccountService';
@@ -94,24 +94,34 @@ export class APIResourceAccount extends APIResource<Account, QueryParams, Accoun
     return new APIResource<AccountServicePayment, BillingPeriodQueryParams, NoData>(this).push('account-services', id, 'billing-period');
   }
 
-  // /account/{accountId}/visual-test/access
+  // /accounts/{accountId}/visual-test/access
   visualTestAccess() {
     return new APIResource<VisualTestAccess, NoQueryParams, VisualTestAccess>(this).push('visual-tests', 'access');
   }
 
-  // /account/{accountId}/account-services
+  // /accounts/{accountId}/account-services
   accountServices() {
     return new APIList<AccountService>(this).push('account-services');
   }
 
-  // /account/{accountId}/account-services/{id}
+  // /accounts/{accountId}/account-services/{id}
   accountService(id: number) {
     return new APIList<AccountService>(this).push('account-services', id);
   }
 
-  // /account/{accountId}/services
+  // /accounts/{accountId}/services
   services() {
     return new APIResource<ServicePaymentStatus>(this).push('services');
+  }
+
+  // /accounts/{accountId}/usage-details
+  usageDetails() {
+    return new APIList<AccountSessionUsage>(this).push('usage-details');
+  }
+
+  // /accounts/{accountId}/usage-details-summary
+  usageDetailsSummary() {
+    return new APIResource<AccountSessionUsageSummary>(this).push('usage-details-summary');
   }
 
 }
