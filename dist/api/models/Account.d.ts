@@ -44,6 +44,23 @@ export type AccountUsage = {
     manualConcurrency: number;
     manualUsage: number;
 };
+export type AccountSessionUsage = {
+    createTime: number;
+    duration: number;
+    type: SessionUsageType;
+    userId: number;
+    userName: string;
+};
+export type AccountSessionUsageSummary = {
+    totalTime: number;
+    usage: Record<SessionUsageType, number>;
+};
+export declare enum SessionUsageType {
+    AUTOMATIC = "automatic",
+    MANUAL = "manual",
+    DEDICATED_AUTOMATIC = "dedicated_automatic",
+    DEDICATED_MANUAL = "dedicated_manual"
+}
 export declare enum UtilizationType {
     ALL = "all",
     PUBLIC = "public",

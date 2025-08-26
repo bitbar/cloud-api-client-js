@@ -2,7 +2,7 @@ import { API } from '../API';
 import { APIList } from './APIList';
 import { APIResource } from './APIResource';
 import { APIResourceBillingPeriod } from './APIResourceBillingPeriod';
-import { Account, AccountData } from './models/Account';
+import { Account, AccountData, AccountSessionUsage, AccountSessionUsageSummary } from './models/Account';
 import { AccountConcurrencyStatusMap } from './models/AccountConcurrencyStatusMap';
 import { AccountPreferences } from './models/AccountPreference';
 import { AccountService, ServicePaymentStatus } from './models/AccountService';
@@ -32,5 +32,7 @@ export declare class APIResourceAccount extends APIResource<Account, QueryParams
     accountServices(): APIList<AccountService, import("./models/HTTP").CollectionQueryParams, any>;
     accountService(id: number): APIList<AccountService, import("./models/HTTP").CollectionQueryParams, any>;
     services(): APIResource<ServicePaymentStatus, QueryParams, QueryParams>;
+    usageDetails(): APIList<AccountSessionUsage, import("./models/HTTP").CollectionQueryParams, any>;
+    usageDetailsSummary(): APIResource<AccountSessionUsageSummary, QueryParams, QueryParams>;
 }
 export default APIResourceAccount;
