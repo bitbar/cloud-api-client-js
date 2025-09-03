@@ -56,10 +56,10 @@ export type AccountSessionUsageSummary = {
     usage: Record<SessionUsageType, number>;
 };
 export declare enum SessionUsageType {
-    AUTOMATIC = "automatic",
-    MANUAL = "manual",
-    DEDICATED_AUTOMATIC = "dedicated_automatic",
-    DEDICATED_MANUAL = "dedicated_manual"
+    AUTOMATIC = "AUTOMATIC",
+    MANUAL = "MANUAL",
+    DEDICATED_AUTOMATIC = "DEDICATED_AUTOMATIC",
+    DEDICATED_MANUAL = "DEDICATED_MANUAL"
 }
 export declare enum UtilizationType {
     ALL = "all",
