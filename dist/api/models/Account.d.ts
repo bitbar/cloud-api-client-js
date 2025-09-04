@@ -3,10 +3,16 @@ export type Account = {
     activeServiceName: string;
     comment: string;
     createTime: number;
+    dedicatedDevicesConcurrency: number;
     dedicatedDevicesCount: number;
+    dedicatedDevicesRatio: number;
+    dedicatedDevicesUsage: number;
     id: number;
     invoiceDetails: Invoice;
     name: string;
+    publicDevicesConcurrency: number;
+    publicDevicesRatio: number;
+    publicDevicesUsage: number;
     slmOrganizationId: string;
     userName: string;
 };

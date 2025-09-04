@@ -2,15 +2,21 @@ import {CollectionQueryParams} from './HTTP';
 
 
 export type Account = {
-  activeServiceName: string;
-  comment: string;
-  createTime: number;
-  dedicatedDevicesCount: number;
-  id: number;
-  invoiceDetails: Invoice
-  name: string;
-  slmOrganizationId: string;
-  userName: string;
+  activeServiceName: string,
+  comment: string,
+  createTime: number,
+  dedicatedDevicesConcurrency: number,
+  dedicatedDevicesCount: number,
+  dedicatedDevicesRatio: number,
+  dedicatedDevicesUsage: number,
+  id: number,
+  invoiceDetails: Invoice,
+  name: string,
+  publicDevicesConcurrency: number,
+  publicDevicesRatio: number,
+  publicDevicesUsage: number,
+  slmOrganizationId: string,
+  userName: string
 }
 
 export type Invoice = {
