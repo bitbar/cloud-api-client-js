@@ -19,7 +19,7 @@ export class APIAdminListRuns extends APIList<AdminTestRun> {
 
   // /runs/config
   config() {
-    const apiResource = new APIResource<TestRunConfig, RunsConfigParams, {configuration: TestRunConfig}>(this);
+    const apiResource = new APIResource<TestRunConfig, RunsConfigParams, TestRunConfig>(this);
     apiResource.restack('runs', 'config');
     return apiResource;
   }

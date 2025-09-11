@@ -137,16 +137,12 @@ export interface RunData extends TestRunData {
 export interface RunQueryParam extends QueryParams {
     projectId: number;
 }
-export interface TestRunsData {
-    configuration: TestRunConfig;
-}
 export type TestRunsIncludes = {
     includeDeviceGroups: boolean;
     includeDevices: boolean;
     includeFrameworks: boolean;
 };
 export type RunsConfigParams = TestRunsIncludes & QueryParams;
-export type TestRunsConfigData = TestRunsIncludes & TestRunsData;
 export interface TestRunsQueryParams extends CollectionBasicQueryParams {
     forWholeAccount: boolean;
     skipCommonProject: boolean;

@@ -7,8 +7,6 @@ import { RunsConfigParams, TestRunConfig } from './models/TestRun';
 export declare class APIAdminListRuns extends APIList<AdminTestRun> {
     protected ALLOWED_HTTP_METHODS: Array<Method>;
     constructor(parent: APIAdminResource);
-    config(): APIResource<TestRunConfig, RunsConfigParams, {
-        configuration: TestRunConfig;
-    }>;
+    config(): APIResource<TestRunConfig, RunsConfigParams, TestRunConfig>;
 }
 export default APIAdminListRuns;

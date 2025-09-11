@@ -152,9 +152,6 @@ export interface RunQueryParam extends QueryParams {
   projectId: number;
 }
 
-export interface TestRunsData {
-  configuration: TestRunConfig;
-}
 
 export type TestRunsIncludes = {
   includeDeviceGroups: boolean;
@@ -163,8 +160,6 @@ export type TestRunsIncludes = {
 }
 
 export type RunsConfigParams = TestRunsIncludes & QueryParams;
-
-export type TestRunsConfigData = TestRunsIncludes & TestRunsData;
 
 // for users/{userid}/runs
 export interface TestRunsQueryParams extends CollectionBasicQueryParams {
