@@ -5,13 +5,11 @@ import {
   RunsConfigParams,
   TestRun,
   TestRunConfig,
-  TestRunsConfigData,
-  TestRunsData,
   TestRunsQueryParams
 } from './models/TestRun';
 
 
-export class APIListRuns extends APIList<TestRun, TestRunsQueryParams, TestRunsData> {
+export class APIListRuns extends APIList<TestRun, TestRunsQueryParams, TestRunConfig> {
 
   /**
    * /runs
@@ -23,7 +21,7 @@ export class APIListRuns extends APIList<TestRun, TestRunsQueryParams, TestRunsD
 
   // /runs/config
   config() {
-    return new APIResource<TestRunConfig, RunsConfigParams, TestRunsConfigData>(this).push('config');
+    return new APIResource<TestRunConfig, RunsConfigParams, TestRunConfig>(this).push('config');
   }
 
 }
