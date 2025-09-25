@@ -2,7 +2,7 @@ import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource'
 import {
-  Account,
+  Account, AccountData,
   AccountUsage,
   AccountUsageParams,
   AccountUsageSummary,
@@ -14,7 +14,7 @@ import {AccountService} from './models/AccountService';
 import {AccountPreferences, AccountPreferencesData} from './models/AccountPreference';
 
 
-export class APIAdminResourceAccount extends APIResource<Account, NoQueryParams, NoData> {
+export class APIAdminResourceAccount extends APIResource<Account, NoQueryParams, AccountData> {
 
   /**
    * /admin/accounts/{id}
