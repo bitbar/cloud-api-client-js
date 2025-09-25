@@ -52,7 +52,9 @@ export type AccountUsage = {
 };
 export type AccountSessionUsage = {
     createTime: number;
+    deviceModelName: string;
     duration: number;
+    osVersion: string;
     type: SessionUsageType;
     userId: number;
     userName: string;
