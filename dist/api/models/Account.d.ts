@@ -50,6 +50,15 @@ export type AccountUsage = {
     manualConcurrency: number;
     manualUsage: number;
 };
+export type AccountUserSessionUsage = {
+    devices: number;
+    duration: number;
+    osVersions: number;
+    sessions: number;
+    sessionShare: number;
+    userId: number;
+    userName: string;
+};
 export type AccountSessionUsage = {
     createTime: number;
     deviceModelName: string;
