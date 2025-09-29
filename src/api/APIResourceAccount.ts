@@ -2,7 +2,13 @@ import {API} from '../API';
 import {APIList} from './APIList';
 import {APIResource} from './APIResource';
 import {APIResourceBillingPeriod} from './APIResourceBillingPeriod';
-import {Account, AccountData, AccountSessionUsage, AccountSessionUsageSummary} from './models/Account';
+import {
+  Account,
+  AccountData,
+  AccountSessionUsage,
+  AccountSessionUsageSummary,
+  AccountUserSessionUsage
+} from './models/Account';
 import {AccountConcurrencyStatusMap} from './models/AccountConcurrencyStatusMap';
 import {AccountPreferences} from './models/AccountPreference';
 import {AccountService, ServicePaymentStatus} from './models/AccountService';
@@ -112,6 +118,11 @@ export class APIResourceAccount extends APIResource<Account, QueryParams, Accoun
   // /accounts/{accountId}/services
   services() {
     return new APIResource<ServicePaymentStatus>(this).push('services');
+  }
+
+  // /accounts/{accountId}/user-usage-details
+  userUsageDetails() {
+    return new APIList<AccountUserSessionUsage>(this).push('user-usage-details');
   }
 
   // /accounts/{accountId}/usage-details

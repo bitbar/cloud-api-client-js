@@ -158,6 +158,14 @@ describe('APIResourceAccount', () => {
     });
   });
 
+  describe('@userUsageDetails', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.userUsageDetails();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/user-usage-details`);
+    });
+  });
+
   describe('@usageDetails', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.usageDetails();
