@@ -1,6 +1,7 @@
 import {DevicesQueryParams, Platform, SoftwareVersion} from './Device';
 import {OsType} from './Enum';
 import {CollectionQueryParams} from './HTTP';
+import {Cluster} from './Cluster';
 
 
 export enum InitStep {
@@ -22,11 +23,11 @@ export enum DeviceState {
 }
 
 export type AdminDevice = {
-  accountId: number;
-  accountName: string;
-  cluster: unknown;
+  accountId: number | null;
+  accountName: string | null;
+  cluster: Cluster;
   comment: string;
-  dedicationEndTime: number;
+  dedicationEndTime: number | null;
   deviceModelId: number;
   deviceModelName: string;
   enabled: boolean;
@@ -55,4 +56,7 @@ export type AdminDevice = {
 export type AdminDevicesQueryParams = Pick<DevicesQueryParams, 'withDisabled'> & CollectionQueryParams;
 
 export type AdminDeviceData = Pick<AdminDevice, 'accountId' | 'enabled' | 'initStep' | 'ipAddress' | 'name' |
-  'serialId' | 'testTimeLimit' | 'unlockGesture'> & {apiLevel: number; releaseVersion: string};
+  'serialId' | 'testTimeLimit' | 'unlockGesture' | 'comment' | 'forceRestore' | 'dedicationEndTime'> & {
+  apiLevel: number;
+  releaseVersion: string;
+};
