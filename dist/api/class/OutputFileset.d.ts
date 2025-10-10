@@ -5,17 +5,14 @@ import { APIResource } from '../APIResource';
 import { Screenshot } from '../models/Screenshot';
 import { UserFile } from '../models/UserFile';
 import { FilesQueryParams } from './FilesQueryParams';
+import APIListOutputFiles from '../APIListOutputFiles';
 export declare class OutputFileset extends APIResource<UserFile, FilesQueryParams> {
     constructor(parent: APIEntity | API);
-    files(): APIList<UserFile, FilesQueryParams, any>;
+    files(): APIListOutputFiles;
     file(id: number): APIResource<UserFile, FilesQueryParams, FilesQueryParams>;
     filesZip(): APIResource<Blob, FilesQueryParams, FilesQueryParams>;
     screenshots(): APIList<Screenshot, FilesQueryParams, any>;
     screenshot(id: number): APIResource<Screenshot, FilesQueryParams, FilesQueryParams>;
     screenshotFile(id: number): APIResource<Screenshot, FilesQueryParams, FilesQueryParams>;
-    videos(): APIList<UserFile, FilesQueryParams, any>;
-    nonMediaFiles(): APIList<UserFile, FilesQueryParams, any>;
-    performance(): APIList<UserFile, FilesQueryParams, any>;
-    images(): APIList<UserFile, FilesQueryParams, any>;
 }
 export default OutputFileset;

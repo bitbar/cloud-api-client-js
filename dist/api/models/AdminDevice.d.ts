@@ -49,7 +49,7 @@ export type AdminDevice = {
     unlockGesture: string;
 };
 export type AdminDevicesQueryParams = Pick<DevicesQueryParams, 'withDisabled'> & CollectionQueryParams;
-export type AdminDeviceData = Pick<AdminDevice, 'accountId' | 'enabled' | 'initStep' | 'ipAddress' | 'name' | 'serialId' | 'testTimeLimit' | 'unlockGesture' | 'testTimeLimit' | 'comment' | 'forceRestore' | 'dedicationEndTime'> & {
+export type AdminDeviceData = Pick<AdminDevice, 'accountId' | 'enabled' | 'initStep' | 'ipAddress' | 'name' | 'serialId' | 'testTimeLimit' | 'unlockGesture' | 'comment' | 'forceRestore' | 'dedicationEndTime'> & {
     apiLevel: number;
     releaseVersion: string;
 };

@@ -6,8 +6,7 @@ import {NonRequestable} from '../decorators/NonRequestable';
 import {Screenshot} from '../models/Screenshot';
 import {UserFile} from '../models/UserFile';
 import {FilesQueryParams} from './FilesQueryParams';
-import {IMAGE_FILES_FILTER} from './Images.filter';
-import {NON_MEDIA_FILES_FILTER} from './NonMedia.filter';
+import APIListOutputFiles from '../APIListOutputFiles';
 
 
 @NonRequestable
@@ -25,7 +24,7 @@ export class OutputFileset extends APIResource<UserFile, FilesQueryParams> {
 
   // /output-file-set/files
   files() {
-    return new APIList<UserFile, FilesQueryParams>(this).push('files');
+    return new APIListOutputFiles(this); /*new APIList<UserFile, FilesQueryParams>(this).push('files')*/;
   }
 
   // /output-file-set/files/{id}
@@ -52,30 +51,6 @@ export class OutputFileset extends APIResource<UserFile, FilesQueryParams> {
   screenshotFile(id: number) {
     return this.screenshot(id).push('file');
   }
-
-  // Filter files out by ready videos
-  videos() {
-    return this.files().params({
-      filter: 's_state_eq_READY',
-      tag: ['video']
-    });
-  }
-
-  // Filter files out by non-media
-  nonMediaFiles() {
-    return this.files().filter(NON_MEDIA_FILES_FILTER);
-  }
-
-  performance() {
-    return this.files().params({
-      tag: ['performance']
-    })
-  }
-
-  images() {
-    return this.files().filter(IMAGE_FILES_FILTER);
-  }
-
 }
 
 export default OutputFileset

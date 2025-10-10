@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.5.7 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.5.8 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
 })(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.5.7";
+  var version = "1.5.8";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -634,13 +634,37 @@
       'video/mp4', 'video/avi', 'video/webm', 'video/ogg', 'video/mpeg'
   ]);
 
+  class APIListOutputFiles extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('files');
+      }
+      performance() {
+          return this.params({
+              tag: ['performance']
+          });
+      }
+      images() {
+          return this.filter(IMAGE_FILES_FILTER);
+      }
+      nonMediaFiles() {
+          return this.filter(NON_MEDIA_FILES_FILTER);
+      }
+      videos() {
+          return this.params({
+              filter: 's_state_eq_READY',
+              tag: ['video']
+          });
+      }
+  }
+
   exports.OutputFileset = class OutputFileset extends APIResource {
       constructor(parent) {
           super(parent);
           this.push('output-file-set');
       }
       files() {
-          return new APIList(this).push('files');
+          return new APIListOutputFiles(this);
       }
       file(id) {
           return new APIResource(this).push('files', id);
@@ -656,23 +680,6 @@
       }
       screenshotFile(id) {
           return this.screenshot(id).push('file');
-      }
-      videos() {
-          return this.files().params({
-              filter: 's_state_eq_READY',
-              tag: ['video']
-          });
-      }
-      nonMediaFiles() {
-          return this.files().filter(NON_MEDIA_FILES_FILTER);
-      }
-      performance() {
-          return this.files().params({
-              tag: ['performance']
-          });
-      }
-      images() {
-          return this.files().filter(IMAGE_FILES_FILTER);
       }
   };
   exports.OutputFileset = __decorate([
