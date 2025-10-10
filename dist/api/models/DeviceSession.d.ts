@@ -64,6 +64,7 @@ export type DeviceSession = {
     name: string;
     projectId: number;
     projectName: string;
+    retryable: boolean;
     retryState: RetryState;
     startTime: number;
     state: DeviceSessionState;
