@@ -29,8 +29,8 @@ describe('OutputFileset', () => {
       expect(service.last).toEqual('output-file-set');
     });
 
-    it('should be non requestable', async () => {
-      await expect(service.send()).rejects.toBeUndefined();
+    it('should initialize proper endpoint path', () => {
+      expect(service.toUrl()).toEqual('/output-file-set');
     });
   });
 
@@ -93,7 +93,7 @@ describe('OutputFileset', () => {
 
   describe('@videos', () => {
     it('should return hook to videos collection endpoint', () => {
-      const call = service.videos();
+      const call = service.files().videos();
       expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual('/output-file-set/files');
       expect(call.getParams()).toEqual({
@@ -105,7 +105,7 @@ describe('OutputFileset', () => {
 
   describe('@nonMediaFiles', () => {
     it('should return hook to non media file collection endpoint', () => {
-      const call = service.nonMediaFiles();
+      const call = service.files().nonMediaFiles();
       expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual('/output-file-set/files');
       expect(call.getParams()).toEqual({
@@ -116,7 +116,7 @@ describe('OutputFileset', () => {
 
   describe('@performance', () => {
     it('should return hook to performance collection endpoint', () => {
-      const call = service.performance();
+      const call = service.files().performance();
       expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual('/output-file-set/files');
       expect(call.getParams()).toEqual({
@@ -127,7 +127,7 @@ describe('OutputFileset', () => {
 
   describe('@images', () => {
     it('should return hook to image file collection endpoint', () => {
-      const call = service.images();
+      const call = service.files().images();
       expect(call).toBeInstanceOf(APIList);
       expect(call.toUrl()).toEqual('/output-file-set/files');
       expect(call.getParams()).toEqual({
