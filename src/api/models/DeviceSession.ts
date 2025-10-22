@@ -60,7 +60,6 @@ export type DeviceSession = {
   clientSideId: string;
   device: Device;
   deviceInstanceId: number;
-  deviceLogFirstTimestamp: number;
   deviceRunId: number;
   duration: number;
   endTime: number;

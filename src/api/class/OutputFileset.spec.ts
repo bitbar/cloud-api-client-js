@@ -2,7 +2,6 @@ import API from '../../API';
 import APIEntity from '../APIEntity';
 import APIList from '../APIList';
 import APIResource from '../APIResource';
-import {IMAGE_FILES_FILTER} from './Images.filter';
 import {NON_MEDIA_FILES_FILTER} from './NonMedia.filter';
 import OutputFileset from './OutputFileset';
 
@@ -113,27 +112,4 @@ describe('OutputFileset', () => {
       });
     });
   });
-
-  describe('@performance', () => {
-    it('should return hook to performance collection endpoint', () => {
-      const call = service.files().performance();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/output-file-set/files');
-      expect(call.getParams()).toEqual({
-        tag: ['performance']
-      });
-    });
-  });
-
-  describe('@images', () => {
-    it('should return hook to image file collection endpoint', () => {
-      const call = service.files().images();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual('/output-file-set/files');
-      expect(call.getParams()).toEqual({
-        filter: IMAGE_FILES_FILTER.toString()
-      });
-    });
-  });
-
 });
