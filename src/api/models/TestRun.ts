@@ -4,6 +4,7 @@ import {OsType} from './Enum';
 import {CollectionBasicQueryParams, QueryParams} from './HTTP';
 import {UserFile} from './UserFile';
 import {DeviceGroup} from './DeviceGroup';
+import {Framework} from './Framework';
 
 
 export enum LimitationType {
@@ -109,7 +110,7 @@ export type TestRunConfig = TRCDefaultSettings & {
   applicationUsername: string;
   availableDeviceGroups: DeviceGroup[];
   availableDevices: Array<Device>;
-  availableFrameworks: any;
+  availableFrameworks: Framework[];
   availableOsTypes: Array<OsType>;
   clientSideTestConfig: any;
   computedDevices: Array<number>;
