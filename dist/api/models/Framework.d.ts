@@ -1,11 +1,12 @@
 import { OsType } from './Enum';
 import { UserFile } from './UserFile';
+export type FrameworkOptionsType = 'CLIENT_SIDE' | 'MANUAL' | '';
 export type FrameworkOptions = {
     id: number;
     name: string;
     description: string;
     icon: string;
-    type: string;
+    type: FrameworkOptionsType;
     requiredAppExtensions: string;
     requiredTestExtensions: string;
     sampleApp: UserFile;
