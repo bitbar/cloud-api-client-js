@@ -24,7 +24,7 @@ export class OutputFileset extends APIResource<UserFile, FilesQueryParams> {
 
   // /output-file-set/files
   files() {
-    return new APIListOutputFiles(this); /*new APIList<UserFile, FilesQueryParams>(this).push('files')*/;
+    return new APIListOutputFiles(this);
   }
 
   // /output-file-set/files/{id}

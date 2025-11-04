@@ -686,6 +686,20 @@
       NonRequestable
   ], exports.OutputFileset);
 
+  class APIListScreenshots extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('screenshots');
+      }
+  }
+
+  class APIListTestCaseRuns extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('test-case-runs');
+      }
+  }
+
   class APIResourceDeviceSessionCommon extends APIResource {
       constructor(parent, id) {
           if (id == null) {
@@ -707,7 +721,7 @@
           return new APIResource(this).push('release').post();
       }
       screenshots() {
-          return new APIList(this).push('screenshots');
+          return new APIListScreenshots(this);
       }
       screenshot(id) {
           if (id == null) {
@@ -728,7 +742,7 @@
           return this.step('current');
       }
       testCaseRuns() {
-          return new APIList(this).push('test-case-runs');
+          return new APIListTestCaseRuns(this);
       }
       connections() {
           return new APIList(this).push('connections');
@@ -1052,6 +1066,13 @@
       }
   }
 
+  class APIListTestRunDeviceSessions extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('device-sessions');
+      }
+  }
+
   class APIResourceRunCommon extends APIResource {
       constructor(parent, id) {
           if (id == null) {
@@ -1070,7 +1091,7 @@
           return new APIResource(this).push('data-availability');
       }
       deviceSessions() {
-          return new APIList(this).push('device-sessions');
+          return new APIListTestRunDeviceSessions(this);
       }
       filesZip(ids) {
           return postDeviceRunIds(this, 'files.zip', ids);
