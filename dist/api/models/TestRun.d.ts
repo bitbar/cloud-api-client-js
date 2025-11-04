@@ -40,6 +40,7 @@ export type TestRun = {
     'number': number;
     projectId: number;
     projectName: string;
+    retryable: boolean;
     rowIndex: number;
     runningDeviceCount: number;
     screenshotsFileId: number;
