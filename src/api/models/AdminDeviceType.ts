@@ -1,6 +1,7 @@
 export type AdminDeviceType = {
   frameExtraWidth: number;
   id: number;
+  imageCornerRadius: number;
   imageHeight: number;
   imageLeft: number;
   imagePrefix: string;
