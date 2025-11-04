@@ -81,6 +81,7 @@ export type Device = {
   frame80Url: string;
   frameExtraWidth: number;
   id: number;
+  imageCornerRadius: number;
   imageHeight: number;
   imageLeft: number;
   imagePrefix: string;
