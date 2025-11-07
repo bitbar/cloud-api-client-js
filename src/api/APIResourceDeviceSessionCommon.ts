@@ -9,12 +9,10 @@ import {
   DeviceSession,
   DeviceSessionCommand,
   DeviceSessionStep,
-  SessionQueryParams,
   SessionRunStepQueryParams,
   SessionStepQueryParams
 } from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
-import {TestCaseRun} from './models/TestCaseRun';
 import APIListScreenshots from './APIListScreenshots';
 import APIListTestCaseRuns from './APIListTestCaseRuns';
 

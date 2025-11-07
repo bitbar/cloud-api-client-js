@@ -1,14 +1,13 @@
 import {Screenshot} from './models/Screenshot';
-import {SessionQueryParams, SessionRunStepQueryParams, SessionStepQueryParams} from './models/DeviceSession';
-import {NoData} from './models/HTTP';
+import {CollectionBasicQueryParams, NoData} from './models/HTTP';
 import APIList from './APIList';
 import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
 
 
-export class APIListScreenshots extends APIList<Screenshot, SessionQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, NoData> {
+export class APIListScreenshots extends APIList<Screenshot, CollectionBasicQueryParams, NoData> {
 
   /**
-   * /screenshots
+   * screenshots
    */
   constructor(parent: APIResourceDeviceSessionCommon) {
     super(parent);

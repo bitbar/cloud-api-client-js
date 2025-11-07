@@ -1,11 +1,11 @@
 import {SessionQueryParams} from './models/DeviceSession';
-import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
+import {NoData, NoQueryParams} from './models/HTTP';
 import APIList from './APIList';
 import APIResourceDeviceSessionCommon from './APIResourceDeviceSessionCommon';
 import {TestCaseRun} from './models/TestCaseRun';
 
 
-export class APIListTestCaseRuns extends APIList<TestCaseRun, SessionQueryParams | CollectionBasicQueryParams | NoQueryParams, NoData> {
+export class APIListTestCaseRuns extends APIList<TestCaseRun, SessionQueryParams | NoQueryParams, NoData> {
 
   /**
    * /test-case-runs
