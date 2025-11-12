@@ -9,13 +9,12 @@ import {
   DeviceSession,
   DeviceSessionCommand,
   DeviceSessionStep,
-  SessionQueryParams,
   SessionRunStepQueryParams,
   SessionStepQueryParams
 } from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
-import {Screenshot} from './models/Screenshot';
-import {TestCaseRun} from './models/TestCaseRun';
+import APIListScreenshots from './APIListScreenshots';
+import APIListTestCaseRuns from './APIListTestCaseRuns';
 
 export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> implements DeviceSessionCommon {
 
@@ -53,7 +52,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
 
   // /device-sessions/{id}/screenshots
   screenshots() {
-    return new APIList<Screenshot, SessionQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, NoData>(this).push('screenshots');
+    return new APIListScreenshots(this);
   }
 
   // /device-sessions/{id}/screenshots/{id}
@@ -86,7 +85,7 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
 
   // /device-sessions/{id}/test-case-runs
   testCaseRuns() {
-    return new APIList<TestCaseRun, SessionQueryParams | NoQueryParams, NoData>(this).push('test-case-runs');
+    return new APIListTestCaseRuns(this);
   }
 
   // /device-sessions/{id}/connections

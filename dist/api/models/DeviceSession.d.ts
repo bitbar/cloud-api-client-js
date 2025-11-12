@@ -129,9 +129,6 @@ export interface SessionRunStepQueryParams extends CollectionBasicQueryParams {
 export interface SessionStepQueryParams extends SessionRunStepQueryParams {
     projectId: number;
 }
-export interface TestRunDeviceSessionQueryParams extends CollectionBasicQueryParams {
-    projectId: number;
-}
 export declare enum SessionReleaseReason {
     INACTIVITY = "INACTIVITY",
     TIMEOUT = "TIMEOUT",

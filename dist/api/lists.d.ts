@@ -3,6 +3,8 @@ import { APIListCleanupConfigurations as OriginAPIListCleanupConfigurations } fr
 import { APIListDevices as OriginAPIListDevices } from './APIListDevices';
 import { APIListFiles as OriginAPIListFiles } from './APIListFiles';
 import { APIListOutputFiles as OriginAPIListOutputFiles } from './APIListOutputFiles';
+import { APIListScreenshots as OriginAPIListScreenshots } from './APIListScreenshots';
+import { APIListTestRunDeviceSessions as OriginAPIListTestRunDeviceSessions } from './APIListTestRunDeviceSessions';
 import { APIListNotifications as OriginAPIListNotifications } from './APIListNotifications';
 import { APIListProperties as OriginAPIListProperties } from './APIListProperties';
 import { APIListRuns as OriginAPIListRuns } from './APIListRuns';
@@ -14,6 +16,8 @@ export type APIListCleanupConfigurations = InstanceType<typeof OriginAPIListClea
 export type APIListDevices = InstanceType<typeof OriginAPIListDevices>;
 export type APIListFiles = InstanceType<typeof OriginAPIListFiles>;
 export type APIListOutputFiles = InstanceType<typeof OriginAPIListOutputFiles>;
+export type APIListScreenshots = InstanceType<typeof OriginAPIListScreenshots>;
+export type APIListTestRunDeviceSessions = InstanceType<typeof OriginAPIListTestRunDeviceSessions>;
 export type APIListNotifications = InstanceType<typeof OriginAPIListNotifications>;
 export type APIListProperties = InstanceType<typeof OriginAPIListProperties>;
 export type APIListRuns = InstanceType<typeof OriginAPIListRuns>;
