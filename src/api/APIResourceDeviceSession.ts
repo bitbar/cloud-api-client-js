@@ -1,9 +1,10 @@
 import {APIResource} from './APIResource';
 import {APIResourceDeviceSessionCommon} from './APIResourceDeviceSessionCommon';
-import {DeviceSession} from './interface/DeviceSession';
-import {DeviceSession as DeviceSessionModel} from './models/DeviceSession';
+import {DeviceSession as DeviceSessionModel, SessionQueryParams} from './models/DeviceSession';
+import APIListTestCaseRuns from './APIListTestCaseRuns';
+import {APIListQuery} from './APIList';
 
-export class APIResourceDeviceSession extends APIResourceDeviceSessionCommon implements DeviceSession {
+export class APIResourceDeviceSession<QUERY_PARAMS extends APIListQuery = SessionQueryParams> extends APIResourceDeviceSessionCommon {
 
   // /device-sessions/{id}/abort
   abort() {
@@ -15,6 +16,10 @@ export class APIResourceDeviceSession extends APIResourceDeviceSessionCommon imp
     return new APIResource<DeviceSessionModel>(this).push('retry').post();
   }
 
+  // /device-sessions/{id}/test-case-runs
+  testCaseRuns() {
+    return new APIListTestCaseRuns<QUERY_PARAMS>(this);
+  }
 }
 
 export default APIResourceDeviceSession

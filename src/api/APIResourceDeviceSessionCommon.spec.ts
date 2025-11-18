@@ -112,14 +112,6 @@ describe('APIResourceDeviceSessionCommon', () => {
     });
   });
 
-  describe('@testCaseRuns', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.testCaseRuns();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/test-case-runs`);
-    });
-  });
-
   describe('@connections', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.connections();

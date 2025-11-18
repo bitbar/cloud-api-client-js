@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "1.5.14",
+  "version": "1.5.15",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/bitbar-cloud-api-client.min.js",
   "types": "dist/index.d.ts",

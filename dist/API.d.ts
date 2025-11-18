@@ -42,7 +42,7 @@ export declare class API {
     deviceGroup(id: number): APIResourceDeviceGroup;
     deviceGroups(): APIList<any, CollectionQueryParams, any>;
     devices(): APIListDevices;
-    deviceSession(id: number): APIResourceDeviceSession;
+    deviceSession(id: number): APIResourceDeviceSession<import("./models").SessionQueryParams>;
     deviceSessions(): APIList<any, CollectionQueryParams, any>;
     deviceStatistics(): APIList<any, CollectionQueryParams, any>;
     enums(): APIResource<any, import("./api/models/HTTP").QueryParams, import("./api/models/HTTP").QueryParams>;

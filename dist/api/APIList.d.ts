@@ -4,7 +4,8 @@ import { APIEntity } from './APIEntity';
 import { APIOrder, CollectionBasicQueryParams, CollectionQueryParams, CollectionResponse, NoQueryParams, SimpleCollectionResponse } from './models/HTTP';
 export declare const DEFAULT_LIMIT: number;
 export declare const DEFAULT_OFFSET: number;
-export declare class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any> extends APIEntity<CollectionResponse<RESPONSE> | SimpleCollectionResponse<RESPONSE>, QUERY_PARAMS, DATA> {
+export type APIListQuery = CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams;
+export declare class APIList<RESPONSE = any, QUERY_PARAMS extends APIListQuery = CollectionQueryParams, DATA = any> extends APIEntity<CollectionResponse<RESPONSE> | SimpleCollectionResponse<RESPONSE>, QUERY_PARAMS, DATA> {
     create(data: DATA): Promise<AxiosResponse<RESPONSE>>;
     sort(name: string, order?: APIOrder): this;
     limit(limit?: number): this;

@@ -1,6 +1,7 @@
 import {API} from '../API';
 import {APIResourceDeviceSession} from './APIResourceDeviceSession';
 import {APIResource} from './APIResource';
+import APIList from './APIList';
 
 describe('APIResourceDeviceSession', () => {
   const cloudUrl = 'https://cloud.bitbar.com';
@@ -30,6 +31,14 @@ describe('APIResourceDeviceSession', () => {
       const call = service.retry();
       expect(call).toBeInstanceOf(APIResource);
       expect(call.toUrl()).toEqual(`${baseUrl}/retry`);
+    });
+  });
+
+  describe('@testCaseRuns', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.testCaseRuns();
+      expect(call).toBeInstanceOf(APIList);
+      expect(call.toUrl()).toEqual(`${baseUrl}/test-case-runs`);
     });
   });
 

@@ -8,7 +8,6 @@ import { DeviceSessionCommon } from './interface/DeviceSessionCommon';
 import { DeviceSession, DeviceSessionCommand, DeviceSessionStep, SessionRunStepQueryParams, SessionStepQueryParams } from './models/DeviceSession';
 import { CollectionBasicQueryParams, NoQueryParams } from './models/HTTP';
 import APIListScreenshots from './APIListScreenshots';
-import APIListTestCaseRuns from './APIListTestCaseRuns';
 export declare class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> implements DeviceSessionCommon {
     constructor(parent: APIEntity<any> | API, id: number);
     commands(): APIList<DeviceSessionCommand, import("./models/HTTP").CollectionQueryParams, any>;
@@ -17,10 +16,9 @@ export declare class APIResourceDeviceSessionCommon extends APIResource<DeviceSe
     release(): APIResource<DeviceSession, NoQueryParams, void>;
     screenshots(): APIListScreenshots;
     screenshot(id: number): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
-    steps(): APIList<DeviceSessionStep, SessionRunStepQueryParams | SessionStepQueryParams | CollectionBasicQueryParams, void>;
+    steps(): APIList<DeviceSessionStep, CollectionBasicQueryParams | SessionRunStepQueryParams | SessionStepQueryParams, void>;
     step(id: number | 'current'): APIResource<DeviceSessionStep, NoQueryParams, void>;
     currentStep(): APIResource<DeviceSessionStep, NoQueryParams, void>;
-    testCaseRuns(): APIListTestCaseRuns;
     connections(): APIList<any, import("./models/HTTP").CollectionQueryParams, any>;
     logs(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     clusterLogs(): APIResource<any, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
