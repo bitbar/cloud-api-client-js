@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.5.14 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.5.15 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
 })(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.5.14";
+  var version = "1.5.15";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -693,13 +693,6 @@
       }
   }
 
-  class APIListTestCaseRuns extends APIList {
-      constructor(parent) {
-          super(parent);
-          this.push('test-case-runs');
-      }
-  }
-
   class APIResourceDeviceSessionCommon extends APIResource {
       constructor(parent, id) {
           if (id == null) {
@@ -740,9 +733,6 @@
       }
       currentStep() {
           return this.step('current');
-      }
-      testCaseRuns() {
-          return new APIListTestCaseRuns(this);
       }
       connections() {
           return new APIList(this).push('connections');
@@ -1057,12 +1047,22 @@
       }
   }
 
+  class APIListTestCaseRuns extends APIList {
+      constructor(parent) {
+          super(parent);
+          this.push('test-case-runs');
+      }
+  }
+
   class APIResourceDeviceSession extends APIResourceDeviceSessionCommon {
       abort() {
           return new APIResource(this).push('abort').post();
       }
       retry() {
           return new APIResource(this).push('retry').post();
+      }
+      testCaseRuns() {
+          return new APIListTestCaseRuns(this);
       }
   }
 

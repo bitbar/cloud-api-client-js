@@ -1,13 +1,22 @@
 import {AxiosResponse} from 'axios';
 import {FilterBuilder} from '../FilterBuilder'
 import {APIEntity} from './APIEntity'
-import {APIOrder, CollectionBasicQueryParams, CollectionQueryParams, CollectionResponse, NoQueryParams, SimpleCollectionResponse} from './models/HTTP';
+import {
+  APIOrder,
+  CollectionBasicQueryParams,
+  CollectionQueryParams,
+  CollectionResponse,
+  NoQueryParams,
+  SimpleCollectionResponse
+} from './models/HTTP';
 
 
 export const DEFAULT_LIMIT: number = 20;
 export const DEFAULT_OFFSET: number = 0;
 
-export class APIList<RESPONSE = any, QUERY_PARAMS extends CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams = CollectionQueryParams, DATA = any>
+export type APIListQuery = CollectionBasicQueryParams | CollectionQueryParams | NoQueryParams;
+
+export class APIList<RESPONSE = any, QUERY_PARAMS extends APIListQuery = CollectionQueryParams, DATA = any>
   extends APIEntity<CollectionResponse<RESPONSE> | SimpleCollectionResponse<RESPONSE>, QUERY_PARAMS, DATA> {
 
   /**

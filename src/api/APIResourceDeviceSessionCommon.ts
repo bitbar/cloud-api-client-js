@@ -14,7 +14,7 @@ import {
 } from './models/DeviceSession';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import APIListScreenshots from './APIListScreenshots';
-import APIListTestCaseRuns from './APIListTestCaseRuns';
+
 
 export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> implements DeviceSessionCommon {
 
@@ -81,11 +81,6 @@ export class APIResourceDeviceSessionCommon extends APIResource<DeviceSession> i
   // /device-sessions/{id}/steps/current
   currentStep() {
     return this.step('current');
-  }
-
-  // /device-sessions/{id}/test-case-runs
-  testCaseRuns() {
-    return new APIListTestCaseRuns(this);
   }
 
   // /device-sessions/{id}/connections
