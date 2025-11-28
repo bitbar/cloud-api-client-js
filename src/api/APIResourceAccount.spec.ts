@@ -182,4 +182,12 @@ describe('APIResourceAccount', () => {
     });
   });
 
+  describe('@services', () => {
+    it('should initialize proper endpoint path', () => {
+      const call = service.services();
+      expect(call).toBeInstanceOf(APIResource);
+      expect(call.toUrl()).toEqual(`${baseUrl}/services`);
+    });
+  });
+
 });
