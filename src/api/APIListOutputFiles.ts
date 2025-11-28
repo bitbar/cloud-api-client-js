@@ -2,7 +2,9 @@ import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {APIList} from './APIList';
 import {UserFile} from './models/UserFile';
-import {FilesQueryParams, IMAGE_FILES_FILTER, NON_MEDIA_FILES_FILTER} from './class';
+import {FilesQueryParams} from './class/FilesQueryParams';
+import {IMAGE_FILES_FILTER} from './class/Images.filter';
+import {NON_MEDIA_FILES_FILTER} from './class/NonMedia.filter';
 
 
 export class APIListOutputFiles extends APIList<UserFile, FilesQueryParams> {
@@ -39,4 +41,4 @@ export class APIListOutputFiles extends APIList<UserFile, FilesQueryParams> {
   }
 }
 
-export default APIListOutputFiles
+export default APIListOutputFiles;
