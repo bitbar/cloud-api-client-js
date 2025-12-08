@@ -191,9 +191,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
    * Set form data
    */
   formData(data: DATA): this {
-    this.headers({
-      'Content-Type': 'multipart/form-data'
-    }).data(data);
+    this.data(data);
     return this;
   }
 
@@ -211,20 +209,20 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
       requestConfig.headers = {};
     }
 
-    // Set default Content-Type
-    if (requestConfig.headers['Content-Type'] == null) {
+    if (!(requestConfig.method === 'POST' && requestConfig.data instanceof FormData) &&
+      requestConfig.headers['Content-Type'] == null) {
       requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     }
 
     // Convert data if needed
     if (requestConfig.method === 'POST' &&
-      (<string>requestConfig.headers['Content-Type']).startsWith('application/x-www-form-urlencoded') &&
+      (<string>requestConfig.headers['Content-Type'])?.startsWith('application/x-www-form-urlencoded') &&
       requestConfig.data != null) {
       requestConfig.data = this.paramsSerializer(requestConfig.data);
     }
 
     if (requestConfig.params) {
-      requestConfig.paramsSerializer = this.paramsSerializer;
+      requestConfig.paramsSerializer = {indexes: false};
     }
 
     // Send request
