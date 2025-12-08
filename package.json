@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "1.5.19",
+  "version": "1.6.0",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/bitbar-cloud-api-client.min.js",
   "types": "dist/index.d.ts",
@@ -69,14 +69,14 @@
     "ts-node": "^10.7.0",
     "tslib": "^2.3.1",
     "typedoc": "0.27.6",
+    "typedoc-github-theme": "^0.2.1",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.3.0",
-    "typedoc-github-theme": "^0.2.1"
+    "typescript-eslint": "^8.3.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.2",
     "@bitbar/finka": "^2.4.4",
-    "axios": "^0.26.1",
+    "axios": "^1.13.2",
     "form-data": "^4.0.4",
     "node-abort-controller": "^3.1.1",
     "qs": "6.10.3"

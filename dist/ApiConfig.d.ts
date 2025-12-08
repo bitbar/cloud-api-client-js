@@ -6,5 +6,6 @@ export type ApiConfig = {
     apiKey?: string;
     auth?: AxiosBasicCredentials;
     withCredentials?: boolean;
+    withXSRFToken?: boolean | undefined;
 };
 export default ApiConfig;
