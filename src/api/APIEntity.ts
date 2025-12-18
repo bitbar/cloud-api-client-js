@@ -233,8 +233,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
 
   protected paramsSerializer(params: DATA | QUERY_PARAMS): string {
     return stringify(params, {
-      arrayFormat: 'brackets',
-      allowEmptyArrays: true
+      arrayFormat: 'brackets'
     });
   }
 }
