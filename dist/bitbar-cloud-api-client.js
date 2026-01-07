@@ -1,4 +1,4 @@
-/* @bitbar/cloud-api-client v1.6.0 | Copyright 2025 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.6.0 | Copyright 2026 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
@@ -276,11 +276,12 @@
           return this;
       }
       formData(data) {
-          this.data(data);
+          this.headers({
+              'Content-Type': 'multipart/form-data'
+          }).data(data);
           return this;
       }
       send() {
-          var _a;
           const requestConfig = Object.deepAssign({}, this.requestConfig, {
               url: `/${this.stack.join('/')}`,
               signal: this.abortController.signal
@@ -288,12 +289,11 @@
           if (requestConfig.headers == null) {
               requestConfig.headers = {};
           }
-          if (!(requestConfig.method === 'POST' && requestConfig.data instanceof FormData) &&
-              requestConfig.headers['Content-Type'] == null) {
+          if (requestConfig.headers['Content-Type'] == null) {
               requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
           }
           if (requestConfig.method === 'POST' &&
-              ((_a = requestConfig.headers['Content-Type']) === null || _a === void 0 ? void 0 : _a.startsWith('application/x-www-form-urlencoded')) &&
+              requestConfig.headers['Content-Type'].startsWith('application/x-www-form-urlencoded') &&
               requestConfig.data != null) {
               requestConfig.data = this.paramsSerializer(requestConfig.data);
           }
