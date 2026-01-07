@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.5.19 | Copyright 2026 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.6.0 | Copyright 2026 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
   typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
 })(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.5.19";
+  var version = "1.6.0";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -298,7 +298,7 @@
               requestConfig.data = this.paramsSerializer(requestConfig.data);
           }
           if (requestConfig.params) {
-              requestConfig.paramsSerializer = this.paramsSerializer;
+              requestConfig.paramsSerializer = { indexes: false };
           }
           return this.root.axios.request(requestConfig);
       }
@@ -1796,6 +1796,7 @@
                   password: ''
               };
           }
+          this.axiosConfig.withXSRFToken = true;
           this.axiosConfig.withCredentials = config.withCredentials == null ? false : config.withCredentials;
           this.axios = axios.create(this.axiosConfig);
       }
