@@ -134,19 +134,6 @@ describe('APIAdminResource', () => {
     });
   });
 
-  describe('@browser', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.browser(1);
-      expect(call).toBeInstanceOf(APIResource);
-      expect(call.toUrl()).toEqual(`${baseUrl}/browsers/1`);
-    });
-
-    it('should throw error if resource ID is missing', () => {
-      const id: any = undefined;
-      expect(() => service.browser(id)).toThrow(new Error('Resource ID cannot be null!'));
-    });
-  });
-
   describe('@clusters', () => {
     it('should initialize proper endpoint path', () => {
       const call = service.clusters();

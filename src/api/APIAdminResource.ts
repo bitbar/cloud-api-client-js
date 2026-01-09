@@ -125,15 +125,6 @@ export class APIAdminResource extends APIResource {
     return new APIList<Browser, CollectionQueryParams, BrowserData>(this).push('admin', 'browsers');
   }
 
-  // /admin/browsers/{id}
-  browser(id: number) {
-    if (id == null) {
-      throw new Error('Resource ID cannot be null!');
-    }
-
-    return new APIResource<Browser, NoQueryParams, BrowserData>(this).push('admin', 'browsers', id);
-  }
-
   // /clusters
   clusters() {
     return new APIList<Cluster>(this).push('clusters');
