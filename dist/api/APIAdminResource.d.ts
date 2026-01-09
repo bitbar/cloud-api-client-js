@@ -63,7 +63,6 @@ export declare class APIAdminResource extends APIResource {
     billingPeriods(): APIList<BillingPeriod, CollectionQueryParams, any>;
     billingPeriod(id: number): APIResource<BillingPeriod, import("./models/HTTP").QueryParams, import("./models/HTTP").QueryParams>;
     browsers(): APIList<Browser, CollectionQueryParams, BrowserData>;
-    browser(id: number): APIResource<Browser, NoQueryParams, BrowserData>;
     clusters(): APIList<Cluster, CollectionQueryParams, any>;
     cluster(id: number): APIAdminResourceCluster;
     devices(): APIAdminListDevices;
