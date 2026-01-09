@@ -45,6 +45,7 @@ export type DeviceSessionConfig = {
     url: string;
 };
 export type DeviceSession = {
+    abortTime: number;
     accountId: number;
     autoRetriesLeftCount: number;
     biometricInstrumentation: boolean;
