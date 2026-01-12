@@ -1,6 +1,11 @@
 import {AxiosInstance} from 'axios';
+
 // this version of axios has some issue paired with rollup and is not handling default import correctly
-// as a workaround we need to use require instead of import until migrating to newer axios version
+// as a workaround we need to use require instead of import until migrating to newer axios version.
+//
+// Axios has been updated to version 1.13.2. Due to issues related to how axios exports are handled between CommonJS and ES Module
+// as a workaround we need to use require instead of import in case we want to support both CJS and ESM.
+// For CommonJS output in the consumer project (f.ex cloud-frontend), the workaround may still be needed. For ESM, the default import should work.
 const axios = require('axios').default;
 // @ts-ignore
 import {version} from '../package.json';
@@ -41,7 +46,6 @@ if (globalThis.isNodeJs) {
 
 // Disable max content length
 axios.defaults.maxContentLength = 1073741824; // 1GB
-
 
 /**
  * API
@@ -91,6 +95,8 @@ export class API {
       };
     }
 
+    // With XSRFToken
+    this.axiosConfig.withXSRFToken = true;
     // With credentials
     this.axiosConfig.withCredentials = config.withCredentials == null ? false : config.withCredentials;
 

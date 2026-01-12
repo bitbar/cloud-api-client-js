@@ -36,6 +36,13 @@ export type ApiConfig = {
    *
    */
   withCredentials?: boolean;
+
+
+  /**
+   * With XSRFToken? `undefined` (default) - set XSRF header only for the same origin requests
+   *
+   */
+  withXSRFToken?: boolean | undefined;
 }
 
 export default ApiConfig;

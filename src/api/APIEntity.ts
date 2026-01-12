@@ -211,7 +211,6 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
       requestConfig.headers = {};
     }
 
-    // Set default Content-Type
     if (requestConfig.headers['Content-Type'] == null) {
       requestConfig.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     }
@@ -224,7 +223,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
     }
 
     if (requestConfig.params) {
-      requestConfig.paramsSerializer = this.paramsSerializer;
+      requestConfig.paramsSerializer = {indexes: false};
     }
 
     // Send request

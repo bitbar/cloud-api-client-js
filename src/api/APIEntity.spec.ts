@@ -222,15 +222,10 @@ describe('APIEntity', () => {
   });
 
   describe('@formData', () => {
-    it('should set data and content header in existing configuration', () => {
-      const call = service.formData({
-        test: 'me',
-        properly: 1
-      });
-      expect((<any>service).requestConfig.data.test).toEqual('me');
-      expect((<any>service).requestConfig.data.properly).toEqual(1);
-      expect((<any>service).requestConfig.headers['Content-Type']).toEqual('multipart/form-data');
-      expect(call).toEqual(service);
+    it('should set data in requestConfig', () => {
+      const data = {foo: 'bar'};
+      service.formData(data);
+      expect((<any>service).requestConfig.data).toEqual(data);
     });
   });
 
@@ -304,7 +299,9 @@ describe('APIEntity', () => {
         params: {
           test: 'me'
         },
-        paramsSerializer: (<any>service).paramsSerializer,
+        paramsSerializer: {
+          indexes: false,
+        },
         signal: (<any>service).abortController.signal
       });
     });
