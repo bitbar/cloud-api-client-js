@@ -18,7 +18,7 @@ import {DeviceStatistics} from './models/DeviceStatistics';
 import {DeviceUsage} from './models/DeviceUsage';
 import {Framework} from './models/Framework';
 import {Project, UserProjectData, UserProjectQueryParams} from './models/Project';
-import {User, UserDeleteData} from './models/User';
+import {MarkAccountOwnerData, User, UserDeleteData} from './models/User';
 import {UiPreferencesData, UserPreference, UserPreferenceData} from './models/UserPreference';
 import {StatisticQueryParams, UserStatistics} from './models/UserStatistics';
 import {DeviceSession, DeviceSessionData, DeviceSessionQueryParams} from './models/DeviceSession';
@@ -73,7 +73,7 @@ export class APIResourceUser extends APIResource<User> {
 
   // /users/{id}/mark-account-owner
   markAccountOwner() {
-    return new APIResource<User, NoQueryParams, NoData>(this).push('mark-account-owner').post();
+    return new APIResource<User, NoQueryParams, MarkAccountOwnerData>(this).push('mark-account-owner').post();
   }
 
   // /users/{id}/projects

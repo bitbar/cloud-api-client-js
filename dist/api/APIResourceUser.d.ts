@@ -18,7 +18,7 @@ import { DeviceStatistics } from './models/DeviceStatistics';
 import { DeviceUsage } from './models/DeviceUsage';
 import { Framework } from './models/Framework';
 import { Project, UserProjectData, UserProjectQueryParams } from './models/Project';
-import { User, UserDeleteData } from './models/User';
+import { MarkAccountOwnerData, User, UserDeleteData } from './models/User';
 import { UiPreferencesData, UserPreference, UserPreferenceData } from './models/UserPreference';
 import { StatisticQueryParams, UserStatistics } from './models/UserStatistics';
 import { DeviceSession, DeviceSessionData, DeviceSessionQueryParams } from './models/DeviceSession';
@@ -31,7 +31,7 @@ export declare class APIResourceUser extends APIResource<User> {
     deviceGroup(id: number): APIResourceDeviceGroup;
     deviceSessions(): APIList<DeviceSession, DeviceSessionQueryParams, DeviceSessionData>;
     deviceSession(id: number): APIResourceDeviceSessionStandalone;
-    markAccountOwner(): APIResource<User, NoQueryParams, void>;
+    markAccountOwner(): APIResource<User, NoQueryParams, MarkAccountOwnerData>;
     projects(): APIList<Project, UserProjectQueryParams, UserProjectData>;
     project(id: number): APIResourceProject;
     files(): APIListFiles;
