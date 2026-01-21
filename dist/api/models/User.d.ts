@@ -63,3 +63,6 @@ export type UserActivateData = {
 export interface UserRecoveryQueryParams extends QueryParams {
     recoveryKey: string;
 }
+export type MarkAccountOwnerData = {
+    value: boolean;
+};
