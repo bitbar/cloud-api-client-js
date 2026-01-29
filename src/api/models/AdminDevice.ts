@@ -25,6 +25,7 @@ export enum DeviceState {
 export type AdminDevice = {
   accountId: number | null;
   accountName: string | null;
+  browsersMatched: boolean;
   cluster: Cluster;
   comment: string;
   dedicationEndTime: number | null;
