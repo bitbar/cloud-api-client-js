@@ -1,3 +1,4 @@
+import { CollectionQueryParams } from './HTTP';
 export declare enum AccessGroupScope {
     USER = "USER",
     ACCOUNT = "ACCOUNT",
@@ -9,6 +10,9 @@ export type AccessGroup = {
     scope: AccessGroupScope;
     userEmail: string;
     userId: number;
+};
+export type AccessGroupUsersQueryParams = CollectionQueryParams & {
+    email: string;
 };
 export type AccessGroupData = Pick<AccessGroup, 'name' | 'scope' | 'userId'>;
 export type AccessGroupsData = Omit<AccessGroupData, 'userId'>;

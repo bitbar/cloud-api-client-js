@@ -2,7 +2,7 @@ import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {APIResourceUser} from './APIResourceUser';
-import {AccessGroup} from './models/AccessGroup';
+import {AccessGroup, AccessGroupUsersQueryParams} from './models/AccessGroup';
 import {CollectionBasicQueryParams, NoData, NoQueryParams} from './models/HTTP';
 import {SharedResource} from './models/SharedResource';
 import {User, UserData} from './models/User';
@@ -24,7 +24,7 @@ export class APIResourceAccessGroup extends APIResource<AccessGroup> {
 
   // /access-groups/{id}/users
   users() {
-    return new APIList<User, CollectionBasicQueryParams, UserData>(this).push('users');
+    return new APIList<User, AccessGroupUsersQueryParams, UserData>(this).push('users');
   }
 
   // /access-groups/{id}/users/{id}
