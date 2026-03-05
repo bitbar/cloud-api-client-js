@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/bitbar-cloud-api-client.min.js",
   "types": "dist/index.d.ts",
@@ -76,14 +76,16 @@
   "dependencies": {
     "@babel/runtime": "^7.28.2",
     "@bitbar/finka": "^2.4.4",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "form-data": "^4.0.4",
     "node-abort-controller": "^3.1.1",
     "qs": "6.10.3"
   },
   "overrides": {
     "glob": "^9.0.0",
-    "side-channel": "1.0.4"
+    "side-channel": "1.0.4",
+    "diff": "4.0.4",
+    "markdown-it": "14.1.1"
   },
   "jest": {
     "preset": "ts-jest",
