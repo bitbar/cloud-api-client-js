@@ -18,6 +18,7 @@ export declare enum DeviceSessionState {
     ABORTED = "ABORTED",
     EXCLUDED = "EXCLUDED",
     FAILED = "FAILED",
+    FINISHING = "FINISHING",
     RUNNING = "RUNNING",
     SUCCEEDED = "SUCCEEDED",
     TIMEOUT = "TIMEOUT",
