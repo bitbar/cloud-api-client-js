@@ -38,6 +38,7 @@ export type AccountUsageSummary = {
     osVersionsCount: number;
     projectsCount: number;
     usersCount: number;
+    previous: AccountUsageSummary;
 };
 export type AccountUsage = {
     timestamp: number;

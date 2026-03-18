@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/bitbar-cloud-api-client.min.js",
   "types": "dist/index.d.ts",
@@ -85,7 +85,8 @@
     "glob": "^9.0.0",
     "side-channel": "1.0.4",
     "diff": "4.0.4",
-    "markdown-it": "14.1.1"
+    "markdown-it": "14.1.1",
+    "serialize-javascript": "7.0.3"
   },
   "jest": {
     "preset": "ts-jest",
