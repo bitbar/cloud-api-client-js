@@ -54,12 +54,4 @@ describe('APIAdminResourceDevice', () => {
     });
   });
 
-  describe('@queue', () => {
-    it('should initialize proper endpoint path', () => {
-      const call = service.queue();
-      expect(call).toBeInstanceOf(APIList);
-      expect(call.toUrl()).toEqual(`${baseUrl}/1/queue`);
-    });
-  });
-
 });

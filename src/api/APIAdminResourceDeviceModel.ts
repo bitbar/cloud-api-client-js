@@ -4,6 +4,7 @@ import {APIResource} from './APIResource'
 import {Browser, DeviceBrowserData} from './models/Browser';
 import {DeviceModel, DeviceModelData} from './models/DeviceModel';
 import {NoQueryParams} from './models/HTTP';
+import {AdminDeviceSession} from './models/AdminDeviceSession';
 
 
 export class APIAdminResourceDeviceModel extends APIResource<DeviceModel, NoQueryParams, DeviceModelData> {
@@ -23,6 +24,11 @@ export class APIAdminResourceDeviceModel extends APIResource<DeviceModel, NoQuer
   // /admin/device-models/{id}/browsers
   browsers() {
     return new APIList<Browser, NoQueryParams, DeviceBrowserData>(this).push('browsers');
+  }
+
+  // /admin/device-models/{id}/queue
+  queue() {
+    return new APIList<AdminDeviceSession>(this).push('queue');
   }
 
 }
