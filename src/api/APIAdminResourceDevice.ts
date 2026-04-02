@@ -2,7 +2,6 @@ import {APIAdminResource} from './APIAdminResource';
 import {APIList} from './APIList'
 import {APIResource} from './APIResource'
 import {AdminDevice, AdminDeviceData} from './models/AdminDevice';
-import {AdminDeviceSession} from './models/AdminDeviceSession';
 import {
   DeviceCleanupConfiguration,
   DeviceCleanupConfigurationData,
@@ -39,11 +38,6 @@ export class APIAdminResourceDevice extends APIResource<AdminDevice, NoQueryPara
   // /admin/devices/{id}/labels/{id}
   label(id: number) {
     return new APIResource<DeviceProperty, NoQueryParams, NoData>(this).push('labels', id);
-  }
-
-  // /admin/devices/{id}/queue
-  queue() {
-    return new APIList<AdminDeviceSession>(this).push('queue');
   }
 
 }
