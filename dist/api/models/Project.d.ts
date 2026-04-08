@@ -6,7 +6,7 @@ export declare enum ArchivingStrategy {
     RUNS = "RUNS"
 }
 export type Project = {
-    archiveTime: number;
+    archiveTime: number | null;
     archivingItemCount: number;
     archivingStrategy: ArchivingStrategy;
     common: boolean;
