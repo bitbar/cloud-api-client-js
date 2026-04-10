@@ -3,7 +3,7 @@ import { TestScheduler, TestState } from './TestRun';
 export type AdminTestRun = {
     createTime: number;
     duration: number;
-    endTime: number;
+    endTime: number | null;
     frameworkId: number;
     frameworkName: string;
     id: number;
