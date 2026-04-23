@@ -8,7 +8,6 @@ export type Service = {
   activated: boolean;
   archiveTime: number;
   centPrice: number;
-  commonId: string;
   customPlan: boolean;
   defaultConcurrences: Array<number>;
   description: string;
