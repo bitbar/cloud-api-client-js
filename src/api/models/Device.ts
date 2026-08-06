@@ -87,6 +87,7 @@ export type Device = {
   imagePrefix: string;
   imageTop: number;
   imageWidth: number;
+  location: string;
   locked: boolean;
   lockReason: LockReason;
   manufacturer: string;
