@@ -37,6 +37,7 @@ export type AdminDevice = {
     location: string;
     locked: boolean;
     manufacturer: string;
+    mdmEnabled: boolean;
     name: string;
     osType: OsType;
     ownerHasAccountService: boolean;
