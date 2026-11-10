@@ -1,5 +1,4 @@
 import { Filter } from './Filter';
-import './finka';
 export declare class FilterBuilder {
     private readonly filters;
     gt(name: string, value: number): this;
