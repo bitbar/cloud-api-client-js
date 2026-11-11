@@ -1,6 +1,6 @@
 {
   "name": "@bitbar/cloud-api-client",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "description": "Bitbar Cloud API Client for JavaScript",
   "main": "dist/bitbar-cloud-api-client.min.js",
   "types": "dist/index.d.ts",
@@ -78,15 +78,20 @@
     "@bitbar/finka": "^2.4.4",
     "axios": "^1.15.2",
     "form-data": "^4.0.6",
+    "js-yaml": "^4.3.0",
     "node-abort-controller": "^3.1.1",
-    "qs": "6.10.3"
+    "qs": "^6.14.1"
   },
   "overrides": {
+    "@humanfs/node": "^0.16.8",
+    "@istanbuljs/load-nyc-config": {
+      "js-yaml": "^3.15.0"
+    },
     "glob": "^9.0.0",
     "side-channel": "1.0.4",
     "diff": "4.0.4",
-    "markdown-it": "14.3.1",
-    "serialize-javascript": "7.0.3",
+    "markdown-it": "14.3.3",
+    "serialize-javascript": "^7.0.5",
     "brace-expansion": "^2.1.4"
   },
   "jest": {
@@ -94,4 +99,3 @@
     "testEnvironment": "node"
   }
 }
-
