@@ -1,6 +1,7 @@
-import {AxiosRequestConfig, AxiosResponse, Method} from 'axios';
+import {AxiosRequestConfig, AxiosResponse, Method, RawAxiosHeaders} from 'axios';
 import {stringify} from 'qs';
 import {API} from '../API';
+import {deepAssign} from '../utils';
 import {ALLOWED_HTTP_METHODS, QueryParams} from './models/HTTP';
 import {AbortController} from 'node-abort-controller';
 
@@ -92,8 +93,29 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
   }
 
   setRequestConfig(requestConfig: AxiosRequestConfig): this {
-    Object.deepAssign(this.requestConfig, requestConfig);
+    if (this.requestConfig.headers != null) {
+      this.requestConfig.headers = this.normalizeHeaders(this.requestConfig.headers);
+    }
+
+    const config = {...requestConfig};
+    if (config.headers != null) {
+      config.headers = this.normalizeHeaders(config.headers);
+    }
+
+    deepAssign(this.requestConfig, config);
     return this;
+  }
+
+  private normalizeHeaders(headers: NonNullable<AxiosRequestConfig['headers']>): RawAxiosHeaders {
+    const normalized: RawAxiosHeaders = {};
+
+    for (const [key, value] of Object.entries(headers)) {
+      if (typeof value !== 'undefined') {
+        normalized[key] = value;
+      }
+    }
+
+    return normalized;
   }
 
   removeRequestConfig(key: keyof AxiosRequestConfig): this {
@@ -201,7 +223,7 @@ export class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams | void =
    * Send request
    */
   send<T = RESPONSE>(): Promise<AxiosResponse<T>> {
-    const requestConfig = <AxiosRequestConfig>Object.deepAssign({}, this.requestConfig, {
+    const requestConfig = <AxiosRequestConfig>deepAssign({}, this.requestConfig, {
       url: `/${this.stack.join('/')}`,
       signal: this.abortController.signal
     });

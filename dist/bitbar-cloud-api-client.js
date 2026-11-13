@@ -1,11 +1,11 @@
-/* @bitbar/cloud-api-client v1.7.7 | Copyright 2026 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
+/* @bitbar/cloud-api-client v1.7.8 | Copyright 2026 (c) SmartBear Software and contributors | .git/blob/master/LICENSE */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@bitbar/finka'), require('qs'), require('node-abort-controller')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@bitbar/finka', 'qs', 'node-abort-controller'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global["@bitbar/finka"], global.qs, global["node-abort-controller"]));
-})(this, (function (exports, finka, qs, nodeAbortController) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('qs'), require('node-abort-controller')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'qs', 'node-abort-controller'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["bitbar-cloud-api-client"] = {}, global.lodash, global.qs, global["node-abort-controller"]));
+})(this, (function (exports, lodash, qs, nodeAbortController) { 'use strict';
 
-  var version = "1.7.7";
+  var version = "1.7.8";
 
   /******************************************************************************
   Copyright (c) Microsoft Corporation.
@@ -43,8 +43,6 @@
           this.operand = operand;
       }
   }
-
-  finka();
 
   class FilterBuilder {
       constructor() {
@@ -96,7 +94,7 @@
           return this.add(name, value, 'notin', true);
       }
       raw(filter) {
-          const filters = Array.wrap(filter);
+          const filters = lodash.castArray(filter);
           for (const filter of filters) {
               if (this.isFilterPart(filter)) {
                   this.filters.push(filter);
@@ -128,7 +126,7 @@
           return parts.join(';');
       }
       add(name, value, operand, checkNull = false) {
-          let _value = Array.wrap(value);
+          let _value = lodash.castArray(value);
           if (_value.length === 0) {
               return this;
           }
@@ -157,6 +155,27 @@
           this.filters.push(new Filter(name, _value, operand));
           return this;
       }
+  }
+
+  function isNaturalNumber(value) {
+      return lodash.isInteger(value) && value >= 0 && !Object.is(value, -0);
+  }
+  function isNodeJs() {
+      return typeof process !== 'undefined' &&
+          typeof process.release !== 'undefined' &&
+          process.release.name === 'node';
+  }
+  function deepAssign(target, ...sources) {
+      return lodash.mergeWith(target, ...sources, (targetValue, sourceValue) => {
+          if (typeof targetValue === 'undefined') {
+              return sourceValue;
+          }
+          if ((lodash.isPlainObject(targetValue) && lodash.isPlainObject(sourceValue)) ||
+              (Array.isArray(targetValue) && Array.isArray(sourceValue))) {
+              return undefined;
+          }
+          return sourceValue;
+      });
   }
 
   const ALLOWED_HTTP_METHODS = ['GET', 'POST', 'DELETE'];
@@ -218,8 +237,24 @@
           return url;
       }
       setRequestConfig(requestConfig) {
-          Object.deepAssign(this.requestConfig, requestConfig);
+          if (this.requestConfig.headers != null) {
+              this.requestConfig.headers = this.normalizeHeaders(this.requestConfig.headers);
+          }
+          const config = Object.assign({}, requestConfig);
+          if (config.headers != null) {
+              config.headers = this.normalizeHeaders(config.headers);
+          }
+          deepAssign(this.requestConfig, config);
           return this;
+      }
+      normalizeHeaders(headers) {
+          const normalized = {};
+          for (const [key, value] of Object.entries(headers)) {
+              if (typeof value !== 'undefined') {
+                  normalized[key] = value;
+              }
+          }
+          return normalized;
       }
       removeRequestConfig(key) {
           delete this.requestConfig[key];
@@ -282,7 +317,7 @@
           return this;
       }
       send() {
-          const requestConfig = Object.deepAssign({}, this.requestConfig, {
+          const requestConfig = deepAssign({}, this.requestConfig, {
               url: `/${this.stack.join('/')}`,
               signal: this.abortController.signal
           });
@@ -326,7 +361,7 @@
           });
       }
       limit(limit = DEFAULT_LIMIT) {
-          if (!Number.isNatural(limit)) {
+          if (!isNaturalNumber(limit)) {
               throw new Error(`Limit '${limit}' is invalid!`);
           }
           return this.params({
@@ -341,7 +376,7 @@
           return this.limit(0);
       }
       offset(offset = DEFAULT_OFFSET) {
-          if (!Number.isNatural(offset)) {
+          if (!isNaturalNumber(offset)) {
               throw new Error(`Offset '${offset}' is invalid!`);
           }
           return this.params({
@@ -349,10 +384,10 @@
           });
       }
       between(from, to) {
-          if (!Number.isNatural(from)) {
+          if (!isNaturalNumber(from)) {
               throw new Error(`From '${from}' is invalid!`);
           }
-          if (!Number.isNatural(to)) {
+          if (!isNaturalNumber(to)) {
               throw new Error(`To '${to}' is invalid!`);
           }
           return this.params({
@@ -361,7 +396,7 @@
           });
       }
       only(idx) {
-          if (!Number.isNatural(idx)) {
+          if (!isNaturalNumber(idx)) {
               throw new Error(`Index '${idx}' is invalid!`);
           }
           return this.params({
@@ -370,7 +405,7 @@
           });
       }
       page(page = 1) {
-          if (!Number.isNatural(page) || page == 0) {
+          if (!isNaturalNumber(page) || page == 0) {
               throw new Error(`Page '${page}' is invalid!`);
           }
           const limit = this.getLimit();
@@ -1556,7 +1591,7 @@
           this.push('files');
       }
       upload(obj) {
-          if (global.isNodeJs) {
+          if (isNodeJs()) {
               return this.nodeUpload(obj);
           }
           else {
@@ -1756,7 +1791,7 @@
   }
 
   const axios = require('axios').default;
-  if (globalThis.isNodeJs) {
+  if (isNodeJs()) {
       axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
   }
   axios.defaults.maxContentLength = 1073741824;

@@ -1,5 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {FilterBuilder} from '../FilterBuilder'
+import {isNaturalNumber} from '../utils';
 import {APIEntity} from './APIEntity'
 import {
   APIOrder,
@@ -47,7 +48,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS extends APIListQuery = Collect
    * @returns this
    */
   limit(limit = DEFAULT_LIMIT): this {
-    if (!Number.isNatural(limit)) {
+    if (!isNaturalNumber(limit)) {
       throw new Error(`Limit '${limit}' is invalid!`);
     }
 
@@ -85,7 +86,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS extends APIListQuery = Collect
    * @returns this
    */
   offset(offset: number = DEFAULT_OFFSET): this {
-    if (!Number.isNatural(offset)) {
+    if (!isNaturalNumber(offset)) {
       throw new Error(`Offset '${offset}' is invalid!`);
     }
 
@@ -103,11 +104,11 @@ export class APIList<RESPONSE = any, QUERY_PARAMS extends APIListQuery = Collect
    * @returns this
    */
   between(from: number, to: number): this {
-    if (!Number.isNatural(from)) {
+    if (!isNaturalNumber(from)) {
       throw new Error(`From '${from}' is invalid!`);
     }
 
-    if (!Number.isNatural(to)) {
+    if (!isNaturalNumber(to)) {
       throw new Error(`To '${to}' is invalid!`);
     }
 
@@ -125,7 +126,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS extends APIListQuery = Collect
    * @returns this
    */
   only(idx: number): this {
-    if (!Number.isNatural(idx)) {
+    if (!isNaturalNumber(idx)) {
       throw new Error(`Index '${idx}' is invalid!`);
     }
 
@@ -143,7 +144,7 @@ export class APIList<RESPONSE = any, QUERY_PARAMS extends APIListQuery = Collect
    * @returns this
    */
   page(page = 1): this {
-    if (!Number.isNatural(page) || page == 0) {
+    if (!isNaturalNumber(page) || page == 0) {
       throw new Error(`Page '${page}' is invalid!`);
     }
 

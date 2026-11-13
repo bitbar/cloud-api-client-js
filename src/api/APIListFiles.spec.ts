@@ -1,6 +1,7 @@
 import FormData from 'form-data';
 import fs from 'fs';
 import API from '../API';
+import * as utils from '../utils';
 import APIListFiles from './APIListFiles';
 
 describe('APIListFiles', () => {
@@ -26,15 +27,9 @@ describe('APIListFiles', () => {
 
   describe('@upload', () => {
     it('should throw error if used in browser', () => {
-      // @ts-ignore
-      global.isNodeJs = false;
-      try {
-        service.upload(upload);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
-      // @ts-ignore
-      global.isNodeJs = true;
+      const isNodeSpy = jest.spyOn(utils, 'isNodeJs').mockReturnValue(false);
+      expect(() => service.upload(upload)).toThrow(new Error('Not supported yet!'));
+      isNodeSpy.mockRestore();
     });
 
     it('should set form data sending', () => {
