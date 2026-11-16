@@ -1,5 +1,5 @@
+import {castArray} from 'lodash';
 import {Filter} from './Filter';
-import './finka';
 
 /**
  * FilterBuilder
@@ -72,7 +72,7 @@ export class FilterBuilder {
   }
 
   raw(filter: Filter | string | Filter[] | string[]): void {
-    const filters = Array.wrap(filter);
+    const filters = castArray<Filter | string>(filter);
     for (const filter of filters) {
       if (this.isFilterPart(<string>filter)) {
         this.filters.push(<Filter>filter);
@@ -122,7 +122,7 @@ export class FilterBuilder {
    */
   private add<T = any>(name: string, value: T, operand: string, checkNull = false): this {
 
-    let _value = Array.wrap(value);
+    let _value = castArray<any>(value);
 
     if (_value.length === 0) {
       return this;

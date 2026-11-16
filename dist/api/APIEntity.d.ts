@@ -18,6 +18,7 @@ export declare class APIEntity<RESPONSE = any, QUERY_PARAMS extends QueryParams 
     set last(val: string | number);
     toUrl(absolute?: boolean): string;
     setRequestConfig(requestConfig: AxiosRequestConfig): this;
+    private normalizeHeaders;
     removeRequestConfig(key: keyof AxiosRequestConfig): this;
     headers(headers: Record<string, string>): this;
     method(name: Method): this;

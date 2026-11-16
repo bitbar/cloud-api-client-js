@@ -1,3 +1,4 @@
+import {AxiosHeaders} from 'axios';
 import {API} from '../API';
 import {APIEntity} from './APIEntity';
 import {ALLOWED_HTTP_METHODS} from './models/HTTP';
@@ -98,6 +99,40 @@ describe('APIEntity', () => {
       expect((<any>service).requestConfig.withCredentials).toEqual(true);
       expect(call).toEqual(service);
     });
+
+    it('should deep-merge nested objects, merge arrays by index, and ignore undefined values', () => {
+      service.setRequestConfig({
+        params: {
+          nested: {first: true, retained: true},
+          values: [1, 2],
+          keep: 'existing'
+        }
+      });
+
+      service.setRequestConfig({
+        params: {
+          nested: {second: true},
+          values: [3],
+          keep: undefined
+        }
+      });
+
+      expect((<any>service).requestConfig.params).toEqual({
+        nested: {first: true, retained: true, second: true},
+        values: [3, 2],
+        keep: 'existing'
+      });
+    });
+
+    it('should replace nested Date values instead of merging them as objects', () => {
+      const originalDate = new Date('2025-01-01T00:00:00.000Z');
+      const replacementDate = new Date('2025-02-01T00:00:00.000Z');
+      service.setRequestConfig({params: {date: originalDate}});
+
+      service.setRequestConfig({params: {date: replacementDate}});
+
+      expect((<any>service).requestConfig.params.date).toBe(replacementDate);
+    });
   });
 
   describe('@removeRequestConfig', () => {
@@ -123,6 +158,59 @@ describe('APIEntity', () => {
       expect((<any>service).requestConfig.headers.hasOwnProperty('Some-Header')).toBe(true);
       expect((<any>service).requestConfig.headers.hasOwnProperty('Testheader')).toBe(true);
       expect(call).toEqual(service);
+    });
+
+    it('should preserve AxiosHeaders when adding JSON content type', () => {
+      service.setRequestConfig({
+        headers: new AxiosHeaders({Authorization: 'Bearer token'})
+      });
+
+      service.jsonData({enabled: true});
+
+      expect((<any>service).requestConfig.headers).toEqual({
+        Authorization: 'Bearer token',
+        'Content-Type': 'application/json'
+      });
+    });
+
+    it('should preserve AxiosHeaders when adding normalized headers', () => {
+      service.setRequestConfig({
+        headers: new AxiosHeaders({Authorization: 'Bearer token'})
+      });
+
+      service.headers({'x-request-id': 'request-1'});
+
+      expect((<any>service).requestConfig.headers).toEqual({
+        Authorization: 'Bearer token',
+        'X-Request-Id': 'request-1'
+      });
+    });
+
+    it('should merge incoming AxiosHeaders with existing plain headers', () => {
+      service.setRequestConfig({headers: {'X-Request-Id': 'request-1'}});
+
+      service.setRequestConfig({
+        headers: new AxiosHeaders({Authorization: 'Bearer token'})
+      });
+
+      expect((<any>service).requestConfig.headers).toEqual({
+        Authorization: 'Bearer token',
+        'X-Request-Id': 'request-1'
+      });
+    });
+
+    it.each([false, null])('should preserve AxiosHeaders suppression value %s', (value) => {
+      service.setRequestConfig({
+        headers: new AxiosHeaders({Authorization: '******'})
+      });
+
+      service.setRequestConfig({
+        headers: new AxiosHeaders({Authorization: value})
+      });
+
+      expect((<any>service).requestConfig.headers).toEqual({
+        Authorization: value
+      });
     });
   });
 
@@ -205,6 +293,12 @@ describe('APIEntity', () => {
       expect((<any>service).requestConfig.data.test).toEqual('me');
       expect((<any>service).requestConfig.data.properly).toEqual(1);
       expect(call).toEqual(service);
+    });
+
+    it('should replace an existing body with null', () => {
+      service.data({enabled: true}).data(null);
+
+      expect((<any>service).requestConfig.data).toBeNull();
     });
   });
 

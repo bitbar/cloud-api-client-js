@@ -11,6 +11,16 @@ describe('FilterBuilder', () => {
     expect(f.toString()).toEqual('');
   });
 
+  it('should wrap a scalar raw filter and preserve array inputs', () => {
+    const scalar = new FilterBuilder();
+    scalar.raw('test_eq_VALUE');
+    expect(scalar.toString()).toEqual('test_eq_VALUE');
+
+    const multiple = new FilterBuilder();
+    multiple.raw(['test_eq_FIRST', 'test_eq_SECOND']);
+    expect(multiple.toString()).toEqual('test_eq_FIRST;test_eq_SECOND');
+  });
+
   describe('@gt', () => {
     it('should generate proper string for number', () => {
       const f = new FilterBuilder();
@@ -111,6 +121,12 @@ describe('FilterBuilder', () => {
       f.on('test', []);
       expect(f.toString()).toEqual('');
     });
+
+    it('does not add a filter when given an empty array', () => {
+      const f = new FilterBuilder();
+      f.raw([]);
+      expect(f.toString()).toEqual('');
+    });
   });
 
   describe('@eq', () => {
@@ -147,6 +163,16 @@ describe('FilterBuilder', () => {
       const f = new FilterBuilder();
       f.eq('test', test);
       expect(f.toString()).toEqual('test_eq_' + test);
+    });
+
+    it('should preserve null and undefined scalar values', () => {
+      const nullValue = new FilterBuilder();
+      nullValue.eq('test', null);
+      expect(nullValue.toString()).toEqual('test_eq_');
+
+      const undefinedValue = new FilterBuilder();
+      undefinedValue.eq('test', undefined);
+      expect(undefinedValue.toString()).toEqual('test_eq');
     });
 
     it('should generate proper string for string', () => {

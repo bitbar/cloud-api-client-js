@@ -35,11 +35,10 @@ import {Project} from './api/models/Project';
 import {Property} from './api/models/Property';
 import {UserFile, UserFileData, UserFileParams} from './api/models/UserFile';
 import {ApiConfig} from './ApiConfig';
-import './finka';
 import {LabelGroup} from './api/models/LabelGroup';
+import {isNodeJs} from './utils';
 
-// @ts-ignore
-if (globalThis.isNodeJs) {
+if (isNodeJs()) {
   // Set User-Agent
   axios.defaults.headers.common['User-Agent'] = `Bitbar Cloud API Client for JavaScript v${version}`;
 }

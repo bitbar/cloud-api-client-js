@@ -3,6 +3,7 @@ import {APIEntity} from './APIEntity';
 import {APIList} from './APIList';
 import {FilesQueryParams} from './class/FilesQueryParams';
 import {FileData, UploadObj, UserFile} from './models/UserFile';
+import {isNodeJs} from '../utils';
 
 
 export class APIListFiles extends APIList<UserFile, FilesQueryParams, FileData | FormData> {
@@ -21,8 +22,7 @@ export class APIListFiles extends APIList<UserFile, FilesQueryParams, FileData |
    */
   upload(obj: UploadObj): this {
     // For NodeJS
-    // @ts-ignore
-    if (global.isNodeJs) {
+    if (isNodeJs()) {
       return this.nodeUpload(obj);
     } else {
       /**

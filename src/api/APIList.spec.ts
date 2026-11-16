@@ -90,6 +90,10 @@ describe('APIList', () => {
       const param = -1;
       expect(() => service.limit(param)).toThrow(new Error(`Limit '${param}' is invalid!`));
     });
+
+    it.each([-0, 1.5, NaN, Infinity, -Infinity])('should reject non-natural value %s', (param) => {
+      expect(() => service.limit(param)).toThrow(new Error(`Limit '${param}' is invalid!`));
+    });
   });
 
   describe('@getLimit', () => {
